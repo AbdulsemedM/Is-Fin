@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ifb_loan/app/utils/app_theme.dart';
 import 'package:ifb_loan/features/splash_screen/splash_screen.dart';
 
 void main() {
@@ -14,10 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       // title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      theme: AppTheme.themeData(),
       home: SplashScreenPage(),
     );
   }
