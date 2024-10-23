@@ -19,8 +19,8 @@ class AppTheme {
         displaySmall: TextStyle(
             fontStyle: FontStyle.italic, color: AppColors.primaryTextColor),
         bodyLarge: TextStyle(fontSize: 16.0, color: Colors.black),
-        bodyMedium: TextStyle(fontSize: 14.0, color: Colors.grey),
-        bodySmall: TextStyle(fontSize: 14.0, color: Colors.grey),
+        bodyMedium: TextStyle(fontSize: 14.0, color: Colors.black),
+        bodySmall: TextStyle(fontSize: 12.0, color: Colors.black),
       ),
       fontFamily: 'Poppins',
       colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -41,5 +41,66 @@ class AppTheme {
   static TextStyle textStyle() {
     return const TextStyle(
         color: AppColors.primaryTextColor, fontSize: 14, fontFamily: 'Poppins');
+  }
+}
+
+class ScreenConfig {
+  // Static variables to store screen height and width
+  static late double screenWidth;
+  static late double screenHeight;
+
+  // Initialize method to set width and height
+  static void init(BuildContext context) {
+    screenWidth = MediaQuery.of(context).size.width;
+    screenHeight = MediaQuery.of(context).size.height;
+  }
+}
+
+class AppDecorations {
+  static InputDecoration getAppInputDecoration(
+      {IconData? sIconData,
+      IconData? pIconData,
+      String? hintText,
+      String? lableText,
+      required bool myBorder,
+      required BuildContext context}) {
+    return InputDecoration(
+      filled: true,
+      fillColor: AppColors.greyColor,
+      // focusedBorder: InputBorder.none,
+      enabledBorder: myBorder
+          ? const OutlineInputBorder(
+              borderSide:
+                  BorderSide(width: 2.0, color: AppColors.primaryDarkColor))
+          : InputBorder.none,
+      focusedBorder: myBorder
+          ? const OutlineInputBorder(
+              borderSide:
+                  BorderSide(width: 2.0, color: AppColors.primaryDarkColor))
+          : InputBorder.none,
+      hintText: hintText,
+      labelText: lableText,
+      labelStyle: Theme.of(context).textTheme.bodySmall,
+
+      // GoogleFonts.roboto(
+      //     color: AppColors.primaryDarkColor,
+      //     fontSize: 16,
+      //     fontWeight: FontWeight.w400),
+      prefixIconColor: AppColors.iconColor,
+      suffixIconColor: AppColors.iconColor,
+      prefixIcon: pIconData != null
+          ? Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Icon(pIconData),
+            )
+          : null,
+      suffixIcon: sIconData != null
+          ? Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Icon(sIconData),
+            )
+          : null,
+      contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+    );
   }
 }
