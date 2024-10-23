@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:ifb_loan/app/app_button.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
+import 'package:ifb_loan/features/dashborad/dashboard_page.dart';
+import 'package:ifb_loan/features/signup/presentation/screen/signup_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -35,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             SizedBox(
-              height: ScreenConfig.screenHeight * 0.08,
+              height: ScreenConfig.screenHeight * 0.05,
             ),
             Center(
                 child: SizedBox(
@@ -168,11 +170,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               loading = false;
                               // loading = false;
                             });
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) =>
-                            //             const DashboardPage()));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const DashboardPage()));
                           },
                     buttonText: loading
                         ? SizedBox(
@@ -203,10 +205,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (context) => const Signup()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SignupScreen()));
                   },
                   child: Text(
                     "Sign up",
