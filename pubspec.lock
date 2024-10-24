@@ -25,6 +25,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.0"
+  card_slider:
+    dependency: "direct main"
+    description:
+      name: card_slider
+      sha256: "3d8db347a7cb3ac3f30f4169d74282d0976f42de2615d4ca4c0038dd3e56646b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.5"
   characters:
     dependency: transitive
     description:

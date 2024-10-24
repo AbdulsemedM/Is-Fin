@@ -17,7 +17,9 @@ class AppTheme {
             fontStyle: FontStyle.italic,
             color: AppColors.primaryTextColor),
         displaySmall: TextStyle(
-            fontStyle: FontStyle.italic, color: AppColors.primaryTextColor),
+            fontSize: 20,
+            fontStyle: FontStyle.italic,
+            color: AppColors.primaryTextColor),
         bodyLarge: TextStyle(fontSize: 16.0, color: Colors.black),
         bodyMedium: TextStyle(fontSize: 14.0, color: Colors.black),
         bodySmall: TextStyle(fontSize: 12.0, color: Colors.black),

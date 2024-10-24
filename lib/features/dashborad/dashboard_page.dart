@@ -31,6 +31,7 @@ class _DashboardPageState extends State<DashboardPage> {
         itemCornerRadius: 24,
         iconSize: 20,
         curve: Curves.easeIn,
+        itemPadding: EdgeInsets.symmetric(horizontal: 0),
         onItemSelected: (index) => setState(() => currentIndex = index),
         items: <BottomNavyBarItem>[
           BottomNavyBarItem(
