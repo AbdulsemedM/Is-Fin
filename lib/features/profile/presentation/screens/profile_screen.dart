@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:ifb_loan/app/app_button.dart';
+import 'package:ifb_loan/app/utils/app_colors.dart';
+import 'package:ifb_loan/app/utils/app_theme.dart';
+import 'package:ifb_loan/features/KYC/presentation/screen/kyc_screen.dart';
 import 'package:ifb_loan/features/profile/presentation/widgets/custome_list_button.dart';
 import 'package:ifb_loan/features/profile/presentation/widgets/kyc_card_widget.dart';
 import 'package:ifb_loan/features/profile/presentation/widgets/loan_status_card.dart';
@@ -24,7 +28,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               painter: CurvedPainter(),
             ),
             // Add content inside the stack if needed, e.g., profile picture, settings icon
-            Positioned(
+            const Positioned(
               top: 70,
               left: 0,
               right: 0,
@@ -42,42 +46,64 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ],
         ),
-        Text(
+        const Text(
           "Hi, Abdulsemed M.",
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        SizedBox(
-          height: 30,
+        const SizedBox(
+          height: 20,
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
+        const Padding(
+          padding: EdgeInsets.all(8.0),
           child: KycProgressCard(
             title: 'KYC Completed',
             percent: 0.74, // 74%
           ),
         ),
-        Column(
-          children: [
-            CustomListButton(
-              icon: Icons.info,
-              title: 'Complete KYC',
-              onPressed: () {
-                // Callback for Complete KYC button
-              },
-            ),
-            CustomListButton(
-              icon: Icons.add,
-              title: 'Add Business Partner',
-              onPressed: () {
-                // Callback for Add Business Partner button
-              },
-            ),
-            LoanStatusCard(
-              completedLoans: 13,
-              pendingLoans: 2,
-              failedLoans: 0,
-            ),
-          ],
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              CustomListButton(
+                icon: Icons.info,
+                title: 'Complete KYC',
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CompleteKYCDetail()));
+                },
+              ),
+              CustomListButton(
+                icon: Icons.add,
+                title: 'Add Business Partner',
+                onPressed: () {
+                  // Callback for Add Business Partner button
+                },
+              ),
+              SizedBox(height: 10),
+              const LoanStatusCard(
+                completedLoans: 13,
+                pendingLoans: 2,
+                failedLoans: 0,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Text(
+                    textAlign: TextAlign.center,
+                    "If you are here as a product seller and wanted to fill a form or check status please click the button bellow"),
+              ),
+              MyButton(
+                  height: ScreenConfig.screenHeight * 0.06,
+                  width: ScreenConfig.screenWidth * 0.9,
+                  backgroundColor: AppColors.primaryDarkColor,
+                  onPressed: () {},
+                  buttonText: Text(
+                    "Click-Here",
+                    style: TextStyle(color: Colors.white),
+                  ))
+            ],
+          ),
         )
       ],
     );

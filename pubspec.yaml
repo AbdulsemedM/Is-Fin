@@ -37,6 +37,7 @@ dependencies:
   salomon_bottom_bar: ^3.3.2
   bottom_navy_bar: ^6.1.0
   card_slider: ^1.0.5
+  custom_sliding_segmented_control: ^1.8.3
 
 dev_dependencies:
   flutter_test:
