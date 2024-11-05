@@ -5,12 +5,10 @@ import 'package:ifb_loan/app/utils/app_theme.dart';
 import 'package:ifb_loan/features/splash_screen/splash_screen.dart';
 
 void main() {
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarColor:
-        AppColors.primaryDarkColor, // Change to your preferred color
-    statusBarIconBrightness:
-        Brightness.light, // For light icons on dark background
-    statusBarBrightness: Brightness.dark, // Adjust for iOS
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: AppColors.primaryDarkColor, // Global status bar color
+    statusBarIconBrightness: Brightness.light,
   ));
   runApp(const MyApp());
 }
@@ -26,6 +24,7 @@ class MyApp extends StatelessWidget {
       // title: 'Flutter Demo',
       theme: AppTheme.themeData(),
       home: SplashScreenPage(),
+      
     );
   }
 }

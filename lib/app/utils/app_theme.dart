@@ -5,39 +5,45 @@ import 'package:ifb_loan/app/utils/app_colors.dart';
 class AppTheme {
   static ThemeData themeData() {
     return ThemeData(
-      primaryColor: AppColors.primaryColor,
-      textTheme: const TextTheme(
-        displayLarge: TextStyle(
-            fontFamily: "Poppins",
-            fontSize: 32.0,
-            fontWeight: FontWeight.bold,
-            color: AppColors.primaryTextColor),
-        displayMedium: TextStyle(
-            fontSize: 24.0,
-            fontStyle: FontStyle.italic,
-            color: AppColors.primaryTextColor),
-        displaySmall: TextStyle(
-            fontSize: 20,
-            fontStyle: FontStyle.italic,
-            color: AppColors.primaryTextColor),
-        bodyLarge: TextStyle(fontSize: 16.0, color: Colors.black),
-        bodyMedium: TextStyle(fontSize: 14.0, color: Colors.black),
-        bodySmall: TextStyle(fontSize: 12.0, color: Colors.black),
-      ),
-      fontFamily: 'Poppins',
-      colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      useMaterial3: true,
-    );
+        primaryColor: AppColors.primaryColor,
+        textTheme: const TextTheme(
+          displayLarge: TextStyle(
+              fontFamily: "Poppins",
+              fontSize: 32.0,
+              fontWeight: FontWeight.bold,
+              color: AppColors.primaryTextColor),
+          displayMedium: TextStyle(
+              fontSize: 24.0,
+              fontStyle: FontStyle.italic,
+              color: AppColors.primaryTextColor),
+          displaySmall: TextStyle(
+              fontSize: 20,
+              fontStyle: FontStyle.italic,
+              color: AppColors.primaryTextColor),
+          bodyLarge: TextStyle(fontSize: 16.0, color: Colors.black),
+          bodyMedium: TextStyle(fontSize: 14.0, color: Colors.black),
+          bodySmall: TextStyle(fontSize: 12.0, color: Colors.black),
+        ),
+        fontFamily: 'Poppins',
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+        appBarTheme: appBarTheme());
   }
 
   static AppBarTheme appBarTheme() {
     return AppBarTheme(
-        color: Colors.white,
-        elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.black),
-        titleTextStyle: textStyle(),
-        toolbarTextStyle: textStyle(),
-        systemOverlayStyle: SystemUiOverlayStyle.dark);
+      backgroundColor: Colors.white,
+      // color: AppColors.primaryDarkColor,
+      elevation: 0,
+      iconTheme: const IconThemeData(color: Colors.black),
+      titleTextStyle: textStyle(),
+      toolbarTextStyle: textStyle(),
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarColor: AppColors.primaryDarkColor,
+        statusBarIconBrightness: Brightness.light,
+        statusBarBrightness: Brightness.dark,
+      ),
+    );
   }
 
   static TextStyle textStyle() {
