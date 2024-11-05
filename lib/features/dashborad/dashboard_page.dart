@@ -18,13 +18,6 @@ class _DashboardPageState extends State<DashboardPage> {
   @override
   void initState() {
     super.initState();
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor:
-          AppColors.primaryDarkColor, // Change to your preferred color
-      statusBarIconBrightness:
-          Brightness.light, // For light icons on dark background
-      statusBarBrightness: Brightness.dark, // Adjust for iOS
-    ));
   }
 
   int currentIndex = 0;
