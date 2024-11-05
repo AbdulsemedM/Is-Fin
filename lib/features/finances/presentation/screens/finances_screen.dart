@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
 import 'package:ifb_loan/features/finances/presentation/widgets/finances_widget.dart';
+import 'package:ifb_loan/features/finances/presentation/widgets/loan_display_card.dart';
 
 class FinancesScreen extends StatefulWidget {
   const FinancesScreen({super.key});
@@ -29,14 +30,14 @@ class _FinancesScreenState extends State<FinancesScreen> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12.0),
           child: SizedBox(
-            height: ScreenConfig.screenHeight * 0.4,
+            height: ScreenConfig.screenHeight * 0.45,
             child: GridView.builder(
               itemCount: 4,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 mainAxisSpacing: 16.0,
                 crossAxisSpacing: 16.0,
-                childAspectRatio: 1.2,
+                childAspectRatio: 1,
               ),
               itemBuilder: (context, index) {
                 return FinancesCard(
@@ -67,6 +68,36 @@ class _FinancesScreenState extends State<FinancesScreen> {
                 );
               },
             ),
+          ),
+        ),
+        SizedBox(
+          height: ScreenConfig.screenHeight * 0.4,
+          child: ListView(
+            padding: const EdgeInsets.all(16.0),
+            children: [
+              LoanCard(
+                loanTitle: 'Loan 1',
+                loanDescription: '10 Mobiles and 10 TVs',
+                amount: 1150,
+                lender: 'ABC General Trading',
+                backgroundColor: Colors.blue.shade100,
+                image: Image.asset(
+                  'assets/images/elec.png', // replace with your image asset
+                  fit: BoxFit.contain,
+                ),
+              ),
+              LoanCard(
+                loanTitle: 'Loan 2',
+                loanDescription: 'Coffee plant grain picker',
+                amount: 7000,
+                lender: 'XYZ Import and Export',
+                backgroundColor: Colors.orange.shade100,
+                image: Image.asset(
+                  'assets/images/agri.png', // replace with your image asset
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ],
           ),
         )
       ],

@@ -114,11 +114,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     cardColor: Color(0xFFA6D9FA), // Custom card color
                   ),
                   ExpandableCard(
-                    title: 'Murabaha',
+                    title: 'Mudarabah',
                     iconContainer: Container(
                       padding: EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                        color: Colors.orange,
+                        color: Colors.green,
                         shape: BoxShape.circle,
                       ),
                       child: Icon(Icons.account_balance, color: Colors.white),
@@ -128,7 +128,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     onGetStarted: () {
                       print("Get Started clicked");
                     },
-                    cardColor: Colors.orangeAccent, // Custom card color
+                    cardColor: const Color.fromARGB(
+                        255, 155, 249, 163), // Custom card color
                   ),
                 ],
               ),
