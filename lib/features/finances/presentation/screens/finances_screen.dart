@@ -4,6 +4,7 @@ import 'package:ifb_loan/features/business_partner/presentation/screen/add_bisin
 import 'package:ifb_loan/features/finances/presentation/widgets/finances_widget.dart';
 import 'package:ifb_loan/features/finances/presentation/widgets/loan_display_card.dart';
 import 'package:ifb_loan/features/loan_application/presentation/screen/loan_application_screen.dart';
+import 'package:ifb_loan/features/loan_approval_status/presentation/screen/loan_approval_status.dart';
 import 'package:ifb_loan/features/loan_repayment/presentation/screen/loan_repayment_screen.dart';
 
 class FinancesScreen extends StatefulWidget {
@@ -80,6 +81,12 @@ class _FinancesScreenState extends State<FinancesScreen> {
                           MaterialPageRoute(
                               builder: (context) =>
                                   const AddBisinessPartnerScreen()));
+                    } else if (index == 1) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const LoanApprovalStatus()));
                     }
                   },
                 );
