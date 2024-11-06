@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
 import 'package:ifb_loan/features/finances/presentation/widgets/finances_widget.dart';
 import 'package:ifb_loan/features/finances/presentation/widgets/loan_display_card.dart';
-import 'package:ifb_loan/features/murabaha_loan_application/presentation/screen/loan_application_screen.dart';
+import 'package:ifb_loan/features/loan_application/presentation/screen/loan_application_screen.dart';
 
 class FinancesScreen extends StatefulWidget {
   const FinancesScreen({super.key});

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ifb_loan/app/app_button.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
-import 'package:ifb_loan/features/murabaha_loan_application/presentation/widgets/table_item_widget.dart';
+import 'package:ifb_loan/features/loan_application/presentation/widgets/table_item_widget.dart';
 
 class LoanApplicationScreen extends StatefulWidget {
   const LoanApplicationScreen({super.key});
