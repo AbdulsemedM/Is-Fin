@@ -164,7 +164,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 15.0),
                       child: MyButton(
-                          height: ScreenConfig.screenHeight * 0.06,
+                          // height: ScreenConfig.screenHeight * 0.06,
                           width: ScreenConfig.screenWidth * 0.5,
                           backgroundColor: loading
                               ? AppColors.iconColor

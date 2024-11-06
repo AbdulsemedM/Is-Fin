@@ -14,11 +14,11 @@ class AppTheme {
               color: AppColors.primaryTextColor),
           displayMedium: TextStyle(
               fontSize: 24.0,
-              fontStyle: FontStyle.italic,
+              // fontStyle: FontStyle.italic,
               color: AppColors.primaryTextColor),
           displaySmall: TextStyle(
               fontSize: 20,
-              fontStyle: FontStyle.italic,
+              // fontStyle: FontStyle.italic,
               color: AppColors.primaryTextColor),
           bodyLarge: TextStyle(fontSize: 16.0, color: Colors.black),
           bodyMedium: TextStyle(fontSize: 14.0, color: Colors.black),

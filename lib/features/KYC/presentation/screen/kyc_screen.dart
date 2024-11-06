@@ -23,7 +23,11 @@ class _CompleteKYCDetailState extends State<CompleteKYCDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Complete KYC')),
+      appBar: AppBar(
+          title: Text(
+        'Complete KYC',
+        style: Theme.of(context).textTheme.displaySmall,
+      )),
       body: Column(
         children: [
           Padding(

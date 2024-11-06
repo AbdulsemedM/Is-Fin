@@ -104,7 +104,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
           ),
           const SizedBox(height: 16),
           const SizedBox(height: 8),
-          Row(
+          const Row(
             children: [
               Text(
                 'Select Id. from gallery or capture',

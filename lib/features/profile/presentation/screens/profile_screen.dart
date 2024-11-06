@@ -3,6 +3,7 @@ import 'package:ifb_loan/app/app_button.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
 import 'package:ifb_loan/features/KYC/presentation/screen/kyc_screen.dart';
+import 'package:ifb_loan/features/business_partner/presentation/screen/business_partners_screen.dart';
 import 'package:ifb_loan/features/profile/presentation/widgets/custome_list_button.dart';
 import 'package:ifb_loan/features/profile/presentation/widgets/kyc_card_widget.dart';
 import 'package:ifb_loan/features/profile/presentation/widgets/loan_status_card.dart';
@@ -78,7 +79,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 icon: Icons.add,
                 title: 'Add Business Partner',
                 onPressed: () {
-                  // Callback for Add Business Partner button
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              const BusinessPartnersScreen()));
                 },
               ),
               SizedBox(height: 10),

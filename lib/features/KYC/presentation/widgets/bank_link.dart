@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:ifb_loan/app/app_button.dart';
+import 'package:ifb_loan/app/utils/app_colors.dart';
+import 'package:ifb_loan/app/utils/app_theme.dart';
+import 'package:ifb_loan/features/KYC/presentation/widgets/bank_account_widget.dart';
 
 class BankLink extends StatefulWidget {
   const BankLink({super.key});
@@ -8,116 +12,125 @@ class BankLink extends StatefulWidget {
 }
 
 class _BankLinkState extends State<BankLink> {
+  var loading = false;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            Expanded(
-              child: TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'First Name',
-                  filled: true,
-                  fillColor: Colors.grey[200],
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide.none,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text("Complete all the fields below"),
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Account Number',
+                    filled: true,
+                    fillColor: Colors.grey[200],
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide.none,
+                    ),
                   ),
                 ),
               ),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Last Name',
-                  filled: true,
-                  fillColor: Colors.grey[200],
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide.none,
+              const SizedBox(width: 16),
+              Expanded(
+                child: MyButton(
+                    backgroundColor: loading
+                        ? AppColors.iconColor
+                        : AppColors.primaryDarkColor,
+                    onPressed: loading
+                        ? () {}
+                        : () {
+                            setState(() {
+                              loading = true;
+                            });
+                          },
+                    buttonText: loading
+                        ? SizedBox(
+                            height: ScreenConfig.screenHeight * 0.02,
+                            width: ScreenConfig.screenHeight * 0.02,
+                            child: const CircularProgressIndicator(
+                              strokeWidth: 3,
+                              color: AppColors.primaryColor,
+                            ),
+                          )
+                        : const Text(
+                            "Submit",
+                            style: TextStyle(color: Colors.white),
+                          )),
+              ),
+            ],
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 16),
+            child: Divider(),
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'OTP',
+                    filled: true,
+                    fillColor: Colors.grey[200],
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide.none,
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 16),
-        Row(
-          children: [
-            Expanded(
-              child: TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Tin Number',
-                  filled: true,
-                  fillColor: Colors.grey[200],
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide.none,
-                  ),
-                ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: MyButton(
+                    backgroundColor: loading
+                        ? AppColors.iconColor
+                        : AppColors.primaryDarkColor,
+                    onPressed: loading
+                        ? () {}
+                        : () {
+                            setState(() {
+                              loading = true;
+                            });
+                          },
+                    buttonText: loading
+                        ? SizedBox(
+                            height: ScreenConfig.screenHeight * 0.02,
+                            width: ScreenConfig.screenHeight * 0.02,
+                            child: const CircularProgressIndicator(
+                              strokeWidth: 3,
+                              color: AppColors.primaryColor,
+                            ),
+                          )
+                        : const Text(
+                            "Add",
+                            style: TextStyle(color: Colors.white),
+                          )),
               ),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: DropdownButtonFormField<String>(
-                decoration: InputDecoration(
-                  labelText: 'Id. Type',
-                  filled: true,
-                  fillColor: Colors.grey[200],
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide.none,
-                  ),
-                ),
-                items: [
-                  DropdownMenuItem(
-                    value: 'Driver\'s License',
-                    child: Text('Driver\'s License'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'Passport',
-                    child: Text('Passport'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'National ID',
-                    child: Text('National ID'),
-                  ),
-                ],
-                onChanged: (value) {
-                  // Handle value change
-                },
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 16),
-        Text(
-          'Select Id. from gallery or capture',
-          style: TextStyle(fontSize: 16),
-        ),
-        const SizedBox(height: 8),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            IconButton(
-              icon: Icon(Icons.photo, size: 40),
-              onPressed: () {
-                // Implement gallery selection
-              },
-            ),
-            const SizedBox(width: 32),
-            IconButton(
-              icon: Icon(Icons.camera_alt, size: 40),
-              onPressed: () {
-                // Implement camera capture
-              },
-            ),
-          ],
-        ),
-        const Spacer(),
-      ],
+            ],
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 16),
+            child: Divider(),
+          ),
+          AccountCard(
+            name: 'Abdulsemed Mussema',
+            id: '1022200133387',
+            onAccept: () {
+              // Handle accept action
+            },
+            onReject: () {
+              // Handle reject action
+            },
+          ),
+        ],
+      ),
     );
   }
 }
