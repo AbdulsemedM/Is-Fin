@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
+import 'package:ifb_loan/features/business_partner/presentation/screen/add_bisiness_partner_screen.dart';
 import 'package:ifb_loan/features/finances/presentation/widgets/finances_widget.dart';
 import 'package:ifb_loan/features/finances/presentation/widgets/loan_display_card.dart';
 import 'package:ifb_loan/features/loan_application/presentation/screen/loan_application_screen.dart';
@@ -73,11 +74,31 @@ class _FinancesScreenState extends State<FinancesScreen> {
                           MaterialPageRoute(
                               builder: (context) =>
                                   const LoanApplicationScreen()));
+                    } else if (index == 3) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const AddBisinessPartnerScreen()));
                     }
                   },
                 );
               },
             ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Row(
+            children: [
+              Text(
+                "Overall loan History",
+                style: Theme.of(context)
+                    .textTheme
+                    .displaySmall!
+                    .copyWith(fontWeight: FontWeight.w600),
+              ),
+            ],
           ),
         ),
         SizedBox(
