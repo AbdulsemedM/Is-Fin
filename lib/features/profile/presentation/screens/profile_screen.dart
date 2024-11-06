@@ -17,6 +17,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  var loading = false;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -99,14 +100,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     "If you are here as a product seller and wanted to fill a form or check status please click the button bellow"),
               ),
               MyButton(
-                  height: ScreenConfig.screenHeight * 0.06,
-                  width: ScreenConfig.screenWidth * 0.9,
-                  backgroundColor: AppColors.primaryDarkColor,
-                  onPressed: () {},
-                  buttonText: Text(
-                    "Click-Here",
-                    style: TextStyle(color: Colors.white),
-                  ))
+                  backgroundColor: loading
+                      ? AppColors.iconColor
+                      : AppColors.primaryDarkColor,
+                  onPressed: loading
+                      ? () {}
+                      : () {
+                          setState(() {
+                            loading = true;
+                          });
+                        },
+                  buttonText: loading
+                      ? SizedBox(
+                          height: ScreenConfig.screenHeight * 0.02,
+                          width: ScreenConfig.screenHeight * 0.02,
+                          child: const CircularProgressIndicator(
+                            strokeWidth: 3,
+                            color: AppColors.primaryColor,
+                          ),
+                        )
+                      : const Text(
+                          "Click Here",
+                          style: TextStyle(color: Colors.white),
+                        )),
             ],
           ),
         )

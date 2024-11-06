@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
 import 'package:ifb_loan/features/finances/presentation/widgets/finances_widget.dart';
 import 'package:ifb_loan/features/finances/presentation/widgets/loan_display_card.dart';
+import 'package:ifb_loan/features/murabaha_loan_application/presentation/screen/loan_application_screen.dart';
 
 class FinancesScreen extends StatefulWidget {
   const FinancesScreen({super.key});
@@ -64,7 +65,15 @@ class _FinancesScreenState extends State<FinancesScreen> {
                           : index == 2
                               ? Colors.green.shade100
                               : Colors.red.shade100,
-                  onTap: () {},
+                  onTap: () {
+                    if (index == 0) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const LoanApplicationScreen()));
+                    }
+                  },
                 );
               },
             ),
