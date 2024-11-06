@@ -3,6 +3,7 @@ import 'package:ifb_loan/app/utils/app_theme.dart';
 import 'package:ifb_loan/features/finances/presentation/widgets/finances_widget.dart';
 import 'package:ifb_loan/features/finances/presentation/widgets/loan_display_card.dart';
 import 'package:ifb_loan/features/loan_application/presentation/screen/loan_application_screen.dart';
+import 'package:ifb_loan/features/loan_repayment/presentation/screen/loan_repayment_screen.dart';
 
 class FinancesScreen extends StatefulWidget {
   const FinancesScreen({super.key});
@@ -84,15 +85,23 @@ class _FinancesScreenState extends State<FinancesScreen> {
           child: ListView(
             padding: const EdgeInsets.all(16.0),
             children: [
-              LoanCard(
-                loanTitle: 'Loan 1',
-                loanDescription: '10 Mobiles and 10 TVs',
-                amount: 1150,
-                lender: 'ABC General Trading',
-                backgroundColor: Colors.blue.shade100,
-                image: Image.asset(
-                  'assets/images/elec.png', // replace with your image asset
-                  fit: BoxFit.contain,
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoanRepaymentScreen()));
+                },
+                child: LoanCard(
+                  loanTitle: 'Loan 1',
+                  loanDescription: '10 Mobiles and 10 TVs',
+                  amount: 1150,
+                  lender: 'ABC General Trading',
+                  backgroundColor: Colors.blue.shade100,
+                  image: Image.asset(
+                    'assets/images/elec.png', // replace with your image asset
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
               LoanCard(
