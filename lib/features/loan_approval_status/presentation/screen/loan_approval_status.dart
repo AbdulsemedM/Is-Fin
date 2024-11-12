@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:ifb_loan/app/app_button.dart';
+import 'package:ifb_loan/app/utils/app_colors.dart';
+import 'package:ifb_loan/app/utils/app_theme.dart';
 import 'package:ifb_loan/features/loan_approval_status/presentation/widgets/loan_status_table.dart';
 
 class LoanApprovalStatus extends StatefulWidget {
@@ -9,6 +12,7 @@ class LoanApprovalStatus extends StatefulWidget {
 }
 
 class _LoanApprovalStatusState extends State<LoanApprovalStatus> {
+  var loading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,7 +57,38 @@ class _LoanApprovalStatusState extends State<LoanApprovalStatus> {
                         .copyWith(fontWeight: FontWeight.w600),
                   ),
                 ],
-              )
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: Text(
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                    "If you accept these offer from the merchant click the button bellow and the bank officials will review the loan application"),
+              ),
+              MyButton(
+                  backgroundColor: loading
+                      ? AppColors.iconColor
+                      : AppColors.primaryDarkColor,
+                  onPressed: loading
+                      ? () {}
+                      : () {
+                          setState(() {
+                            loading = true;
+                          });
+                        },
+                  buttonText: loading
+                      ? SizedBox(
+                          height: ScreenConfig.screenHeight * 0.02,
+                          width: ScreenConfig.screenHeight * 0.02,
+                          child: const CircularProgressIndicator(
+                            strokeWidth: 3,
+                            color: AppColors.primaryColor,
+                          ),
+                        )
+                      : const Text(
+                          "Accept Offer",
+                          style: TextStyle(color: Colors.white),
+                        )),
             ],
           ),
         ),

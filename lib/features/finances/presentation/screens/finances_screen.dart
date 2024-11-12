@@ -81,7 +81,7 @@ class _FinancesScreenState extends State<FinancesScreen> {
                           MaterialPageRoute(
                               builder: (context) =>
                                   const AddBisinessPartnerScreen()));
-                    } else if (index == 1) {
+                    } else if (index == 2) {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
