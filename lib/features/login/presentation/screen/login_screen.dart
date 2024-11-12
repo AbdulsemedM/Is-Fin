@@ -3,6 +3,7 @@ import 'package:ifb_loan/app/app_button.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
 import 'package:ifb_loan/features/dashborad/dashboard_page.dart';
+import 'package:ifb_loan/features/forgot_password/presentation/screen/forgot_password.dart';
 import 'package:ifb_loan/features/signup/presentation/screen/signup_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -148,9 +149,38 @@ class _LoginScreenState extends State<LoginScreen> {
                       return null;
                     },
                   ),
-                  SizedBox(
-                    height: ScreenConfig.screenHeight * 0.04,
+                  Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 12.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            // Delay the navigation by 2 seconds
+                            Future.delayed(Duration(seconds: 2), () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ForgotPassword()),
+                              );
+                            });
+                          },
+                          child: Text(
+                            "Forgot Password?",
+                            style: Theme.of(context)
+                                .textTheme
+                                .displaySmall
+                                ?.copyWith(
+                                    fontSize: 16,
+                                    decoration: TextDecoration.underline,
+                                    color: AppColors.primaryColor),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
+                  // SizedBox(
+                  //   height: ScreenConfig.screenHeight * 0.04,
+                  // ),
                   MyButton(
                     height: ScreenConfig.screenHeight * 0.055,
                     width: ScreenConfig.screenWidth,
