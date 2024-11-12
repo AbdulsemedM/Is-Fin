@@ -33,6 +33,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
       body: SafeArea(
         child: Stack(
           children: [
+  
             // Background Image
             Opacity(
               opacity: 0.3,

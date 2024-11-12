@@ -24,7 +24,6 @@ class MyApp extends StatelessWidget {
       // title: 'Flutter Demo',
       theme: AppTheme.themeData(),
       home: SplashScreenPage(),
-      
     );
   }
 }
