@@ -33,13 +33,12 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
       body: SafeArea(
         child: Stack(
           children: [
-  
             // Background Image
             Opacity(
               opacity: 0.3,
               child: SizedBox.expand(
                 child: Image.asset(
-                  "assets/images/RIZQ2.png", // Replace with your background image path
+                  "assets/images/backgound.png", // Replace with your background image path
                   fit: BoxFit.cover,
                 ),
               ),
@@ -116,24 +115,22 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
                           color: Colors.black, width: 1.5), // Black border
                       borderRadius: BorderRadius.circular(5), // Rounded corners
                     ),
-                    child: DropdownButton<String>(
-                      value: _dropdownValue, // Set default value
-                      isExpanded: true,
+                    child: DropdownButtonFormField<String>(
                       hint: Text(
                         "Choose Language",
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
-                      icon: const Icon(Icons.arrow_drop_down_outlined),
-                      elevation: 16,
-                      style: Theme.of(context).textTheme.titleMedium,
-                      underline: Container(
-                        color: Colors.transparent,
+                      dropdownColor: AppColors.greyColor,
+                      value: _dropdownValue,
+                      decoration: InputDecoration(
+                        // labelText: 'Business Type',
+                        filled: true,
+                        fillColor: Colors.transparent,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: BorderSide.none,
+                        ),
                       ),
-                      onChanged: (String? value) {
-                        setState(() {
-                          _dropdownValue = value;
-                        });
-                      },
                       items: const [
                         DropdownMenuItem(
                           value: 'en',
@@ -153,7 +150,48 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
                         ),
                         // Add more languages as needed
                       ],
+                      onChanged: (value) {
+                        // Handle value change
+                      },
                     ),
+                    // DropdownButton<String>(
+                    //   value: _dropdownValue, // Set default value
+                    //   isExpanded: true,
+                    //   hint: Text(
+                    //     "Choose Language",
+                    //     style: Theme.of(context).textTheme.bodyMedium,
+                    //   ),
+                    //   icon: const Icon(Icons.arrow_drop_down_outlined),
+                    //   elevation: 16,
+                    //   style: Theme.of(context).textTheme.titleMedium,
+                    //   underline: Container(
+                    //     color: Colors.transparent,
+                    //   ),
+                    //   onChanged: (String? value) {
+                    //     setState(() {
+                    //       _dropdownValue = value;
+                    //     });
+                    //   },
+                    //   items: const [
+                    //     DropdownMenuItem(
+                    //       value: 'en',
+                    //       child: Text('English'),
+                    //     ),
+                    //     DropdownMenuItem(
+                    //       value: 'fr',
+                    //       child: Text('Afaan Oromoo'),
+                    //     ),
+                    //     DropdownMenuItem(
+                    //       value: 'es',
+                    //       child: Text('Amharic'),
+                    //     ),
+                    //     DropdownMenuItem(
+                    //       value: 'de',
+                    //       child: Text('Afaan Somaali'),
+                    //     ),
+                    //     // Add more languages as needed
+                    //   ],
+                    // ),
                   ),
                 ),
                 SizedBox(
