@@ -8,6 +8,7 @@ import 'package:ifb_loan/features/profile/presentation/widgets/custome_list_butt
 import 'package:ifb_loan/features/profile/presentation/widgets/kyc_card_widget.dart';
 import 'package:ifb_loan/features/profile/presentation/widgets/loan_status_card.dart';
 import 'package:ifb_loan/features/profile/presentation/widgets/upper_circular_design.dart';
+import 'package:ifb_loan/features/provider_loan_form/presentation/screen/provider_loan_form.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -106,9 +107,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   onPressed: loading
                       ? () {}
                       : () {
-                          setState(() {
-                            loading = true;
-                          });
+                          // setState(() {
+                          //   loading = true;
+                          // });
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ProviderLoanForm()));
                         },
                   buttonText: loading
                       ? SizedBox(
