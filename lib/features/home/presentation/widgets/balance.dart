@@ -48,7 +48,7 @@ class LoanStatusCard extends StatelessWidget {
           ),
           SizedBox(height: 8.0),
           Text(
-            "${availableLoan.toInt()} Birr",
+            "ETB ${availableLoan.toInt()}",
             style: TextStyle(
               color: Colors.white,
               fontSize: 36.0,
@@ -60,7 +60,7 @@ class LoanStatusCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "${receivedLoan.toInt()} Birr received",
+                "ETB ${receivedLoan.toInt()} received",
                 style: TextStyle(
                   color: Colors.white, // Different color for emphasis
                   fontSize: 16.0, // Larger font size
@@ -68,7 +68,7 @@ class LoanStatusCard extends StatelessWidget {
                 ),
               ),
               Text(
-                "${maxLoan.toInt()} Birr max",
+                "ETB ${maxLoan.toInt()} max",
                 style: TextStyle(
                   color: Colors.white70,
                   fontSize: 14.0,
