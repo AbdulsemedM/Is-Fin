@@ -6,14 +6,14 @@ import 'package:ifb_loan/features/provider_loan_form/presentation/widgets/all_ap
 import 'package:ifb_loan/features/provider_loan_form/presentation/widgets/approved_applicatins.dart';
 import 'package:ifb_loan/features/provider_loan_form/presentation/widgets/new_applications.dart';
 
-class ProviderLoanForm extends StatefulWidget {
-  const ProviderLoanForm({super.key});
+class ProviderLoanListScreen extends StatefulWidget {
+  const ProviderLoanListScreen({super.key});
 
   @override
-  State<ProviderLoanForm> createState() => _ProviderLoanFormState();
+  State<ProviderLoanListScreen> createState() => _ProviderLoanListScreenState();
 }
 
-class _ProviderLoanFormState extends State<ProviderLoanForm> {
+class _ProviderLoanListScreenState extends State<ProviderLoanListScreen> {
   final _selectedSegment = ValueNotifier('new');
 
   @override
@@ -78,7 +78,7 @@ class _ProviderLoanFormState extends State<ProviderLoanForm> {
                   //   height: 100,
                   //   child: ListView(
                   //     children: loanformList.map((transaction) {
-                  //       return ProviderLoanListWidget(
+                  //       return ProviderLoanListScreenWidget(
                   //         name: transaction["name"],
                   //         amount: transaction["amount"],
                   //         description: transaction["description"],

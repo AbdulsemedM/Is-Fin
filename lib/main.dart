@@ -1,18 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
+import 'package:ifb_loan/features/signup/bloc/signup_bloc.dart';
+import 'package:ifb_loan/features/signup/data/data_provider/signup_data_provider.dart';
+import 'package:ifb_loan/features/signup/data/repository/signup_repository.dart';
 import 'package:ifb_loan/features/splash_screen/splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final bool isFirstTime = await _checkFirstTime();
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    statusBarColor: AppColors.primaryDarkColor, // Global status bar color
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: AppColors.primaryDarkColor,
     statusBarIconBrightness: Brightness.light,
   ));
-  runApp(MyApp(isFirstTime: isFirstTime));
+  runApp(MultiBlocProvider(
+    providers: [
+      BlocProvider(
+        create: (context) => SignupBloc(SignupRepository(SignupDataProvider())),
+      )
+    ],
+    child: MyApp(isFirstTime: isFirstTime),
+  ));
 }
 
 Future<bool> _checkFirstTime() async {

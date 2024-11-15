@@ -30,7 +30,13 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+            
     </application>
+    <!-- <application
+    android:usesCleartextTraffic="true"
+    android:networkSecurityConfig="@xml/network_security_config"
+    ... >
+    </application> -->
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and
          https://developer.android.com/reference/android/content/Intent#ACTION_PROCESS_TEXT.
@@ -42,4 +48,5 @@
             <data android:mimeType="text/plain"/>
         </intent>
     </queries>
+    <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>
