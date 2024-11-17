@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
+// import 'package:ifb_loan/configuration/auth_service.dart';
 import 'package:ifb_loan/features/home/presentation/widgets/home_icon_widget.dart';
 import 'package:ifb_loan/features/home/presentation/widgets/slider_widget.dart';
 import 'package:ifb_loan/features/home/presentation/widgets/balance.dart';
@@ -13,6 +14,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // fetchtoken();
+  }
+
+  // Future<void> fetchtoken() async {
+  //   final authService = AuthService();
+  //   String? token = await authService.getToken();
+  //   print('Token: $token');
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -73,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
           //   "Coop Bank offers a Sharia-compliant, interest-free digital product that ensures transparency and aligns with Islamic values.",
           //   style: Theme.of(context).textTheme.bodySmall?.copyWith(height: 1.6),
           // ),
-          // SizedBox(height: ScreenConfig.screenHeight * 0.03),  
+          // SizedBox(height: ScreenConfig.screenHeight * 0.03),
           LoanStatusCard(),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),

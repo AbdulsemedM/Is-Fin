@@ -3,6 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
+import 'package:ifb_loan/features/login/bloc/login_bloc.dart';
+import 'package:ifb_loan/features/login/data/data_provider/login_data_provider.dart';
+import 'package:ifb_loan/features/login/data/repository/login_repository.dart';
 import 'package:ifb_loan/features/signup/bloc/signup_bloc.dart';
 import 'package:ifb_loan/features/signup/data/data_provider/signup_data_provider.dart';
 import 'package:ifb_loan/features/signup/data/repository/signup_repository.dart';
@@ -20,7 +23,9 @@ void main() async {
     providers: [
       BlocProvider(
         create: (context) => SignupBloc(SignupRepository(SignupDataProvider())),
-      )
+      ),
+      BlocProvider(
+          create: (contex) => LoginBloc(LoginRepository(LoginDataProvider())))
     ],
     child: MyApp(isFirstTime: isFirstTime),
   ));
