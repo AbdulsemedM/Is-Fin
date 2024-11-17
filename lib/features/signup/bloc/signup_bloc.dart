@@ -13,7 +13,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
   }
   void _userSignUp(SignupSent event, Emitter<SignupState> emit) async {
     emit(SignupLoading());
-    print("loading...");
+    // print("loading...");
     try {
       final signup = await signupRepository.sendSignup(
         event.fullName,
@@ -22,11 +22,11 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
         event.email,
       );
       emit(SignupSuccess(signupModel: signup));
-      print(signup);
+      // print(signup);
     } catch (e) {
       emit(SignupFailure(e.toString()));
-      print("failure...");
-      print(e.toString());
+      // print("failure...");
+      // print(e.toString());
     }
   }
 }

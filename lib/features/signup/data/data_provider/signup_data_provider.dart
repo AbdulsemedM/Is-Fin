@@ -16,7 +16,7 @@ class SignupDataProvider {
       final response = await apiProvider.postRequest("/api/auth/signup", body);
       return response.body;
     } catch (e) {
-      print(e.toString());
+      // print(e.toString());
       throw e.toString();
     }
   }

@@ -11,7 +11,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
   void _userLogin(LoginFetched event, Emitter<LoginState> emit) async {
     emit(LoginLoading());
-    print("loading...");
+    // print("loading...");
     try {
       final signup =
           await loginRepository.sendLogin(event.phoneNumber, event.password);
@@ -19,8 +19,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       print(signup);
     } catch (e) {
       emit(LoginFailure(e.toString()));
-      print("failure...");
-      print(e.toString());
+      // print("failure...");
+      // print(e.toString());
     }
   }
 }

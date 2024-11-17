@@ -8,11 +8,11 @@ class LoginDataProvider {
       // print(body);
       final apiProvider = ProviderSetup.getApiProvider(ApiConstants.baseUrl);
       final response = await apiProvider.postRequest("/api/auth/signin", body);
-      print(response.body);
+      // print(response.body);
       return response.body;
     } catch (e) {
-      print("here is the response");
-      print(e.toString());
+      // print("here is the response");
+      // print(e.toString());
       throw e.toString();
     }
   }

@@ -32,8 +32,8 @@ class _SignupScreenState extends State<SignupScreen> {
           child: SingleChildScrollView(
         child: BlocListener<SignupBloc, SignupState>(
           listener: (context, state) {
-            print("all the states");
-            print(state);
+            // print("all the states");
+            // print(state);
             if (state is SignupLoading) {
               setState(() {
                 loading = true;

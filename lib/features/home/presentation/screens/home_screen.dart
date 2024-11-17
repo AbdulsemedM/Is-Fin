@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
+import 'package:ifb_loan/features/KYC/presentation/screen/kyc_screen.dart';
 // import 'package:ifb_loan/configuration/auth_service.dart';
 import 'package:ifb_loan/features/home/presentation/widgets/home_icon_widget.dart';
 import 'package:ifb_loan/features/home/presentation/widgets/slider_widget.dart';
@@ -109,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     description:
                         'Murabaha at Coop Bank is a Sharia-compliant financing product where the bank buys goods for customers and resells them at a disclosed profit, allowing interest-free financing in line with Islamic principles.',
                     onGetStarted: () {
-                      print("Get Started clicked");
+                      // print("Get Started clicked");
                     },
                     cardColor: const Color(0xFFFAC7A6), // Custom card color
                   ),
@@ -126,7 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     description:
                         'Murabaha at Coop Bank is a Sharia-compliant financing product where the bank buys goods for customers and resells them at a disclosed profit, allowing interest-free financing in line with Islamic principles.',
                     onGetStarted: () {
-                      print("Get Started clicked");
+                      // print("Get Started clicked");
                     },
                     cardColor: Color(0xFFA6D9FA), // Custom card color
                   ),
@@ -143,7 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     description:
                         'Murabaha at Coop Bank is a Sharia-compliant financing product where the bank buys goods for customers and resells them at a disclosed profit, allowing interest-free financing in line with Islamic principles.',
                     onGetStarted: () {
-                      print("Get Started clicked");
+                      // print("Get Started clicked");
                     },
                     cardColor: const Color.fromARGB(
                         255, 155, 249, 163), // Custom card color
@@ -162,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   icon: Icons.account_balance_wallet,
                   iconColor: Colors.blue,
                   onClicked: () {
-                    print("Loan App clicked");
+                    // print("Loan App clicked");
                   },
                 ),
                 HomeIconWidget(
@@ -170,7 +171,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   icon: Icons.store,
                   iconColor: Colors.orange,
                   onClicked: () {
-                    print("KYC clicked");
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CompleteKYCDetail()));
                   },
                 ),
                 HomeIconWidget(
@@ -178,7 +182,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   icon: Icons.person_add,
                   iconColor: Colors.deepOrange,
                   onClicked: () {
-                    print("Provider clicked");
+                    // print("Provider clicked");
                   },
                 ),
                 HomeIconWidget(
@@ -186,7 +190,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   icon: Icons.calendar_today,
                   iconColor: Colors.purple,
                   onClicked: () {
-                    print("Repayment clicked");
+                    // print("Repayment clicked");
                   },
                 ),
               ],

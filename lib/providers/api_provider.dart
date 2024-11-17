@@ -40,9 +40,6 @@ class ApiProvider {
     final headers = await authInterceptor.getHeaders();
 
     try {
-      print("here is the provider");
-      print(body);
-      print(url);
       final response = await http.post(
         url,
         headers: headers,

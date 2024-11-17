@@ -127,28 +127,28 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                     name: 'Laptop',
                     quantity: 3,
                     onDelete: () {
-                      print("Delete Laptop");
+                      // print("Delete Laptop");
                     },
                   ),
                   TableItem(
                     name: 'Tablet Phone',
                     quantity: 10,
                     onDelete: () {
-                      print("Delete Tablet Phone");
+                      // print("Delete Tablet Phone");
                     },
                   ),
                   TableItem(
                     name: 'Smart Phone',
                     quantity: 7,
                     onDelete: () {
-                      print("Delete Smart Phone");
+                      // print("Delete Smart Phone");
                     },
                   ),
                   TableItem(
                     name: 'Smart TV',
                     quantity: 10,
                     onDelete: () {
-                      print("Delete Smart TV");
+                      // print("Delete Smart TV");
                     },
                   ),
                 ],

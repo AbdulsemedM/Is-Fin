@@ -11,14 +11,14 @@ class LoginRepository {
   Future<String> sendLogin(String phoneNumber, String password) async {
     final authService = AuthService();
     try {
-      print("here we gooooo");
+      // print("here we gooooo");
       final loginData =
           await loginDataProvider.sendLogin(phoneNumber, password);
 
       final data = jsonDecode(loginData);
       if (data['httpStatus'] != 200) {
         // Log the message if needed
-        print('Error Message: ${data['message']}');
+        // print('Error Message: ${data['message']}');
 
         // Throw only the message part
         throw data['message'];
@@ -30,7 +30,7 @@ class LoginRepository {
       return data['message'];
     } catch (e) {
       // Print and re-throw the exception for the message only
-      print('Caught Exception: $e');
+      // print('Caught Exception: $e');
       throw e; // This will throw only the `message` part if thrown from above
     }
   }

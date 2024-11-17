@@ -27,8 +27,8 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SafeArea(
           child: BlocListener<LoginBloc, LoginState>(
         listener: (context, state) {
-          print("all the states");
-          print(state);
+          // print("all the states");
+          // print(state);
           if (state is LoginLoading) {
             setState(() {
               loading = true;

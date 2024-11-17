@@ -1,5 +1,5 @@
 class ApiConstants {
-  static const String baseUrl = 'http://10.8.100.45:9000';
+  static const String baseUrl = 'http://10.8.100.45:8080';
   // Future<void> fetchData() async {
   //   final apiProvider = ProviderSetup.getApiProvider(
   //     baseUrl,
