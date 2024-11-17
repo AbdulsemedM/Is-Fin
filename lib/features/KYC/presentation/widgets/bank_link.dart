@@ -26,6 +26,24 @@ class _BankLinkState extends State<BankLink> {
           Row(
             children: [
               Expanded(
+                  child: Divider(
+                color: Colors.grey, // Set the color of the divider
+                thickness: 1,
+              )),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Bank Info."),
+              ),
+              Expanded(
+                  child: Divider(
+                color: Colors.grey, // Set the color of the divider
+                thickness: 1,
+              )),
+            ],
+          ),
+          Row(
+            children: [
+              Expanded(
                 child: TextFormField(
                   decoration: InputDecoration(
                     labelText: 'Account Number',
