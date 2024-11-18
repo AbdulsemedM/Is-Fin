@@ -13,10 +13,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     emit(LoginLoading());
     // print("loading...");
     try {
-      final signup =
-          await loginRepository.sendLogin(event.phoneNumber, event.password);
+      // final signup =
+      //     await loginRepository.sendLogin(event.phoneNumber, event.password);
       emit(LoginSuccess());
-      print(signup);
+      // print(signup);
     } catch (e) {
       emit(LoginFailure(e.toString()));
       // print("failure...");

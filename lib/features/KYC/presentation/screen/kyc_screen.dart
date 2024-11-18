@@ -5,6 +5,7 @@ import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/features/KYC/presentation/widgets/bank_link.dart';
 import 'package:ifb_loan/features/KYC/presentation/widgets/business_info.dart';
 import 'package:ifb_loan/features/KYC/presentation/widgets/personal_info.dart';
+import 'package:ifb_loan/features/KYC/presentation/widgets/upload_images.dart';
 
 class CompleteKYCDetail extends StatefulWidget {
   @override
@@ -19,6 +20,7 @@ class _CompleteKYCDetailState extends State<CompleteKYCDetail> {
     1: PersonalInfo(),
     2: BusinessInfo(),
     3: BankLink(),
+    4: UploadImages(),
   };
 
   @override
