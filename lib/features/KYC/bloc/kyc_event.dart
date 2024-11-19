@@ -14,3 +14,9 @@ class BusinessKYCSent extends KycEvent {
 
   BusinessKYCSent({required this.businessInfo});
 }
+
+class ImagesKYCSent extends KycEvent {
+  final ImagesModel imagesInfo;
+
+  ImagesKYCSent({required this.imagesInfo});
+}

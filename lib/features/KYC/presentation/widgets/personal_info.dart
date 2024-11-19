@@ -627,7 +627,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                   ],
                 ),
                 const SizedBox(height: 16),
-                Row(
+                const Row(
                   children: [
                     Expanded(
                         child: Divider(
@@ -635,7 +635,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                       thickness: 1,
                     )),
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(8.0),
                       child: Text("Residential Info."),
                     ),
                     Expanded(

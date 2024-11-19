@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:ifb_loan/features/KYC/data/repository/KYC_repository.dart';
 import 'package:ifb_loan/features/KYC/models/business_info/business_info_model.dart';
+import 'package:ifb_loan/features/KYC/models/image_models/images_model.dart';
 import 'package:ifb_loan/features/KYC/models/personal_info/personal_info_model.dart';
 part 'kyc_event.dart';
 part 'kyc_state.dart';
@@ -11,6 +12,7 @@ class KycBloc extends Bloc<KycEvent, KycState> {
   KycBloc(this.kycRepository) : super(KycInitial()) {
     on<PersonalKYCSent>(_personalKYCSent);
     on<BusinessKYCSent>(_businessKYCSent);
+    on<ImagesKYCSent>(_imagesKYCSent);
   }
   void _personalKYCSent(PersonalKYCSent event, Emitter<KycState> emit) async {
     emit(KycPersonalSentLoading());
@@ -27,7 +29,7 @@ class KycBloc extends Bloc<KycEvent, KycState> {
   }
 
   void _businessKYCSent(BusinessKYCSent event, Emitter<KycState> emit) async {
-    emit(KycPersonalSentLoading());
+    emit(KycBusinessSentLoading());
     // print("loading...");
     try {
       print(event.businessInfo.businessName);
@@ -36,6 +38,21 @@ class KycBloc extends Bloc<KycEvent, KycState> {
       // print(signup);
     } catch (e) {
       emit(KycBusinessSentFailure(e.toString()));
+      // print("failure...");
+      // print(e.toString());
+    }
+  }
+
+  void _imagesKYCSent(ImagesKYCSent event, Emitter<KycState> emit) async {
+    emit(KycImagesSentLoading());
+    // print("loading...");
+    try {
+      print(event.imagesInfo.renewedIdFileName);
+      await kycRepository.sendImagesKYC(event.imagesInfo);
+      emit(KycImagesSentSuccess());
+      // print(signup);
+    } catch (e) {
+      emit(KycImagesSentFailure(e.toString()));
       // print("failure...");
       // print(e.toString());
     }

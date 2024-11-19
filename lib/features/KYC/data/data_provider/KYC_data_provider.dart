@@ -1,5 +1,6 @@
 import 'package:ifb_loan/configuration/api_constants.dart';
 import 'package:ifb_loan/features/KYC/models/business_info/business_info_model.dart';
+import 'package:ifb_loan/features/KYC/models/image_models/images_model.dart';
 import 'package:ifb_loan/features/KYC/models/personal_info/personal_info_model.dart';
 import 'package:ifb_loan/providers/provider_setup.dart';
 
@@ -82,6 +83,32 @@ class KycDataProvider {
       final apiProvider = ProviderSetup.getApiProvider(ApiConstants.baseUrl);
       final response =
           await apiProvider.postRequest("/api/kyc/businessInfo", body);
+      print(response.body);
+      return response.body;
+      // return "body";
+    } catch (e) {
+      // print("here is the response");
+      print(e.toString());
+      throw e.toString();
+    }
+  }
+
+  Future<String> sendImagesKYC(ImagesModel imageInfo) async {
+    try {
+      final body = {
+        'renewedId': imageInfo.renewedId,
+        'renewedIdFileName': imageInfo.renewedIdFileName,
+        'renewedTradeLicense': imageInfo.renewedTradeLicense,
+        'renewedTradeLicenseFileName': imageInfo.renewedTradeLicenseFileName,
+        'commercialRegistrationCertificate':
+            imageInfo.commercialRegistrationCertificate,
+        'commercialRegistrationCertificateFileName':
+            imageInfo.commercialRegistrationCertificateFileName,
+        'tinNumber': imageInfo.tinNumber,
+        'tinNumberFileName': imageInfo.tinNumberFileName,
+      };
+      final apiProvider = ProviderSetup.getApiProvider(ApiConstants.baseUrl);
+      final response = await apiProvider.postRequest("/api/kyc/file", body);
       print(response.body);
       return response.body;
       // return "body";

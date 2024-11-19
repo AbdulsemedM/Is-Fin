@@ -24,3 +24,13 @@ final class KycBusinessSentFailure extends KycState {
 
   KycBusinessSentFailure(this.errorMessage);
 }
+
+final class KycImagesSentLoading extends KycState {}
+
+final class KycImagesSentSuccess extends KycState {}
+
+final class KycImagesSentFailure extends KycState {
+  final String errorMessage;
+
+  KycImagesSentFailure(this.errorMessage);
+}
