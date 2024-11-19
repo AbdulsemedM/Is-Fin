@@ -35,7 +35,7 @@ class ApiProvider {
   }
 
   Future<http.Response> postRequest(
-      String endpoint, Map<String, dynamic> body) async {
+      String endpoint, Map<dynamic, dynamic> body) async {
     final url = Uri.parse('${ApiConstants.baseUrl}$endpoint');
     final headers = await authInterceptor.getHeaders();
 

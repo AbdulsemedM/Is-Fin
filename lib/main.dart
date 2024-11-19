@@ -3,6 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
+import 'package:ifb_loan/features/KYC/bloc/kyc_bloc.dart';
+import 'package:ifb_loan/features/KYC/data/data_provider/KYC_data_provider.dart';
+import 'package:ifb_loan/features/KYC/data/repository/KYC_repository.dart';
 import 'package:ifb_loan/features/login/bloc/login_bloc.dart';
 import 'package:ifb_loan/features/login/data/data_provider/login_data_provider.dart';
 import 'package:ifb_loan/features/login/data/repository/login_repository.dart';
@@ -22,10 +25,12 @@ void main() async {
   runApp(MultiBlocProvider(
     providers: [
       BlocProvider(
-        create: (context) => SignupBloc(SignupRepository(SignupDataProvider())),
-      ),
+          create: (context) =>
+              SignupBloc(SignupRepository(SignupDataProvider()))),
       BlocProvider(
-          create: (contex) => LoginBloc(LoginRepository(LoginDataProvider())))
+          create: (contex) => LoginBloc(LoginRepository(LoginDataProvider()))),
+      BlocProvider(
+          create: (contex) => KycBloc(KycRepository(KycDataProvider())))
     ],
     child: MyApp(isFirstTime: isFirstTime),
   ));

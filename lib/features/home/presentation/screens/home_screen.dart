@@ -22,12 +22,6 @@ class _HomeScreenState extends State<HomeScreen> {
     // fetchtoken();
   }
 
-  // Future<void> fetchtoken() async {
-  //   final authService = AuthService();
-  //   String? token = await authService.getToken();
-  //   print('Token: $token');
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Padding(

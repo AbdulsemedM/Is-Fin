@@ -16,7 +16,7 @@ class _CompleteKYCDetailState extends State<CompleteKYCDetail> {
   int _selectedValue = 1; // Initial tab selected
 
   // Define your different screens as widgets
-  final Map<int, Widget> _screens = {
+  final Map<int, Widget> _screens = const {
     1: PersonalInfo(),
     2: BusinessInfo(),
     3: BankLink(),
