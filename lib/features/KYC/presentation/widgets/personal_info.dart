@@ -84,27 +84,43 @@ class _PersonalInfoState extends State<PersonalInfo> {
     setState(() {
       loadValues = true;
     });
+
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    // Retrieve the JSON string
     PhoneNumberManager phoneManager = PhoneNumberManager();
     String? phone = await phoneManager.getPhoneNumber();
     print(phone);
+
     final String? jsonString = prefs.getString('personal_info_$phone');
 
     if (jsonString != null) {
       print("this is not null");
-      setState(() {
-        personalData = PersonalInfoModel.fromJson(jsonString);
-      });
-      _initializeTextFields();
+
+      if (mounted) {
+        setState(() {
+          personalData = PersonalInfoModel.fromJson(jsonString);
+        });
+        _initializeTextFields();
+      }
+
+      if (mounted) {
+        setState(() {
+          loadValues = false;
+        });
+      }
+
+      return PersonalInfoModel.fromJson(jsonString);
+    }
+
+    if (mounted) {
+      context.read<KycBloc>().add(PersonalKYCFetched());
+    }
+
+    if (mounted) {
       setState(() {
         loadValues = false;
       });
-      return PersonalInfoModel.fromJson(jsonString);
     }
-    setState(() {
-      loadValues = false;
-    });
+
     return null; // Return null if no data is found
   }
 
@@ -132,6 +148,20 @@ class _PersonalInfoState extends State<PersonalInfo> {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text(state.errorMessage)),
               );
+            } else if (state is KycPersonalFetchedLoading) {
+              setState(() {
+                loading = true;
+              });
+            } else if (state is KycPersonalFetchedSuccess) {
+              setState(() {
+                personalData = state.personalInfo;
+                _initializeTextFields();
+                loading = false;
+              });
+            } else if (state is KycPersonalFetchedFailure) {
+              setState(() {
+                loading = false;
+              });
             }
           },
           child: Form(

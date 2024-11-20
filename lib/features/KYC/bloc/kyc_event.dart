@@ -9,6 +9,10 @@ class PersonalKYCSent extends KycEvent {
   PersonalKYCSent({required this.personalinfo});
 }
 
+class PersonalKYCFetched extends KycEvent {
+  PersonalKYCFetched();
+}
+
 class BusinessKYCSent extends KycEvent {
   final BusinessInfoModel businessInfo;
 

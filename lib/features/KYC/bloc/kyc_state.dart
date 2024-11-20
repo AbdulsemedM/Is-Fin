@@ -15,6 +15,21 @@ final class KycPersonalSentFailure extends KycState {
   KycPersonalSentFailure(this.errorMessage);
 }
 
+final class KycPersonalFetchedLoading extends KycState {}
+
+final class KycPersonalFetchedSuccess extends KycState {
+  final PersonalInfoModel personalInfo;
+
+  KycPersonalFetchedSuccess({required this.personalInfo});
+}
+
+final class KycPersonalFetchedFailure extends KycState {
+  final String errorMessage;
+
+  KycPersonalFetchedFailure(this.errorMessage);
+}
+
+////////////////////////////////////////////////////////////////////////////
 final class KycBusinessSentLoading extends KycState {}
 
 final class KycBusinessSentSuccess extends KycState {}

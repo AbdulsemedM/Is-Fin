@@ -34,6 +34,21 @@ class KycRepository {
     }
   }
 
+  Future<PersonalInfoModel> fetchPersonalKYC() async {
+    try {
+      // print("here we gooooo");
+      final kycData = await kycDataProvider.fetchPersonalKYC();
+
+      final data = jsonDecode(kycData);
+      if (data['httpStatus'] != 200) {
+        throw data['message'];
+      }
+      return data['response'];
+    } catch (e) {
+      throw e; // This will throw only the `message` part if thrown from above
+    }
+  }
+
   Future<String> sendBusinessKYC(BusinessInfoModel businessInfo) async {
     try {
       // print("here we gooooo");
