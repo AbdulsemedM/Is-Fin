@@ -40,6 +40,21 @@ final class KycBusinessSentFailure extends KycState {
   KycBusinessSentFailure(this.errorMessage);
 }
 
+final class KycBusinessFetchedLoading extends KycState {}
+
+final class KycBusinessFetchedSuccess extends KycState {
+  final BusinessInfoModel businessInfo;
+
+  KycBusinessFetchedSuccess({required this.businessInfo});
+}
+
+final class KycBusinessFetchedFailure extends KycState {
+  final String errorMessage;
+
+  KycBusinessFetchedFailure(this.errorMessage);
+}
+
+//////////////////////////////////////////////////////////////////////////////
 final class KycImagesSentLoading extends KycState {}
 
 final class KycImagesSentSuccess extends KycState {}

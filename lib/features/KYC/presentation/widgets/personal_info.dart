@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ifb_loan/app/app_button.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
+import 'package:ifb_loan/app/utils/dialog_utils.dart';
 import 'package:ifb_loan/configuration/phone_number_manager.dart';
 import 'package:ifb_loan/features/KYC/bloc/kyc_bloc.dart';
 import 'package:ifb_loan/features/KYC/models/personal_info/address_info_model.dart';
@@ -139,15 +140,13 @@ class _PersonalInfoState extends State<PersonalInfo> {
               setState(() {
                 loading = false;
               });
-              ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text("Personal info. sent successfully!")));
+              displaySnack(
+                  context, "Personal info. sent successfully!", Colors.black);
             } else if (state is KycPersonalSentFailure) {
               setState(() {
                 loading = false;
               });
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(state.errorMessage)),
-              );
+              displaySnack(context, state.errorMessage, Colors.red);
             } else if (state is KycPersonalFetchedLoading) {
               setState(() {
                 loading = true;

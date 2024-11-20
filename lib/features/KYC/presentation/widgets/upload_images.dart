@@ -121,12 +121,7 @@ class _UploadImagesState extends State<UploadImages> {
         _registrationCertImageBase64 == null &&
         _tinImageBase64 == null) {
       displaySnack(context, "Please upload at least one image.", Colors.red);
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   const SnackBar(
-      //     content: Text("Please upload at least one image."),
-      //     backgroundColor: Colors.red,
-      //   ),
-      // );
+
       return;
     }
 
@@ -146,9 +141,7 @@ class _UploadImagesState extends State<UploadImages> {
       setState(() {
         loading = false;
       });
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Images sent successfully!")),
-      );
+      displaySnack(context, "Images sent successfully!", Colors.black);
     });
   }
 
@@ -164,15 +157,12 @@ class _UploadImagesState extends State<UploadImages> {
           setState(() {
             loading = false;
           });
-          ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Images sent successfully!")));
+          displaySnack(context, "Images sent successfully!", Colors.black);
         } else if (state is KycImagesSentFailure) {
           setState(() {
             loading = false;
           });
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.errorMessage)),
-          );
+          displaySnack(context, state.errorMessage, Colors.red);
         }
       },
       child: SingleChildScrollView(

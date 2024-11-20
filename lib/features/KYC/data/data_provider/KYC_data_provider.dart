@@ -122,7 +122,20 @@ class KycDataProvider {
   Future<String> fetchPersonalKYC() async {
     try {
       final apiProvider = ProviderSetup.getApiProvider(ApiConstants.baseUrl);
-      final response = await apiProvider.getRequest("/api/auth/signin");
+      final response = await apiProvider.getRequest("/api/kyc/personalInfo");
+      // print(response.body);
+      return response.body;
+    } catch (e) {
+      // print("here is the response");
+      // print(e.toString());
+      throw e.toString();
+    }
+  }
+
+  Future<String> fetchBusinessKYC() async {
+    try {
+      final apiProvider = ProviderSetup.getApiProvider(ApiConstants.baseUrl);
+      final response = await apiProvider.getRequest("/api/kyc/businessInfo");
       // print(response.body);
       return response.body;
     } catch (e) {

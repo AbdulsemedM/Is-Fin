@@ -13,6 +13,7 @@ class KycBloc extends Bloc<KycEvent, KycState> {
     on<PersonalKYCSent>(_personalKYCSent);
     on<PersonalKYCFetched>(_personalKYCFetched);
     on<BusinessKYCSent>(_businessKYCSent);
+    on<BusinessKYCFetched>(_businessKYCFetched);
     on<ImagesKYCSent>(_imagesKYCSent);
   }
   void _personalKYCSent(PersonalKYCSent event, Emitter<KycState> emit) async {
@@ -51,6 +52,21 @@ class KycBloc extends Bloc<KycEvent, KycState> {
       print(event.businessInfo.businessName);
       await kycRepository.sendBusinessKYC(event.businessInfo);
       emit(KycBusinessSentSuccess());
+      // print(signup);
+    } catch (e) {
+      emit(KycBusinessSentFailure(e.toString()));
+      // print("failure...");
+      // print(e.toString());
+    }
+  }
+
+  void _businessKYCFetched(
+      BusinessKYCFetched event, Emitter<KycState> emit) async {
+    emit(KycBusinessFetchedLoading());
+    // print("loading...");
+    try {
+      final businessInfo = await kycRepository.fetchBusinessKYC();
+      emit(KycBusinessFetchedSuccess(businessInfo: businessInfo));
       // print(signup);
     } catch (e) {
       emit(KycBusinessSentFailure(e.toString()));

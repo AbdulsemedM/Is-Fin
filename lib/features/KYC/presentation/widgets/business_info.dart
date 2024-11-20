@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ifb_loan/app/app_button.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
+import 'package:ifb_loan/app/utils/dialog_utils.dart';
 import 'package:ifb_loan/configuration/phone_number_manager.dart';
 import 'package:ifb_loan/features/KYC/bloc/kyc_bloc.dart';
 import 'package:ifb_loan/features/KYC/models/business_info/business_address_model.dart';
@@ -92,6 +93,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
       });
       return BusinessInfoModel.fromJson(jsonString);
     }
+    context.read<KycBloc>().add(BusinessKYCFetched());
     setState(() {
       loadValues = false;
     });
@@ -113,15 +115,28 @@ class _BusinessInfoState extends State<BusinessInfo> {
               setState(() {
                 loading = false;
               });
-              ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text("Business info. sent successfully!")));
+              displaySnack(
+                  context, "Business info. sent successfully", Colors.black);
             } else if (state is KycBusinessSentFailure) {
               setState(() {
                 loading = false;
               });
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(state.errorMessage)),
-              );
+              displaySnack(context, state.errorMessage, Colors.red);
+            } else if (state is KycBusinessFetchedLoading) {
+              setState(() {
+                loading = true;
+              });
+            } else if (state is KycBusinessFetchedSuccess) {
+              setState(() {
+                _initializeTextFields();
+                loading = true;
+              });
+              displaySnack(
+                  context, "Business info fetched successfully", Colors.black);
+            } else if (state is KycBusinessFetchedFailure) {
+              setState(() {
+                loading = false;
+              });
             }
           },
           child: Form(

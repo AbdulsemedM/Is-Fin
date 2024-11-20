@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:ifb_loan/app/utils/dialog_utils.dart';
 
 class UrlCard extends StatelessWidget {
   final String url;
@@ -38,9 +39,7 @@ class UrlCard extends StatelessWidget {
             icon: Icon(Icons.copy, color: Colors.grey[700]),
             onPressed: () {
               Clipboard.setData(ClipboardData(text: url));
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('URL copied to clipboard')),
-              );
+              displaySnack(context, "URL copied to clipboard", Colors.black);
             },
           ),
 

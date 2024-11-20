@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ifb_loan/app/app_button.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
+import 'package:ifb_loan/app/utils/dialog_utils.dart';
 import 'package:ifb_loan/features/signup/bloc/signup_bloc.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -42,16 +43,14 @@ class _SignupScreenState extends State<SignupScreen> {
               setState(() {
                 loading = false;
               });
-              ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text("Account created successfully")));
+              displaySnack(
+                  context, "Account created successfully", Colors.black);
               Navigator.pop(context); // Navigate back on success
             } else if (state is SignupFailure) {
               setState(() {
                 loading = false;
               });
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(state.errorMessage)),
-              );
+              displaySnack(context, state.errorMessage, Colors.red);
             }
           },
           child: Column(

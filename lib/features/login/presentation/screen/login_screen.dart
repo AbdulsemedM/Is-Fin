@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ifb_loan/app/app_button.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
+import 'package:ifb_loan/app/utils/dialog_utils.dart';
 import 'package:ifb_loan/features/dashborad/dashboard_page.dart';
 import 'package:ifb_loan/features/forgot_password/presentation/screen/forgot_password.dart';
 import 'package:ifb_loan/features/login/bloc/login_bloc.dart';
@@ -37,8 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
             setState(() {
               loading = false;
             });
-            ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text("Logged in successfully")));
+            displaySnack(context, "Logged in successfully", Colors.black);
             Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -48,9 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
             setState(() {
               loading = false;
             });
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.errorMessage)),
-            );
+            displaySnack(context, state.errorMessage, Colors.red);
           }
         },
         child: SingleChildScrollView(
