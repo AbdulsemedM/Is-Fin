@@ -158,6 +158,8 @@ class _PersonalInfoState extends State<PersonalInfo> {
                 loading = false;
               });
             } else if (state is KycPersonalFetchedFailure) {
+              print("I'm fetching the personal data");
+              print(state.errorMessage);
               setState(() {
                 loading = false;
               });
@@ -760,7 +762,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                       lastName: _lastNameController.text,
                                       gender: _genderController.text,
                                       idType: _idTypeController.text,
-                                      doB: _doBController.text,
+                                      dateOfBirth: _doBController.text,
                                       educationLevel:
                                           _educationLevelController.text,
                                       idNo: _idNoController.text,
@@ -783,14 +785,13 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                       spouseInformationDto:
                                           _maritalStatusController.text == "Married"
                                               ? SpouseInfoModel(
-                                                  firstName:
-                                                      _sFirstNameController
-                                                          .text,
+                                                  firstName: _sFirstNameController
+                                                      .text,
                                                   lastName:
                                                       _sLastNameController.text,
                                                   phoneNumber:
                                                       _sPhoneNoController.text,
-                                                  idNumber: _sIdNoController.text)
+                                                  idNo: _sIdNoController.text)
                                               : null)));
                             }
                           },
@@ -822,7 +823,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
     _lastNameController.text = personalData!.lastName;
     _genderController.text = personalData!.gender;
     _idTypeController.text = personalData!.idType;
-    _doBController.text = personalData!.doB;
+    _doBController.text = personalData!.dateOfBirth;
     _educationLevelController.text = personalData!.educationLevel;
     _idNoController.text = personalData!.idNo;
     _maritalStatusController.text = personalData!.meritalStatus;
@@ -832,7 +833,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
       _sLastNameController.text = personalData!.spouseInformationDto!.lastName;
       _sPhoneNoController.text =
           personalData!.spouseInformationDto!.phoneNumber;
-      _sIdNoController.text = personalData!.spouseInformationDto!.idNumber;
+      _sIdNoController.text = personalData!.spouseInformationDto!.idNo;
     }
     _cFirstNameController.text =
         personalData!.alternativeContactPerson.contactPersonfirstName;

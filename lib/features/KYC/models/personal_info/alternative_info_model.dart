@@ -41,12 +41,22 @@ class ContactPersonInfoModel {
 
   factory ContactPersonInfoModel.fromMap(Map<String, dynamic> map) {
     return ContactPersonInfoModel(
-      contactPersonfirstName: map['contactPersonfirstName'] as String,
-      contactPersonlastName: map['contactPersonlastName'] as String,
-      contactPersonphoneNumber: map['contactPersonphoneNumber'] as String,
-      idNo: map['idNo'] as String,
+      contactPersonfirstName: map['contactPersonfirstName'] as String? ?? '',
+      contactPersonlastName: map['contactPersonlastName'] as String? ?? '',
+      contactPersonphoneNumber:
+          map['contactPersonphoneNumber'] as String? ?? '',
+      idNo: map['idNo'] as String? ?? '',
     );
   }
+
+  // factory ContactPersonInfoModel.fromMap(Map<String, dynamic> map) {
+  //   return ContactPersonInfoModel(
+  //     contactPersonfirstName: map['contactPersonfirstName'] as String,
+  //     contactPersonlastName: map['contactPersonlastName'] as String,
+  //     contactPersonphoneNumber: map['contactPersonphoneNumber'] as String,
+  //     idNo: map['idNo'] as String,
+  //   );
+  // }
 
   String toJson() => json.encode(toMap());
 

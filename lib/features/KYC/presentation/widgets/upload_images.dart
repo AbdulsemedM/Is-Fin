@@ -60,6 +60,13 @@ class _UploadImagesState extends State<UploadImages> {
       existsTradeLicense =
           prefs.getString('images_info_renewedTradeLicense_$phone');
     });
+    if (mounted &&
+        existsRenewedId == null &&
+        existsRegCertificate == null &&
+        existsTinNumber == null &&
+        existsTradeLicense == null) {
+      context.read<KycBloc>().add(ImagesKYCFetched());
+    }
     print("here are the images");
     print(existsRenewedId);
     print(existsRegCertificate);
@@ -159,6 +166,24 @@ class _UploadImagesState extends State<UploadImages> {
           });
           displaySnack(context, "Images sent successfully!", Colors.black);
         } else if (state is KycImagesSentFailure) {
+          setState(() {
+            loading = false;
+          });
+          displaySnack(context, state.errorMessage, Colors.red);
+        } else if (state is KycIMagesFetchedLoading) {
+          setState(() {
+            loading = true;
+          });
+        } else if (state is KycIMagesFetchedSuccess) {
+          setState(() {
+            existsRenewedId = "Done";
+            existsTinNumber = "Done";
+            existsRegCertificate = "Done";
+            existsTradeLicense = "Done";
+            loading = false;
+          });
+          displaySnack(context, "Images sent successfully!", Colors.black);
+        } else if (state is KycIMagesFetchedFailure) {
           setState(() {
             loading = false;
           });

@@ -15,13 +15,13 @@ class KycDataProvider {
         "idNo": personalInfo.idNo,
         "educationLevel": personalInfo.educationLevel,
         "meritalStatus": personalInfo.meritalStatus,
-        "dateOfBirth": personalInfo.doB,
+        "dateOfBirth": personalInfo.dateOfBirth,
         if (personalInfo.meritalStatus == "Married")
           "spouseInformationDto": {
             "firstName": personalInfo.spouseInformationDto!.firstName,
             "lastName": personalInfo.spouseInformationDto!.lastName,
             "phoneNumber": personalInfo.spouseInformationDto!.phoneNumber,
-            "idNo": personalInfo.spouseInformationDto!.idNumber
+            "idNo": personalInfo.spouseInformationDto!.idNo
           },
         "alternativeContactPerson": {
           "contactPersonfirstName":
@@ -83,12 +83,47 @@ class KycDataProvider {
       final apiProvider = ProviderSetup.getApiProvider(ApiConstants.baseUrl);
       final response =
           await apiProvider.postRequest("/api/kyc/businessInfo", body);
-      print(response.body);
       return response.body;
       // return "body";
     } catch (e) {
       // print("here is the response");
       print(e.toString());
+      throw e.toString();
+    }
+  }
+
+  Future<String> sendAccountKYC(String accountNumber) async {
+    try {
+      final body = {
+        "accountNumber": accountNumber,
+      };
+      final apiProvider = ProviderSetup.getApiProvider(ApiConstants.baseUrl);
+      final response = await apiProvider.postRequest(
+          "/api/kyc/account/accountLinkReq", body);
+      // print(response.body);
+      return response.body;
+      // return "body";
+    } catch (e) {
+      // print("here is the response");
+      // print(e.toString());
+      throw e.toString();
+    }
+  }
+
+  Future<String> sendOTPKYC(String otp) async {
+    try {
+      final body = {
+        "otpNumber": otp,
+      };
+      final apiProvider = ProviderSetup.getApiProvider(ApiConstants.baseUrl);
+      final response = await apiProvider.postRequest(
+          "/api/kyc/account/accountLinkVerification", body);
+      // print(response.body);
+      return response.body;
+      // return "body";
+    } catch (e) {
+      // print("here is the response");
+      // print(e.toString());
       throw e.toString();
     }
   }
@@ -136,6 +171,19 @@ class KycDataProvider {
     try {
       final apiProvider = ProviderSetup.getApiProvider(ApiConstants.baseUrl);
       final response = await apiProvider.getRequest("/api/kyc/businessInfo");
+      // print(response.body);
+      return response.body;
+    } catch (e) {
+      // print("here is the response");
+      // print(e.toString());
+      throw e.toString();
+    }
+  }
+
+  Future<String> fetchImagesKYC() async {
+    try {
+      final apiProvider = ProviderSetup.getApiProvider(ApiConstants.baseUrl);
+      final response = await apiProvider.getRequest("/api/kyc/file");
       // print(response.body);
       return response.body;
     } catch (e) {

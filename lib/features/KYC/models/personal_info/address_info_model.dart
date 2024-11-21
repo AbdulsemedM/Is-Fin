@@ -38,12 +38,20 @@ class AddressInfoModel {
 
   factory AddressInfoModel.fromMap(Map<String, dynamic> map) {
     return AddressInfoModel(
-      region: map['region'] as String,
-      zone: map['zone'] as String,
-      woreda: map['woreda'] as String,
-      kebele: map['kebele'] as String,
+      region: map['region'] as String? ?? '',
+      zone: map['zone'] as String? ?? '',
+      woreda: map['woreda'] as String? ?? '',
+      kebele: map['kebele'] as String? ?? '',
     );
   }
+  // factory AddressInfoModel.fromMap(Map<String, dynamic> map) {
+  //   return AddressInfoModel(
+  //     region: map['region'] as String,
+  //     zone: map['zone'] as String,
+  //     woreda: map['woreda'] as String,
+  //     kebele: map['kebele'] as String,
+  //   );
+  // }
 
   String toJson() => json.encode(toMap());
 

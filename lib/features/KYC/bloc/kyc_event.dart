@@ -23,8 +23,24 @@ class BusinessKYCFetched extends KycEvent {
   BusinessKYCFetched();
 }
 
+class AccountKYCSent extends KycEvent {
+  final String accountNumber;
+
+  AccountKYCSent({required this.accountNumber});
+}
+
+class OTPKYCSent extends KycEvent {
+  final String otpNumber;
+
+  OTPKYCSent({required this.otpNumber});
+}
+
 class ImagesKYCSent extends KycEvent {
   final ImagesModel imagesInfo;
 
   ImagesKYCSent({required this.imagesInfo});
+}
+
+class ImagesKYCFetched extends KycEvent {
+  ImagesKYCFetched();
 }

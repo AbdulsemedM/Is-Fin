@@ -11,7 +11,7 @@ class PersonalInfoModel {
   final String gender;
   final String idNo;
   final String idType;
-  final String doB;
+  final String dateOfBirth;
   final String educationLevel;
   final String meritalStatus;
   final SpouseInfoModel? spouseInformationDto;
@@ -23,7 +23,7 @@ class PersonalInfoModel {
     required this.gender,
     required this.idNo,
     required this.idType,
-    required this.doB,
+    required this.dateOfBirth,
     required this.educationLevel,
     required this.meritalStatus,
     this.spouseInformationDto,
@@ -37,7 +37,7 @@ class PersonalInfoModel {
     String? gender,
     String? idNo,
     String? idType,
-    String? doB,
+    String? dateOfBirth,
     String? educationLevel,
     String? meritalStatus,
     SpouseInfoModel? spouseInformationDto,
@@ -50,7 +50,7 @@ class PersonalInfoModel {
       gender: gender ?? this.gender,
       idNo: idNo ?? this.idNo,
       idType: idType ?? this.idType,
-      doB: doB ?? this.doB,
+      dateOfBirth: dateOfBirth ?? this.dateOfBirth,
       educationLevel: educationLevel ?? this.educationLevel,
       meritalStatus: meritalStatus ?? this.meritalStatus,
       spouseInformationDto: spouseInformationDto ?? this.spouseInformationDto,
@@ -67,7 +67,7 @@ class PersonalInfoModel {
       'gender': gender,
       'idNo': idNo,
       'idType': idType,
-      'doB': doB,
+      'dateOfBirth': dateOfBirth,
       'educationLevel': educationLevel,
       'meritalStatus': meritalStatus,
       'spouseInformationDto': spouseInformationDto?.toMap(),
@@ -78,14 +78,14 @@ class PersonalInfoModel {
 
   factory PersonalInfoModel.fromMap(Map<String, dynamic> map) {
     return PersonalInfoModel(
-      firstName: map['firstName'] as String,
-      lastName: map['lastName'] as String,
-      gender: map['gender'] as String,
-      idNo: map['idNo'] as String,
-      idType: map['idType'] as String,
-      doB: map['doB'] as String,
-      educationLevel: map['educationLevel'] as String,
-      meritalStatus: map['meritalStatus'] as String,
+      firstName: map['firstName'] as String? ?? '',
+      lastName: map['lastName'] as String? ?? '',
+      gender: map['gender'] as String? ?? '',
+      idNo: map['idNo'] as String? ?? '',
+      idType: map['idType'] as String? ?? '',
+      dateOfBirth: map['dateOfBirth'] as String? ?? '',
+      educationLevel: map['educationLevel'] as String? ?? '',
+      meritalStatus: map['meritalStatus'] as String? ?? '',
       spouseInformationDto: map['spouseInformationDto'] != null
           ? SpouseInfoModel.fromMap(
               map['spouseInformationDto'] as Map<String, dynamic>)
@@ -96,6 +96,26 @@ class PersonalInfoModel {
           map['residentialInfoDto'] as Map<String, dynamic>),
     );
   }
+  // factory PersonalInfoModel.fromMap(Map<String, dynamic> map) {
+  //   return PersonalInfoModel(
+  //     firstName: map['firstName'] as String,
+  //     lastName: map['lastName'] as String,
+  //     gender: map['gender'] as String,
+  //     idNo: map['idNo'] as String,
+  //     idType: map['idType'] as String,
+  //     dateOfBirth: map['dateOfBirth'] as String,
+  //     educationLevel: map['educationLevel'] as String,
+  //     meritalStatus: map['meritalStatus'] as String,
+  //     spouseInformationDto: map['spouseInformationDto'] != null
+  //         ? SpouseInfoModel.fromMap(
+  //             map['spouseInformationDto'] as Map<String, dynamic>)
+  //         : null,
+  //     alternativeContactPerson: ContactPersonInfoModel.fromMap(
+  //         map['alternativeContactPerson'] as Map<String, dynamic>),
+  //     residentialInfoDto: AddressInfoModel.fromMap(
+  //         map['residentialInfoDto'] as Map<String, dynamic>),
+  //   );
+  // }
 
   String toJson() => json.encode(toMap());
 
@@ -104,7 +124,7 @@ class PersonalInfoModel {
 
   @override
   String toString() {
-    return 'PersonalInfoModel(firstName: $firstName, lastName: $lastName, gender: $gender, idNo: $idNo, idType: $idType, doB: $doB, educationLevel: $educationLevel, meritalStatus: $meritalStatus, spouseInformationDto: $spouseInformationDto, alternativeContactPerson: $alternativeContactPerson, residentialInfoDto: $residentialInfoDto)';
+    return 'PersonalInfoModel(firstName: $firstName, lastName: $lastName, gender: $gender, idNo: $idNo, idType: $idType, dateOfBirth: $dateOfBirth, educationLevel: $educationLevel, meritalStatus: $meritalStatus, spouseInformationDto: $spouseInformationDto, alternativeContactPerson: $alternativeContactPerson, residentialInfoDto: $residentialInfoDto)';
   }
 
   @override
@@ -116,7 +136,7 @@ class PersonalInfoModel {
         other.gender == gender &&
         other.idNo == idNo &&
         other.idType == idType &&
-        other.doB == doB &&
+        other.dateOfBirth == dateOfBirth &&
         other.educationLevel == educationLevel &&
         other.meritalStatus == meritalStatus &&
         other.spouseInformationDto == spouseInformationDto &&
@@ -131,7 +151,7 @@ class PersonalInfoModel {
         gender.hashCode ^
         idNo.hashCode ^
         idType.hashCode ^
-        doB.hashCode ^
+        dateOfBirth.hashCode ^
         educationLevel.hashCode ^
         meritalStatus.hashCode ^
         spouseInformationDto.hashCode ^

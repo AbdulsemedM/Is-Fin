@@ -64,3 +64,52 @@ final class KycImagesSentFailure extends KycState {
 
   KycImagesSentFailure(this.errorMessage);
 }
+
+final class KycIMagesFetchedLoading extends KycState {}
+
+final class KycIMagesFetchedSuccess extends KycState {
+  final ImagesModel imagesInfo;
+
+  KycIMagesFetchedSuccess({required this.imagesInfo});
+}
+
+final class KycIMagesFetchedFailure extends KycState {
+  final String errorMessage;
+
+  KycIMagesFetchedFailure(this.errorMessage);
+}
+
+//////////////////////////////////////////////////////////////////////////////
+final class KycAccountSentLoading extends KycState {}
+
+final class KycAccountSentSuccess extends KycState {}
+
+final class KycAccountSentFailure extends KycState {
+  final String errorMessage;
+
+  KycAccountSentFailure(this.errorMessage);
+}
+
+final class KycOTPSentLoading extends KycState {}
+
+final class KycOTPSentSuccess extends KycState {}
+
+final class KycOTPSentFailure extends KycState {
+  final String errorMessage;
+
+  KycOTPSentFailure(this.errorMessage);
+}
+
+// final class KycAccountFetchedLoading extends KycState {}
+
+// final class KycAccountFetchedSuccess extends KycState {
+//   final PersonalInfoModel personalInfo;
+
+//   KycAccountFetchedSuccess({required this.personalInfo});
+// }
+
+// final class KycAccountFetchedFailure extends KycState {
+//   final String errorMessage;
+
+//   KycAccountFetchedFailure(this.errorMessage);
+// }

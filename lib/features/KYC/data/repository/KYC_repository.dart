@@ -38,13 +38,14 @@ class KycRepository {
     try {
       // print("here we gooooo");
       final kycData = await kycDataProvider.fetchPersonalKYC();
-
       final data = jsonDecode(kycData);
       if (data['httpStatus'] != 200) {
         throw data['message'];
       }
-      return data['response'];
+      print(PersonalInfoModel.fromMap(data['response']));
+      return PersonalInfoModel.fromMap(data['response']);
     } catch (e) {
+      print(e.toString());
       throw e; // This will throw only the `message` part if thrown from above
     }
   }
@@ -80,8 +81,51 @@ class KycRepository {
       if (data['httpStatus'] != 200) {
         throw data['message'];
       }
-      return data['response'];
+      return BusinessInfoModel.fromMap(data['response']);
     } catch (e) {
+      throw e; // This will throw only the `message` part if thrown from above
+    }
+  }
+
+  Future<String> sendAccountKYC(String accountNumber) async {
+    try {
+      // print("here we gooooo");
+      final accountData = await kycDataProvider.sendAccountKYC(accountNumber);
+
+      final data = jsonDecode(accountData);
+      if (data['httpStatus'] != 201) {
+        // Log the message if needed
+        // print('Error Message: ${data['message']}');
+
+        // Throw only the message part
+        throw data['message'];
+      }
+      saveAccountInfo(accountNumber);
+      return data['message'];
+    } catch (e) {
+      // Print and re-throw the exception for the message only
+      // print('Caught Exception: $e');
+      throw e; // This will throw only the `message` part if thrown from above
+    }
+  }
+
+  Future<String> sendOTPKYC(String otp) async {
+    try {
+      // print("here we gooooo");
+      await kycDataProvider.sendOTPKYC(otp);
+
+      final data = jsonDecode(otp);
+      if (data['httpStatus'] != 201) {
+        // Log the message if needed
+        // print('Error Message: ${data['message']}');
+
+        // Throw only the message part
+        throw data['message'];
+      }
+      return data['message'];
+    } catch (e) {
+      // Print and re-throw the exception for the message only
+      // print('Caught Exception: $e');
       throw e; // This will throw only the `message` part if thrown from above
     }
   }
@@ -116,6 +160,21 @@ class KycRepository {
     }
   }
 
+  Future<ImagesModel> fetchImagesKYC() async {
+    try {
+      // print("here we gooooo");
+      final kycData = await kycDataProvider.fetchImagesKYC();
+
+      final data = jsonDecode(kycData);
+      if (data['httpStatus'] != 200) {
+        throw data['message'];
+      }
+      return ImagesModel.fromMap(data['response']);
+    } catch (e) {
+      throw e; // This will throw only the `message` part if thrown from above
+    }
+  }
+
   Future<void> savePersonalInfo(PersonalInfoModel personalInfo) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     // Convert to JSON and save
@@ -130,6 +189,14 @@ class KycRepository {
     String? phone = await phoneManager.getPhoneNumber();
     await prefs.setString('business_info_$phone', businessInfo.toJson());
     print("Business info saved successfully.");
+  }
+
+  Future<void> saveAccountInfo(String accountNumber) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    // Convert to JSON and save
+    String? phone = await phoneManager.getPhoneNumber();
+    await prefs.setString('account_info_$phone', accountNumber);
+    print("Account info saved successfully.");
   }
 
   Future<void> saveImageInfo(String imageInfo) async {

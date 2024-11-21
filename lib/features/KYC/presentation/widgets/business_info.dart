@@ -67,7 +67,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
   @override
   void initState() {
     super.initState();
-    super.initState();
+    // super.initState();
     getBusinessInfo();
   }
 
@@ -128,8 +128,9 @@ class _BusinessInfoState extends State<BusinessInfo> {
               });
             } else if (state is KycBusinessFetchedSuccess) {
               setState(() {
+                businessData = state.businessInfo;
                 _initializeTextFields();
-                loading = true;
+                loading = false;
               });
               displaySnack(
                   context, "Business info fetched successfully", Colors.black);
@@ -771,6 +772,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
 
   void _initializeTextFields() async {
     _businessNameController.text = businessData!.businessName;
+    print(businessData!.businessName);
     if (businessData!.websiteUrl != null) {
       _websiteURLController.text = businessData!.websiteUrl!;
     }

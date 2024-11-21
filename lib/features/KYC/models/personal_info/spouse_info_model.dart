@@ -5,25 +5,25 @@ class SpouseInfoModel {
   final String firstName;
   final String lastName;
   final String phoneNumber;
-  final String idNumber;
+  final String idNo;
   SpouseInfoModel({
     required this.firstName,
     required this.lastName,
     required this.phoneNumber,
-    required this.idNumber,
+    required this.idNo,
   });
 
   SpouseInfoModel copyWith({
     String? firstName,
     String? lastName,
     String? phoneNumber,
-    String? idNumber,
+    String? idNo,
   }) {
     return SpouseInfoModel(
       firstName: firstName ?? this.firstName,
       lastName: lastName ?? this.lastName,
       phoneNumber: phoneNumber ?? this.phoneNumber,
-      idNumber: idNumber ?? this.idNumber,
+      idNo: idNo ?? this.idNo,
     );
   }
 
@@ -32,16 +32,16 @@ class SpouseInfoModel {
       'firstName': firstName,
       'lastName': lastName,
       'phoneNumber': phoneNumber,
-      'idNumber': idNumber,
+      'idNo': idNo,
     };
   }
 
   factory SpouseInfoModel.fromMap(Map<String, dynamic> map) {
     return SpouseInfoModel(
-      firstName: map['firstName'] as String,
-      lastName: map['lastName'] as String,
-      phoneNumber: map['phoneNumber'] as String,
-      idNumber: map['idNumber'] as String,
+      firstName: map['firstName'] as String? ?? '',
+      lastName: map['lastName'] as String? ?? '',
+      phoneNumber: map['phoneNumber'] as String? ?? '',
+      idNo: map['idNo'] as String? ?? '',
     );
   }
 
@@ -52,7 +52,7 @@ class SpouseInfoModel {
 
   @override
   String toString() {
-    return 'SpouseInfoModel(firstName: $firstName, lastName: $lastName, phoneNumber: $phoneNumber, idNumber: $idNumber)';
+    return 'SpouseInfoModel(firstName: $firstName, lastName: $lastName, phoneNumber: $phoneNumber, idNo: $idNo)';
   }
 
   @override
@@ -62,7 +62,7 @@ class SpouseInfoModel {
     return other.firstName == firstName &&
         other.lastName == lastName &&
         other.phoneNumber == phoneNumber &&
-        other.idNumber == idNumber;
+        other.idNo == idNo;
   }
 
   @override
@@ -70,6 +70,6 @@ class SpouseInfoModel {
     return firstName.hashCode ^
         lastName.hashCode ^
         phoneNumber.hashCode ^
-        idNumber.hashCode;
+        idNo.hashCode;
   }
 }
