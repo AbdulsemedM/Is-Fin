@@ -4,11 +4,15 @@ import 'package:ifb_loan/app/utils/app_colors.dart';
 class KycProgressCard extends StatelessWidget {
   final String title;
   final double percent;
+  final String step1;
+  final String step2;
 
   const KycProgressCard({
     Key? key,
     required this.title,
     required this.percent,
+    required this.step1,
+    required this.step2,
   }) : super(key: key);
 
   @override
@@ -29,7 +33,7 @@ class KycProgressCard extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
@@ -37,7 +41,7 @@ class KycProgressCard extends StatelessWidget {
                 ),
                 Text(
                   '${(percent * 100).toStringAsFixed(0)}%', // Display the percentage
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
@@ -45,38 +49,33 @@ class KycProgressCard extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             // Progress Bar
             ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: LinearProgressIndicator(
                 value: percent, // Set the progress value
                 backgroundColor: Colors.white,
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                valueColor: const AlwaysStoppedAnimation<Color>(Colors.blue),
                 minHeight: 10,
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             // Steps Row
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Step 2",
-                  style: TextStyle(color: Colors.white),
+                  step1,
+                  style: const TextStyle(color: Colors.white),
                 ),
                 Row(
                   children: [
                     Text(
-                      "Step 3",
-                      style: TextStyle(color: Colors.white),
+                      step2,
+                      style: const TextStyle(color: Colors.white),
                     ),
-                    SizedBox(width: 5),
-                    Icon(
-                      Icons.search,
-                      color: Colors.white,
-                      size: 18,
-                    ),
+                    const SizedBox(width: 5),
                   ],
                 ),
               ],
