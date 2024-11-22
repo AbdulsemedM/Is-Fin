@@ -218,4 +218,14 @@ class KycDataProvider {
       throw e.toString();
     }
   }
+
+  Future<String> fetchKYCStatus() async {
+    try {
+      final apiProvider = ProviderSetup.getApiProvider(ApiConstants.baseUrl);
+      final response = await apiProvider.getRequest("/api/kyc/status");
+      return response.body;
+    } catch (e) {
+      throw e.toString();
+    }
+  }
 }

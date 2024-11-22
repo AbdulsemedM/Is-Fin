@@ -109,6 +109,21 @@ final class KycZonesFetchedFailure extends KycState {
 }
 
 //////////////////////////////////////////////////////////////////////////////
+final class KycStatusFetchedLoading extends KycState {}
+
+final class KycStatusFetchedSuccess extends KycState {
+  final KycStatusModel kycStatusInfo;
+
+  KycStatusFetchedSuccess({required this.kycStatusInfo});
+}
+
+final class KycStatusFetchedFailure extends KycState {
+  final String errorMessage;
+
+  KycStatusFetchedFailure(this.errorMessage);
+}
+
+//////////////////////////////////////////////////////////////////////////////
 final class KycAccountSentLoading extends KycState {}
 
 final class KycAccountSentSuccess extends KycState {}

@@ -7,6 +7,7 @@ import 'package:ifb_loan/features/KYC/models/address_model/region_model.dart';
 import 'package:ifb_loan/features/KYC/models/address_model/zone_model.dart';
 import 'package:ifb_loan/features/KYC/models/business_info/business_info_model.dart';
 import 'package:ifb_loan/features/KYC/models/image_models/images_model.dart';
+import 'package:ifb_loan/features/KYC/models/kyc_status/kyc_status_model.dart';
 import 'package:ifb_loan/features/KYC/models/personal_info/personal_info_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -211,6 +212,21 @@ class KycRepository {
       print(zones.length);
       return zones;
     } catch (e) {
+      throw e; // This will throw only the `message` part if thrown from above
+    }
+  }
+
+  Future<KycStatusModel> fetchKYCStatus() async {
+    try {
+      // print("here we gooooo");
+      final kycData = await kycDataProvider.fetchKYCStatus();
+      final data = jsonDecode(kycData);
+      if (data['httpStatus'] != 200) {
+        throw data['message'];
+      }
+      return KycStatusModel.fromMap(data['response']);
+    } catch (e) {
+      print(e.toString());
       throw e; // This will throw only the `message` part if thrown from above
     }
   }

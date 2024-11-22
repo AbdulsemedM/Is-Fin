@@ -5,6 +5,7 @@ import 'package:ifb_loan/features/KYC/models/address_model/region_model.dart';
 import 'package:ifb_loan/features/KYC/models/address_model/zone_model.dart';
 import 'package:ifb_loan/features/KYC/models/business_info/business_info_model.dart';
 import 'package:ifb_loan/features/KYC/models/image_models/images_model.dart';
+import 'package:ifb_loan/features/KYC/models/kyc_status/kyc_status_model.dart';
 import 'package:ifb_loan/features/KYC/models/personal_info/personal_info_model.dart';
 part 'kyc_event.dart';
 part 'kyc_state.dart';
@@ -22,6 +23,7 @@ class KycBloc extends Bloc<KycEvent, KycState> {
     on<ImagesKYCFetched>(_imagesKYCFetched);
     on<RegionsKYCFetched>(_regionsKYCFetched);
     on<ZonesKYCFetched>(_zonesKYCFetched);
+    on<KYCStatusFetched>(_kycStatusFetched);
   }
   void _personalKYCSent(PersonalKYCSent event, Emitter<KycState> emit) async {
     emit(KycPersonalSentLoading());
@@ -162,10 +164,26 @@ class KycBloc extends Bloc<KycEvent, KycState> {
     emit(KycZonesFetchedLoading());
     try {
       final zonesInfo = await kycRepository.fetchZoneKYC(event.regionId);
-    
+
       emit(KycZonesFetchedSuccess(zoneInfo: zonesInfo));
     } catch (e) {
       emit(KycZonesFetchedFailure(e.toString()));
+    }
+  }
+
+  void _kycStatusFetched(KYCStatusFetched event, Emitter<KycState> emit) async {
+    emit(KycStatusFetchedLoading());
+    // print("loading...");
+    try {
+      final kycInfo = await kycRepository.fetchKYCStatus();
+      print("from bloc");
+      print(kycInfo.approvalStatus);
+      emit(KycStatusFetchedSuccess(kycStatusInfo: kycInfo));
+      // print(signup);
+    } catch (e) {
+      emit(KycStatusFetchedFailure(e.toString()));
+      // print("failure...");
+      // print(e.toString());
     }
   }
   // void _zonesKYCFetched(ZonesKYCFetched event, Emitter<KycState> emit) async {

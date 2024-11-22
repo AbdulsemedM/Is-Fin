@@ -53,3 +53,7 @@ class ZonesKYCFetched extends KycEvent {
   final String regionId;
   ZonesKYCFetched({required this.regionId});
 }
+
+class KYCStatusFetched extends KycEvent {
+  KYCStatusFetched();
+}
