@@ -196,7 +196,7 @@ class KycDataProvider {
   Future<String> fetchRegions() async {
     try {
       final apiProvider = ProviderSetup.getApiProvider(ApiConstants.baseUrl);
-      final response = await apiProvider.getRequest("/api/auth/signin");
+      final response = await apiProvider.getRequest("/api/region");
       // print(response.body);
       return response.body;
     } catch (e) {
@@ -206,11 +206,10 @@ class KycDataProvider {
     }
   }
 
-  Future<String> fetchWoredas(String regionId) async {
+  Future<String> fetchZones(String regionId) async {
     try {
       final apiProvider = ProviderSetup.getApiProvider(ApiConstants.baseUrl);
-      final response =
-          await apiProvider.getRequest("/api/getWoredasById/$regionId");
+      final response = await apiProvider.getRequest("/api/region/$regionId");
       // print(response.body);
       return response.body;
     } catch (e) {

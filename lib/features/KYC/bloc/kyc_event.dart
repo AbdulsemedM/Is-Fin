@@ -44,3 +44,12 @@ class ImagesKYCSent extends KycEvent {
 class ImagesKYCFetched extends KycEvent {
   ImagesKYCFetched();
 }
+
+class RegionsKYCFetched extends KycEvent {
+  RegionsKYCFetched();
+}
+
+class ZonesKYCFetched extends KycEvent {
+  final String regionId;
+  ZonesKYCFetched({required this.regionId});
+}

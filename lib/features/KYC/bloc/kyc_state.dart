@@ -80,6 +80,35 @@ final class KycIMagesFetchedFailure extends KycState {
 }
 
 //////////////////////////////////////////////////////////////////////////////
+final class KycRegionsFetchedLoading extends KycState {}
+
+final class KycRegionsFetchedSuccess extends KycState {
+  final List<RegionModel> regionInfo;
+
+  KycRegionsFetchedSuccess({required this.regionInfo});
+}
+
+final class KycRegionsFetchedFailure extends KycState {
+  final String errorMessage;
+
+  KycRegionsFetchedFailure(this.errorMessage);
+}
+
+final class KycZonesFetchedLoading extends KycState {}
+
+final class KycZonesFetchedSuccess extends KycState {
+  final List<ZoneModel> zoneInfo;
+
+  KycZonesFetchedSuccess({required this.zoneInfo});
+}
+
+final class KycZonesFetchedFailure extends KycState {
+  final String errorMessage;
+
+  KycZonesFetchedFailure(this.errorMessage);
+}
+
+//////////////////////////////////////////////////////////////////////////////
 final class KycAccountSentLoading extends KycState {}
 
 final class KycAccountSentSuccess extends KycState {}

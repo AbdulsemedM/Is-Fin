@@ -1,6 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:ifb_loan/features/KYC/data/repository/KYC_repository.dart';
+import 'package:ifb_loan/features/KYC/models/address_model/region_model.dart';
+import 'package:ifb_loan/features/KYC/models/address_model/zone_model.dart';
 import 'package:ifb_loan/features/KYC/models/business_info/business_info_model.dart';
 import 'package:ifb_loan/features/KYC/models/image_models/images_model.dart';
 import 'package:ifb_loan/features/KYC/models/personal_info/personal_info_model.dart';
@@ -18,6 +20,8 @@ class KycBloc extends Bloc<KycEvent, KycState> {
     on<OTPKYCSent>(_otpKYCSent);
     on<ImagesKYCSent>(_imagesKYCSent);
     on<ImagesKYCFetched>(_imagesKYCFetched);
+    on<RegionsKYCFetched>(_regionsKYCFetched);
+    on<ZonesKYCFetched>(_zonesKYCFetched);
   }
   void _personalKYCSent(PersonalKYCSent event, Emitter<KycState> emit) async {
     emit(KycPersonalSentLoading());
@@ -136,4 +140,46 @@ class KycBloc extends Bloc<KycEvent, KycState> {
       // print(e.toString());
     }
   }
+
+  void _regionsKYCFetched(
+      RegionsKYCFetched event, Emitter<KycState> emit) async {
+    emit(KycRegionsFetchedLoading());
+    // print("loading...");
+    try {
+      final regionsInfo = await kycRepository.fetchRegionsKYC();
+      emit(KycRegionsFetchedSuccess(regionInfo: regionsInfo));
+      // print(signup);
+    } catch (e) {
+      emit(KycRegionsFetchedFailure(e.toString()));
+      // print("failure...");
+      // print(e.toString());
+    }
+  }
+
+  void _zonesKYCFetched(ZonesKYCFetched event, Emitter<KycState> emit) async {
+    print("event.regionId");
+    print(event.regionId);
+    emit(KycZonesFetchedLoading());
+    try {
+      final zonesInfo = await kycRepository.fetchZoneKYC(event.regionId);
+    
+      emit(KycZonesFetchedSuccess(zoneInfo: zonesInfo));
+    } catch (e) {
+      emit(KycZonesFetchedFailure(e.toString()));
+    }
+  }
+  // void _zonesKYCFetched(ZonesKYCFetched event, Emitter<KycState> emit) async {
+  //   print("event.regionId");
+  //   print(event.regionId);
+  //   emit(KycZonesFetchedLoading());
+  //   try {
+  //     final zonesInfo = await kycRepository.fetchZoneKYC(event.regionId);
+  //     emit(KycZonesFetchedSuccess(zoneInfo: zonesInfo));
+  //     // print(signup);
+  //   } catch (e) {
+  //     emit(KycZonesFetchedFailure(e.toString()));
+  //     // print("failure...");
+  //     // print(e.toString());
+  //   }
+  // }
 }

@@ -6,6 +6,8 @@ import 'package:ifb_loan/app/utils/app_theme.dart';
 import 'package:ifb_loan/app/utils/dialog_utils.dart';
 import 'package:ifb_loan/configuration/phone_number_manager.dart';
 import 'package:ifb_loan/features/KYC/bloc/kyc_bloc.dart';
+import 'package:ifb_loan/features/KYC/models/address_model/region_model.dart';
+import 'package:ifb_loan/features/KYC/models/address_model/zone_model.dart';
 import 'package:ifb_loan/features/KYC/models/personal_info/address_info_model.dart';
 import 'package:ifb_loan/features/KYC/models/personal_info/alternative_info_model.dart';
 import 'package:ifb_loan/features/KYC/models/personal_info/personal_info_model.dart';
@@ -22,6 +24,9 @@ class PersonalInfo extends StatefulWidget {
 class _PersonalInfoState extends State<PersonalInfo> {
   var loading = false;
   var loadValues = false;
+  var zoneFetched = false;
+  List<RegionModel> myRegions = [];
+  List<ZoneModel> myZones = [];
   GlobalKey<FormState> myKey = GlobalKey();
   final TextEditingController _doBController = TextEditingController();
   final TextEditingController _firstNameController = TextEditingController();
@@ -76,8 +81,8 @@ class _PersonalInfoState extends State<PersonalInfo> {
   PersonalInfoModel? personalData;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    context.read<KycBloc>().add(RegionsKYCFetched());
     getPersonalInfo();
   }
 
@@ -125,6 +130,11 @@ class _PersonalInfoState extends State<PersonalInfo> {
     return null; // Return null if no data is found
   }
 
+  void fetchzone(String regionId) async {
+    print(regionId);
+    context.read<KycBloc>().add(ZonesKYCFetched(regionId: regionId));
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -162,6 +172,51 @@ class _PersonalInfoState extends State<PersonalInfo> {
               print(state.errorMessage);
               setState(() {
                 loading = false;
+              });
+            } else if (state is KycRegionsFetchedLoading) {
+              setState(() {
+                loadValues = true;
+              });
+            } else if (state is KycRegionsFetchedSuccess) {
+              setState(() {
+                myRegions = state.regionInfo;
+                String regionId = myRegions
+                    .firstWhere((region) =>
+                        region.regionName ==
+                        personalData!.residentialInfoDto.region)
+                    .id
+                    .toString();
+                // print("regionId");
+                // print(regionId);
+                fetchzone(regionId);
+                // _initializeTextFields();
+                loadValues = false;
+              });
+            } else if (state is KycRegionsFetchedFailure) {
+              // print("I'm fetching the personal data");
+              print(state.errorMessage);
+              setState(() {
+                loadValues = false;
+              });
+            } else if (state is KycZonesFetchedLoading) {
+              print("zone is fetching");
+              setState(() {
+                loadValues = true;
+              });
+            } else if (state is KycZonesFetchedSuccess) {
+              setState(() {
+                myZones = state.zoneInfo;
+                if (!zoneFetched) {
+                  _initializeTextFields();
+                }
+                zoneFetched = true;
+                loadValues = false;
+              });
+            } else if (state is KycZonesFetchedFailure) {
+              // print("I'm fetching the personal data");
+              print(state.errorMessage);
+              setState(() {
+                loadValues = false;
               });
             }
           },
@@ -678,37 +733,80 @@ class _PersonalInfoState extends State<PersonalInfo> {
                 ),
                 Row(
                   children: [
-                    Expanded(
-                      child: TextFormField(
-                        controller: _regionController,
-                        validator: (value) => validateField(value),
-                        decoration: InputDecoration(
-                          labelText: 'Region/ District',
-                          filled: true,
-                          fillColor: Colors.grey[200],
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                            borderSide: BorderSide.none,
+                    if (!loadValues)
+                      Expanded(
+                        child: DropdownButtonFormField<String>(
+                          value: _regionController.text.isNotEmpty
+                              ? _regionController.text
+                              : null,
+                          validator: (value) => validateDropDown(value),
+                          decoration: InputDecoration(
+                            labelText: 'Region/ District',
+                            filled: true,
+                            fillColor: Colors.grey[200],
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                              borderSide: BorderSide.none,
+                            ),
                           ),
+                          items: myRegions.map((region) {
+                            return DropdownMenuItem(
+                              value: region.regionName, // Use ID as the value
+                              child: Text(region
+                                  .regionName), // Display the name in the dropdown
+                            );
+                          }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              _regionController.text =
+                                  value!; // Store the selected region
+                            });
+
+                            // Now fetch the zones after the state is updated
+                            String regionId = myRegions
+                                .firstWhere(
+                                    (region) => region.regionName == value)
+                                .id
+                                .toString();
+
+                            _zoneController.clear(); // Reset zone controller
+                            fetchzone(
+                                regionId); // Fetch zones based on the selected region
+                          },
                         ),
                       ),
-                    ),
                     const SizedBox(width: 16),
-                    Expanded(
-                      child: TextFormField(
-                        controller: _zoneController,
-                        validator: (value) => validateField(value),
-                        decoration: InputDecoration(
-                          labelText: 'Zone',
-                          filled: true,
-                          fillColor: Colors.grey[200],
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                            borderSide: BorderSide.none,
+                    if (!loadValues)
+                      Expanded(
+                        child: DropdownButtonFormField<String>(
+                          value: _zoneController.text.isNotEmpty
+                              ? _zoneController.text
+                              : null,
+                          validator: (value) => validateDropDown(value),
+                          decoration: InputDecoration(
+                            labelText: 'Zone/ Subcity',
+                            filled: true,
+                            fillColor: Colors.grey[200],
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                              borderSide: BorderSide.none,
+                            ),
                           ),
+                          items: myZones.map((zone) {
+                            return DropdownMenuItem(
+                              value: zone.zoneName, // Use ID as the value
+                              child: Text(zone
+                                  .zoneName), // Display the name in the dropdown
+                            );
+                          }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              _zoneController.text =
+                                  value!; // Store the selected ID
+                            });
+                          },
                         ),
                       ),
-                    ),
                   ],
                 ),
                 const SizedBox(height: 16),

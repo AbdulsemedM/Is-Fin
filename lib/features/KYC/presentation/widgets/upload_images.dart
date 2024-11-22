@@ -176,13 +176,31 @@ class _UploadImagesState extends State<UploadImages> {
           });
         } else if (state is KycIMagesFetchedSuccess) {
           setState(() {
-            existsRenewedId = "Done";
-            existsTinNumber = "Done";
-            existsRegCertificate = "Done";
-            existsTradeLicense = "Done";
+            ImagesModel images = state.imagesInfo;
+            existsRenewedId =
+                (images.renewedId?.isNotEmpty ?? false) ? "Done" : null;
+            print(existsRenewedId);
+
+            existsTinNumber =
+                (images.tinNumber?.isNotEmpty ?? false) ? "Done" : null;
+            print(existsTinNumber);
+
+            existsRegCertificate =
+                (images.commercialRegistrationCertificateFileName?.isNotEmpty ??
+                        false)
+                    ? "Done"
+                    : null;
+            print(existsRegCertificate);
+
+            existsTradeLicense =
+                (images.renewedTradeLicense?.isNotEmpty ?? false)
+                    ? "Done"
+                    : null;
+            print(existsTradeLicense);
+
             loading = false;
           });
-          displaySnack(context, "Images sent successfully!", Colors.black);
+          // displaySnack(context, "Images sent successfully!", Colors.black);
         } else if (state is KycIMagesFetchedFailure) {
           setState(() {
             loading = false;
@@ -215,26 +233,26 @@ class _UploadImagesState extends State<UploadImages> {
                 ],
               ),
               ..._buildImageSection(
-                existsRenewedId != null ? 'Renewed Id.' : 'Renewed Id.(Sent)',
+                existsRenewedId == null ? 'Renewed Id.' : 'Renewed Id.(Sent)',
                 _idImageName,
                 'id',
               ),
               ..._buildImageSection(
-                existsTradeLicense != null
+                existsTradeLicense == null
                     ? 'Renewed Trade License'
                     : "Renewed Trade License(Sent)",
                 _tradeLicenseImageName,
                 'tradeLicense', // Fix: Change from 'license' to 'tradeLicense'
               ),
               ..._buildImageSection(
-                existsRegCertificate != null
+                existsRegCertificate == null
                     ? 'Commercial Registration Certificate'
                     : 'Commercial Registration Certificate(Sent)',
                 _registrationCertImageName,
                 'registrationCert', // Fix: Ensure the key matches getBase64StringByType
               ),
               ..._buildImageSection(
-                existsTinNumber != null
+                existsTinNumber == null
                     ? 'TIN No. (Applicant\'s)'
                     : 'TIN No. (Applicant\'s)(Sent)',
                 _tinImageName,

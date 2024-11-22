@@ -3,6 +3,8 @@ import 'dart:convert';
 
 import 'package:ifb_loan/configuration/phone_number_manager.dart';
 import 'package:ifb_loan/features/KYC/data/data_provider/KYC_data_provider.dart';
+import 'package:ifb_loan/features/KYC/models/address_model/region_model.dart';
+import 'package:ifb_loan/features/KYC/models/address_model/zone_model.dart';
 import 'package:ifb_loan/features/KYC/models/business_info/business_info_model.dart';
 import 'package:ifb_loan/features/KYC/models/image_models/images_model.dart';
 import 'package:ifb_loan/features/KYC/models/personal_info/personal_info_model.dart';
@@ -170,6 +172,44 @@ class KycRepository {
         throw data['message'];
       }
       return ImagesModel.fromMap(data['response']);
+    } catch (e) {
+      throw e; // This will throw only the `message` part if thrown from above
+    }
+  }
+
+  Future<List<RegionModel>> fetchRegionsKYC() async {
+    try {
+      // print("here we gooooo");
+      final kycData = await kycDataProvider.fetchRegions();
+
+      final data = jsonDecode(kycData);
+      if (data['httpStatus'] != 200) {
+        throw data['message'];
+      }
+      final regions = (data['response'] as List)
+          .map((regionMap) => RegionModel.fromMap(regionMap))
+          .toList();
+      return regions;
+    } catch (e) {
+      throw e; // This will throw only the `message` part if thrown from above
+    }
+  }
+
+  Future<List<ZoneModel>> fetchZoneKYC(String regionId) async {
+    try {
+      // print("here we gooooo");
+      final kycData = await kycDataProvider.fetchZones(regionId);
+
+      final data = jsonDecode(kycData);
+      if (data['httpStatus'] != 201) {
+        throw data['message'];
+      }
+      final zones = (data['response'] as List)
+          .map((zoneMap) => ZoneModel.fromMap(zoneMap))
+          .toList();
+      print("herearethezones");
+      print(zones.length);
+      return zones;
     } catch (e) {
       throw e; // This will throw only the `message` part if thrown from above
     }
