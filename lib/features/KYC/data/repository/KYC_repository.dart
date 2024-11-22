@@ -45,10 +45,10 @@ class KycRepository {
       if (data['httpStatus'] != 200) {
         throw data['message'];
       }
-      print(PersonalInfoModel.fromMap(data['response']));
+      // print(PersonalInfoModel.fromMap(data['response']));
       return PersonalInfoModel.fromMap(data['response']);
     } catch (e) {
-      print(e.toString());
+      // print(e.toString());
       throw e; // This will throw only the `message` part if thrown from above
     }
   }
@@ -208,8 +208,8 @@ class KycRepository {
       final zones = (data['response'] as List)
           .map((zoneMap) => ZoneModel.fromMap(zoneMap))
           .toList();
-      print("herearethezones");
-      print(zones.length);
+      // print("herearethezones");
+      // print(zones.length);
       return zones;
     } catch (e) {
       throw e; // This will throw only the `message` part if thrown from above
@@ -226,7 +226,7 @@ class KycRepository {
       }
       return KycStatusModel.fromMap(data['response']);
     } catch (e) {
-      print(e.toString());
+      // print(e.toString());
       throw e; // This will throw only the `message` part if thrown from above
     }
   }

@@ -61,7 +61,6 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
             state is KycBusinessFetchedLoading ||
             state is KycIMagesFetchedLoading) {
           setState(() {
-            print("fetching status...");
             progressLoading = true;
           });
         }
@@ -72,8 +71,6 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
               kycStatus += 25;
               steps.add("Perssonal Info.");
               isPersonalFetched = true;
-              print("KycPersonalFetchedSuccess");
-              print(kycStatus);
             }
           });
         } else if (state is KycBusinessFetchedSuccess && progressLoading) {
@@ -82,8 +79,6 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
               kycStatus += 25;
               steps.add("Business Info.");
               isBusinessFetched = true;
-              print("KycBusinessFetchedSuccess");
-              print(kycStatus);
             }
           });
         } else if (state is KycIMagesFetchedSuccess && progressLoading) {
@@ -126,9 +121,6 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
               }
 
               areImagesFetched = true;
-
-              print("KycIMagesFetchedSuccess");
-              print(kycStatus);
             }
           });
         }
@@ -136,8 +128,6 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
         // Check if all success states are true
         if (isPersonalFetched && isBusinessFetched && areImagesFetched) {
           setState(() {
-            print("fetching ended...$kycStatus");
-            print(steps);
             step2 = steps.firstWhere((step) => step == "Images Info.");
             step1 = "Business Info.";
             if (step2 != "Images Info.") {
@@ -154,17 +144,14 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
 
         if (state is KycPersonalFetchedFailure) {
           setState(() {
-            print("KycPersonalFetchedFailure");
             progressLoading = false;
           });
         } else if (state is KycBusinessFetchedFailure) {
           setState(() {
-            print("KycBusinessFetchedFailure");
             progressLoading = false;
           });
         } else if (state is KycIMagesFetchedFailure) {
           setState(() {
-            print("KycIMagesFetchedFailure");
             progressLoading = false;
           });
         }

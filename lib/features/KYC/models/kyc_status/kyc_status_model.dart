@@ -27,8 +27,6 @@ class KycStatusModel {
   }
 
   factory KycStatusModel.fromMap(Map<String, dynamic> map) {
-    print("Incoming map to fromMap: $map"); // Add this line for debugging
-    print(map['approvalStatus']); // Add this line for debugging
     return KycStatusModel(
       approvalStatus: map['approvalStatus']?.toString() ?? '',
       rejectReason: map['rejectReason']?.toString(),

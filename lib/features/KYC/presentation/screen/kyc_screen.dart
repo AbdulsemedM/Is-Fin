@@ -45,8 +45,6 @@ class _CompleteKYCDetailState extends State<CompleteKYCDetail> {
             // print("here accessing the status");
           }
           if (state is KycStatusFetchedSuccess) {
-            print("here accessing the status");
-            print(state.kycStatusInfo.approvalStatus);
             if (state.kycStatusInfo.approvalStatus == "REJECTED") {
               _showRejectDialog(context, state.kycStatusInfo.rejectReason!);
             }

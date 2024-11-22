@@ -85,11 +85,9 @@ class _BusinessInfoState extends State<BusinessInfo> {
     // Retrieve the JSON string
     PhoneNumberManager phoneManager = PhoneNumberManager();
     String? phone = await phoneManager.getPhoneNumber();
-    print(phone);
     final String? jsonString = prefs.getString('business_info_$phone');
 
     if (jsonString != null) {
-      print("this is not null");
       setState(() {
         businessData = BusinessInfoModel.fromJson(jsonString);
       });
@@ -107,7 +105,6 @@ class _BusinessInfoState extends State<BusinessInfo> {
   }
 
   void fetchzone(String regionId) async {
-    print(regionId);
     context.read<KycBloc>().add(ZonesKYCFetched(regionId: regionId));
   }
 
@@ -161,27 +158,22 @@ class _BusinessInfoState extends State<BusinessInfo> {
             } else if (state is KycRegionsFetchedSuccess) {
               setState(() {
                 myRegions = state.regionInfo;
-                print(myRegions.length);
                 String regionId = myRegions
                     .firstWhere((region) =>
                         region.regionName ==
                         businessData!.businessAddressDto.businessAddressregion)
                     .id
                     .toString();
-                print("regionId");
-                print(regionId);
                 fetchzone(regionId);
                 // _initializeTextFields();
                 loadValues = false;
               });
             } else if (state is KycRegionsFetchedFailure) {
               // print("I'm fetching the personal data");
-              print(state.errorMessage);
               setState(() {
                 loadValues = false;
               });
             } else if (state is KycZonesFetchedLoading) {
-              print("zone is fetching");
               setState(() {
                 loadValues = true;
               });
@@ -196,7 +188,6 @@ class _BusinessInfoState extends State<BusinessInfo> {
               });
             } else if (state is KycZonesFetchedFailure) {
               // print("I'm fetching the personal data");
-              print(state.errorMessage);
               setState(() {
                 loadValues = false;
               });
@@ -373,7 +364,6 @@ class _BusinessInfoState extends State<BusinessInfo> {
                             // Update the controller with the selected year
                             _yearofEstablishmentController.text =
                                 pickedDate.year.toString();
-                            print(_yearofEstablishmentController.text);
                           }
                         },
                       ),
@@ -877,7 +867,6 @@ class _BusinessInfoState extends State<BusinessInfo> {
 
   void _initializeTextFields() async {
     _businessNameController.text = businessData!.businessName;
-    print(businessData!.businessName);
     if (businessData!.websiteUrl != null) {
       _websiteURLController.text = businessData!.websiteUrl!;
     }

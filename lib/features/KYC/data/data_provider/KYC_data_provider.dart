@@ -42,7 +42,7 @@ class KycDataProvider {
       final apiProvider = ProviderSetup.getApiProvider(ApiConstants.baseUrl);
       final response =
           await apiProvider.postRequest("/api/kyc/personalInfo", body);
-      print(response.body);
+      // print(response.body);
       return response.body;
       // return "body";
     } catch (e) {
@@ -87,7 +87,7 @@ class KycDataProvider {
       // return "body";
     } catch (e) {
       // print("here is the response");
-      print(e.toString());
+      // print(e.toString());
       throw e.toString();
     }
   }
@@ -144,12 +144,12 @@ class KycDataProvider {
       };
       final apiProvider = ProviderSetup.getApiProvider(ApiConstants.baseUrl);
       final response = await apiProvider.postRequest("/api/kyc/file", body);
-      print(response.body);
+      // print(response.body);
       return response.body;
       // return "body";
     } catch (e) {
       // print("here is the response");
-      print(e.toString());
+      // print(e.toString());
       throw e.toString();
     }
   }

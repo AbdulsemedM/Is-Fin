@@ -94,13 +94,10 @@ class _PersonalInfoState extends State<PersonalInfo> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     PhoneNumberManager phoneManager = PhoneNumberManager();
     String? phone = await phoneManager.getPhoneNumber();
-    print(phone);
 
     final String? jsonString = prefs.getString('personal_info_$phone');
 
     if (jsonString != null) {
-      print("this is not null");
-
       if (mounted) {
         setState(() {
           personalData = PersonalInfoModel.fromJson(jsonString);
@@ -131,7 +128,6 @@ class _PersonalInfoState extends State<PersonalInfo> {
   }
 
   void fetchzone(String regionId) async {
-    print(regionId);
     context.read<KycBloc>().add(ZonesKYCFetched(regionId: regionId));
   }
 
@@ -168,8 +164,6 @@ class _PersonalInfoState extends State<PersonalInfo> {
                 loading = false;
               });
             } else if (state is KycPersonalFetchedFailure) {
-              print("I'm fetching the personal data");
-              print(state.errorMessage);
               setState(() {
                 loading = false;
               });
@@ -194,12 +188,10 @@ class _PersonalInfoState extends State<PersonalInfo> {
               });
             } else if (state is KycRegionsFetchedFailure) {
               // print("I'm fetching the personal data");
-              print(state.errorMessage);
               setState(() {
                 loadValues = false;
               });
             } else if (state is KycZonesFetchedLoading) {
-              print("zone is fetching");
               setState(() {
                 loadValues = true;
               });
@@ -214,7 +206,6 @@ class _PersonalInfoState extends State<PersonalInfo> {
               });
             } else if (state is KycZonesFetchedFailure) {
               // print("I'm fetching the personal data");
-              print(state.errorMessage);
               setState(() {
                 loadValues = false;
               });

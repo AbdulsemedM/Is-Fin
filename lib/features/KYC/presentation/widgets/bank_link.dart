@@ -38,11 +38,9 @@ class _BankLinkState extends State<BankLink> {
     // Retrieve the JSON string
     PhoneNumberManager phoneManager = PhoneNumberManager();
     String? phone = await phoneManager.getPhoneNumber();
-    print(phone);
     final String? jsonString = prefs.getString('account_info_$phone');
 
     if (jsonString != null) {
-      print("this is not null");
       setState(() {
         accountInfo = jsonString;
       });

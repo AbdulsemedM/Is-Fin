@@ -51,7 +51,6 @@ class _UploadImagesState extends State<UploadImages> {
     // Retrieve the JSON string
     PhoneNumberManager phoneManager = PhoneNumberManager();
     String? phone = await phoneManager.getPhoneNumber();
-    print(phone);
     setState(() {
       existsRenewedId = prefs.getString('images_info_renewedId_$phone');
       existsRegCertificate = prefs
@@ -67,10 +66,6 @@ class _UploadImagesState extends State<UploadImages> {
         existsTradeLicense == null) {
       context.read<KycBloc>().add(ImagesKYCFetched());
     }
-    print("here are the images");
-    print(existsRenewedId);
-    print(existsRegCertificate);
-    print(existsTinNumber);
   }
 
   // Method to pick image from gallery
@@ -179,25 +174,20 @@ class _UploadImagesState extends State<UploadImages> {
             ImagesModel images = state.imagesInfo;
             existsRenewedId =
                 (images.renewedId?.isNotEmpty ?? false) ? "Done" : null;
-            print(existsRenewedId);
 
             existsTinNumber =
                 (images.tinNumber?.isNotEmpty ?? false) ? "Done" : null;
-            print(existsTinNumber);
 
             existsRegCertificate =
                 (images.commercialRegistrationCertificateFileName?.isNotEmpty ??
                         false)
                     ? "Done"
                     : null;
-            print(existsRegCertificate);
 
             existsTradeLicense =
                 (images.renewedTradeLicense?.isNotEmpty ?? false)
                     ? "Done"
                     : null;
-            print(existsTradeLicense);
-
             loading = false;
           });
           // displaySnack(context, "Images sent successfully!", Colors.black);

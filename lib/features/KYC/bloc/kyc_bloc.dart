@@ -58,7 +58,7 @@ class KycBloc extends Bloc<KycEvent, KycState> {
     emit(KycBusinessSentLoading());
     // print("loading...");
     try {
-      print(event.businessInfo.businessName);
+      // print(event.businessInfo.businessName);
       await kycRepository.sendBusinessKYC(event.businessInfo);
       emit(KycBusinessSentSuccess());
       // print(signup);
@@ -118,7 +118,7 @@ class KycBloc extends Bloc<KycEvent, KycState> {
     emit(KycImagesSentLoading());
     // print("loading...");
     try {
-      print(event.imagesInfo.renewedIdFileName);
+      // print(event.imagesInfo.renewedIdFileName);
       await kycRepository.sendImagesKYC(event.imagesInfo);
       emit(KycImagesSentSuccess());
       // print(signup);
@@ -159,8 +159,8 @@ class KycBloc extends Bloc<KycEvent, KycState> {
   }
 
   void _zonesKYCFetched(ZonesKYCFetched event, Emitter<KycState> emit) async {
-    print("event.regionId");
-    print(event.regionId);
+    // print("event.regionId");
+    // print(event.regionId);
     emit(KycZonesFetchedLoading());
     try {
       final zonesInfo = await kycRepository.fetchZoneKYC(event.regionId);
@@ -176,8 +176,8 @@ class KycBloc extends Bloc<KycEvent, KycState> {
     // print("loading...");
     try {
       final kycInfo = await kycRepository.fetchKYCStatus();
-      print("from bloc");
-      print(kycInfo.approvalStatus);
+      // print("from bloc");
+      // print(kycInfo.approvalStatus);
       emit(KycStatusFetchedSuccess(kycStatusInfo: kycInfo));
       // print(signup);
     } catch (e) {
