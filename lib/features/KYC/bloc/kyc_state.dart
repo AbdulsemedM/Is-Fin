@@ -144,16 +144,16 @@ final class KycOTPSentFailure extends KycState {
   KycOTPSentFailure(this.errorMessage);
 }
 
-// final class KycAccountFetchedLoading extends KycState {}
+final class KycAccountFetchedLoading extends KycState {}
 
-// final class KycAccountFetchedSuccess extends KycState {
-//   final PersonalInfoModel personalInfo;
+final class KycAccountFetchedSuccess extends KycState {
+  final Map<String, String> accountInfo;
 
-//   KycAccountFetchedSuccess({required this.personalInfo});
-// }
+  KycAccountFetchedSuccess({required this.accountInfo});
+}
 
-// final class KycAccountFetchedFailure extends KycState {
-//   final String errorMessage;
+final class KycAccountFetchedFailure extends KycState {
+  final String errorMessage;
 
-//   KycAccountFetchedFailure(this.errorMessage);
-// }
+  KycAccountFetchedFailure(this.errorMessage);
+}

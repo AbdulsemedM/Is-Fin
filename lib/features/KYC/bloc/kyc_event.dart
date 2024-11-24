@@ -35,6 +35,10 @@ class OTPKYCSent extends KycEvent {
   OTPKYCSent({required this.otpNumber});
 }
 
+class AccountKYCFetched extends KycEvent {
+  AccountKYCFetched();
+}
+
 class ImagesKYCSent extends KycEvent {
   final ImagesModel imagesInfo;
 

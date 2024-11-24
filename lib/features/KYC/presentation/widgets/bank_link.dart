@@ -17,17 +17,23 @@ class BankLink extends StatefulWidget {
 }
 
 class _BankLinkState extends State<BankLink> {
-  var loading = false;
+  String accountHolder = "";
+  String accountNumber = "";
+  var accountLoading = false;
+  var accountSent = false;
+  var otpLoading = false;
   var loadValues = false;
   GlobalKey<FormState> myKey1 = GlobalKey();
   GlobalKey<FormState> myKey2 = GlobalKey();
   final TextEditingController _accountNumberController =
       TextEditingController();
   final TextEditingController _otpController = TextEditingController();
-  String? accountInfo;
+  // String? accountInfo;
   @override
   void initState() {
     super.initState();
+    context.read<KycBloc>().add(AccountKYCFetched());
+    getAccountInfo();
   }
 
   Future<String?> getAccountInfo() async {
@@ -42,13 +48,13 @@ class _BankLinkState extends State<BankLink> {
 
     if (jsonString != null) {
       setState(() {
-        accountInfo = jsonString;
+        accountNumber = jsonString;
       });
       _initializeTextFields();
       setState(() {
         loadValues = false;
       });
-      return accountInfo;
+      return accountNumber;
     }
     // context.read<KycBloc>().add(BusinessKYCFetched());
     setState(() {
@@ -69,7 +75,7 @@ class _BankLinkState extends State<BankLink> {
   String? validateOTPField(String? value) {
     if (value == null || value.trim().isEmpty) {
       return 'This field is required';
-    } else if (value.trim().length < 6) {
+    } else if (value.trim().length != 6) {
       return 'This field must be at least 6 digits long';
     }
     return null; // Return null if validation passes
@@ -84,19 +90,40 @@ class _BankLinkState extends State<BankLink> {
           listener: (context, state) {
             if (state is KycAccountSentLoading) {
               setState(() {
-                loading = true;
+                accountLoading = true;
+                accountSent = true;
               });
             } else if (state is KycAccountSentSuccess) {
               setState(() {
-                loading = false;
+                accountLoading = false;
               });
               displaySnack(
                   context, "Account info. sent successfully", Colors.black);
             } else if (state is KycAccountSentFailure) {
               setState(() {
-                loading = false;
+                accountLoading = false;
+                accountSent = false;
               });
               displaySnack(context, state.errorMessage, Colors.red);
+            }
+            if (state is KycAccountFetchedLoading) {
+              setState(() {
+                loadValues = true;
+                accountLoading = true;
+              });
+            } else if (state is KycAccountFetchedSuccess) {
+              setState(() {
+                loadValues = false;
+                accountLoading = false;
+                accountNumber = state.accountInfo['accountNumber']!;
+                accountHolder = state.accountInfo['accountName']!;
+              });
+            } else if (state is KycAccountFetchedFailure) {
+              setState(() {
+                loadValues = false;
+                accountLoading = false;
+                displaySnack(context, state.errorMessage, Colors.red);
+              });
             }
           },
           child: Column(
@@ -125,10 +152,12 @@ class _BankLinkState extends State<BankLink> {
               ),
               Row(
                 children: [
-                  Form(
-                    key: myKey1,
-                    child: Expanded(
+                  Expanded(
+                    flex: 2, // Make the text field take more space
+                    child: Form(
+                      key: myKey1,
                       child: TextFormField(
+                        enabled: !accountSent,
                         controller: _accountNumberController,
                         validator: (value) => validateAccountField(value),
                         decoration: InputDecoration(
@@ -145,32 +174,38 @@ class _BankLinkState extends State<BankLink> {
                   ),
                   const SizedBox(width: 16),
                   Expanded(
+                    flex: 1, // Make the button take less space
                     child: MyButton(
-                        backgroundColor: loading
-                            ? AppColors.iconColor
-                            : AppColors.primaryDarkColor,
-                        onPressed: loading
-                            ? () {}
-                            : () {
-                                if (myKey1.currentState!.validate()) {
-                                  context.read<KycBloc>().add(AccountKYCSent(
+                      backgroundColor: accountLoading || accountSent
+                          ? AppColors.iconColor
+                          : AppColors.primaryDarkColor,
+                      onPressed: accountLoading || accountSent
+                          ? () {}
+                          : () {
+                              if (myKey1.currentState!.validate()) {
+                                context.read<KycBloc>().add(AccountKYCSent(
                                       accountNumber:
-                                          _accountNumberController.text));
-                                }
-                              },
-                        buttonText: loading
-                            ? SizedBox(
-                                height: ScreenConfig.screenHeight * 0.02,
-                                width: ScreenConfig.screenHeight * 0.02,
-                                child: const CircularProgressIndicator(
-                                  strokeWidth: 3,
-                                  color: AppColors.primaryColor,
-                                ),
-                              )
-                            : const Text(
-                                "Submit",
-                                style: TextStyle(color: Colors.white),
-                              )),
+                                          _accountNumberController.text,
+                                    ));
+                              }
+                            },
+                      buttonText: accountLoading
+                          ? SizedBox(
+                              height: ScreenConfig.screenHeight * 0.02,
+                              width: ScreenConfig.screenHeight * 0.02,
+                              child: const CircularProgressIndicator(
+                                strokeWidth: 3,
+                                color: AppColors.primaryColor,
+                              ),
+                            )
+                          : const Text(
+                              "Submit",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  // fontSize: 10,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                    ),
                   ),
                 ],
               ),
@@ -183,7 +218,9 @@ class _BankLinkState extends State<BankLink> {
                   Form(
                     key: myKey2,
                     child: Expanded(
+                      flex: 2,
                       child: TextFormField(
+                        enabled: accountSent,
                         controller: _otpController,
                         validator: (value) => validateOTPField(value),
                         decoration: InputDecoration(
@@ -200,11 +237,12 @@ class _BankLinkState extends State<BankLink> {
                   ),
                   const SizedBox(width: 16),
                   Expanded(
+                    flex: 1,
                     child: MyButton(
-                        backgroundColor: loading
+                        backgroundColor: otpLoading || !accountSent
                             ? AppColors.iconColor
                             : AppColors.primaryDarkColor,
-                        onPressed: loading
+                        onPressed: otpLoading || !accountSent
                             ? () {}
                             : () {
                                 if (myKey2.currentState!.validate() &&
@@ -213,7 +251,7 @@ class _BankLinkState extends State<BankLink> {
                                       otpNumber: _otpController.text));
                                 }
                               },
-                        buttonText: loading
+                        buttonText: otpLoading
                             ? SizedBox(
                                 height: ScreenConfig.screenHeight * 0.02,
                                 width: ScreenConfig.screenHeight * 0.02,
@@ -222,10 +260,15 @@ class _BankLinkState extends State<BankLink> {
                                   color: AppColors.primaryColor,
                                 ),
                               )
-                            : const Text(
-                                "Add",
-                                style: TextStyle(color: Colors.white),
-                              )),
+                            : !accountSent
+                                ? const Text(
+                                    "Add",
+                                    style: TextStyle(color: Colors.white),
+                                  )
+                                : const Text(
+                                    "Add",
+                                    style: TextStyle(color: Colors.white),
+                                  )),
                   ),
                 ],
               ),
@@ -233,16 +276,17 @@ class _BankLinkState extends State<BankLink> {
                 padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 16),
                 child: Divider(),
               ),
-              AccountCard(
-                name: 'Abdulsemed Mussema',
-                id: '1022200133387',
-                onAccept: () {
-                  // Handle accept action
-                },
-                onReject: () {
-                  // Handle reject action
-                },
-              ),
+              if (!loadValues || !accountLoading || accountNumber != "")
+                AccountCard(
+                  name: accountHolder,
+                  id: accountNumber,
+                  onAccept: () {
+                    // Handle accept action
+                  },
+                  onReject: () {
+                    // Handle reject action
+                  },
+                ),
             ],
           ),
         ),
@@ -251,6 +295,6 @@ class _BankLinkState extends State<BankLink> {
   }
 
   void _initializeTextFields() async {
-    _accountNumberController.text = accountInfo!;
+    _accountNumberController.text = accountNumber;
   }
 }

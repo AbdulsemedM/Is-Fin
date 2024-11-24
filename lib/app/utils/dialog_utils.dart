@@ -5,7 +5,7 @@ import 'dart:async';
 Future<void> displaySnack(
     BuildContext context, String message, Color? bgColor) async {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    duration: const Duration(milliseconds: 1000),
+    duration: const Duration(milliseconds: 3000),
     content: Text(message),
     backgroundColor: bgColor ?? const Color(0xFF121814),
   ));

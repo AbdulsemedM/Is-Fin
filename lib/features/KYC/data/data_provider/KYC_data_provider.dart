@@ -228,4 +228,15 @@ class KycDataProvider {
       throw e.toString();
     }
   }
+
+  Future<String> fetchAccountInfo() async {
+    try {
+      final apiProvider = ProviderSetup.getApiProvider(ApiConstants.baseUrl);
+      final response =
+          await apiProvider.getRequest("/api/kyc/account/accountNumber");
+      return response.body;
+    } catch (e) {
+      throw e.toString();
+    }
+  }
 }

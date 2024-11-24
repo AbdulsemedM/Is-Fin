@@ -158,13 +158,16 @@ class _BusinessInfoState extends State<BusinessInfo> {
             } else if (state is KycRegionsFetchedSuccess) {
               setState(() {
                 myRegions = state.regionInfo;
-                String regionId = myRegions
-                    .firstWhere((region) =>
-                        region.regionName ==
-                        businessData!.businessAddressDto.businessAddressregion)
-                    .id
-                    .toString();
-                fetchzone(regionId);
+                if (businessData != null) {
+                  String regionId = myRegions
+                      .firstWhere((region) =>
+                          region.regionName ==
+                          businessData!
+                              .businessAddressDto.businessAddressregion)
+                      .id
+                      .toString();
+                  fetchzone(regionId);
+                }
                 // _initializeTextFields();
                 loadValues = false;
               });

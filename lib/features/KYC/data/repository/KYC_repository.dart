@@ -45,7 +45,7 @@ class KycRepository {
       if (data['httpStatus'] != 200) {
         throw data['message'];
       }
-      // print(PersonalInfoModel.fromMap(data['response']));
+      print(data['response']);
       return PersonalInfoModel.fromMap(data['response']);
     } catch (e) {
       // print(e.toString());
@@ -84,6 +84,7 @@ class KycRepository {
       if (data['httpStatus'] != 200) {
         throw data['message'];
       }
+      print(data['response']);
       return BusinessInfoModel.fromMap(data['response']);
     } catch (e) {
       throw e; // This will throw only the `message` part if thrown from above
@@ -104,6 +105,7 @@ class KycRepository {
         throw data['message'];
       }
       saveAccountInfo(accountNumber);
+      print(data['message']);
       return data['message'];
     } catch (e) {
       // Print and re-throw the exception for the message only
@@ -225,6 +227,25 @@ class KycRepository {
         throw data['message'];
       }
       return KycStatusModel.fromMap(data['response']);
+    } catch (e) {
+      // print(e.toString());
+      throw e; // This will throw only the `message` part if thrown from above
+    }
+  }
+
+  Future<Map<String, String>> fetchAccountInfo() async {
+    try {
+      // print("here we gooooo");
+      final accountData = await kycDataProvider.fetchAccountInfo();
+      final data = jsonDecode(accountData);
+      if (data['httpStatus'] != 200) {
+        throw data['message'];
+      }
+      Map<String, String> accountInfo = {
+        "accountNumber": data['response']['accountNumber'],
+        "accountName": data['response']['accountName']
+      };
+      return accountInfo;
     } catch (e) {
       // print(e.toString());
       throw e; // This will throw only the `message` part if thrown from above

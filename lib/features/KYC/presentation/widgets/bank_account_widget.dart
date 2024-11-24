@@ -66,16 +66,16 @@ class AccountCard extends StatelessWidget {
           ),
 
           // Reject Icon
-          GestureDetector(
-            onTap: onReject,
-            child: CircleAvatar(
-              backgroundColor: Colors.red[100],
-              child: Icon(
-                Icons.close,
-                color: Colors.red,
-              ),
-            ),
-          ),
+          // GestureDetector(
+          //   onTap: onReject,
+          //   child: CircleAvatar(
+          //     backgroundColor: Colors.red[100],
+          //     child: Icon(
+          //       Icons.close,
+          //       color: Colors.red,
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

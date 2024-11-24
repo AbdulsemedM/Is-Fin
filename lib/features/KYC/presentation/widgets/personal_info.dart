@@ -174,15 +174,17 @@ class _PersonalInfoState extends State<PersonalInfo> {
             } else if (state is KycRegionsFetchedSuccess) {
               setState(() {
                 myRegions = state.regionInfo;
-                String regionId = myRegions
-                    .firstWhere((region) =>
-                        region.regionName ==
-                        personalData!.residentialInfoDto.region)
-                    .id
-                    .toString();
-                // print("regionId");
-                // print(regionId);
-                fetchzone(regionId);
+                if (personalData != null) {
+                  String regionId = myRegions
+                      .firstWhere((region) =>
+                          region.regionName ==
+                          personalData!.residentialInfoDto.region)
+                      .id
+                      .toString();
+                  // print("regionId");
+                  // print(regionId);
+                  fetchzone(regionId);
+                }
                 // _initializeTextFields();
                 loadValues = false;
               });
