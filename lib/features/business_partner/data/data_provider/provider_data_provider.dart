@@ -13,4 +13,25 @@ class ProviderDataProvider {
       throw e.toString();
     }
   }
+
+  Future<String> verifyProvider(String phoneNumber, String name) async {
+    try {
+      final body = {"phoneNumber": phoneNumber, "fullName": name};
+      final apiProvider = ProviderSetup.getApiProvider(ApiConstants.baseUrl);
+      final response = await apiProvider.postRequest("/api/user/partner", body);
+      return response.body;
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  Future<String> getProvider() async {
+    try {
+      final apiProvider = ProviderSetup.getApiProvider(ApiConstants.baseUrl);
+      final response = await apiProvider.getRequest("/api/user/partner");
+      return response.body;
+    } catch (e) {
+      throw e.toString();
+    }
+  }
 }

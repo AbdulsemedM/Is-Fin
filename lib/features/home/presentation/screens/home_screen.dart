@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
 import 'package:ifb_loan/features/KYC/presentation/screen/kyc_screen.dart';
+import 'package:ifb_loan/features/business_partner/presentation/screen/business_partners_screen.dart';
 // import 'package:ifb_loan/configuration/auth_service.dart';
 import 'package:ifb_loan/features/home/presentation/widgets/home_icon_widget.dart';
 import 'package:ifb_loan/features/home/presentation/widgets/slider_widget.dart';
@@ -176,7 +177,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   icon: Icons.person_add,
                   iconColor: Colors.deepOrange,
                   onClicked: () {
-                    // print("Provider clicked");
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                const BusinessPartnersScreen()));
                   },
                 ),
                 HomeIconWidget(

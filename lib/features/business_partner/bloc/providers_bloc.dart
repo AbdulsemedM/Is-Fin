@@ -8,17 +8,51 @@ class ProvidersBloc extends Bloc<ProvidersEvent, ProvidersState> {
   final ProviderRepository providerRepository;
   ProvidersBloc(this.providerRepository) : super(ProviderSendInitial()) {
     on<ProviderSend>(_sendProvider);
+    on<ProviderVerify>(_verifyProvider);
+    on<ProviderFetch>(_fetchProvider);
   }
   void _sendProvider(ProviderSend event, Emitter<ProvidersState> emit) async {
     emit(ProviderSendLoading());
     // print("loading...");
     try {
       // final login =
-      await providerRepository.sendProvider(event.phoneNumber);
-      emit(ProviderSendSuccess());
+      final provider = await providerRepository.sendProvider(event.phoneNumber);
+      emit(ProviderSendSuccess(provider: provider));
       // print(signup);
     } catch (e) {
       emit(ProviderSendFailure(e.toString()));
+      // print("failure...");
+      // print(e.toString());
+    }
+  }
+
+  void _verifyProvider(
+      ProviderVerify event, Emitter<ProvidersState> emit) async {
+    emit(ProviderVerifyLoading());
+    // print("loading...");
+    try {
+      // final login =
+      final message = await providerRepository.verifyProvider(
+          event.phoneNumber, event.name);
+      emit(ProviderVerifySuccess(message: message));
+      // print(signup);
+    } catch (e) {
+      emit(ProviderVerifyFailure(e.toString()));
+      // print("failure...");
+      // print(e.toString());
+    }
+  }
+
+  void _fetchProvider(ProviderFetch event, Emitter<ProvidersState> emit) async {
+    emit(ProviderFetchLoading());
+    // print("loading...");
+    try {
+      // final login =
+      final providers = await providerRepository.getProvider();
+      emit(ProviderFetchSuccess(providers: providers));
+      // print(signup);
+    } catch (e) {
+      emit(ProviderFetchFailure(e.toString()));
       // print("failure...");
       // print(e.toString());
     }
