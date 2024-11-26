@@ -55,7 +55,7 @@ class _AddBisinessPartnerScreenState extends State<AddBisinessPartnerScreen> {
             });
           } else if (state is ProviderSendFailure) {
             setState(() {
-              loading = true;
+              loading = false;
             });
             displaySnack(context, state.errorMessage, Colors.red);
           } else if (state is ProviderVerifyLoading) {
@@ -66,6 +66,7 @@ class _AddBisinessPartnerScreenState extends State<AddBisinessPartnerScreen> {
             setState(() {
               loading2 = false;
             });
+            context.read<ProvidersBloc>().add(ProviderFetch());
             displaySnack(context, state.message, Colors.black);
             Navigator.pop(context, true);
           } else if (state is ProviderVerifyFailure) {
@@ -229,8 +230,13 @@ class _AddBisinessPartnerScreenState extends State<AddBisinessPartnerScreen> {
                         ? AppColors.iconColor
                         : AppColors.primaryDarkColor,
                     onPressed: loading
-                        ? () {}
+                        ? () {
+                            context.read<ProvidersBloc>().add(ProviderFetch());
+                            Navigator.pop(context, true);
+                          }
                         : () {
+                            context.read<ProvidersBloc>().add(ProviderFetch());
+                            Navigator.pop(context, true);
                             setState(() {
                               loading = true;
                             });

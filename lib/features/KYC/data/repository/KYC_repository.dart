@@ -243,7 +243,7 @@ class KycRepository {
       }
       Map<String, String> accountInfo = {
         "accountNumber": data['response']['accountNumber'],
-        "accountName": data['response']['accountName']
+        "accountName": data['response']['accountHolderName']
       };
       return accountInfo;
     } catch (e) {

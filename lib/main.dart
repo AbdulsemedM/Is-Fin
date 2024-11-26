@@ -9,6 +9,9 @@ import 'package:ifb_loan/features/KYC/data/repository/KYC_repository.dart';
 import 'package:ifb_loan/features/business_partner/bloc/providers_bloc.dart';
 import 'package:ifb_loan/features/business_partner/data/data_provider/provider_data_provider.dart';
 import 'package:ifb_loan/features/business_partner/data/repository/provider_repository.dart';
+import 'package:ifb_loan/features/loan_application/bloc/loan_app_bloc.dart';
+import 'package:ifb_loan/features/loan_application/data/data_provider/loan_app_provider.dart';
+import 'package:ifb_loan/features/loan_application/data/repository/loan_app_repository.dart';
 import 'package:ifb_loan/features/login/bloc/login_bloc.dart';
 import 'package:ifb_loan/features/login/data/data_provider/login_data_provider.dart';
 import 'package:ifb_loan/features/login/data/repository/login_repository.dart';
@@ -37,6 +40,9 @@ void main() async {
       BlocProvider(
           create: (contex) =>
               ProvidersBloc(ProviderRepository(ProviderDataProvider()))),
+      BlocProvider(
+          create: (contex) =>
+              LoanAppBloc(LoanAppRepository(LoanAppProvider()))),
     ],
     child: MyApp(isFirstTime: isFirstTime),
   ));

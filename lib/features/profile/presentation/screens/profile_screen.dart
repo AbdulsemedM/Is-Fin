@@ -30,6 +30,7 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
   double kycStatus = 0;
   bool isPersonalFetched = false;
   bool isBusinessFetched = false;
+  bool isAccountFetched = false;
   bool areImagesFetched = false;
 
   @override
@@ -51,6 +52,7 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
     context.read<KycBloc>().add(PersonalKYCFetched());
     context.read<KycBloc>().add(BusinessKYCFetched());
     context.read<KycBloc>().add(ImagesKYCFetched());
+    context.read<KycBloc>().add(AccountKYCFetched());
   }
 
   @override
@@ -59,6 +61,7 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
       listener: (context, state) {
         if (state is KycPersonalFetchedLoading ||
             state is KycBusinessFetchedLoading ||
+            state is KycAccountFetchedLoading ||
             state is KycIMagesFetchedLoading) {
           setState(() {
             progressLoading = true;
@@ -68,6 +71,7 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
         if (state is KycPersonalFetchedSuccess && progressLoading) {
           setState(() {
             if (!isPersonalFetched) {
+              print("KycPersonalFetchedSuccess");
               kycStatus += 25;
               steps.add("Perssonal Info.");
               isPersonalFetched = true;
@@ -76,8 +80,18 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
         } else if (state is KycBusinessFetchedSuccess && progressLoading) {
           setState(() {
             if (!isBusinessFetched) {
+              print("KycBusinessFetchedSuccess");
               kycStatus += 25;
               steps.add("Business Info.");
+              isBusinessFetched = true;
+            }
+          });
+        } else if (state is KycAccountFetchedSuccess && progressLoading) {
+          setState(() {
+            if (!isAccountFetched) {
+              print("KycAccountFetchedSuccess");
+              kycStatus += 25;
+              steps.add("Account Info.");
               isBusinessFetched = true;
             }
           });
@@ -89,6 +103,7 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
               String? renewedId =
                   (images.renewedId?.isNotEmpty ?? false) ? "Done" : null;
               if (renewedId != null) {
+                print("renewedId");
                 kycStatus += 6.25;
                 addStep("Images Info.");
               }
@@ -96,17 +111,18 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
               String? tinNumber =
                   (images.tinNumber?.isNotEmpty ?? false) ? "Done" : null;
               if (tinNumber != null) {
+                print("tinNumber");
                 kycStatus += 6.25;
                 addStep("Images Info.");
               }
 
-              String? regCertificate = (images
-                          .commercialRegistrationCertificateFileName
-                          ?.isNotEmpty ??
-                      false)
-                  ? "Done"
-                  : null;
+              String? regCertificate =
+                  (images.commercialRegistrationCertificate?.isNotEmpty ??
+                          false)
+                      ? "Done"
+                      : null;
               if (regCertificate != null) {
+                print("regCertificate");
                 kycStatus += 6.25;
                 addStep("Images Info.");
               }
@@ -116,6 +132,7 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
                       ? "Done"
                       : null;
               if (tradeLicense != null) {
+                print("tradeLicense");
                 kycStatus += 6.25;
                 addStep("Images Info.");
               }
@@ -126,18 +143,20 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
         }
 
         // Check if all success states are true
-        if (isPersonalFetched && isBusinessFetched && areImagesFetched) {
+        if (isPersonalFetched &&
+            isAccountFetched &&
+            isBusinessFetched &&
+            areImagesFetched) {
           setState(() {
-            step2 = steps.firstWhere((step) => step == "Images Info.");
-            step1 = "Business Info.";
-            if (step2 != "Images Info.") {
-              step2 = steps.firstWhere((step) => step == "Business Info.");
-              step1 = "Personal Info.";
-            }
-            if (step2 != "Business Info") {
-              step2 = steps.firstWhere((step) => step == "Personal Info.");
-            }
-
+            step2 = steps.firstWhere(
+              (step) => step == "Images Info.",
+              orElse: () => steps.isNotEmpty ? steps.first : "Default Step",
+            );
+            step1 = step2 == "Images Info."
+                ? "Business Info."
+                : step2 == "Business Info."
+                    ? "Personal Info."
+                    : "Default Step";
             progressLoading = false;
           });
         }

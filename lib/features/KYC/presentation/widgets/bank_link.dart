@@ -124,6 +124,24 @@ class _BankLinkState extends State<BankLink> {
                 accountLoading = false;
                 displaySnack(context, state.errorMessage, Colors.red);
               });
+            } ///////////////////////////////////////////////////////////////
+            else if (state is KycOTPSentLoading) {
+              setState(() {
+                // loadValues = false;
+                // accountLoading = false;
+                // displaySnack(context, state.errorMessage, Colors.red);
+              });
+            } else if (state is KycOTPSentSuccess) {
+              setState(() {
+                displaySnack(
+                    context, "Account Verified Successfully", Colors.black);
+              });
+            } else if (state is KycOTPSentFailure) {
+              setState(() {
+                // loadValues = false;
+                // accountLoading = false;
+                displaySnack(context, state.errorMessage, Colors.red);
+              });
             }
           },
           child: Column(

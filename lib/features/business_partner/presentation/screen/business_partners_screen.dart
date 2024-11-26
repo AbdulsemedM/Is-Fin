@@ -33,6 +33,13 @@ class _BusinessPartnersScreenState extends State<BusinessPartnersScreen> {
               builder: (context) => const AddBisinessPartnerScreen(),
             ),
           );
+          // print("here is the result");
+          // print(result.runtimeType);
+          // if (result != null) {
+          //   print("here is the result");
+          //   print(result.runtimeType);
+          //   context.read<ProvidersBloc>().add(ProviderFetch());
+          // }
         },
         child: const CircleAvatar(
           backgroundColor: AppColors.primaryDarkColor,
