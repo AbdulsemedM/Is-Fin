@@ -19,6 +19,9 @@ import 'package:ifb_loan/features/loan_approval_status/data/repository/loan_appr
 import 'package:ifb_loan/features/login/bloc/login_bloc.dart';
 import 'package:ifb_loan/features/login/data/data_provider/login_data_provider.dart';
 import 'package:ifb_loan/features/login/data/repository/login_repository.dart';
+import 'package:ifb_loan/features/provider_loan_form/bloc/provider_loan_form_bloc.dart';
+import 'package:ifb_loan/features/provider_loan_form/data/data_provider/provider_loan_form_data_provider.dart';
+import 'package:ifb_loan/features/provider_loan_form/data/repository/provider_loan_form_repository.dart';
 import 'package:ifb_loan/features/signup/bloc/signup_bloc.dart';
 import 'package:ifb_loan/features/signup/data/data_provider/signup_data_provider.dart';
 import 'package:ifb_loan/features/signup/data/repository/signup_repository.dart';
@@ -49,12 +52,17 @@ void main() async {
           create: (contex) =>
               LoanAppBloc(LoanAppRepository(LoanAppProvider()))),
       BlocProvider(
+          create: (contex) => ProviderLoanFormBloc(
+              ProviderLoanFormRepository(ProviderLoanFormDataProvider()))),
+      BlocProvider(
           create: (contex) => LoanApprovalStatusBloc(
               LoanApprovalStatusRepository(LoanApprovalStatusDataProvider()))),
     ],
     child: MyApp(isFirstTime: isFirstTime),
   ));
 }
+
+class ProviderLoanFormProvider {}
 
 Future<bool> _checkFirstTime() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();

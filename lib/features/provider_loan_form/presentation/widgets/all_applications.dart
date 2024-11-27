@@ -1,9 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
+import 'package:ifb_loan/features/loan_approval_status/model/product_list_model.dart';
 import 'package:ifb_loan/features/provider_loan_form/presentation/widgets/provider_loan_list_widget.dart';
 
 class AllApplications extends StatefulWidget {
-  final List<Map<String, dynamic>> loanformList;
+  final List<StatusProductListModel> loanformList;
 
   const AllApplications({super.key, required this.loanformList});
 
@@ -19,12 +21,20 @@ class _AllApplicationsState extends State<AllApplications> {
       child: ListView(
         children: widget.loanformList.map((transaction) {
           return ProviderLoanListWidget(
-            name: transaction["name"],
-            amount: transaction["amount"],
-            description: transaction["description"],
-            date: transaction["date"],
-            icon: transaction["icon"],
-            iconColor: transaction["iconColor"],
+            name: transaction.supplierFullName,
+            amount: transaction.totalAmount?.toString() ?? "",
+            description: transaction.sectorName,
+            date: transaction.requestedAt,
+            icon: transaction.status == "PENDING"
+                ? Icons.timer
+                : transaction.status == "APPROVED"
+                    ? Icons.check
+                    : Icons.close,
+            iconColor: transaction.status == "PENDING"
+                ? Colors.orange
+                : transaction.status == "APPROVED"
+                    ? Colors.green
+                    : Colors.red,
           );
         }).toList(),
       ),
