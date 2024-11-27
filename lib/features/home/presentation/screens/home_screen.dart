@@ -66,24 +66,28 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Hello $name!",
-                      style: Theme.of(context)
-                          .textTheme
-                          .displaySmall
-                          ?.copyWith(fontWeight: FontWeight.w700, fontSize: 28),
-                    ),
-                    Text(
-                      _getGreeting(),
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyMedium!
-                          .copyWith(fontSize: 20),
-                    ),
-                  ],
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Hello $name!",
+                        style: Theme.of(context)
+                            .textTheme
+                            .displaySmall
+                            ?.copyWith(
+                                fontWeight: FontWeight.w700, fontSize: 28),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Text(
+                        _getGreeting(),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(fontSize: 20),
+                      ),
+                    ],
+                  ),
                 ),
                 const CircleAvatar(
                   radius: 25,

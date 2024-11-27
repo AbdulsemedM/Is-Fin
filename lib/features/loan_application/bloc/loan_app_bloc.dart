@@ -56,7 +56,7 @@ class LoanAppBloc extends Bloc<LoanAppEvent, LoanAppState> {
     try {
       // final unitofMeasurements =
       await loanAppRepository.sendProductRequest(event.products);
-      emit(ProductsSentLoading());
+      emit(ProductsSentSuccess());
     } catch (e) {
       emit(ProductsSentFailure(e.toString()));
     }

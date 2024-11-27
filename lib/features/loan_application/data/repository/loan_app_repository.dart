@@ -94,10 +94,9 @@ class LoanAppRepository {
       // print("here we gooooo");
       final productRequest = await loanAppProvider.sendProductRequest(product);
       final data = jsonDecode(productRequest);
-      if (data['httpStatus'] != 200) {
+      if (data['httpStatus'] != 201) {
         throw data['message'];
       }
-
       return data['message'];
     } catch (e) {
       // print(e.toString());

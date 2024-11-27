@@ -105,7 +105,8 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
               setState(() {
                 loading = false;
               });
-              displaySnack(context, "Logged in successfully", Colors.black);
+              displaySnack(
+                  context, "Product request sent successfully", Colors.black);
               Navigator.pop(context);
             } else if (state is ProductsSentFailure) {
               setState(() {
@@ -176,8 +177,9 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                               Expanded(
                                 child: TextFormField(
                                   controller: _productQuantityController,
-                                  keyboardType: const TextInputType.numberWithOptions(
-                                      decimal: true), // Allow decimals
+                                  keyboardType:
+                                      const TextInputType.numberWithOptions(
+                                          decimal: true), // Allow decimals
                                   inputFormatters: [
                                     FilteringTextInputFormatter.allow(
                                       RegExp(

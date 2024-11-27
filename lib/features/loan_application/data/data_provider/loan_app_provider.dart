@@ -53,16 +53,16 @@ class LoanAppProvider {
             "productName": prod.productName,
             "quantity": prod.productQuantity,
             "productDescription": prod.productDescription,
-            "productUUnitOfMeasurement": prod.productUnitofMeasurement,
+            "unitOfMeasurement": prod.productUnitofMeasurement,
           };
         }).toList(),
         "sectorName": product.sector,
         "repaymentCycleDuration": product.repymentPlan,
-        "supplierId": product.provider,
+        "phoneNumber": product.provider,
       };
 
       final response =
-          await apiProvider.postRequest("/api/product/request", body);
+          await apiProvider.postRequest("/api/product/buyer/request", body);
       // print(response.body);
       return response.body;
     } catch (e) {
