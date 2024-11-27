@@ -181,7 +181,7 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
             children: [
               // Background curves
               CustomPaint(
-                size: Size(double.infinity, 200), // Adjust height as needed
+                size: const Size(double.infinity, 200), // Adjust height as needed
                 painter: CurvedPainter(),
               ),
               // Add content inside the stack if needed, e.g., profile picture, settings icon
@@ -211,7 +211,7 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
             height: 20,
           ),
           Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: KycProgressCard(
               title: 'KYC Completed',
               percent: kycStatus / 100, step1: step1, step2: step2, // 74%
@@ -242,14 +242,14 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
                                 const BusinessPartnersScreen()));
                   },
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 const LoanStatusCard(
                   completedLoans: 13,
                   pendingLoans: 2,
                   failedLoans: 0,
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
+                const Padding(
+                  padding: EdgeInsets.all(12.0),
                   child: Text(
                       textAlign: TextAlign.center,
                       "If you are here as a product seller and wanted to fill a form or check status please click the button bellow"),

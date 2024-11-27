@@ -7,10 +7,10 @@ class UrlCard extends StatelessWidget {
   final VoidCallback onShare;
 
   const UrlCard({
-    Key? key,
+    super.key,
     required this.url,
     required this.onShare,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class UrlCard extends StatelessWidget {
           Expanded(
             child: Text(
               url,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
                 color: Colors.black87,
               ),
@@ -45,7 +45,7 @@ class UrlCard extends StatelessWidget {
 
           // Share icon
           IconButton(
-            icon: Icon(Icons.share, color: Colors.black87),
+            icon: const Icon(Icons.share, color: Colors.black87),
             onPressed: onShare,
           ),
         ],

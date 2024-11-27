@@ -58,10 +58,10 @@ class _SignupScreenState extends State<SignupScreen> {
               SizedBox(
                 height: ScreenConfig.screenHeight * 0.02,
               ),
-              Row(
+              const Row(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    padding: EdgeInsets.symmetric(horizontal: 8.0),
                     child: Icon(Icons.arrow_back_ios_new_outlined),
                   )
                 ],
@@ -97,7 +97,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         Row(
                           children: [
                             Padding(
-                              padding: EdgeInsets.symmetric(vertical: 8.0),
+                              padding: const EdgeInsets.symmetric(vertical: 8.0),
                               child: Text(
                                 "Full Name",
                                 style: Theme.of(context)
@@ -126,7 +126,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         Row(
                           children: [
                             Padding(
-                              padding: EdgeInsets.symmetric(vertical: 8.0),
+                              padding: const EdgeInsets.symmetric(vertical: 8.0),
                               child: Text(
                                 "Phone Number",
                                 style: Theme.of(context)
@@ -159,7 +159,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         Row(
                           children: [
                             Padding(
-                              padding: EdgeInsets.symmetric(vertical: 8.0),
+                              padding: const EdgeInsets.symmetric(vertical: 8.0),
                               child: Text(
                                 "Password",
                                 style: Theme.of(context)
@@ -200,7 +200,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                     });
                                   },
                                 )),
-                            contentPadding: EdgeInsets.symmetric(vertical: 16),
+                            contentPadding: const EdgeInsets.symmetric(vertical: 16),
                           ),
                           validator: (value) {
                             if (value?.isEmpty == true) {
@@ -214,7 +214,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         Row(
                           children: [
                             Padding(
-                              padding: EdgeInsets.symmetric(vertical: 8.0),
+                              padding: const EdgeInsets.symmetric(vertical: 8.0),
                               child: Text(
                                 "Confirm Password",
                                 style: Theme.of(context)
@@ -255,7 +255,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                     });
                                   },
                                 )),
-                            contentPadding: EdgeInsets.symmetric(vertical: 16),
+                            contentPadding: const EdgeInsets.symmetric(vertical: 16),
                           ),
                           validator: (value) {
                             if (value?.isEmpty == true) {

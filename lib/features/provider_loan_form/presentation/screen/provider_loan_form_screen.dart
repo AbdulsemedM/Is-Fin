@@ -37,9 +37,9 @@ class _ProviderLoanFormScreenState extends State<ProviderLoanFormScreen> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              Center(
+              const Center(
                   child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                padding: EdgeInsets.symmetric(vertical: 8.0),
                 child:
                     Text("Fill product prices form for Abdulsemed's request"),
               )),

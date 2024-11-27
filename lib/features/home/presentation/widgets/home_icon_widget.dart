@@ -6,7 +6,7 @@ class HomeIconWidget extends StatelessWidget {
   final Color iconColor;
   final VoidCallback onClicked; // Callback function for click events
 
-  HomeIconWidget({
+  const HomeIconWidget({super.key, 
     required this.title,
     required this.icon,
     required this.iconColor,
@@ -21,7 +21,7 @@ class HomeIconWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            padding: EdgeInsets.all(12),
+            padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
               color: iconColor,
               shape: BoxShape.circle,
@@ -30,7 +30,7 @@ class HomeIconWidget extends StatelessWidget {
                   color: Colors.black.withOpacity(0.1),
                   blurRadius: 5,
                   spreadRadius: 2,
-                  offset: Offset(0, 2),
+                  offset: const Offset(0, 2),
                 ),
               ],
             ),
@@ -40,10 +40,10 @@ class HomeIconWidget extends StatelessWidget {
               size: 30,
             ),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
             title,
-            style: TextStyle(fontSize: 14, color: Colors.black),
+            style: const TextStyle(fontSize: 14, color: Colors.black),
             textAlign: TextAlign.center,
           ),
         ],

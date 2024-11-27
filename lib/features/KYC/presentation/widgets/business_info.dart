@@ -201,7 +201,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
             child: Column(
               children: [
                 const Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(8.0),
                   child: Text("Complete all the fields below"),
                 ),
                 const Row(
@@ -348,7 +348,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
                             borderRadius: BorderRadius.circular(8.0),
                             borderSide: BorderSide.none,
                           ),
-                          suffixIcon: Icon(
+                          suffixIcon: const Icon(
                               Icons.calendar_today), // Adds a calendar icon
                         ),
                         controller:

@@ -6,11 +6,11 @@ class CustomListButton extends StatelessWidget {
   final VoidCallback onPressed;
 
   const CustomListButton({
-    Key? key,
+    super.key,
     required this.icon,
     required this.title,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +19,11 @@ class CustomListButton extends StatelessWidget {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor:
-              Color(0xFFF5E8E1), // Background color similar to your example
+              const Color(0xFFF5E8E1), // Background color similar to your example
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           elevation: 0, // No shadow
         ),
         onPressed: onPressed,
@@ -37,10 +37,10 @@ class CustomListButton extends StatelessWidget {
                   color: Colors.black,
                   size: 24,
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Text(
                   title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
@@ -48,7 +48,7 @@ class CustomListButton extends StatelessWidget {
                 ),
               ],
             ),
-            Icon(
+            const Icon(
               Icons.arrow_forward_ios,
               color: Colors.black,
               size: 20,

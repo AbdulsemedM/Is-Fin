@@ -50,16 +50,16 @@ class _DashboardPageState extends State<DashboardPage> {
           },
           items: [
             SalomonBottomBarItem(
-              icon: Icon(Icons.home_outlined),
-              title: Text("Home"),
+              icon: const Icon(Icons.home_outlined),
+              title: const Text("Home"),
             ),
             SalomonBottomBarItem(
-              icon: Icon(Icons.description_outlined),
-              title: Text("Finances"),
+              icon: const Icon(Icons.description_outlined),
+              title: const Text("Finances"),
             ),
             SalomonBottomBarItem(
-              icon: Icon(Icons.person),
-              title: Text("Profile"),
+              icon: const Icon(Icons.person),
+              title: const Text("Profile"),
             ),
           ],
         ),
@@ -80,7 +80,7 @@ class _DashboardPageState extends State<DashboardPage> {
                   onPressed: () {
                     Navigator.of(context).pop(false);
                   },
-                  child: Text("No")),
+                  child: const Text("No")),
               TextButton(
                   onPressed: () async {
                     deleteToken();
@@ -90,7 +90,7 @@ class _DashboardPageState extends State<DashboardPage> {
                         MaterialPageRoute(
                             builder: (context) => const LoginScreen()));
                   },
-                  child: Text(
+                  child: const Text(
                     "Yes",
                     style: TextStyle(color: Colors.red),
                   ))

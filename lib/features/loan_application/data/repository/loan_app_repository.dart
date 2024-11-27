@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:ifb_loan/features/loan_application/data/data_provider/loan_app_provider.dart';
+import 'package:ifb_loan/features/loan_application/models/products_request_model.dart';
 
 class LoanAppRepository {
   final LoanAppProvider loanAppProvider;
@@ -82,6 +83,22 @@ class LoanAppRepository {
       } else {
         throw "Invalid response format: Expected a list";
       }
+    } catch (e) {
+      // print(e.toString());
+      rethrow; // This will throw only the `message` part if thrown from above
+    }
+  }
+
+  Future<String> sendProductRequest(ProductsRequestModel product) async {
+    try {
+      // print("here we gooooo");
+      final productRequest = await loanAppProvider.sendProductRequest(product);
+      final data = jsonDecode(productRequest);
+      if (data['httpStatus'] != 200) {
+        throw data['message'];
+      }
+
+      return data['message'];
     } catch (e) {
       // print(e.toString());
       rethrow; // This will throw only the `message` part if thrown from above

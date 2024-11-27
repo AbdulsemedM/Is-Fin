@@ -11,13 +11,13 @@ class EmailPasswordSection extends StatelessWidget {
   final VoidCallback onSendOtp;
 
   const EmailPasswordSection({
-    Key? key,
+    super.key,
     required this.emailController,
     required this.passwordController,
     required this.confirmPasswordController,
     required this.loading,
     required this.onSendOtp,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class EmailPasswordSection extends StatelessWidget {
         Row(
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 8.0),
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Text(
                 "Email",
                 style: Theme.of(context)
@@ -54,11 +54,11 @@ class EmailPasswordSection extends StatelessWidget {
             return null;
           },
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         Row(
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 8.0),
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Text(
                 "New Password",
                 style: Theme.of(context)
@@ -85,11 +85,11 @@ class EmailPasswordSection extends StatelessWidget {
             return null;
           },
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         Row(
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 8.0),
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Text(
                 "Confirm Password",
                 style: Theme.of(context)
@@ -116,7 +116,7 @@ class EmailPasswordSection extends StatelessWidget {
             return null;
           },
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         MyButton(
           height: ScreenConfig.screenHeight * 0.055,
           width: ScreenConfig.screenWidth,

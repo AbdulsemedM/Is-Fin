@@ -33,7 +33,7 @@ class KycRepository {
     } catch (e) {
       // Print and re-throw the exception for the message only
       // print('Caught Exception: $e');
-      throw e; // This will throw only the `message` part if thrown from above
+      rethrow; // This will throw only the `message` part if thrown from above
     }
   }
 
@@ -49,7 +49,7 @@ class KycRepository {
       return PersonalInfoModel.fromMap(data['response']);
     } catch (e) {
       // print(e.toString());
-      throw e; // This will throw only the `message` part if thrown from above
+      rethrow; // This will throw only the `message` part if thrown from above
     }
   }
 
@@ -71,7 +71,7 @@ class KycRepository {
     } catch (e) {
       // Print and re-throw the exception for the message only
       // print('Caught Exception: $e');
-      throw e; // This will throw only the `message` part if thrown from above
+      rethrow; // This will throw only the `message` part if thrown from above
     }
   }
 
@@ -87,7 +87,7 @@ class KycRepository {
       print(data['response']);
       return BusinessInfoModel.fromMap(data['response']);
     } catch (e) {
-      throw e; // This will throw only the `message` part if thrown from above
+      rethrow; // This will throw only the `message` part if thrown from above
     }
   }
 
@@ -110,7 +110,7 @@ class KycRepository {
     } catch (e) {
       // Print and re-throw the exception for the message only
       // print('Caught Exception: $e');
-      throw e; // This will throw only the `message` part if thrown from above
+      rethrow; // This will throw only the `message` part if thrown from above
     }
   }
 
@@ -131,7 +131,7 @@ class KycRepository {
     } catch (e) {
       // Print and re-throw the exception for the message only
       // print('Caught Exception: $e');
-      throw e; // This will throw only the `message` part if thrown from above
+      rethrow; // This will throw only the `message` part if thrown from above
     }
   }
 
@@ -161,7 +161,7 @@ class KycRepository {
       }
       return data['message'];
     } catch (e) {
-      throw e; // This will throw only the `message` part if thrown from above
+      rethrow; // This will throw only the `message` part if thrown from above
     }
   }
 
@@ -176,7 +176,7 @@ class KycRepository {
       }
       return ImagesModel.fromMap(data['response']);
     } catch (e) {
-      throw e; // This will throw only the `message` part if thrown from above
+      rethrow; // This will throw only the `message` part if thrown from above
     }
   }
 
@@ -194,7 +194,7 @@ class KycRepository {
           .toList();
       return regions;
     } catch (e) {
-      throw e; // This will throw only the `message` part if thrown from above
+      rethrow; // This will throw only the `message` part if thrown from above
     }
   }
 
@@ -214,7 +214,7 @@ class KycRepository {
       // print(zones.length);
       return zones;
     } catch (e) {
-      throw e; // This will throw only the `message` part if thrown from above
+      rethrow; // This will throw only the `message` part if thrown from above
     }
   }
 
@@ -229,7 +229,7 @@ class KycRepository {
       return KycStatusModel.fromMap(data['response']);
     } catch (e) {
       // print(e.toString());
-      throw e; // This will throw only the `message` part if thrown from above
+      rethrow; // This will throw only the `message` part if thrown from above
     }
   }
 
@@ -248,7 +248,7 @@ class KycRepository {
       return accountInfo;
     } catch (e) {
       // print(e.toString());
-      throw e; // This will throw only the `message` part if thrown from above
+      rethrow; // This will throw only the `message` part if thrown from above
     }
   }
 

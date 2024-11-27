@@ -9,20 +9,20 @@ class ProviderLoanListWidget extends StatelessWidget {
   final Color iconColor;
 
   const ProviderLoanListWidget({
-    Key? key,
+    super.key,
     required this.name,
     required this.amount,
     required this.description,
     required this.date,
     required this.icon,
     required this.iconColor,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      padding: EdgeInsets.all(16),
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.grey.shade200,
         borderRadius: BorderRadius.circular(16),
@@ -38,19 +38,19 @@ class ProviderLoanListWidget extends StatelessWidget {
               size: 24,
             ),
           ),
-          SizedBox(width: 16),
+          const SizedBox(width: 16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   name,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w400,
                   ),
                 ),
-                SizedBox(height: 4),
+                const SizedBox(height: 4),
                 Text(
                   description,
                   style: TextStyle(
@@ -58,7 +58,7 @@ class ProviderLoanListWidget extends StatelessWidget {
                     color: Colors.grey.shade600,
                   ),
                 ),
-                SizedBox(height: 4),
+                const SizedBox(height: 4),
                 Text(
                   date,
                   style: TextStyle(
@@ -74,7 +74,7 @@ class ProviderLoanListWidget extends StatelessWidget {
             children: [
               Text(
                 amount,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
                   color: Colors.black,

@@ -9,11 +9,11 @@ class OtpSection extends StatelessWidget {
   final VoidCallback onSubmit;
 
   const OtpSection({
-    Key? key,
+    super.key,
     required this.otpController,
     required this.loading,
     required this.onSubmit,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class OtpSection extends StatelessWidget {
         Row(
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 8.0),
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Text(
                 "Enter OTP",
                 style: Theme.of(context)
@@ -50,7 +50,7 @@ class OtpSection extends StatelessWidget {
             return null;
           },
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         MyButton(
           height: ScreenConfig.screenHeight * 0.055,
           width: ScreenConfig.screenWidth,

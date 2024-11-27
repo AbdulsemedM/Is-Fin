@@ -9,14 +9,14 @@ class PaymentCard extends StatelessWidget {
   final String currency;
 
   const PaymentCard({
-    Key? key,
+    super.key,
     required this.roundNumber,
     required this.date,
     required this.status,
     required this.statusColor,
     required this.amount,
     required this.currency,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class PaymentCard extends StatelessWidget {
             children: [
               Text(
                 'Round $roundNumber',
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16.0,
                 ),
@@ -57,7 +57,7 @@ class PaymentCard extends StatelessWidget {
             children: [
               Text(
                 date,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.grey,
                   fontSize: 14.0,
                 ),
@@ -66,7 +66,7 @@ class PaymentCard extends StatelessWidget {
               // Amount text
               Text(
                 '$amount $currency',
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18.0,
                 ),

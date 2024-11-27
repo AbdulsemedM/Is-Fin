@@ -36,7 +36,7 @@ class _LoanRepaymentScreenState extends State<LoanRepaymentScreen> {
                   fit: BoxFit.contain,
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Row(
                 children: [
                   Text(
@@ -51,7 +51,7 @@ class _LoanRepaymentScreenState extends State<LoanRepaymentScreen> {
               SizedBox(
                 height: ScreenConfig.screenHeight * 0.7,
                 child: ListView.builder(
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   itemCount: paymentData.length,
                   itemBuilder: (context, index) {
                     final payment = paymentData[index];

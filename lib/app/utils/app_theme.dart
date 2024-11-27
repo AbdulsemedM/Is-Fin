@@ -38,7 +38,7 @@ class AppTheme {
       iconTheme: const IconThemeData(color: Colors.black),
       titleTextStyle: textStyle(),
       toolbarTextStyle: textStyle(),
-      systemOverlayStyle: SystemUiOverlayStyle(
+      systemOverlayStyle: const SystemUiOverlayStyle(
         statusBarColor: AppColors.primaryDarkColor,
         statusBarIconBrightness: Brightness.light,
         statusBarBrightness: Brightness.dark,

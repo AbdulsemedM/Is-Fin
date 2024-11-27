@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
+import 'package:ifb_loan/configuration/phone_number_manager.dart';
 import 'package:ifb_loan/features/KYC/bloc/kyc_bloc.dart';
 import 'package:ifb_loan/features/KYC/data/data_provider/KYC_data_provider.dart';
 import 'package:ifb_loan/features/KYC/data/repository/KYC_repository.dart';
@@ -34,7 +35,8 @@ void main() async {
           create: (context) =>
               SignupBloc(SignupRepository(SignupDataProvider()))),
       BlocProvider(
-          create: (contex) => LoginBloc(LoginRepository(LoginDataProvider()))),
+          create: (contex) =>
+              LoginBloc(LoginRepository(LoginDataProvider(), UserManager()))),
       BlocProvider(
           create: (contex) => KycBloc(KycRepository(KycDataProvider()))),
       BlocProvider(
@@ -70,7 +72,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       // title: 'Flutter Demo',
       theme: AppTheme.themeData(),
-      home: SplashScreenPage(),
+      home: const SplashScreenPage(),
     );
   }
 }

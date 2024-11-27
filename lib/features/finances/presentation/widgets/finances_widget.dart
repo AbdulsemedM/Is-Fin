@@ -9,14 +9,14 @@ class FinancesCard extends StatelessWidget {
   final VoidCallback onTap;
 
   const FinancesCard({
-    Key? key,
+    super.key,
     required this.icon,
     required this.iconContainerColor,
     required this.title,
     required this.subtitle,
     required this.containerColor,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

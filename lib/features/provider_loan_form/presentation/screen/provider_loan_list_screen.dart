@@ -48,7 +48,7 @@ class _ProviderLoanListScreenState extends State<ProviderLoanListScreen> {
                     backgroundColor: AppColors.iconColor,
                     sliderColor: AppColors.primaryDarkColor,
                     controller: _selectedSegment,
-                    segments: {
+                    segments: const {
                       'new': 'New',
                       'all': 'All',
                       'approved': 'Approved',
@@ -71,7 +71,7 @@ class _ProviderLoanListScreenState extends State<ProviderLoanListScreen> {
                           loanformList: loanformList,
                         );
                       }
-                      return SizedBox.shrink(); // Empty widget if no match
+                      return const SizedBox.shrink(); // Empty widget if no match
                     },
                   ),
                   // SizedBox(

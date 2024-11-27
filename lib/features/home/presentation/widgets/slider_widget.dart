@@ -8,7 +8,7 @@ class ExpandableCard extends StatefulWidget {
   final VoidCallback onGetStarted;
   final Color cardColor; // Accepts a color for the entire card background
 
-  ExpandableCard({
+  const ExpandableCard({super.key, 
     required this.title,
     required this.iconContainer,
     required this.description,
@@ -39,22 +39,22 @@ class _ExpandableCardState extends State<ExpandableCard> {
               Row(
                 children: [
                   widget.iconContainer, // Display custom icon container
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Expanded(
                     child: Text(
                       widget.title,
                       style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Text(
                 _isExpanded
                     ? widget.description
-                    : widget.description.substring(0, 80) + '...',
-                style: TextStyle(fontSize: 16),
+                    : '${widget.description.substring(0, 80)}...',
+                style: const TextStyle(fontSize: 16),
               ),
               TextButton(
                 onPressed: () {
@@ -73,7 +73,7 @@ class _ExpandableCardState extends State<ExpandableCard> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  child: Text('Get Started'),
+                  child: const Text('Get Started'),
                 ),
             ],
           ),

@@ -10,6 +10,8 @@ import 'package:ifb_loan/features/KYC/presentation/widgets/personal_info.dart';
 import 'package:ifb_loan/features/KYC/presentation/widgets/upload_images.dart';
 
 class CompleteKYCDetail extends StatefulWidget {
+  const CompleteKYCDetail({super.key});
+
   @override
   _CompleteKYCDetailState createState() => _CompleteKYCDetailState();
 }
@@ -102,11 +104,11 @@ class _CompleteKYCDetailState extends State<CompleteKYCDetail> {
                         color: Colors.black.withOpacity(.3),
                         blurRadius: 4.0,
                         spreadRadius: 1.0,
-                        offset: Offset(0.0, 2.0),
+                        offset: const Offset(0.0, 2.0),
                       ),
                     ],
                   ),
-                  duration: Duration(milliseconds: 300),
+                  duration: const Duration(milliseconds: 300),
                   curve: Curves.easeInToLinear,
                   onValueChanged: (value) {
                     setState(() {

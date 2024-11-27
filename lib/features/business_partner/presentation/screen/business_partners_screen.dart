@@ -5,6 +5,7 @@ import 'package:ifb_loan/app/utils/dialog_utils.dart';
 import 'package:ifb_loan/features/business_partner/bloc/providers_bloc.dart';
 import 'package:ifb_loan/features/business_partner/presentation/screen/add_bisiness_partner_screen.dart';
 import 'package:ifb_loan/features/business_partner/presentation/widget/business_partners_card.dart';
+import 'package:ifb_loan/features/loan_application/bloc/loan_app_bloc.dart';
 
 class BusinessPartnersScreen extends StatefulWidget {
   const BusinessPartnersScreen({super.key});
@@ -64,9 +65,13 @@ class _BusinessPartnersScreenState extends State<BusinessPartnersScreen> {
               loading = true;
             });
           } else if (state is ProviderFetchSuccess) {
+            context
+                .read<LoanAppBloc>()
+                .add(UpdateProvidersEvent(state.providers));
+            print("sent from the business page");
             setState(() {
               loading = false;
-              myProviders = state.providers; // Assign fetched providers
+              myProviders = state.providers;
             });
           } else if (state is ProviderFetchFailure) {
             setState(() {

@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 
 class TableItem {
   final String name;
-  final int quantity;
+  final double quantity;
   final VoidCallback onDelete;
+  final VoidCallback onEdit;
 
   TableItem({
     required this.name,
     required this.quantity,
     required this.onDelete,
+    required this.onEdit,
   });
 }
 
@@ -16,9 +18,9 @@ class TableWidget extends StatelessWidget {
   final List<TableItem> items;
 
   const TableWidget({
-    Key? key,
+    super.key,
     required this.items,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,8 @@ class TableWidget extends StatelessWidget {
           0: FixedColumnWidth(40.0),
           1: FlexColumnWidth(),
           2: FixedColumnWidth(60.0),
-          3: FixedColumnWidth(40.0),
+          3: FixedColumnWidth(40.0), // Delete button
+          4: FixedColumnWidth(40.0), // Edit button
         },
         border: TableBorder(
           horizontalInside: BorderSide(color: Colors.grey[300]!),
@@ -42,23 +45,24 @@ class TableWidget extends StatelessWidget {
           // Table header
           TableRow(
             decoration: BoxDecoration(color: Colors.grey[200]),
-            children: [
+            children: const [
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(8.0),
                 child:
                     Text('No.', style: TextStyle(fontWeight: FontWeight.bold)),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(8.0),
                 child:
                     Text('Name', style: TextStyle(fontWeight: FontWeight.bold)),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(8.0),
                 child: Text('Quantity',
                     style: TextStyle(fontWeight: FontWeight.bold)),
               ),
-              SizedBox(width: 40), // For delete icon spacing
+              SizedBox(width: 40), // Delete button spacing
+              SizedBox(width: 40), // Edit button spacing
             ],
           ),
           // Table rows
@@ -72,14 +76,18 @@ class TableWidget extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(items[i].name,
-                      style: TextStyle(fontWeight: FontWeight.w600)),
+                      style: const TextStyle(fontWeight: FontWeight.w600)),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(items[i].quantity.toString()),
                 ),
                 IconButton(
-                  icon: Icon(Icons.close, color: Colors.red),
+                  icon: const Icon(Icons.edit, color: Colors.blue),
+                  onPressed: items[i].onEdit,
+                ),
+                IconButton(
+                  icon: const Icon(Icons.close, color: Colors.red),
                   onPressed: items[i].onDelete,
                 ),
               ],

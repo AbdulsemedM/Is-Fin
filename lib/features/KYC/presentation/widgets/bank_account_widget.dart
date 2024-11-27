@@ -7,12 +7,12 @@ class AccountCard extends StatelessWidget {
   final VoidCallback onReject;
 
   const AccountCard({
-    Key? key,
+    super.key,
     required this.name,
     required this.id,
     required this.onAccept,
     required this.onReject,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class AccountCard extends StatelessWidget {
             onTap: onAccept,
             child: CircleAvatar(
               backgroundColor: Colors.green[100],
-              child: Icon(
+              child: const Icon(
                 Icons.check,
                 color: Colors.green,
               ),
@@ -46,7 +46,7 @@ class AccountCard extends StatelessWidget {
               children: [
                 Text(
                   name,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                     color: Colors.black87,
@@ -55,7 +55,7 @@ class AccountCard extends StatelessWidget {
                 const SizedBox(height: 4.0),
                 Text(
                   id,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
                     color: Colors.black87,

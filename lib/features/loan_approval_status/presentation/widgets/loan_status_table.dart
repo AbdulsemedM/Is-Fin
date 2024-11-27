@@ -4,9 +4,9 @@ class LoanStatusTable extends StatelessWidget {
   final List<Map<String, dynamic>> items;
 
   const LoanStatusTable({
-    Key? key,
+    super.key,
     required this.items,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class LoanStatusTable extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: DataTable(
         columnSpacing: 16,
-        headingRowColor: MaterialStateColor.resolveWith(
+        headingRowColor: WidgetStateColor.resolveWith(
             (states) => Colors.grey[300]!), // Light grey color for header
         columns: const [
           DataColumn(label: Text('No.')),

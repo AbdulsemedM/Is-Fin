@@ -14,3 +14,13 @@ class RepaymentsFetch extends LoanAppEvent {
 class UnitofMeasurementsFetch extends LoanAppEvent {
   UnitofMeasurementsFetch();
 }
+
+class ProductsRequestSent extends LoanAppEvent {
+  final ProductsRequestModel products;
+  ProductsRequestSent({required this.products});
+}
+
+class UpdateProvidersEvent extends LoanAppEvent {
+  final List<Map<String, String>> providers; // Add providers list to the event
+  UpdateProvidersEvent(this.providers);
+}

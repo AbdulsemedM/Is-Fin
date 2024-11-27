@@ -30,7 +30,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Forgot Password"),
+        title: const Text("Forgot Password"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -54,15 +54,15 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               },
             ),
 
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
 
             // Divider
-            Divider(
+            const Divider(
               color: Colors.grey,
               thickness: 1,
             ),
 
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
 
             // OTP Input and Submit Button
             OtpSection(

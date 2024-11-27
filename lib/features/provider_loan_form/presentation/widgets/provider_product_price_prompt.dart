@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ProductTable extends StatelessWidget {
   final List<Map<String, String>> products;
 
-  ProductTable({required this.products});
+  const ProductTable({super.key, required this.products});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class ProductTable extends StatelessWidget {
         Container(
           color: Colors.grey[300],
           padding: const EdgeInsets.all(8.0),
-          child: Row(
+          child: const Row(
             children: [
               Expanded(
                   child: Text('Name',
@@ -54,7 +54,7 @@ class ProductRow extends StatelessWidget {
   final String description;
   final VoidCallback onRemove;
 
-  ProductRow({
+  const ProductRow({super.key, 
     required this.name,
     required this.description,
     required this.onRemove,
@@ -68,7 +68,7 @@ class ProductRow extends StatelessWidget {
         children: [
           // Product name and quantity
           Expanded(
-            child: Text(name, style: TextStyle(fontWeight: FontWeight.bold)),
+            child: Text(name, style: const TextStyle(fontWeight: FontWeight.bold)),
           ),
           // Product description
           Expanded(
@@ -77,9 +77,9 @@ class ProductRow extends StatelessWidget {
           // Price text field and delete button
           Row(
             children: [
-              Container(
+              SizedBox(
                 width: 80,
-                child: TextField(
+                child: const TextField(
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Price',
@@ -88,7 +88,7 @@ class ProductRow extends StatelessWidget {
                 ),
               ),
               IconButton(
-                icon: Icon(Icons.close),
+                icon: const Icon(Icons.close),
                 onPressed: onRemove,
               ),
             ],

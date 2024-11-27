@@ -364,7 +364,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                             borderRadius: BorderRadius.circular(8.0),
                             borderSide: BorderSide.none,
                           ),
-                          suffixIcon: Icon(
+                          suffixIcon: const Icon(
                               Icons.calendar_today), // Adds a calendar icon
                         ),
                         onTap: () async {
@@ -505,7 +505,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                 if (_maritalStatusController.text == "Married")
                   Column(
                     children: [
-                      Row(
+                      const Row(
                         children: [
                           Expanded(
                               child: Divider(
@@ -513,7 +513,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                             thickness: 1,
                           )),
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: EdgeInsets.all(8.0),
                             child: Text("Spouse info."),
                           ),
                           Expanded(
@@ -607,7 +607,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                   ),
 
                 const SizedBox(height: 16),
-                Row(
+                const Row(
                   children: [
                     Expanded(
                         child: Divider(
@@ -615,7 +615,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                       thickness: 1,
                     )),
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(8.0),
                       child: Text("Altenative contact person"),
                     ),
                     Expanded(
@@ -897,7 +897,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                           )
                         : Text(
                             personalData != null ? "Re-Submit" : "Submit",
-                            style: TextStyle(color: Colors.white),
+                            style: const TextStyle(color: Colors.white),
                           )),
                 const SizedBox(height: 16),
                 // const Spacer(),

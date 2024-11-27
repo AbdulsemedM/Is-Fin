@@ -10,7 +10,7 @@ class LoanCard extends StatelessWidget {
   final Widget image;
 
   const LoanCard({
-    Key? key,
+    super.key,
     required this.loanTitle,
     required this.loanDescription,
     required this.amount,
@@ -18,7 +18,7 @@ class LoanCard extends StatelessWidget {
     required this.backgroundColor,
     this.currency = 'ETB',
     required this.image,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class LoanCard extends StatelessWidget {
       ),
       child: ListTile(
         contentPadding: const EdgeInsets.all(12.0),
-        trailing: Container(
+        trailing: SizedBox(
           width: 60,
           height: 60,
           child: image, // Display the image as leading icon
@@ -40,7 +40,7 @@ class LoanCard extends StatelessWidget {
           children: [
             Text(
               loanTitle,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.bold,
                 color: Colors.black87,
@@ -57,7 +57,7 @@ class LoanCard extends StatelessWidget {
             const SizedBox(height: 4),
             Text(
               '${amount.toStringAsFixed(2)} $currency',
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
                 color: Colors.black87,

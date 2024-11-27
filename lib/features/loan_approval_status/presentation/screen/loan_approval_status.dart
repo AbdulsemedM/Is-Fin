@@ -32,13 +32,13 @@ class _LoanApprovalStatusState extends State<LoanApprovalStatus> {
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodyLarge,
                   'Your loan application from ABC General Trading  has been approved by the product owner and now it is under review by the bank’s officials. The bank will put it’s benefits to the product and will let you know the final offer soon.'),
-              LoanStatusTable(items: [
+              const LoanStatusTable(items: [
                 {'name': 'Laptop', 'quantity': 3, 'total': '81,000'},
                 {'name': 'Tablet Phone', 'quantity': 10, 'total': '64,000'},
                 {'name': 'Smart Phone', 'quantity': 7, 'total': '49,000'},
                 {'name': 'Smart TV', 'quantity': 10, 'total': '72,000'},
               ]),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

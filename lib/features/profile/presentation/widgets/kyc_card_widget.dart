@@ -8,12 +8,12 @@ class KycProgressCard extends StatelessWidget {
   final String step2;
 
   const KycProgressCard({
-    Key? key,
+    super.key,
     required this.title,
     required this.percent,
     required this.step1,
     required this.step2,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

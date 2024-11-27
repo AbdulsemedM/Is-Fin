@@ -2,11 +2,13 @@
 import 'dart:convert';
 
 import 'package:ifb_loan/configuration/auth_service.dart';
+import 'package:ifb_loan/configuration/phone_number_manager.dart';
 import 'package:ifb_loan/features/login/data/data_provider/login_data_provider.dart';
 
 class LoginRepository {
   final LoginDataProvider loginDataProvider;
-  LoginRepository(this.loginDataProvider);
+  final UserManager userManager;
+  LoginRepository(this.loginDataProvider, this.userManager);
 
   Future<String> sendLogin(String phoneNumber, String password) async {
     final authService = AuthService();
@@ -26,12 +28,14 @@ class LoginRepository {
 
       // Store the token if the login is successful
       await authService.storeToken(data['response']['token']);
+      await userManager.setFullName(data['response']['fullName']);
+      await userManager.setKYCStatus(data['response']['kycStatus']);
 
       return data['message'];
     } catch (e) {
       // Print and re-throw the exception for the message only
       // print('Caught Exception: $e');
-      throw e; // This will throw only the `message` part if thrown from above
+      rethrow; // This will throw only the `message` part if thrown from above
     }
   }
 }

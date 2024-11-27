@@ -8,11 +8,11 @@ class LoanStatusCard extends StatelessWidget {
   final int failedLoans;
 
   const LoanStatusCard({
-    Key? key,
+    super.key,
     required this.completedLoans,
     required this.pendingLoans,
     required this.failedLoans,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

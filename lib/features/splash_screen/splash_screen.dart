@@ -23,7 +23,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
     // });
   }
 
-  String? _dropdownValue = 'en'; // Default language is English
+  final String? _dropdownValue = 'en'; // Default language is English
   bool loading = false;
 
   @override
@@ -215,7 +215,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
                                   setState(() {
                                     loading = true;
                                   });
-                                  Future.delayed(Duration(seconds: 4), () {
+                                  Future.delayed(const Duration(seconds: 4), () {
                                     Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(

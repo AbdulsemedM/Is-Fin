@@ -45,11 +45,11 @@ class ProvidersBloc extends Bloc<ProvidersEvent, ProvidersState> {
 
   void _fetchProvider(ProviderFetch event, Emitter<ProvidersState> emit) async {
     emit(ProviderFetchLoading());
-    // print("loading...");
     try {
       // final login =
       final providers = await providerRepository.getProvider();
       emit(ProviderFetchSuccess(providers: providers));
+      print("sent from the business page");
       // print(signup);
     } catch (e) {
       emit(ProviderFetchFailure(e.toString()));

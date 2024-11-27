@@ -22,7 +22,7 @@ class ProviderRepository {
 
       return provider;
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -38,7 +38,7 @@ class ProviderRepository {
 
       return data['message'];
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -65,7 +65,7 @@ class ProviderRepository {
         throw "Invalid response format: Expected a list";
       }
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 }

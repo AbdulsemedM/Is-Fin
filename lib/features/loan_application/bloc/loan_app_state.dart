@@ -19,6 +19,19 @@ final class SectorFetchFailure extends LoanAppState {
   SectorFetchFailure(this.errorMessage);
 }
 
+///////////////////////////////////////////////////////////////////
+final class ProductsSentLoading extends LoanAppState {}
+
+final class ProductsSentSuccess extends LoanAppState {
+  ProductsSentSuccess();
+}
+
+final class ProductsSentFailure extends LoanAppState {
+  final String errorMessage;
+
+  ProductsSentFailure(this.errorMessage);
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////
 final class RepaymentFetchLoading extends LoanAppState {}
 
@@ -47,4 +60,9 @@ final class UnitofMeasurementsFetchFailure extends LoanAppState {
   final String errorMessage;
 
   UnitofMeasurementsFetchFailure(this.errorMessage);
+}
+
+class ProvidersUpdatedState extends LoanAppState {
+  final List<Map<String, String>> providers;
+  ProvidersUpdatedState({required this.providers});
 }

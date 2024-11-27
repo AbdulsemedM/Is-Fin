@@ -1,4 +1,5 @@
 import 'package:ifb_loan/configuration/api_constants.dart';
+import 'package:ifb_loan/features/loan_application/models/products_request_model.dart';
 import 'package:ifb_loan/providers/provider_setup.dart';
 
 class LoanAppProvider {
@@ -34,6 +35,34 @@ class LoanAppProvider {
       final apiProvider = ProviderSetup.getApiProvider(ApiConstants.baseUrl);
       final response =
           await apiProvider.getRequest("/api/product/unitOfMeasurement");
+      // print(response.body);
+      return response.body;
+    } catch (e) {
+      // print("here is the response");
+      // print(e.toString());
+      throw e.toString();
+    }
+  }
+
+  Future<String> sendProductRequest(ProductsRequestModel product) async {
+    try {
+      final apiProvider = ProviderSetup.getApiProvider(ApiConstants.baseUrl);
+      final body = {
+        "productRequest": product.products.map((prod) {
+          return {
+            "productName": prod.productName,
+            "quantity": prod.productQuantity,
+            "productDescription": prod.productDescription,
+            "productUUnitOfMeasurement": prod.productUnitofMeasurement,
+          };
+        }).toList(),
+        "sectorName": product.sector,
+        "repaymentCycleDuration": product.repymentPlan,
+        "supplierId": product.provider,
+      };
+
+      final response =
+          await apiProvider.postRequest("/api/product/request", body);
       // print(response.body);
       return response.body;
     } catch (e) {

@@ -64,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       "Language",
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
-                    Icon(Icons.arrow_drop_down)
+                    const Icon(Icons.arrow_drop_down)
                   ],
                 ),
               ),
@@ -101,7 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Row(
                           children: [
                             Padding(
-                              padding: EdgeInsets.symmetric(vertical: 8.0),
+                              padding: const EdgeInsets.symmetric(vertical: 8.0),
                               child: Text(
                                 "Phone Number",
                                 style: Theme.of(context)
@@ -135,7 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Row(
                           children: [
                             Padding(
-                              padding: EdgeInsets.symmetric(vertical: 8.0),
+                              padding: const EdgeInsets.symmetric(vertical: 8.0),
                               child: Text(
                                 "Password",
                                 style: Theme.of(context)
@@ -176,7 +176,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     });
                                   },
                                 )),
-                            contentPadding: EdgeInsets.symmetric(vertical: 16),
+                            contentPadding: const EdgeInsets.symmetric(vertical: 16),
                           ),
                           validator: (value) {
                             if (value?.isEmpty == true) {
@@ -191,7 +191,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Padding(
-                              padding: EdgeInsets.symmetric(vertical: 12.0),
+                              padding: const EdgeInsets.symmetric(vertical: 12.0),
                               child: GestureDetector(
                                 onTap: () {
                                   Navigator.push(

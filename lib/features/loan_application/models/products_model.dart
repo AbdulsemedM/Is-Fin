@@ -4,7 +4,7 @@ import 'dart:convert';
 class ProductsModel {
   final String productName;
   final String productDescription;
-  final int productQuantity;
+  final double productQuantity;
   final String productUnitofMeasurement;
   ProductsModel({
     required this.productName,
@@ -13,18 +13,18 @@ class ProductsModel {
     required this.productUnitofMeasurement,
   });
 
+
   ProductsModel copyWith({
     String? productName,
     String? productDescription,
-    int? productQuantity,
+    double? productQuantity,
     String? productUnitofMeasurement,
   }) {
     return ProductsModel(
       productName: productName ?? this.productName,
       productDescription: productDescription ?? this.productDescription,
       productQuantity: productQuantity ?? this.productQuantity,
-      productUnitofMeasurement:
-          productUnitofMeasurement ?? this.productUnitofMeasurement,
+      productUnitofMeasurement: productUnitofMeasurement ?? this.productUnitofMeasurement,
     );
   }
 
@@ -41,15 +41,14 @@ class ProductsModel {
     return ProductsModel(
       productName: map['productName'] as String,
       productDescription: map['productDescription'] as String,
-      productQuantity: map['productQuantity'] as int,
+      productQuantity: map['productQuantity'] as double,
       productUnitofMeasurement: map['productUnitofMeasurement'] as String,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory ProductsModel.fromJson(String source) =>
-      ProductsModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory ProductsModel.fromJson(String source) => ProductsModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
@@ -59,18 +58,19 @@ class ProductsModel {
   @override
   bool operator ==(covariant ProductsModel other) {
     if (identical(this, other)) return true;
-
-    return other.productName == productName &&
-        other.productDescription == productDescription &&
-        other.productQuantity == productQuantity &&
-        other.productUnitofMeasurement == productUnitofMeasurement;
+  
+    return 
+      other.productName == productName &&
+      other.productDescription == productDescription &&
+      other.productQuantity == productQuantity &&
+      other.productUnitofMeasurement == productUnitofMeasurement;
   }
 
   @override
   int get hashCode {
     return productName.hashCode ^
-        productDescription.hashCode ^
-        productQuantity.hashCode ^
-        productUnitofMeasurement.hashCode;
+      productDescription.hashCode ^
+      productQuantity.hashCode ^
+      productUnitofMeasurement.hashCode;
   }
 }
