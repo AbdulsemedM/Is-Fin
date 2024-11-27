@@ -12,4 +12,15 @@ class ProviderLoanFormDataProvider {
       throw e.toString();
     }
   }
+
+  Future<String> fetchRequestedProductsById(String id) async {
+    try {
+      final apiProvider = ProviderSetup.getApiProvider(ApiConstants.baseUrl);
+      final response =
+          await apiProvider.getRequest("/api/product/supplier/request/$id");
+      return response.body;
+    } catch (e) {
+      throw e.toString();
+    }
+  }
 }

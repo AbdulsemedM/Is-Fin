@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:ifb_loan/features/provider_loan_form/models/requested_products_model.dart';
 
 class ProductTable extends StatelessWidget {
-  final List<Map<String, String>> products;
+  final List<RequestedProductsModel> products;
 
   const ProductTable({super.key, required this.products});
 
@@ -34,8 +35,8 @@ class ProductTable extends StatelessWidget {
               itemBuilder: (context, index) {
                 final product = products[index];
                 return ProductRow(
-                  name: product['name'] ?? '',
-                  description: product['description'] ?? '',
+                  name: product.productName,
+                  description: product.description,
                   onRemove: () {
                     // Handle product removal
                   },
@@ -54,7 +55,8 @@ class ProductRow extends StatelessWidget {
   final String description;
   final VoidCallback onRemove;
 
-  const ProductRow({super.key, 
+  const ProductRow({
+    super.key,
     required this.name,
     required this.description,
     required this.onRemove,
@@ -68,7 +70,8 @@ class ProductRow extends StatelessWidget {
         children: [
           // Product name and quantity
           Expanded(
-            child: Text(name, style: const TextStyle(fontWeight: FontWeight.bold)),
+            child:
+                Text(name, style: const TextStyle(fontWeight: FontWeight.bold)),
           ),
           // Product description
           Expanded(

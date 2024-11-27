@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 class StatusProductListModel {
+  final String id;
   final String buyerFullName;
   final String supplierFullName;
   final String sectorName;
@@ -10,6 +11,7 @@ class StatusProductListModel {
   final String repaymentCycleDuration;
   final String status;
   StatusProductListModel({
+    required this.id,
     required this.buyerFullName,
     required this.supplierFullName,
     required this.sectorName,
@@ -20,6 +22,7 @@ class StatusProductListModel {
   });
 
   StatusProductListModel copyWith({
+    String? id,
     String? buyerFullName,
     String? supplierFullName,
     String? sectorName,
@@ -29,6 +32,7 @@ class StatusProductListModel {
     String? status,
   }) {
     return StatusProductListModel(
+      id: id ?? this.id,
       buyerFullName: buyerFullName ?? this.buyerFullName,
       supplierFullName: supplierFullName ?? this.supplierFullName,
       sectorName: sectorName ?? this.sectorName,
@@ -42,6 +46,7 @@ class StatusProductListModel {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'id': id,
       'buyerFullName': buyerFullName,
       'supplierFullName': supplierFullName,
       'sectorName': sectorName,
@@ -54,6 +59,7 @@ class StatusProductListModel {
 
   factory StatusProductListModel.fromMap(Map<String, dynamic> map) {
     return StatusProductListModel(
+      id: map['id'] as String,
       buyerFullName: map['buyerFullName'] as String,
       supplierFullName: map['supplierFullName'] as String,
       sectorName: map['sectorName'] as String,
@@ -73,14 +79,15 @@ class StatusProductListModel {
 
   @override
   String toString() {
-    return 'StatusProductListModel(buyerFullName: $buyerFullName, supplierFullName: $supplierFullName, sectorName: $sectorName, requestedAt: $requestedAt, totalAmount: $totalAmount, repaymentCycleDuration: $repaymentCycleDuration, status: $status)';
+    return 'StatusProductListModel(id: $id, buyerFullName: $buyerFullName, supplierFullName: $supplierFullName, sectorName: $sectorName, requestedAt: $requestedAt, totalAmount: $totalAmount, repaymentCycleDuration: $repaymentCycleDuration, status: $status)';
   }
 
   @override
   bool operator ==(covariant StatusProductListModel other) {
     if (identical(this, other)) return true;
 
-    return other.buyerFullName == buyerFullName &&
+    return other.id == id &&
+        other.buyerFullName == buyerFullName &&
         other.supplierFullName == supplierFullName &&
         other.sectorName == sectorName &&
         other.requestedAt == requestedAt &&
@@ -91,7 +98,8 @@ class StatusProductListModel {
 
   @override
   int get hashCode {
-    return buyerFullName.hashCode ^
+    return id.hashCode ^
+        buyerFullName.hashCode ^
         supplierFullName.hashCode ^
         sectorName.hashCode ^
         requestedAt.hashCode ^

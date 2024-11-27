@@ -18,3 +18,17 @@ final class ProviderLoanFormListFetchedFailure extends ProviderLoanFormState {
 
   ProviderLoanFormListFetchedFailure(this.errorMessage);
 }
+
+final class RequestedProductsFetchedLoading extends ProviderLoanFormState {}
+
+final class RequestedProductsFetchedSuccess extends ProviderLoanFormState {
+  final List<RequestedProductsModel> requestedProducts;
+
+  RequestedProductsFetchedSuccess({required this.requestedProducts});
+}
+
+final class RequestedProductsFetchedFailure extends ProviderLoanFormState {
+  final String errorMessage;
+
+  RequestedProductsFetchedFailure(this.errorMessage);
+}

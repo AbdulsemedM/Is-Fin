@@ -21,6 +21,7 @@ class _AllApplicationsState extends State<AllApplications> {
       child: ListView(
         children: widget.loanformList.map((transaction) {
           return ProviderLoanListWidget(
+            id: transaction.id,
             name: transaction.supplierFullName,
             amount: transaction.totalAmount?.toString() ?? "",
             description: transaction.sectorName,
