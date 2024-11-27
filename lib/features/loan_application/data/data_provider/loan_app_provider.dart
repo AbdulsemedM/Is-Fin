@@ -52,7 +52,7 @@ class LoanAppProvider {
           return {
             "productName": prod.productName,
             "quantity": prod.productQuantity,
-            "productDescription": prod.productDescription,
+            "description": prod.productDescription,
             "unitOfMeasurement": prod.productUnitofMeasurement,
           };
         }).toList(),

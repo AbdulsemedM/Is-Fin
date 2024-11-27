@@ -21,7 +21,7 @@ class _ProviderLoanListScreenState extends State<ProviderLoanListScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Provider Loan Form",
+          "Provider Loan Lists",
           style: Theme.of(context).textTheme.displaySmall,
         ),
       ),
@@ -71,7 +71,8 @@ class _ProviderLoanListScreenState extends State<ProviderLoanListScreen> {
                           loanformList: loanformList,
                         );
                       }
-                      return const SizedBox.shrink(); // Empty widget if no match
+                      return const SizedBox
+                          .shrink(); // Empty widget if no match
                     },
                   ),
                   // SizedBox(
