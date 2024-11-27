@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ifb_loan/app/app_button.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
+import 'package:ifb_loan/configuration/phone_number_manager.dart';
 import 'package:ifb_loan/features/KYC/bloc/kyc_bloc.dart';
 import 'package:ifb_loan/features/KYC/models/image_models/images_model.dart';
 import 'package:ifb_loan/features/KYC/presentation/screen/kyc_screen.dart';
@@ -32,11 +33,26 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
   bool isBusinessFetched = false;
   bool isAccountFetched = false;
   bool areImagesFetched = false;
+  String name = "";
+  UserManager userManager = UserManager();
 
   @override
   void initState() {
     super.initState();
     getKYCStatus();
+    fetchUserStatus();
+  }
+
+  fetchUserStatus() async {
+    try {
+      String myName = (await userManager.getFullName())!;
+
+      setState(() {
+        name = myName;
+      });
+    } catch (e) {
+      print('Error fetching user status: $e');
+    }
   }
 
   void addStep(String step) {
@@ -92,7 +108,7 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
               print("KycAccountFetchedSuccess");
               kycStatus += 25;
               steps.add("Account Info.");
-              isBusinessFetched = true;
+              isAccountFetched = true;
             }
           });
         } else if (state is KycIMagesFetchedSuccess && progressLoading) {
@@ -181,7 +197,8 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
             children: [
               // Background curves
               CustomPaint(
-                size: const Size(double.infinity, 200), // Adjust height as needed
+                size:
+                    const Size(double.infinity, 200), // Adjust height as needed
                 painter: CurvedPainter(),
               ),
               // Add content inside the stack if needed, e.g., profile picture, settings icon
@@ -203,8 +220,8 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
               ),
             ],
           ),
-          const Text(
-            "Hi, Abdulsemed M.",
+          Text(
+            "Hi, $name.",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           const SizedBox(
