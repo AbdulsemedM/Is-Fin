@@ -21,7 +21,7 @@ class _ApprovedApplicatinsState extends State<ApprovedApplicatins> {
         children: widget.loanformList.map((transaction) {
           return ProviderLoanListWidget(
             id: transaction.id,
-            name: transaction.supplierFullName,
+            name: transaction.buyerFullName,
             amount: transaction.totalAmount?.toString() ?? "",
             description: transaction.sectorName,
             date: transaction.requestedAt,

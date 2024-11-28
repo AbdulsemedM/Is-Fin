@@ -24,7 +24,7 @@ class _NewApplicationsState extends State<NewApplications> {
               onTap: () {},
               child: ProviderLoanListWidget(
                 id: transaction.id,
-                name: transaction.supplierFullName,
+                name: transaction.buyerFullName,
                 amount: transaction.totalAmount?.toString() ?? "",
                 description: transaction.sectorName,
                 date: transaction.requestedAt,

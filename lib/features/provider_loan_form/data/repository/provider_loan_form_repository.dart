@@ -54,4 +54,18 @@ class ProviderLoanFormRepository {
       rethrow;
     }
   }
+
+  Future<String> sendRequestedProductsPrice(
+      List<RequestedProductsModel> products,
+      String id,
+      String expirationDate,
+      String status) async {
+    final requestedProductsPrices = await providerLoanFormDataProvider
+        .sendRequestedProductsPrice(products, id, expirationDate, status);
+    final data = jsonDecode(requestedProductsPrices);
+    if (data['httpStatus'] != 200) {
+      throw data['message'];
+    }
+    return data['message'];
+  }
 }

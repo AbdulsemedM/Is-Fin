@@ -32,3 +32,17 @@ final class RequestedProductsFetchedFailure extends ProviderLoanFormState {
 
   RequestedProductsFetchedFailure(this.errorMessage);
 }
+
+final class RequestedProductsPriceSentLoading extends ProviderLoanFormState {}
+
+final class RequestedProductsPriceSentSuccess extends ProviderLoanFormState {
+  final String message;
+
+  RequestedProductsPriceSentSuccess(this.message);
+}
+
+final class RequestedProductsPriceSentFailure extends ProviderLoanFormState {
+  final String errorMessage;
+
+  RequestedProductsPriceSentFailure(this.errorMessage);
+}

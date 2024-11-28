@@ -41,4 +41,17 @@ class ProviderLoanFormBloc
       emit(RequestedProductsFetchedFailure(e.toString()));
     }
   }
+
+  Future<void> _onSendRequestedProductsPrice(SendRequestedProductsPrice event,
+      Emitter<ProviderLoanFormState> emit) async {
+    emit(RequestedProductsPriceSentLoading());
+    try {
+      final requestedProductsPrice =
+          await providerLoanFormRepository.sendRequestedProductsPrice(
+              event.products, event.id, event.expirationDate, event.status);
+      emit(RequestedProductsPriceSentSuccess(requestedProductsPrice));
+    } catch (e) {
+      emit(RequestedProductsPriceSentFailure(e.toString()));
+    }
+  }
 }
