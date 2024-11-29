@@ -74,7 +74,9 @@ class LoanListWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                amount,
+                amount != ""
+                    ? "ETB ${NumberFormat('#,###').format(double.parse(amount))}"
+                    : "",
                 style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,

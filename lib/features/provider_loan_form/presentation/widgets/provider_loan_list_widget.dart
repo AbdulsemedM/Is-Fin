@@ -10,6 +10,7 @@ class ProviderLoanListWidget extends StatelessWidget {
   final IconData icon;
   final Color iconColor;
   final String id;
+  final String status;
 
   const ProviderLoanListWidget({
     super.key,
@@ -20,19 +21,22 @@ class ProviderLoanListWidget extends StatelessWidget {
     required this.date,
     required this.icon,
     required this.iconColor,
+    required this.status,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => ProviderLoanFormScreen(
-                      id: id,
-                      name: name,
-                    )));
+        if (status == "PENDING") {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ProviderLoanFormScreen(
+                        id: id,
+                        name: name,
+                      )));
+        }
       },
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
@@ -87,7 +91,7 @@ class ProviderLoanListWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  amount,
+                  amount != "" ? "ETB ${NumberFormat('#,###').format(double.parse(amount))}" : "",
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,

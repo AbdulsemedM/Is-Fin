@@ -23,6 +23,7 @@ class _NewApplicationsState extends State<NewApplications> {
             return GestureDetector(
               onTap: () {},
               child: ProviderLoanListWidget(
+                status: transaction.status,
                 id: transaction.id,
                 name: transaction.buyerFullName,
                 amount: transaction.totalAmount?.toString() ?? "",
@@ -30,14 +31,18 @@ class _NewApplicationsState extends State<NewApplications> {
                 date: transaction.requestedAt,
                 icon: transaction.status == "PENDING"
                     ? Icons.timer
-                    : transaction.status == "APPROVED"
-                        ? Icons.check
-                        : Icons.close,
+                    : transaction.status == "ACCEPTED"
+                        ? Icons.arrow_circle_up_sharp
+                        : transaction.status == "APPROVED"
+                            ? Icons.done
+                            : Icons.close,
                 iconColor: transaction.status == "PENDING"
                     ? Colors.orange
-                    : transaction.status == "APPROVED"
+                    : transaction.status == "ACCEPTED"
                         ? Colors.green
-                        : Colors.red,
+                        : transaction.status == "APPROVED"
+                            ? Colors.blue
+                            : Colors.red,
               ),
             );
           }).toList(),
