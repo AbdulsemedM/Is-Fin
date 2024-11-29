@@ -5,6 +5,7 @@ import 'package:ifb_loan/features/finances/presentation/screens/finances_screen.
 import 'package:ifb_loan/features/home/presentation/screens/home_screen.dart';
 import 'package:ifb_loan/features/login/presentation/screen/login_screen.dart';
 import 'package:ifb_loan/features/profile/presentation/screens/profile_screen.dart';
+import 'package:ifb_loan/features/revenue/presentaion/screen/revenue_screen.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -27,17 +28,19 @@ class _DashboardPageState extends State<DashboardPage> {
   }
 
   int currentIndex = 0;
-  List<Widget> buildScreens() =>
-      [const HomeScreen(), const FinancesScreen(), const ProfileScreen()];
+  List<Widget> buildScreens() => [
+        const HomeScreen(),
+        const FinancesScreen(),
+        const RevenueScreen(),
+        const ProfileScreen()
+      ];
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () => _onBackButtonPressed(context),
       child: Scaffold(
         body: SafeArea(
-          child: SingleChildScrollView(
-            child: buildScreens()[currentIndex],
-          ),
+          child: buildScreens()[currentIndex],
         ),
         bottomNavigationBar: SalomonBottomBar(
           selectedItemColor: AppColors.primaryDarkColor,
@@ -56,6 +59,10 @@ class _DashboardPageState extends State<DashboardPage> {
             SalomonBottomBarItem(
               icon: const Icon(Icons.description_outlined),
               title: const Text("Finances"),
+            ),
+            SalomonBottomBarItem(
+              icon: const Icon(Icons.calculate_outlined),
+              title: const Text("Revenue"),
             ),
             SalomonBottomBarItem(
               icon: const Icon(Icons.person),
