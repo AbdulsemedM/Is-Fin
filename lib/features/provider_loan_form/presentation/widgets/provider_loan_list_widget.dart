@@ -29,7 +29,10 @@ class ProviderLoanListWidget extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => ProviderLoanFormScreen(id: id)));
+                builder: (context) => ProviderLoanFormScreen(
+                      id: id,
+                      name: name,
+                    )));
       },
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),

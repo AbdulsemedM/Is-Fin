@@ -56,10 +56,10 @@ class ProviderLoanFormRepository {
   }
 
   Future<String> sendRequestedProductsPrice(
-      List<RequestedProductsModel> products,
-      String id,
-      String expirationDate,
-      String status) async {
+      List<RequestedProductsModel>?  products,
+      String? id,
+      String? expirationDate,
+      String? status) async {
     final requestedProductsPrices = await providerLoanFormDataProvider
         .sendRequestedProductsPrice(products, id, expirationDate, status);
     final data = jsonDecode(requestedProductsPrices);

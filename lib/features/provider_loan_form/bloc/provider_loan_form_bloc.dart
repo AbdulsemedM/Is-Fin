@@ -14,6 +14,7 @@ class ProviderLoanFormBloc
       : super(ProviderLoanFormInitial()) {
     on<FetchProviderLoanFormList>(_onFetchProviderLoanFormList);
     on<FetchRequestedProductsById>(_onFetchRequestedProductsById);
+    on<SendRequestedProductsPrice>(_onSendRequestedProductsPrice);
   }
 
   Future<void> _onFetchProviderLoanFormList(FetchProviderLoanFormList event,

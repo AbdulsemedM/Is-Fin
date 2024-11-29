@@ -14,10 +14,10 @@ final class FetchRequestedProductsById extends ProviderLoanFormEvent {
 }
 
 final class SendRequestedProductsPrice extends ProviderLoanFormEvent {
-  final List<RequestedProductsModel> products;
-  final String id;
-  final String expirationDate;
-  final String status;
+  final List<RequestedProductsModel>? products;
+  final String? id;
+  final String? expirationDate;
+  final String? status;
 
   SendRequestedProductsPrice(
       this.products, this.id, this.expirationDate, this.status);

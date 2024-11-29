@@ -26,24 +26,27 @@ class ProviderLoanFormDataProvider {
   }
 
   Future<String> sendRequestedProductsPrice(
-      List<RequestedProductsModel> products,
-      String id,
-      String expirationDate,
-      String status) async {
+      List<RequestedProductsModel>? products,
+      String? id,
+      String? expirationDate,
+      String? status) async {
     try {
       final apiProvider = ProviderSetup.getApiProvider(ApiConstants.baseUrl);
       final body = {
         "status": status,
-        "priceExpirationDate": expirationDate,
-        "products": products.map((prod) {
-          return {
-            "id": prod.id,
-            "productPrice": prod.productPrice,
-          };
-        }).toList(),
+        if (expirationDate != null && expirationDate.isNotEmpty)
+          "priceExpirationDate": expirationDate,
+        if (products != null && products.isNotEmpty)
+          "products": products.map((prod) {
+            return {
+              "id": prod.id,
+              "productPrice": prod.productPrice,
+            };
+          }).toList(),
       };
       final response = await apiProvider.postRequest(
           "/api/product/supplier/request/$id", body);
+      print({response.body});
       return response.body;
     } catch (e) {
       throw e.toString();

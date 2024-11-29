@@ -51,8 +51,7 @@ class RequestedProductsModel {
       id: map['id'].toString(),
       productName: map['productName'] as String,
       description: map['description'] as String,
-      productPrice:
-          map['productPrice'] != null ? map['productPrice'] as String : null,
+      productPrice: map['productPrice']?.toString(),
       quantity: map['quantity'] as double,
       unitOfMeasurement: map['unitOfMeasurement'] as String,
     );

@@ -12,7 +12,9 @@ import 'package:ifb_loan/features/provider_loan_form/presentation/widgets/provid
 
 class ProviderLoanFormScreen extends StatefulWidget {
   final String id;
-  const ProviderLoanFormScreen({super.key, required this.id});
+  final String name;
+  const ProviderLoanFormScreen(
+      {super.key, required this.id, required this.name});
 
   @override
   State<ProviderLoanFormScreen> createState() => _ProviderLoanFormScreenState();
@@ -60,6 +62,14 @@ class _ProviderLoanFormScreenState extends State<ProviderLoanFormScreen> {
             displaySnack(context, state.errorMessage, Colors.red);
           } else if (state is RequestedProductsFetchedLoading) {
             print('Loading...');
+          } else if (state is RequestedProductsPriceSentSuccess) {
+            displaySnack(context, state.message, Colors.green);
+            context
+                .read<ProviderLoanFormBloc>()
+                .add(FetchProviderLoanFormList());
+            Navigator.pop(context);
+          } else if (state is RequestedProductsPriceSentFailure) {
+            displaySnack(context, state.errorMessage, Colors.red);
           }
         },
         child: SingleChildScrollView(
@@ -67,11 +77,11 @@ class _ProviderLoanFormScreenState extends State<ProviderLoanFormScreen> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                const Center(
+                Center(
                   child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8.0),
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: Text(
-                        "Fill product prices form for Abdulsemed's request"),
+                        "Fill product prices form for ${widget.name}'s request"),
                   ),
                 ),
                 BlocBuilder<ProviderLoanFormBloc, ProviderLoanFormState>(
@@ -89,7 +99,7 @@ class _ProviderLoanFormScreenState extends State<ProviderLoanFormScreen> {
                     return Column(
                       children: [
                         Padding(
-                          padding: EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(8.0),
                           child: Text(
                             "Please enter the individual price for each product",
                             style: Theme.of(context)
@@ -207,10 +217,14 @@ class _ProviderLoanFormScreenState extends State<ProviderLoanFormScreen> {
                                   Colors.red);
                               return;
                             }
-
-                            context.read<ProviderLoanFormBloc>().add(
-                                SendRequestedProductsPrice(products, widget.id,
-                                    expirationDate.toString(), "APPROVED"));
+                            if (await _showConfirmationDialog('Submit')) {
+                              context.read<ProviderLoanFormBloc>().add(
+                                  SendRequestedProductsPrice(
+                                      products,
+                                      widget.id,
+                                      expirationDate.toString(),
+                                      "APPROVED"));
+                            }
                           },
                     buttonText: loading
                         ? SizedBox(
@@ -226,13 +240,74 @@ class _ProviderLoanFormScreenState extends State<ProviderLoanFormScreen> {
                             style: TextStyle(color: AppColors.bg1),
                           ),
                   ),
-                )
+                ),
+                const SizedBox(height: 16),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: MyButton(
+                    height: ScreenConfig.screenHeight * 0.055,
+                    width: ScreenConfig.screenWidth,
+                    backgroundColor: loading ? AppColors.iconColor : Colors.red,
+                    onPressed: loading
+                        ? () {}
+                        : () async {
+                            // Add date validation
+                            if (await _showConfirmationDialog('Reject')) {
+                              context.read<ProviderLoanFormBloc>().add(
+                                  SendRequestedProductsPrice(
+                                      products,
+                                      widget.id,
+                                      expirationDate.toString(),
+                                      "REJECT"));
+                            }
+                            // context.read<ProviderLoanFormBloc>().add(
+                            //     SendRequestedProductsPrice(products, widget.id,
+                            //         expirationDate.toString(), "REJECT"));
+                          },
+                    buttonText: loading
+                        ? SizedBox(
+                            height: ScreenConfig.screenHeight * 0.02,
+                            width: ScreenConfig.screenHeight * 0.02,
+                            child: const CircularProgressIndicator(
+                              strokeWidth: 3,
+                              color: AppColors.primaryColor,
+                            ),
+                          )
+                        : const Text(
+                            "Reject",
+                            style: TextStyle(color: AppColors.bg1),
+                          ),
+                  ),
+                ),
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  Future<bool> _showConfirmationDialog(String action) async {
+    return await showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Confirm $action'),
+              content: Text('Are you sure you want to $action this request?'),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(false),
+                  child: const Text('Cancel'),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(true),
+                  child: Text(action),
+                ),
+              ],
+            );
+          },
+        ) ??
+        false;
   }
 
   String _calculateTotalPrice() {
