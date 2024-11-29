@@ -5,7 +5,8 @@ import 'package:ifb_loan/app/utils/app_theme.dart';
 import 'package:ifb_loan/features/loan_approval_status/presentation/widgets/loan_status_table.dart';
 
 class LoanApprovalStatus extends StatefulWidget {
-  const LoanApprovalStatus({super.key});
+  final String id;
+  const LoanApprovalStatus({super.key, required this.id});
 
   @override
   State<LoanApprovalStatus> createState() => _LoanApprovalStatusState();
