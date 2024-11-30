@@ -57,6 +57,9 @@ void main() async {
       BlocProvider(
           create: (contex) => LoanApprovalStatusBloc(
               LoanApprovalStatusRepository(LoanApprovalStatusDataProvider()))),
+      // BlocProvider(
+      //     create: (contex) => LoanApprovalStatusBloc(
+      //         LoanApprovalStatusRepository(LoanApprovalStatusDataProvider()))),
     ],
     child: MyApp(isFirstTime: isFirstTime),
   ));

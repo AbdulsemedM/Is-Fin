@@ -34,7 +34,20 @@ class LoanListWidget extends StatelessWidget {
               MaterialPageRoute(
                   builder: (context) => LoanApprovalStatus(
                         id: id,
+                        name: name,
                       )));
+        } else if (status == "PENDING") {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text('Pending'),
+              content: const Text(
+                  'The loan application is pending approval from the merchant'),
+              actions: [
+                TextButton(onPressed: () {}, child: const Text('Close'))
+              ],
+            ),
+          );
         }
       },
       child: Container(

@@ -54,4 +54,21 @@ class ApiProvider {
       rethrow;
     }
   }
+
+  Future<http.Response> putRequest(
+      String endpoint, Map<dynamic, dynamic> body) async {
+    final url = Uri.parse('${ApiConstants.baseUrl}$endpoint');
+    final headers = await authInterceptor.getHeaders();
+    try {
+      final response =
+          await http.put(url, headers: headers, body: jsonEncode(body));
+      loggingInterceptor.logRequest(url.toString(), 'PUT', headers, body);
+      loggingInterceptor.logResponse(response);
+      errorInterceptor.checkError(response);
+      return response;
+    } catch (error) {
+      loggingInterceptor.logError(error);
+      rethrow;
+    }
+  }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:ifb_loan/features/loan_approval_status/data/repository/loan_approval_status_repository.dart';
+import 'package:ifb_loan/features/loan_approval_status/model/offered_products_price_model.dart';
 import 'package:ifb_loan/features/loan_approval_status/model/product_list_model.dart';
 
 part 'loan_approval_status_event.dart';
@@ -12,6 +13,8 @@ class LoanApprovalStatusBloc
   LoanApprovalStatusBloc(this.loanApprovalStatusRepository)
       : super(LoanApprovalStatusInitial()) {
     on<FetchLoanApprovalStatusList>(_onFetchLoanApprovalStatusList);
+    on<OfferedProductsPriceFetch>(_onOfferedProductsPriceFetch);
+    on<AcceptOffer>(_onAcceptOffer);
   }
 
   Future<void> _onFetchLoanApprovalStatusList(FetchLoanApprovalStatusList event,
@@ -23,6 +26,33 @@ class LoanApprovalStatusBloc
       emit(LoanApprovalListFetchedSuccess(productList: productList));
     } catch (e) {
       emit(LoanApprovalListFetchedFailure(e.toString()));
+    }
+  }
+
+  Future<void> _onOfferedProductsPriceFetch(OfferedProductsPriceFetch event,
+      Emitter<LoanApprovalStatusState> emit) async {
+    emit(OfferedProductsPriceFetchedLoading());
+    try {
+      final productList = await loanApprovalStatusRepository
+          .fetchLoanApprovalStatusDetails(event.id);
+      emit(OfferedProductsPriceFetchedSuccess(productList: productList));
+    } catch (e) {
+      emit(OfferedProductsPriceFetchedFailure(e.toString()));
+    }
+  }
+
+  Future<void> _onAcceptOffer(
+      AcceptOffer event, Emitter<LoanApprovalStatusState> emit) async {
+    emit(AcceptOfferLoading());
+    try {
+      final message = await loanApprovalStatusRepository.acceptOffer(
+        event.id,
+        event.status,
+        event.productList ?? [], // Provide empty list as default if null
+      );
+      emit(AcceptOfferSuccess(message));
+    } catch (e) {
+      emit(AcceptOfferFailure(e.toString()));
     }
   }
 }

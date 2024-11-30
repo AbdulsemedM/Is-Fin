@@ -36,6 +36,18 @@ class ProviderLoanListWidget extends StatelessWidget {
                         id: id,
                         name: name,
                       )));
+        } else if (status == "ACCEPTED") {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text('Pending'),
+              content: const Text(
+                  'The loan application is pending approval from the customer'),
+              actions: [
+                TextButton(onPressed: () {}, child: const Text('Close'))
+              ],
+            ),
+          );
         }
       },
       child: Container(
@@ -91,7 +103,9 @@ class ProviderLoanListWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  amount != "" ? "ETB ${NumberFormat('#,###').format(double.parse(amount))}" : "",
+                  amount != ""
+                      ? "ETB ${NumberFormat('#,###').format(double.parse(amount))}"
+                      : "",
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
