@@ -10,6 +10,7 @@ class StatusProductListModel {
   final double? totalAmount;
   final String repaymentCycleDuration;
   final String status;
+  final String? promiseToPurchaseDocument;
   StatusProductListModel({
     required this.id,
     required this.buyerFullName,
@@ -19,6 +20,7 @@ class StatusProductListModel {
     this.totalAmount,
     required this.repaymentCycleDuration,
     required this.status,
+    this.promiseToPurchaseDocument,
   });
 
   StatusProductListModel copyWith({
@@ -30,6 +32,7 @@ class StatusProductListModel {
     double? totalAmount,
     String? repaymentCycleDuration,
     String? status,
+    String? promiseToPurchaseDocument,
   }) {
     return StatusProductListModel(
       id: id ?? this.id,
@@ -41,6 +44,8 @@ class StatusProductListModel {
       repaymentCycleDuration:
           repaymentCycleDuration ?? this.repaymentCycleDuration,
       status: status ?? this.status,
+      promiseToPurchaseDocument:
+          promiseToPurchaseDocument ?? this.promiseToPurchaseDocument,
     );
   }
 
@@ -54,6 +59,7 @@ class StatusProductListModel {
       'totalAmount': totalAmount,
       'repaymentCycleDuration': repaymentCycleDuration,
       'status': status,
+      'promiseToPurchaseDocument': promiseToPurchaseDocument,
     };
   }
 
@@ -68,6 +74,7 @@ class StatusProductListModel {
           map['totalAmount'] != null ? map['totalAmount'] as double : null,
       repaymentCycleDuration: map['repaymentCycleDuration'] as String,
       status: map['status'] as String,
+      promiseToPurchaseDocument: map['promiseToPurchaseDocument'] as String?,
     );
   }
 
@@ -79,7 +86,7 @@ class StatusProductListModel {
 
   @override
   String toString() {
-    return 'StatusProductListModel(id: $id, buyerFullName: $buyerFullName, supplierFullName: $supplierFullName, sectorName: $sectorName, requestedAt: $requestedAt, totalAmount: $totalAmount, repaymentCycleDuration: $repaymentCycleDuration, status: $status)';
+    return 'StatusProductListModel( id: $id, buyerFullName: $buyerFullName, supplierFullName: $supplierFullName, sectorName: $sectorName, requestedAt: $requestedAt, totalAmount: $totalAmount, repaymentCycleDuration: $repaymentCycleDuration, status: $status, promiseToPurchaseDocument: $promiseToPurchaseDocument)';
   }
 
   @override
@@ -93,7 +100,8 @@ class StatusProductListModel {
         other.requestedAt == requestedAt &&
         other.totalAmount == totalAmount &&
         other.repaymentCycleDuration == repaymentCycleDuration &&
-        other.status == status;
+        other.status == status &&
+        other.promiseToPurchaseDocument == promiseToPurchaseDocument;
   }
 
   @override
@@ -105,6 +113,7 @@ class StatusProductListModel {
         requestedAt.hashCode ^
         totalAmount.hashCode ^
         repaymentCycleDuration.hashCode ^
-        status.hashCode;
+        status.hashCode ^
+        promiseToPurchaseDocument.hashCode;
   }
 }

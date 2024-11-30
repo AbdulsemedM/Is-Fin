@@ -11,6 +11,7 @@ class LoanListWidget extends StatelessWidget {
   final String status;
   final IconData icon;
   final Color iconColor;
+  final String pdfUrl;
 
   const LoanListWidget({
     super.key,
@@ -22,6 +23,7 @@ class LoanListWidget extends StatelessWidget {
     required this.status,
     required this.icon,
     required this.iconColor,
+    required this.pdfUrl,
   });
 
   @override
@@ -35,7 +37,15 @@ class LoanListWidget extends StatelessWidget {
                   builder: (context) => LoanApprovalStatus(
                         id: id,
                         name: name,
+                        pdfUrl: pdfUrl,
                       )));
+          // Navigator.push(
+          //     context,
+          //     MaterialPageRoute(
+          //         builder: (context) => LoanApprovedScreen(
+          //               name: name,
+          //               amount: amount,
+          //             )));
         } else if (status == "PENDING") {
           showDialog(
             context: context,
@@ -44,7 +54,27 @@ class LoanListWidget extends StatelessWidget {
               content: const Text(
                   'The loan application is pending approval from the merchant'),
               actions: [
-                TextButton(onPressed: () {}, child: const Text('Close'))
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Close'))
+              ],
+            ),
+          );
+        } else if (status == "UNDER_REVIEW") {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text('Under Review'),
+              content: const Text(
+                  'The loan application is under review by the Bank officers'),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Close'))
               ],
             ),
           );

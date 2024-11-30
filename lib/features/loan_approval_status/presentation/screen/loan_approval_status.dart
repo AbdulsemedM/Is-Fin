@@ -7,31 +7,25 @@ import 'package:ifb_loan/app/utils/dialog_utils.dart';
 import 'package:ifb_loan/features/loan_approval_status/bloc/loan_approval_status_bloc.dart';
 import 'package:ifb_loan/features/loan_approval_status/model/offered_products_price_model.dart';
 import 'package:ifb_loan/features/loan_approval_status/presentation/widgets/loan_status_table.dart';
-import 'package:ifb_loan/features/loan_approval_status/presentation/widgets/promise_to_purchase_dialog.dart';
+import 'package:ifb_loan/features/loan_approval_status/presentation/widgets/pdf_dialog.dart';
 import 'package:intl/intl.dart';
 
 class LoanApprovalStatus extends StatefulWidget {
   final String id;
   final String name;
-  const LoanApprovalStatus({super.key, required this.id, required this.name});
+  final String pdfUrl;
+  const LoanApprovalStatus({
+    super.key,
+    required this.id,
+    required this.name,
+    required this.pdfUrl,
+  });
 
   @override
   State<LoanApprovalStatus> createState() => _LoanApprovalStatusState();
 }
 
 class _LoanApprovalStatusState extends State<LoanApprovalStatus> {
-  final String agreementText = """
-This is the Promise to Purchase agreement. By agreeing, you confirm that you will purchase the product according to the terms outlined in this agreement.
-  
-Please read carefully before proceeding:
-- You agree to provide accurate information.
-- You confirm that you have the means to purchase.
-- Any breach of this agreement may result in legal action.
-
-Thank you for your understanding.
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Morbi tristique nulla vel est sollicitudin, in volutpat lacus convallis.
-  """;
   var loading = false;
   var checker = false;
   List<OfferedProductsPriceModel> originalProducts = [];
@@ -207,14 +201,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vi
                                       }
                                     }
                                   : () async {
-                                      final bool? result =
-                                          await showDialog<bool>(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return PromiseToPurchaseDialog(
-                                              agreementText: agreementText);
-                                        },
-                                      );
+                                      final bool result = await _showPdfDialog(
+                                          context, widget.pdfUrl);
+                                      print("result");
+                                      print(result);
                                       if (result == true && mounted) {
                                         context
                                             .read<LoanApprovalStatusBloc>()
@@ -304,5 +294,24 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vi
   double calculateTotal(List<OfferedProductsPriceModel> products) {
     return products.fold(
         0.0, (sum, product) => sum + (product.productPrice * product.quantity));
+  }
+
+  Future<bool> _showPdfDialog(BuildContext context, String pdfUrl) async {
+    final result = await showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return PdfDialog(
+          pdfUrl: pdfUrl,
+          onAccept: () {
+            Navigator.pop(context, true);
+          },
+          onReject: () {
+            Navigator.pop(context, false);
+          },
+        );
+      },
+    );
+
+    return result ?? false;
   }
 }

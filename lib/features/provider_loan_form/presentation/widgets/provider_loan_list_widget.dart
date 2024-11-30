@@ -44,7 +44,42 @@ class ProviderLoanListWidget extends StatelessWidget {
               content: const Text(
                   'The loan application is pending approval from the customer'),
               actions: [
-                TextButton(onPressed: () {}, child: const Text('Close'))
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Close'))
+              ],
+            ),
+          );
+        } else if (status == "UNDER_REVIEW") {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text('Under Review'),
+              content: const Text(
+                  'The loan application is under review by the Bank officers'),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Close'))
+              ],
+            ),
+          );
+        } else if (status == "REJECTED") {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text('Rejected'),
+              content: const Text('The loan application is rejected'),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Close'))
               ],
             ),
           );

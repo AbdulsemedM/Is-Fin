@@ -27,6 +27,7 @@ class _NewLoanApplicationsState extends State<NewLoanApplications> {
           children: widget.loanformList.map((transaction) {
             return LoanListWidget(
               id: transaction.id,
+              pdfUrl: transaction.promiseToPurchaseDocument ?? "",
               status: transaction.status,
               name: transaction.supplierFullName,
               amount: transaction.totalAmount?.toString() ?? "",
@@ -39,7 +40,7 @@ class _NewLoanApplicationsState extends State<NewLoanApplications> {
                       : transaction.status == "APPROVED"
                           ? Icons.done
                           : transaction.status == "UNDER_REVIEW"
-                              ? Icons.access_alarms_outlined  
+                              ? Icons.access_alarms_outlined
                               : Icons.close,
               iconColor: transaction.status == "PENDING"
                   ? Colors.orange

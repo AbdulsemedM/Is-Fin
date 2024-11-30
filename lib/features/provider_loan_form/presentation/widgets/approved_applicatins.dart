@@ -32,14 +32,18 @@ class _ApprovedApplicatinsState extends State<ApprovedApplicatins> {
                     ? Icons.arrow_circle_up_sharp
                     : transaction.status == "APPROVED"
                         ? Icons.done
-                        : Icons.close,
+                        : transaction.status == "UNDER_REVIEW"
+                            ? Icons.access_alarms_outlined
+                            : Icons.close,
             iconColor: transaction.status == "PENDING"
                 ? Colors.orange
                 : transaction.status == "ACCEPTED"
                     ? Colors.green
                     : transaction.status == "APPROVED"
                         ? Colors.blue
-                        : Colors.red,
+                        : transaction.status == "UNDER_REVIEW"
+                            ? Colors.amber
+                            : Colors.red,
           );
         }).toList(),
       ),
