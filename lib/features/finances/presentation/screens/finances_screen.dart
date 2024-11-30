@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
+import 'package:ifb_loan/app/utils/dialog_utils.dart';
+import 'package:ifb_loan/configuration/phone_number_manager.dart';
 import 'package:ifb_loan/features/business_partner/presentation/screen/add_bisiness_partner_screen.dart';
 import 'package:ifb_loan/features/finances/presentation/widgets/finances_widget.dart';
 import 'package:ifb_loan/features/finances/presentation/widgets/loan_display_card.dart';
@@ -15,6 +17,26 @@ class FinancesScreen extends StatefulWidget {
 }
 
 class _FinancesScreenState extends State<FinancesScreen> {
+  String kycStatus = "null";
+  UserManager userManager = UserManager();
+  @override
+  void initState() {
+    super.initState();
+    fetchUserStatus();
+  }
+
+  fetchUserStatus() async {
+    try {
+      String kyc = (await userManager.getKYCStatus()).toString();
+
+      setState(() {
+        kycStatus = kyc;
+      });
+    } catch (e) {
+      print('Error fetching user status: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -70,17 +92,35 @@ class _FinancesScreenState extends State<FinancesScreen> {
                               : Colors.red.shade100,
                   onTap: () {
                     if (index == 0) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  const LoanApplicationScreen()));
+                      if (kycStatus == "null" ||
+                          kycStatus == "Not Filled" ||
+                          kycStatus == "IN_PROGRESS") {
+                        displaySnack(
+                            context,
+                            "Please fill KYC before going to loan applications.",
+                            Colors.red);
+                      } else {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const LoanApplicationScreen()));
+                      }
                     } else if (index == 3) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  const AddBisinessPartnerScreen()));
+                      if (kycStatus == "null" ||
+                          kycStatus == "Not Filled" ||
+                          kycStatus == "IN_PROGRESS") {
+                        displaySnack(
+                            context,
+                            "Please fill KYC before going to add business partner.",
+                            Colors.red);
+                      } else {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const AddBisinessPartnerScreen()));
+                      }
                     } else if (index == 2) {
                       Navigator.push(
                           context,

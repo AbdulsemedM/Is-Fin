@@ -14,6 +14,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   final _otpController = TextEditingController();
+  GlobalKey<FormState> myKey = GlobalKey();
+  GlobalKey<FormState> myKey1 = GlobalKey();
 
   @override
   void dispose() {
@@ -27,6 +29,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   @override
   Widget build(BuildContext context) {
     bool loading = false;
+    bool phoneSent = false;
 
     return Scaffold(
       appBar: AppBar(
@@ -39,18 +42,22 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           children: [
             // Email and Password Inputs with Send OTP Button
             EmailPasswordSection(
+              myKey: myKey,
               emailController: _emailController,
               passwordController: _passwordController,
               confirmPasswordController: _confirmPasswordController,
               loading: loading,
               onSendOtp: () async {
-                setState(() {
-                  loading = true;
-                });
-                await Future.delayed(const Duration(seconds: 4));
-                setState(() {
-                  loading = false;
-                });
+                if (myKey.currentState!.validate()) {
+                  setState(() {
+                    loading = true;
+                  });
+                  await Future.delayed(const Duration(seconds: 4));
+                  setState(() {
+                    loading = false;
+                  });
+                  phoneSent = true;
+                }
               },
             ),
 
@@ -66,16 +73,19 @@ class _ForgotPasswordState extends State<ForgotPassword> {
 
             // OTP Input and Submit Button
             OtpSection(
+              myKey1: myKey1,
               otpController: _otpController,
               loading: loading,
               onSubmit: () async {
-                setState(() {
-                  loading = true;
-                });
-                await Future.delayed(const Duration(seconds: 4));
-                setState(() {
-                  loading = false;
-                });
+                if (myKey1.currentState!.validate() && phoneSent) {
+                  setState(() {
+                    loading = true;
+                  });
+                  await Future.delayed(const Duration(seconds: 4));
+                  setState(() {
+                    loading = false;
+                  });
+                }
               },
             ),
           ],

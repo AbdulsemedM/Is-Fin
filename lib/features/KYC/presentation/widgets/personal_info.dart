@@ -295,11 +295,11 @@ class _PersonalInfoState extends State<PersonalInfo> {
                           ),
                           items: const [
                             DropdownMenuItem(
-                              value: 'Male',
+                              value: 'MALE',
                               child: Text('Male'),
                             ),
                             DropdownMenuItem(
-                              value: 'Female',
+                              value: 'FEMALE',
                               child: Text('Female'),
                             ),
                           ],
@@ -567,8 +567,8 @@ class _PersonalInfoState extends State<PersonalInfo> {
                               validator: (value) {
                                 if (value?.isEmpty == true) {
                                   return 'Phone number is required';
-                                } else if (value!.length < 10) {
-                                  return 'Phone number should be at least 10 digits';
+                                } else if (value!.length != 10) {
+                                  return 'Invalid phone number format';
                                 } else if (!value.startsWith("09")) {
                                   return 'Invalid phone number format';
                                 }
@@ -669,8 +669,8 @@ class _PersonalInfoState extends State<PersonalInfo> {
                         validator: (value) {
                           if (value?.isEmpty == true) {
                             return 'Phone number is required';
-                          } else if (value!.length < 10) {
-                            return 'Phone number should be at least 10 digits';
+                          } else if (value!.length != 10) {
+                            return 'Invalid phone number format';
                           } else if (!value.startsWith("09")) {
                             return 'Invalid phone number format';
                           }

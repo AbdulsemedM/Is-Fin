@@ -101,7 +101,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         Row(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8.0),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
                               child: Text(
                                 "Phone Number",
                                 style: Theme.of(context)
@@ -124,8 +125,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           validator: (value) {
                             if (value?.isEmpty == true) {
                               return 'Phone number is required';
-                            } else if (value!.length < 10) {
-                              return 'Phone number should be at least 10 digits';
+                            } else if (value!.length != 10) {
+                              return 'Invalid phone number format';
                             } else if (!value.startsWith("09")) {
                               return 'Invalid phone number format';
                             }
@@ -135,7 +136,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         Row(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8.0),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
                               child: Text(
                                 "Password",
                                 style: Theme.of(context)
@@ -176,7 +178,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                     });
                                   },
                                 )),
-                            contentPadding: const EdgeInsets.symmetric(vertical: 16),
+                            contentPadding:
+                                const EdgeInsets.symmetric(vertical: 16),
                           ),
                           validator: (value) {
                             if (value?.isEmpty == true) {
@@ -191,7 +194,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 12.0),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 12.0),
                               child: GestureDetector(
                                 onTap: () {
                                   Navigator.push(

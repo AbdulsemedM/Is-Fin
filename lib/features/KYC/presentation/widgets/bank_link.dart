@@ -171,12 +171,13 @@ class _BankLinkState extends State<BankLink> {
               Row(
                 children: [
                   Expanded(
-                    flex: 2, // Make the text field take more space
+                    flex: 2,
                     child: Form(
                       key: myKey1,
                       child: TextFormField(
                         enabled: !accountSent,
                         controller: _accountNumberController,
+                        keyboardType: TextInputType.number,
                         validator: (value) => validateAccountField(value),
                         decoration: InputDecoration(
                           labelText: 'Account Number',
@@ -240,6 +241,7 @@ class _BankLinkState extends State<BankLink> {
                       child: TextFormField(
                         enabled: accountSent,
                         controller: _otpController,
+                        keyboardType: TextInputType.number,
                         validator: (value) => validateOTPField(value),
                         decoration: InputDecoration(
                           labelText: 'OTP',

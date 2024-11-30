@@ -117,12 +117,11 @@ class KycRepository {
   Future<String> sendOTPKYC(String otp) async {
     try {
       // print("here we gooooo");
-      await kycDataProvider.sendOTPKYC(otp);
+      final response = await kycDataProvider.sendOTPKYC(otp);
 
-      final data = jsonDecode(otp);
+      final data = jsonDecode(response);
       if (data['httpStatus'] != 201) {
         // Log the message if needed
-        // print('Error Message: ${data['message']}');
 
         // Throw only the message part
         throw data['message'];
@@ -130,7 +129,6 @@ class KycRepository {
       return data['message'];
     } catch (e) {
       // Print and re-throw the exception for the message only
-      // print('Caught Exception: $e');
       rethrow; // This will throw only the `message` part if thrown from above
     }
   }

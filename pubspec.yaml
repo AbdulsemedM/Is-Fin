@@ -19,7 +19,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.5.3
+  sdk: ">=3.5.3 <4.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -49,6 +49,7 @@ dependencies:
   syncfusion_flutter_pdfviewer: ^27.2.4
   device_info_plus: ^10.1.2
   dio: ^5.7.0
+  syncfusion_flutter_gauges: ^27.2.4
 
 dev_dependencies:
   flutter_test:
