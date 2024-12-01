@@ -40,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
         kycStatus = kyc;
       });
     } catch (e) {
-      print('Error fetching user status: $e');
+      // print('Error fetching user status: $e');
     }
   }
 
@@ -240,7 +240,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => CompleteKYCDetail()));
+                            builder: (context) => const CompleteKYCDetail()));
                   },
                 ),
                 HomeIconWidget(
