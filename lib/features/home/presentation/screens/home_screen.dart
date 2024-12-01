@@ -11,6 +11,7 @@ import 'package:ifb_loan/features/home/presentation/widgets/multiple_range_guage
 import 'package:ifb_loan/features/home/presentation/widgets/slider_widget.dart';
 // import 'package:ifb_loan/features/home/presentation/widgets/balance.dart';
 import 'package:ifb_loan/features/loan_application/presentation/screen/loan_application_screen.dart';
+import 'package:ifb_loan/features/settings/presentation/screens/settings_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -117,11 +118,19 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-                const CircleAvatar(
-                  radius: 25,
-                  backgroundColor: AppColors.primaryColor,
-                  child: Center(
-                    child: Icon(Icons.person),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SettingsScreen()));
+                  },
+                  child: const CircleAvatar(
+                    radius: 25,
+                    backgroundColor: AppColors.primaryColor,
+                    child: Center(
+                      child: Icon(Icons.person),
+                    ),
                   ),
                 )
               ],
