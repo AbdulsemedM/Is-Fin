@@ -191,119 +191,125 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
           });
         }
       },
-      child: Column(
-        children: [
-          Stack(
-            children: [
-              // Background curves
-              CustomPaint(
-                size:
-                    const Size(double.infinity, 200), // Adjust height as needed
-                painter: CurvedPainter(),
-              ),
-              // Add content inside the stack if needed, e.g., profile picture, settings icon
-              const Positioned(
-                top: 70,
-                left: 0,
-                right: 0,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircleAvatar(
-                      radius: 60,
-                      backgroundImage: AssetImage(
-                          'assets/images/profile.png'), // Replace with actual image
-                    ),
-                    // SizedBox(height: 10),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          Text(
-            "Hi, $name.",
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: KycProgressCard(
-              title: 'KYC Completed',
-              percent: kycStatus / 100, step1: step1, step2: step2, // 74%
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Stack(
               children: [
-                CustomListButton(
-                  icon: Icons.info,
-                  title: 'Complete KYC',
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => CompleteKYCDetail()));
-                  },
+                CustomPaint(
+                  size: Size(double.infinity, MediaQuery.of(context).size.height * 0.25),
+                  painter: CurvedPainter(),
                 ),
-                CustomListButton(
-                  icon: Icons.add,
-                  title: 'Add Business Partner',
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                const BusinessPartnersScreen()));
-                  },
+                Positioned(
+                  top: MediaQuery.of(context).size.height * 0.08,
+                  left: 0,
+                  right: 0,
+                  child: const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircleAvatar(
+                        radius: 60,
+                        backgroundImage: AssetImage(
+                            'assets/images/profile.png'), // Replace with actual image
+                      ),
+                      // SizedBox(height: 10),
+                    ],
+                  ),
                 ),
-                const SizedBox(height: 10),
-                const LoanStatusCard(
-                  completedLoans: 13,
-                  pendingLoans: 2,
-                  failedLoans: 0,
-                ),
-                const Padding(
-                  padding: EdgeInsets.all(12.0),
-                  child: Text(
-                      textAlign: TextAlign.center,
-                      "If you are here as a product seller and wanted to fill a form or check status please click the button bellow"),
-                ),
-                MyButton(
-                    backgroundColor: loading
-                        ? AppColors.iconColor
-                        : AppColors.primaryDarkColor,
-                    onPressed: loading
-                        ? () {}
-                        : () {
-                            // setState(() {
-                            //   loading = true;
-                            // });
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const ProviderLoanListScreen()));
-                          },
-                    buttonText: loading
-                        ? SizedBox(
-                            height: ScreenConfig.screenHeight * 0.02,
-                            width: ScreenConfig.screenHeight * 0.02,
-                            child: const CircularProgressIndicator(
-                              strokeWidth: 3,
-                              color: AppColors.primaryColor,
-                            ),
-                          )
-                        : const Text(
-                            "Click Here",
-                            style: TextStyle(color: Colors.white),
-                          )),
               ],
             ),
-          )
-        ],
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: Text(
+                "Hi, $name.",
+                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: KycProgressCard(
+                title: 'KYC Completed',
+                percent: kycStatus / 100,
+                step1: step1,
+                step2: step2,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Column(
+                children: [
+                  CustomListButton(
+                    icon: Icons.info,
+                    title: 'Complete KYC',
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CompleteKYCDetail()));
+                    },
+                  ),
+                  CustomListButton(
+                    icon: Icons.add,
+                    title: 'Add Business Partner',
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const BusinessPartnersScreen()));
+                    },
+                  ),
+                  const SizedBox(height: 10),
+                  const LoanStatusCard(
+                    completedLoans: 13,
+                    pendingLoans: 2,
+                    failedLoans: 0,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+                    child: Text(
+                      "If you are here as a product seller and wanted to fill a form or check status please click the button bellow",
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 16),
+                    child: MyButton(
+                      backgroundColor: loading
+                          ? AppColors.iconColor
+                          : AppColors.primaryDarkColor,
+                      onPressed: loading
+                          ? () {}
+                          : () {
+                              // setState(() {
+                              //   loading = true;
+                              // });
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ProviderLoanListScreen()));
+                            },
+                      buttonText: loading
+                          ? SizedBox(
+                              height: ScreenConfig.screenHeight * 0.02,
+                              width: ScreenConfig.screenHeight * 0.02,
+                              child: const CircularProgressIndicator(
+                                strokeWidth: 3,
+                                color: AppColors.primaryColor,
+                              ),
+                            )
+                          : const Text(
+                              "Click Here",
+                              style: TextStyle(color: Colors.white),
+                            )),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

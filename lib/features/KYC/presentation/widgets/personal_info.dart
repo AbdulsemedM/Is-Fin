@@ -143,6 +143,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                 loading = true;
               });
             } else if (state is KycPersonalSentSuccess) {
+              context.read<KycBloc>().add(KYCStatusFetched());
               setState(() {
                 loading = false;
               });

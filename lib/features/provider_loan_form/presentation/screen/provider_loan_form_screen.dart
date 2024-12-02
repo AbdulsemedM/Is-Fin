@@ -223,7 +223,9 @@ class _ProviderLoanFormScreenState extends State<ProviderLoanFormScreen> {
                                       products,
                                       widget.id,
                                       expirationDate.toString(),
-                                      "APPROVED"));
+                                      productsToRemove.isEmpty
+                                          ? "APPROVED"
+                                          : "PENDING"));
                             }
                           },
                     buttonText: loading

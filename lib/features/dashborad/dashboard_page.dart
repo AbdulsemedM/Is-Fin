@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
+import 'package:ifb_loan/app/utils/dialog_utils.dart';
 import 'package:ifb_loan/configuration/auth_service.dart';
 import 'package:ifb_loan/features/finances/presentation/screens/finances_screen.dart';
 import 'package:ifb_loan/features/home/presentation/screens/home_screen.dart';
@@ -69,33 +70,56 @@ class _DashboardPageState extends State<DashboardPage> {
 
   Future<bool> _onBackButtonPressed(BuildContext context) async {
     return await showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            backgroundColor: Colors.white,
-            title: const Text("Confirm Logout"),
-            content: const Text("Do you want to Logout?"),
-            actions: <Widget>[
-              TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop(false);
-                  },
-                  child: const Text("No")),
-              TextButton(
-                  onPressed: () async {
-                    deleteToken();
-                    // ignore: use_build_context_synchronously
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const LoginScreen()));
-                  },
-                  child: const Text(
-                    "Yes",
-                    style: TextStyle(color: Colors.red),
-                  ))
-            ],
-          );
-        });
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          title: const Text("Confirm Logout"),
+          content: const Text("Do you want to Logout?"),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text("No"),
+            ),
+            TextButton(
+              onPressed: () async {
+                try {
+                  // Show loading indicator
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (context) => const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+
+                  await deleteToken();
+
+                  // Pop loading indicator and navigate
+                  if (context.mounted) {
+                    Navigator.pop(context); // Pop loading dialog
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                          builder: (context) => const LoginScreen()),
+                      (route) => false, // This removes all previous routes
+                    );
+                  }
+                } catch (e) {
+                  // Handle any errors during logout
+                  if (context.mounted) {
+                    Navigator.pop(context); // Pop loading dialog
+                    displaySnack(context, 'Error logging out', Colors.red);
+                  }
+                }
+              },
+              child: const Text(
+                "Yes",
+                style: TextStyle(color: Colors.red),
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

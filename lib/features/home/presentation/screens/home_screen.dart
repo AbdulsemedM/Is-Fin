@@ -181,9 +181,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    _buildLegendItem(context, 'Poor', Colors.red, '0-40'),
-                    _buildLegendItem(context, 'Fair', Colors.orange, '41-60'),
-                    _buildLegendItem(context, 'Good', Colors.yellow, '61-80'),
+                    _buildLegendItem(context, 'Very Poor', Colors.red, '0-20'),
+                    _buildLegendItem(context, 'Poor', Colors.orange, '21-40'),
+                    _buildLegendItem(
+                        context, 'Average', Colors.yellow, '41-60'),
+                    _buildLegendItem(
+                        context, 'Good', Colors.lightGreen, '61-80'),
                     _buildLegendItem(
                         context, 'Excellent', Colors.green, '81-100'),
                   ],

@@ -40,7 +40,7 @@ class ProviderLoanFormDataProvider {
           "products": products.map((prod) {
             return {
               "id": prod.id,
-              "productPrice": prod.productPrice,
+              "productPrice": double.parse(prod.productPrice.toString()),
             };
           }).toList(),
       };

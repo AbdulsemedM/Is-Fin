@@ -94,6 +94,7 @@ class _BankLinkState extends State<BankLink> {
                 accountSent = true;
               });
             } else if (state is KycAccountSentSuccess) {
+              context.read<KycBloc>().add(KYCStatusFetched());
               setState(() {
                 accountLoading = false;
               });
@@ -132,6 +133,7 @@ class _BankLinkState extends State<BankLink> {
                 // displaySnack(context, state.errorMessage, Colors.red);
               });
             } else if (state is KycOTPSentSuccess) {
+              context.read<KycBloc>().add(KYCStatusFetched());
               setState(() {
                 displaySnack(
                     context, "Account Verified Successfully", Colors.black);

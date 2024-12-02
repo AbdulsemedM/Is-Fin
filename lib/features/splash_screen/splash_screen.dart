@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ifb_loan/app/app_button.dart';
+// import 'package:ifb_loan/app/app_button.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
 // import 'package:ifb_loan/app/utils/app_theme.dart';
@@ -17,13 +17,13 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
   void initState() {
     super.initState();
     // Delaying navigation to LoginScreen for demonstration
-    // Future.delayed(Duration(seconds: 4), () {
-    //   Navigator.pushReplacement(context,
-    //       MaterialPageRoute(builder: (context) => const LoginScreen()));
-    // });
+    Future.delayed(Duration(seconds: 2), () {
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => const LoginScreen()));
+    });
   }
 
-  final String? _dropdownValue = 'en'; // Default language is English
+  // final String? _dropdownValue = 'en'; // Default language is English
   bool loading = false;
 
   @override
@@ -107,138 +107,139 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
                 SizedBox(
                   height: ScreenConfig.screenHeight * 0.07,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                          color: Colors.black, width: 1.5), // Black border
-                      borderRadius: BorderRadius.circular(5), // Rounded corners
-                    ),
-                    child: DropdownButtonFormField<String>(
-                      hint: Text(
-                        "Choose Language",
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      dropdownColor: AppColors.greyColor,
-                      value: _dropdownValue,
-                      decoration: InputDecoration(
-                        // labelText: 'Business Type',
-                        filled: true,
-                        fillColor: Colors.transparent,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide: BorderSide.none,
-                        ),
-                      ),
-                      items: const [
-                        DropdownMenuItem(
-                          value: 'en',
-                          child: Text('English'),
-                        ),
-                        DropdownMenuItem(
-                          value: 'fr',
-                          child: Text('Afaan Oromoo'),
-                        ),
-                        DropdownMenuItem(
-                          value: 'es',
-                          child: Text('Amharic'),
-                        ),
-                        DropdownMenuItem(
-                          value: 'de',
-                          child: Text('Afaan Somaali'),
-                        ),
-                        // Add more languages as needed
-                      ],
-                      onChanged: (value) {
-                        // Handle value change
-                      },
-                    ),
-                    // DropdownButton<String>(
-                    //   value: _dropdownValue, // Set default value
-                    //   isExpanded: true,
-                    //   hint: Text(
-                    //     "Choose Language",
-                    //     style: Theme.of(context).textTheme.bodyMedium,
-                    //   ),
-                    //   icon: const Icon(Icons.arrow_drop_down_outlined),
-                    //   elevation: 16,
-                    //   style: Theme.of(context).textTheme.titleMedium,
-                    //   underline: Container(
-                    //     color: Colors.transparent,
-                    //   ),
-                    //   onChanged: (String? value) {
-                    //     setState(() {
-                    //       _dropdownValue = value;
-                    //     });
-                    //   },
-                    //   items: const [
-                    //     DropdownMenuItem(
-                    //       value: 'en',
-                    //       child: Text('English'),
-                    //     ),
-                    //     DropdownMenuItem(
-                    //       value: 'fr',
-                    //       child: Text('Afaan Oromoo'),
-                    //     ),
-                    //     DropdownMenuItem(
-                    //       value: 'es',
-                    //       child: Text('Amharic'),
-                    //     ),
-                    //     DropdownMenuItem(
-                    //       value: 'de',
-                    //       child: Text('Afaan Somaali'),
-                    //     ),
-                    //     // Add more languages as needed
-                    //   ],
-                    // ),
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                //   child: Container(
+                //     decoration: BoxDecoration(
+                //       border: Border.all(
+                //           color: Colors.black, width: 1.5), // Black border
+                //       borderRadius: BorderRadius.circular(5), // Rounded corners
+                //     ),
+                //     child: DropdownButtonFormField<String>(
+                //       hint: Text(
+                //         "Choose Language",
+                //         style: Theme.of(context).textTheme.bodyMedium,
+                //       ),
+                //       dropdownColor: AppColors.greyColor,
+                //       value: _dropdownValue,
+                //       decoration: InputDecoration(
+                //         // labelText: 'Business Type',
+                //         filled: true,
+                //         fillColor: Colors.transparent,
+                //         border: OutlineInputBorder(
+                //           borderRadius: BorderRadius.circular(8.0),
+                //           borderSide: BorderSide.none,
+                //         ),
+                //       ),
+                //       items: const [
+                //         DropdownMenuItem(
+                //           value: 'en',
+                //           child: Text('English'),
+                //         ),
+                //         DropdownMenuItem(
+                //           value: 'fr',
+                //           child: Text('Afaan Oromoo'),
+                //         ),
+                //         DropdownMenuItem(
+                //           value: 'es',
+                //           child: Text('Amharic'),
+                //         ),
+                //         DropdownMenuItem(
+                //           value: 'de',
+                //           child: Text('Afaan Somaali'),
+                //         ),
+                //         // Add more languages as needed
+                //       ],
+                //       onChanged: (value) {
+                //         // Handle value change
+                //       },
+                //     ),
+                //     // DropdownButton<String>(
+                //     //   value: _dropdownValue, // Set default value
+                //     //   isExpanded: true,
+                //     //   hint: Text(
+                //     //     "Choose Language",
+                //     //     style: Theme.of(context).textTheme.bodyMedium,
+                //     //   ),
+                //     //   icon: const Icon(Icons.arrow_drop_down_outlined),
+                //     //   elevation: 16,
+                //     //   style: Theme.of(context).textTheme.titleMedium,
+                //     //   underline: Container(
+                //     //     color: Colors.transparent,
+                //     //   ),
+                //     //   onChanged: (String? value) {
+                //     //     setState(() {
+                //     //       _dropdownValue = value;
+                //     //     });
+                //     //   },
+                //     //   items: const [
+                //     //     DropdownMenuItem(
+                //     //       value: 'en',
+                //     //       child: Text('English'),
+                //     //     ),
+                //     //     DropdownMenuItem(
+                //     //       value: 'fr',
+                //     //       child: Text('Afaan Oromoo'),
+                //     //     ),
+                //     //     DropdownMenuItem(
+                //     //       value: 'es',
+                //     //       child: Text('Amharic'),
+                //     //     ),
+                //     //     DropdownMenuItem(
+                //     //       value: 'de',
+                //     //       child: Text('Afaan Somaali'),
+                //     //     ),
+                //     //     // Add more languages as needed
+                //     //   ],
+                //     // ),
+                //   ),
+                // ),
                 SizedBox(
                   height: ScreenConfig.screenHeight * 0.03,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                      child: MyButton(
-                          // height: ScreenConfig.screenHeight * 0.06,
-                          width: ScreenConfig.screenWidth * 0.5,
-                          backgroundColor: loading
-                              ? AppColors.iconColor
-                              : AppColors.primaryDarkColor,
-                          onPressed: loading
-                              ? () {}
-                              : () {
-                                  //  Delaying navigation to LoginScreen for demonstration
-                                  setState(() {
-                                    loading = true;
-                                  });
-                                  Future.delayed(const Duration(seconds: 4), () {
-                                    Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const LoginScreen()));
-                                  });
-                                },
-                          buttonText: loading
-                              ? SizedBox(
-                                  height: ScreenConfig.screenHeight * 0.02,
-                                  width: ScreenConfig.screenHeight * 0.02,
-                                  child: const CircularProgressIndicator(
-                                    strokeWidth: 3,
-                                    color: AppColors.primaryColor,
-                                  ),
-                                )
-                              : const Text(
-                                  "Next",
-                                  style: TextStyle(color: Colors.white),
-                                )),
-                    ),
-                  ],
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.end,
+                //   children: [
+                //     Padding(
+                //       padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                //       child: MyButton(
+                //           // height: ScreenConfig.screenHeight * 0.06,
+                //           width: ScreenConfig.screenWidth * 0.5,
+                //           backgroundColor: loading
+                //               ? AppColors.iconColor
+                //               : AppColors.primaryDarkColor,
+                //           onPressed: loading
+                //               ? () {}
+                //               : () {
+                //                   //  Delaying navigation to LoginScreen for demonstration
+                //                   setState(() {
+                //                     loading = true;
+                //                   });
+                //                   Future.delayed(const Duration(seconds: 4),
+                //                       () {
+                //                     Navigator.pushReplacement(
+                //                         context,
+                //                         MaterialPageRoute(
+                //                             builder: (context) =>
+                //                                 const LoginScreen()));
+                //                   });
+                //                 },
+                //           buttonText: loading
+                //               ? SizedBox(
+                //                   height: ScreenConfig.screenHeight * 0.02,
+                //                   width: ScreenConfig.screenHeight * 0.02,
+                //                   child: const CircularProgressIndicator(
+                //                     strokeWidth: 3,
+                //                     color: AppColors.primaryColor,
+                //                   ),
+                //                 )
+                //               : const Text(
+                //                   "Next",
+                //                   style: TextStyle(color: Colors.white),
+                //                 )),
+                //     ),
+                //   ],
+                // ),
                 SizedBox(
                   height: ScreenConfig.screenHeight * 0.16,
                 ),

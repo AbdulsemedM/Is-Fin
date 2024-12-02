@@ -125,6 +125,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
                 loading = true;
               });
             } else if (state is KycBusinessSentSuccess) {
+              context.read<KycBloc>().add(KYCStatusFetched());
               setState(() {
                 loading = false;
               });
