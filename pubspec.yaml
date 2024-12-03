@@ -50,6 +50,7 @@ dependencies:
   device_info_plus: ^10.1.2
   dio: ^5.7.0
   syncfusion_flutter_gauges: ^27.2.4
+  pinput: ^5.0.0
 
 dev_dependencies:
   flutter_test:
