@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:ifb_loan/features/loan_approval_status/data/repository/loan_approval_status_repository.dart';
+import 'package:ifb_loan/features/loan_approval_status/model/murabah_aggrement_model.dart';
 import 'package:ifb_loan/features/loan_approval_status/model/offered_products_price_model.dart';
 import 'package:ifb_loan/features/loan_approval_status/model/product_list_model.dart';
 
@@ -15,6 +16,7 @@ class LoanApprovalStatusBloc
     on<FetchLoanApprovalStatusList>(_onFetchLoanApprovalStatusList);
     on<OfferedProductsPriceFetch>(_onOfferedProductsPriceFetch);
     on<AcceptOffer>(_onAcceptOffer);
+    on<FetchMurabahaAgreement>(_onFetchMurabahaAgreement);
   }
 
   Future<void> _onFetchLoanApprovalStatusList(FetchLoanApprovalStatusList event,
@@ -53,6 +55,18 @@ class LoanApprovalStatusBloc
       emit(AcceptOfferSuccess(message));
     } catch (e) {
       emit(AcceptOfferFailure(e.toString()));
+    }
+  }
+
+  Future<void> _onFetchMurabahaAgreement(FetchMurabahaAgreement event,
+      Emitter<LoanApprovalStatusState> emit) async {
+    emit(FetchMurabahaAgreementLoading());
+    try {
+      final murabahaAgreement =
+          await loanApprovalStatusRepository.fetchMurabahaAgreement(event.id);
+      emit(FetchMurabahaAgreementSuccess(murabahaAgreement));
+    } catch (e) {
+      emit(FetchMurabahaAgreementFailure(e.toString()));
     }
   }
 }

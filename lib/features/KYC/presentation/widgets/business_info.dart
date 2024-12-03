@@ -64,6 +64,15 @@ class _BusinessInfoState extends State<BusinessInfo> {
     return null; // Return null if validation passes
   }
 
+  String? validateNumberField(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'This field is required';
+    } else if (!RegExp(r'^\d+$').hasMatch(value.trim())) {
+      return 'This field must contain only numbers';
+    }
+    return null; // Return null if validation passes
+  }
+
   String? validateDropDown(String? value) {
     if (value == null || value.isEmpty) {
       return 'Please select a gender';
@@ -265,7 +274,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
                     Expanded(
                       child: TextFormField(
                         controller: _tinNoController,
-                        validator: (value) => validateField(value),
+                        validator: (value) => validateNumberField(value),
                         decoration: InputDecoration(
                           labelText: 'Tin No.',
                           filled: true,
@@ -517,7 +526,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
                     Expanded(
                       child: TextFormField(
                         controller: _startingCapitalController,
-                        validator: (value) => validateField(value),
+                        validator: (value) => validateNumberField(value),
                         decoration: InputDecoration(
                           labelText: 'Starting Capital',
                           filled: true,
@@ -532,7 +541,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
                     const SizedBox(width: 16),
                     Expanded(
                       child: TextFormField(
-                        validator: (value) => validateField(value),
+                        validator: (value) => validateNumberField(value),
                         controller: _currentCapitalController,
                         decoration: InputDecoration(
                           labelText: 'Current Capital',

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ifb_loan/features/loan_approval_status/presentation/screen/loan_approval_murabaha_screen.dart';
 import 'package:ifb_loan/features/loan_approval_status/presentation/screen/loan_approval_status.dart';
 import 'package:intl/intl.dart';
 
@@ -11,7 +12,10 @@ class LoanListWidget extends StatelessWidget {
   final String status;
   final IconData icon;
   final Color iconColor;
-  final String pdfUrl;
+  final String? promiseToPurchaseDocument;
+  final String? murabahaAgreementDocument;
+  final String? agentAgreementDocument;
+  final String? undertakingAgreementtDocument;
 
   const LoanListWidget({
     super.key,
@@ -23,7 +27,10 @@ class LoanListWidget extends StatelessWidget {
     required this.status,
     required this.icon,
     required this.iconColor,
-    required this.pdfUrl,
+    required this.promiseToPurchaseDocument,
+    required this.murabahaAgreementDocument,
+    required this.agentAgreementDocument,
+    required this.undertakingAgreementtDocument,
   });
 
   @override
@@ -37,7 +44,7 @@ class LoanListWidget extends StatelessWidget {
                   builder: (context) => LoanApprovalStatus(
                         id: id,
                         name: name,
-                        pdfUrl: pdfUrl,
+                        pdfUrl: promiseToPurchaseDocument!,
                       )));
           // Navigator.push(
           //     context,
@@ -78,6 +85,14 @@ class LoanListWidget extends StatelessWidget {
               ],
             ),
           );
+        } else if (status == "MURABAH_AGREEMENT") {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => LoanApprovalMurabahaScreen(
+                        id: id,
+                        murabahaAgreementDocument: murabahaAgreementDocument!,
+                      )));
         }
       },
       child: Container(

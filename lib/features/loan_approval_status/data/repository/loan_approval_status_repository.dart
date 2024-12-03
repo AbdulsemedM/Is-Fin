@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:ifb_loan/features/loan_approval_status/data/data_provider/loan_approval_status_data_provider.dart';
+import 'package:ifb_loan/features/loan_approval_status/model/murabah_aggrement_model.dart';
 import 'package:ifb_loan/features/loan_approval_status/model/offered_products_price_model.dart';
 import 'package:ifb_loan/features/loan_approval_status/model/product_list_model.dart';
 
@@ -58,6 +59,20 @@ class LoanApprovalStatusRepository {
         throw data['message'];
       }
       return data['message'];
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<MurabahaAgreementModel> fetchMurabahaAgreement(String id) async {
+    try {
+      final response =
+          await loanApprovalStatusDataProvider.fetchMurabahaAgreement(id);
+      final data = jsonDecode(response);
+      if (data['httpStatus'] != 200) {
+        throw data['message'];
+      }
+      return MurabahaAgreementModel.fromMap(data['response']);
     } catch (e) {
       rethrow;
     }

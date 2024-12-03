@@ -18,3 +18,8 @@ final class AcceptOffer extends LoanApprovalStatusEvent {
   final List<OfferedProductsPriceModel>? productList;
   AcceptOffer({required this.id, required this.status, this.productList});
 }
+
+final class FetchMurabahaAgreement extends LoanApprovalStatusEvent {
+  final String id;
+  FetchMurabahaAgreement({required this.id});
+}

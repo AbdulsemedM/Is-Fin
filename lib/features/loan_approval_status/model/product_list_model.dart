@@ -11,6 +11,9 @@ class StatusProductListModel {
   final String repaymentCycleDuration;
   final String status;
   final String? promiseToPurchaseDocument;
+  final String? murabahaAgreementDocument;
+  final String? agentAgreementDocument;
+  final String? undertakingAgreementtDocument;
   StatusProductListModel({
     required this.id,
     required this.buyerFullName,
@@ -21,6 +24,9 @@ class StatusProductListModel {
     required this.repaymentCycleDuration,
     required this.status,
     this.promiseToPurchaseDocument,
+    this.murabahaAgreementDocument,
+    this.agentAgreementDocument,
+    this.undertakingAgreementtDocument,
   });
 
   StatusProductListModel copyWith({
@@ -33,6 +39,9 @@ class StatusProductListModel {
     String? repaymentCycleDuration,
     String? status,
     String? promiseToPurchaseDocument,
+    String? murabahaAgreementDocument,
+    String? agentAgreementDocument,
+    String? undertakingAgreementtDocument,
   }) {
     return StatusProductListModel(
       id: id ?? this.id,
@@ -46,6 +55,12 @@ class StatusProductListModel {
       status: status ?? this.status,
       promiseToPurchaseDocument:
           promiseToPurchaseDocument ?? this.promiseToPurchaseDocument,
+      murabahaAgreementDocument:
+          murabahaAgreementDocument ?? this.murabahaAgreementDocument,
+      agentAgreementDocument:
+          agentAgreementDocument ?? this.agentAgreementDocument,
+      undertakingAgreementtDocument:
+          undertakingAgreementtDocument ?? this.undertakingAgreementtDocument,
     );
   }
 
@@ -60,6 +75,9 @@ class StatusProductListModel {
       'repaymentCycleDuration': repaymentCycleDuration,
       'status': status,
       'promiseToPurchaseDocument': promiseToPurchaseDocument,
+      'murabahaAgreementDocument': murabahaAgreementDocument,
+      'agentAgreementDocument': agentAgreementDocument,
+      'undertakingAgreementtDocument': undertakingAgreementtDocument,
     };
   }
 
@@ -75,6 +93,10 @@ class StatusProductListModel {
       repaymentCycleDuration: map['repaymentCycleDuration'] as String,
       status: map['status'] as String,
       promiseToPurchaseDocument: map['promiseToPurchaseDocument'] as String?,
+      murabahaAgreementDocument: map['murabahaAgreementDocument'] as String?,
+      agentAgreementDocument: map['agentAgreementDocument'] as String?,
+      undertakingAgreementtDocument:
+          map['undertakingAgreementtDocument'] as String?,
     );
   }
 
@@ -86,7 +108,7 @@ class StatusProductListModel {
 
   @override
   String toString() {
-    return 'StatusProductListModel( id: $id, buyerFullName: $buyerFullName, supplierFullName: $supplierFullName, sectorName: $sectorName, requestedAt: $requestedAt, totalAmount: $totalAmount, repaymentCycleDuration: $repaymentCycleDuration, status: $status, promiseToPurchaseDocument: $promiseToPurchaseDocument)';
+    return 'StatusProductListModel( id: $id, buyerFullName: $buyerFullName, supplierFullName: $supplierFullName, sectorName: $sectorName, requestedAt: $requestedAt, totalAmount: $totalAmount, repaymentCycleDuration: $repaymentCycleDuration, status: $status, promiseToPurchaseDocument: $promiseToPurchaseDocument, murabahaAgreementDocument: $murabahaAgreementDocument, agentAgreementDocument: $agentAgreementDocument, undertakingAgreementtDocument: $undertakingAgreementtDocument)';
   }
 
   @override
@@ -101,7 +123,10 @@ class StatusProductListModel {
         other.totalAmount == totalAmount &&
         other.repaymentCycleDuration == repaymentCycleDuration &&
         other.status == status &&
-        other.promiseToPurchaseDocument == promiseToPurchaseDocument;
+        other.promiseToPurchaseDocument == promiseToPurchaseDocument &&
+        other.murabahaAgreementDocument == murabahaAgreementDocument &&
+        other.agentAgreementDocument == agentAgreementDocument &&
+        other.undertakingAgreementtDocument == undertakingAgreementtDocument;
   }
 
   @override
@@ -114,6 +139,9 @@ class StatusProductListModel {
         totalAmount.hashCode ^
         repaymentCycleDuration.hashCode ^
         status.hashCode ^
-        promiseToPurchaseDocument.hashCode;
+        promiseToPurchaseDocument.hashCode ^
+        murabahaAgreementDocument.hashCode ^
+        agentAgreementDocument.hashCode ^
+        undertakingAgreementtDocument.hashCode;
   }
 }

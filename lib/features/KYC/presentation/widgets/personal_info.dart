@@ -572,6 +572,9 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                   return 'Invalid phone number format';
                                 } else if (!value.startsWith("09")) {
                                   return 'Invalid phone number format';
+                                } else if (!RegExp(r'^\d+$')
+                                    .hasMatch(value.trim())) {
+                                  return 'This field must contain only numbers';
                                 }
                                 return null;
                               },
@@ -674,6 +677,8 @@ class _PersonalInfoState extends State<PersonalInfo> {
                             return 'Invalid phone number format';
                           } else if (!value.startsWith("09")) {
                             return 'Invalid phone number format';
+                          } else if (!RegExp(r'^\d+$').hasMatch(value.trim())) {
+                            return 'This field must contain only numbers';
                           }
                           return null;
                         },

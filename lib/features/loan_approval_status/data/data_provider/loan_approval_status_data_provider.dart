@@ -48,4 +48,15 @@ class LoanApprovalStatusDataProvider {
       throw e.toString();
     }
   }
+
+  Future<String> fetchMurabahaAgreement(String id) async {
+    try {
+      final apiProvider = ProviderSetup.getApiProvider(ApiConstants.baseUrl);
+      final response =
+          await apiProvider.getRequest("/api/product/buyer/request/$id");
+      return response.body;
+    } catch (e) {
+      throw e.toString();
+    }
+  }
 }
