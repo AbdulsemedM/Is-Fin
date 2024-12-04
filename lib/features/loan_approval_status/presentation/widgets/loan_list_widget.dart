@@ -85,7 +85,7 @@ class LoanListWidget extends StatelessWidget {
               ],
             ),
           );
-        } else if (status == "MURABAH_AGREEMENT") {
+        } else if (status == "MURABAHA_AGREEMENT") {
           Navigator.push(
               context,
               MaterialPageRoute(

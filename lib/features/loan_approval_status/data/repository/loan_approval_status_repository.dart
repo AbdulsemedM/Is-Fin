@@ -77,4 +77,18 @@ class LoanApprovalStatusRepository {
       rethrow;
     }
   }
+
+  Future<String> acceptMurabahaOffer(String id, String status) async {
+    try {
+      final response =
+          await loanApprovalStatusDataProvider.acceptMuranahaOffer(id, status);
+      final data = jsonDecode(response);
+      if (data['httpStatus'] != 200) {
+        throw data['message'];
+      }
+      return data['message'];
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

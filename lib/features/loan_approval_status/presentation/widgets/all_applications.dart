@@ -42,7 +42,9 @@ class _AllLoanApplicationsState extends State<AllLoanApplications> {
                         ? Icons.done
                         : transaction.status == "UNDER_REVIEW"
                             ? Icons.access_alarms_outlined
-                            : Icons.close,
+                            : transaction.status == "MURABAHA_AGREEMENT"
+                                ? Icons.list
+                                : Icons.close,
             iconColor: transaction.status == "PENDING"
                 ? Colors.orange
                 : transaction.status == "ACCEPTED"
@@ -51,7 +53,9 @@ class _AllLoanApplicationsState extends State<AllLoanApplications> {
                         ? Colors.blue
                         : transaction.status == "UNDER_REVIEW"
                             ? Colors.amber
-                            : Colors.red,
+                            : transaction.status == "MURABAHA_AGREEMENT"
+                                ? Colors.purple
+                                : Colors.red,
           );
         }).toList(),
       ),

@@ -53,7 +53,19 @@ class LoanApprovalStatusDataProvider {
     try {
       final apiProvider = ProviderSetup.getApiProvider(ApiConstants.baseUrl);
       final response =
-          await apiProvider.getRequest("/api/product/buyer/request/$id");
+          await apiProvider.getRequest("/api/product/buyer/request/markup/$id");
+      return response.body;
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  Future<String> acceptMuranahaOffer(String id, String status) async {
+    try {
+      final apiProvider = ProviderSetup.getApiProvider(ApiConstants.baseUrl);
+      final body = {"status": status};
+      final response = await apiProvider.postRequest(
+          "api/product/buyer/request/markup/$id", body);
       return response.body;
     } catch (e) {
       throw e.toString();

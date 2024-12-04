@@ -58,11 +58,15 @@ class _SignupScreenState extends State<SignupScreen> {
               SizedBox(
                 height: ScreenConfig.screenHeight * 0.02,
               ),
-              const Row(
+              Row(
                 children: [
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Icon(Icons.arrow_back_ios_new_outlined),
+                    child: GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Icon(Icons.arrow_back_ios_new_outlined)),
                   )
                 ],
               ),

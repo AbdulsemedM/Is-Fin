@@ -79,6 +79,7 @@ class _LoanApprovalStatusState extends State<LoanApprovalStatus> {
         } else if (state is AcceptOfferFailure) {
           setState(() => loading = false);
           displaySnack(context, state.errorMessage, Colors.red);
+          Navigator.pop(context);
         }
       },
       child: Scaffold(

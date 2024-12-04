@@ -6,15 +6,16 @@ import 'package:path_provider/path_provider.dart';
 
 class PdfDialog extends StatefulWidget {
   final String pdfUrl;
+  final String? token;
   final Function()? onAccept;
   final Function()? onReject;
 
-  const PdfDialog({
-    super.key,
-    required this.pdfUrl,
-    this.onAccept,
-    this.onReject,
-  });
+  const PdfDialog(
+      {super.key,
+      required this.pdfUrl,
+      this.onAccept,
+      this.onReject,
+      this.token});
 
   @override
   State<PdfDialog> createState() => _PdfDialogState();
@@ -60,6 +61,7 @@ class _PdfDialogState extends State<PdfDialog> {
       await dio.download(
         widget.pdfUrl,
         filePath,
+        options: Options(headers: {'Authorizaton': 'Bearer ${widget.token}'}),
         onReceiveProgress: (received, total) {
           if (total != -1) {
             final progress = (received / total * 100).toStringAsFixed(0);

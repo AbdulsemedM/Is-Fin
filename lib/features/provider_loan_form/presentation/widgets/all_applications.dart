@@ -16,38 +16,46 @@ class AllApplications extends StatefulWidget {
 class _AllApplicationsState extends State<AllApplications> {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: ScreenConfig.screenHeight * 0.77,
-      child: ListView(
-        children: widget.loanformList.map((transaction) {
-          return ProviderLoanListWidget(
-            status: transaction.status,
-            id: transaction.id,
-            name: transaction.buyerFullName,
-            amount: transaction.totalAmount?.toString() ?? "",
-            description: transaction.sectorName,
-            date: transaction.requestedAt,
-            icon: transaction.status == "PENDING"
-                ? Icons.timer
-                : transaction.status == "ACCEPTED"
-                    ? Icons.arrow_circle_up_sharp
-                    : transaction.status == "APPROVED"
-                        ? Icons.done
-                        : transaction.status == "UNDER_REVIEW"
-                            ? Icons.access_alarms_outlined
-                            : Icons.close,
-            iconColor: transaction.status == "PENDING"
-                ? Colors.orange
-                : transaction.status == "ACCEPTED"
-                    ? Colors.green
-                    : transaction.status == "APPROVED"
-                        ? Colors.blue
-                        : transaction.status == "UNDER_REVIEW"
-                            ? Colors.amber
-                            : Colors.red,
+    return widget.loanformList.isEmpty
+        ? const Center(
+            child: Text("There are no loans found"),
+          )
+        : SizedBox(
+            height: ScreenConfig.screenHeight * 0.77,
+            child: ListView(
+              children: widget.loanformList.map((transaction) {
+                return ProviderLoanListWidget(
+                  status: transaction.status,
+                  id: transaction.id,
+                  name: transaction.buyerFullName,
+                  amount: transaction.totalAmount?.toString() ?? "",
+                  description: transaction.sectorName,
+                  date: transaction.requestedAt,
+                  icon: transaction.status == "PENDING"
+                      ? Icons.timer
+                      : transaction.status == "ACCEPTED"
+                          ? Icons.arrow_circle_up_sharp
+                          : transaction.status == "APPROVED"
+                              ? Icons.done
+                              : transaction.status == "UNDER_REVIEW"
+                                  ? Icons.access_alarms_outlined
+                                  : transaction.status == "MURABAHA_AGREEMENT"
+                                      ? Icons.list
+                                      : Icons.close,
+                  iconColor: transaction.status == "PENDING"
+                      ? Colors.orange
+                      : transaction.status == "ACCEPTED"
+                          ? Colors.green
+                          : transaction.status == "APPROVED"
+                              ? Colors.blue
+                              : transaction.status == "UNDER_REVIEW"
+                                  ? Colors.amber
+                                  : transaction.status == "MURABAHA_AGREEMENT"
+                                      ? Colors.purple
+                                      : Colors.red,
+                );
+              }).toList(),
+            ),
           );
-        }).toList(),
-      ),
-    );
   }
 }

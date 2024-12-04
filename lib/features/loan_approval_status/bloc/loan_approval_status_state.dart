@@ -61,3 +61,17 @@ final class FetchMurabahaAgreementFailure extends LoanApprovalStatusState {
 
   FetchMurabahaAgreementFailure(this.errorMessage);
 }
+
+final class AcceptMurabahaOfferLoading extends LoanApprovalStatusState {}
+
+final class AcceptMurabahaOfferSuccess extends LoanApprovalStatusState {
+  final String message;
+
+  AcceptMurabahaOfferSuccess(this.message);
+}
+
+final class AcceptMurabahaOfferFailure extends LoanApprovalStatusState {
+  final String errorMessage;
+
+  AcceptMurabahaOfferFailure(this.errorMessage);
+}

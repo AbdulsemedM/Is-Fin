@@ -16,6 +16,7 @@ class LoanApprovalStatusBloc
     on<FetchLoanApprovalStatusList>(_onFetchLoanApprovalStatusList);
     on<OfferedProductsPriceFetch>(_onOfferedProductsPriceFetch);
     on<AcceptOffer>(_onAcceptOffer);
+    on<AcceptMurabahaOffer>(_onAcceptMurabahaOffer);
     on<FetchMurabahaAgreement>(_onFetchMurabahaAgreement);
   }
 
@@ -67,6 +68,18 @@ class LoanApprovalStatusBloc
       emit(FetchMurabahaAgreementSuccess(murabahaAgreement));
     } catch (e) {
       emit(FetchMurabahaAgreementFailure(e.toString()));
+    }
+  }
+
+  Future<void> _onAcceptMurabahaOffer(
+      AcceptMurabahaOffer event, Emitter<LoanApprovalStatusState> emit) async {
+    emit(AcceptMurabahaOfferLoading());
+    try {
+      final message = await loanApprovalStatusRepository.acceptMurabahaOffer(
+          event.id, event.status);
+      emit(AcceptMurabahaOfferSuccess(message));
+    } catch (e) {
+      emit(AcceptMurabahaOfferFailure(e.toString()));
     }
   }
 }

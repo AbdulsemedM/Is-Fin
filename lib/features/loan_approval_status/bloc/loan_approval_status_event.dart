@@ -23,3 +23,9 @@ final class FetchMurabahaAgreement extends LoanApprovalStatusEvent {
   final String id;
   FetchMurabahaAgreement({required this.id});
 }
+
+final class AcceptMurabahaOffer extends LoanApprovalStatusEvent {
+  final String id;
+  final String status;
+  AcceptMurabahaOffer({required this.id, required this.status});
+}
