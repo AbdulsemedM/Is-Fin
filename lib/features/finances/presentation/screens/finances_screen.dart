@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
 import 'package:ifb_loan/app/utils/dialog_utils.dart';
 import 'package:ifb_loan/configuration/phone_number_manager.dart';
 import 'package:ifb_loan/features/business_partner/presentation/screen/add_bisiness_partner_screen.dart';
+import 'package:ifb_loan/features/finances/bloc/finances_bloc.dart';
+import 'package:ifb_loan/features/finances/models/active_loan_model.dart';
 import 'package:ifb_loan/features/finances/presentation/widgets/finances_widget.dart';
 import 'package:ifb_loan/features/finances/presentation/widgets/loan_display_card.dart';
 import 'package:ifb_loan/features/loan_application/presentation/screen/loan_application_screen.dart';
@@ -19,10 +22,17 @@ class FinancesScreen extends StatefulWidget {
 class _FinancesScreenState extends State<FinancesScreen> {
   String kycStatus = "null";
   UserManager userManager = UserManager();
+  var loading = false;
+  List<ActiveLoanModel> myActiveLoans = [];
   @override
   void initState() {
     super.initState();
+    fetchLoans();
     fetchUserStatus();
+  }
+
+  fetchLoans() async {
+    context.read<FinancesBloc>().add(FetchActiveLoans());
   }
 
   fetchUserStatus() async {
@@ -147,45 +157,95 @@ class _FinancesScreenState extends State<FinancesScreen> {
             ],
           ),
         ),
-        SizedBox(
-          height: ScreenConfig.screenHeight * 0.4,
-          child: ListView(
-            padding: const EdgeInsets.all(16.0),
-            children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const LoanRepaymentScreen()));
-                },
-                child: LoanCard(
-                  loanTitle: 'Loan 1',
-                  loanDescription: '10 Mobiles and 10 TVs',
-                  amount: 1150,
-                  lender: 'ABC General Trading',
-                  backgroundColor: Colors.blue.shade100,
-                  image: Image.asset(
-                    'assets/images/elec.png', // replace with your image asset
-                    fit: BoxFit.contain,
-                  ),
-                ),
-              ),
-              LoanCard(
-                loanTitle: 'Loan 2',
-                loanDescription: 'Coffee plant grain picker',
-                amount: 7000,
-                lender: 'XYZ Import and Export',
-                backgroundColor: Colors.orange.shade100,
-                image: Image.asset(
-                  'assets/images/agri.png', // replace with your image asset
-                  fit: BoxFit.contain,
-                ),
-              ),
-            ],
-          ),
+        BlocListener<FinancesBloc, FinancesState>(
+          listener: (context, state) {
+            if (state is ActiveLoansFetchedLoading) {
+              setState(() {
+                loading = true;
+              });
+            } else if (state is ActiveLoansFetchedSuccess) {
+              setState(() {
+                myActiveLoans = state.activeLoans;
+                loading = false;
+              });
+            } else if (state is ActiveLoansFetchedFailure) {
+              setState(() {
+                loading = false;
+              });
+              displaySnack(context, state.errorMessage, Colors.red);
+            }
+          },
+          child: loading
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : myActiveLoans.isEmpty
+                  ? Center(
+                      child: Text(
+                        'No active loans available',
+                        style: TextStyle(fontSize: 16, color: Colors.black54),
+                      ),
+                    )
+                  : SizedBox(
+                      height: ScreenConfig.screenHeight * 0.4,
+                      child: ListView.builder(
+                        padding: const EdgeInsets.all(16.0),
+                        itemCount: myActiveLoans.length,
+                        itemBuilder: (context, index) {
+                          final loan = myActiveLoans[index];
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => LoanRepaymentScreen(
+                                    // loanId: loan.id, // Pass relevant loan data
+                                  ),
+                                ),
+                              );
+                            },
+                            child: LoanCard(
+                              loanTitle: loan.name, // Dynamic title
+                              loanDescription:
+                                  loan.productQuantity, // Dynamic description
+                              amount: loan.totalPayableAmount, // Dynamic amount
+                              // lender: loan.lenderName, // Dynamic lender name
+                              backgroundColor: _getBackgroundColor(index),
+                              image: _getLoanImage(
+                                  loan.sector), // Dynamic image based on type
+                            ),
+                          );
+                        },
+                      ),
+                    ),
         )
       ],
     );
+  }
+
+  Color _getBackgroundColor(int index) {
+    // Alternate colors for the loan cards
+    return index % 2 == 0 ? Colors.blue.shade100 : Colors.orange.shade100;
+  }
+
+  Image _getLoanImage(String type) {
+    // Return different images based on loan type
+    switch (type) {
+      case 'electronics':
+        return Image.asset(
+          'assets/images/elec.png',
+          fit: BoxFit.contain,
+        );
+      case 'agriculture':
+        return Image.asset(
+          'assets/images/agri.png',
+          fit: BoxFit.contain,
+        );
+      default:
+        return Image.asset(
+          'assets/images/default.png', // Default image
+          fit: BoxFit.contain,
+        );
+    }
   }
 }

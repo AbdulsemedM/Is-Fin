@@ -28,8 +28,8 @@ class _LoanRepaymentScreenState extends State<LoanRepaymentScreen> {
               LoanCard(
                 loanTitle: 'Loan 1',
                 loanDescription: '10 Mobiles and 10 TVs',
-                amount: 1150,
-                lender: 'ABC General Trading',
+                amount: "1150",
+                // lender: 'ABC General Trading',
                 backgroundColor: Colors.blue.shade100,
                 image: Image.asset(
                   'assets/images/elec.png', // replace with your image asset

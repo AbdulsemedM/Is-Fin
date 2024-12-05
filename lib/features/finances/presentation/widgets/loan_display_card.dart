@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 class LoanCard extends StatelessWidget {
   final String loanTitle;
   final String loanDescription;
-  final double amount;
-  final String lender;
+  final String amount;
+  // final String lender;
   final Color backgroundColor;
   final String currency;
   final Widget image;
@@ -14,7 +14,7 @@ class LoanCard extends StatelessWidget {
     required this.loanTitle,
     required this.loanDescription,
     required this.amount,
-    required this.lender,
+    // required this.lender,
     required this.backgroundColor,
     this.currency = 'ETB',
     required this.image,
@@ -56,7 +56,7 @@ class LoanCard extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             Text(
-              '${amount.toStringAsFixed(2)} $currency',
+              '${amount} $currency',
               style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,

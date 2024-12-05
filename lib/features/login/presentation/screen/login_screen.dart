@@ -77,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Image.asset("assets/images/ifb2.png"))),
               SizedBox(height: ScreenConfig.screenHeight * 0.05),
               Text(
-                "IFB Financing",
+                "RIZQ Financing",
                 style: Theme.of(context)
                     .textTheme
                     .displayLarge
@@ -86,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(
                 height: 10,
               ),
-              Text("Signin to your account",
+              Text("Login",
                   style: Theme.of(context)
                       .textTheme
                       .displayMedium

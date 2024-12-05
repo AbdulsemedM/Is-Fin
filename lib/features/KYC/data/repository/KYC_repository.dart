@@ -46,6 +46,9 @@ class KycRepository {
         throw data['message'];
       }
       print(data['response']);
+      try {
+        savePersonalInfo(PersonalInfoModel.fromMap(data['response']));
+      } catch (e) {}
       return PersonalInfoModel.fromMap(data['response']);
     } catch (e) {
       // print(e.toString());
@@ -85,6 +88,9 @@ class KycRepository {
         throw data['message'];
       }
       print(data['response']);
+      try {
+        saveBusinessInfo(BusinessInfoModel.fromMap(data['response']));
+      } catch (e) {}
       return BusinessInfoModel.fromMap(data['response']);
     } catch (e) {
       rethrow; // This will throw only the `message` part if thrown from above

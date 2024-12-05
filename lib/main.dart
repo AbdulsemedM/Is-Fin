@@ -10,6 +10,9 @@ import 'package:ifb_loan/features/KYC/data/repository/KYC_repository.dart';
 import 'package:ifb_loan/features/business_partner/bloc/providers_bloc.dart';
 import 'package:ifb_loan/features/business_partner/data/data_provider/provider_data_provider.dart';
 import 'package:ifb_loan/features/business_partner/data/repository/provider_repository.dart';
+import 'package:ifb_loan/features/finances/bloc/finances_bloc.dart';
+import 'package:ifb_loan/features/finances/data/data_provider/finance_data_provider.dart';
+import 'package:ifb_loan/features/finances/data/repository/finances_repository.dart';
 import 'package:ifb_loan/features/landing_page/presentation/screen/landing_page_screen.dart';
 import 'package:ifb_loan/features/loan_application/bloc/loan_app_bloc.dart';
 import 'package:ifb_loan/features/loan_application/data/data_provider/loan_app_provider.dart';
@@ -58,9 +61,9 @@ void main() async {
       BlocProvider(
           create: (contex) => LoanApprovalStatusBloc(
               LoanApprovalStatusRepository(LoanApprovalStatusDataProvider()))),
-      // BlocProvider(
-      //     create: (contex) => LoanApprovalStatusBloc(
-      //         LoanApprovalStatusRepository(LoanApprovalStatusDataProvider()))),
+      BlocProvider(
+          create: (contex) =>
+              FinancesBloc(FinancesRepository(FinanceDataProvider()))),
     ],
     child: MyApp(isFirstTime: isFirstTime),
   ));
