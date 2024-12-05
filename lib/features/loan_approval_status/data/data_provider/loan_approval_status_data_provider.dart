@@ -65,7 +65,7 @@ class LoanApprovalStatusDataProvider {
       final apiProvider = ProviderSetup.getApiProvider(ApiConstants.baseUrl);
       final body = {"status": status};
       final response = await apiProvider.postRequest(
-          "api/product/buyer/request/markup/$id", body);
+          "/api/product/buyer/request/markup/accept/$id", body);
       return response.body;
     } catch (e) {
       throw e.toString();

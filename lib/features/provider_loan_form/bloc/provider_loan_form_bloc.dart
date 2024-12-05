@@ -15,6 +15,8 @@ class ProviderLoanFormBloc
     on<FetchProviderLoanFormList>(_onFetchProviderLoanFormList);
     on<FetchRequestedProductsById>(_onFetchRequestedProductsById);
     on<SendRequestedProductsPrice>(_onSendRequestedProductsPrice);
+    on<AcceptUnderTakingAndagentAgreement>(
+        _onAcceptUnderTakingAndAgentAgreement);
   }
 
   Future<void> _onFetchProviderLoanFormList(FetchProviderLoanFormList event,
@@ -53,6 +55,19 @@ class ProviderLoanFormBloc
       emit(RequestedProductsPriceSentSuccess(requestedProductsPrice));
     } catch (e) {
       emit(RequestedProductsPriceSentFailure(e.toString()));
+    }
+  }
+
+  Future<void> _onAcceptUnderTakingAndAgentAgreement(
+      AcceptUnderTakingAndagentAgreement event,
+      Emitter<ProviderLoanFormState> emit) async {
+    emit(AcceptUnderTakingAndagentAgreementLoading());
+    try {
+      final message = await providerLoanFormRepository
+          .acceptUnderTakingAndagentAgreement(event.id, event.status);
+      emit(AcceptUnderTakingAndAgentAgreementSuccess(message));
+    } catch (e) {
+      emit(AcceptUnderTakingAndAgentAgreementFailure(e.toString()));
     }
   }
 }

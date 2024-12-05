@@ -56,7 +56,7 @@ class ProviderLoanFormRepository {
   }
 
   Future<String> sendRequestedProductsPrice(
-      List<RequestedProductsModel>?  products,
+      List<RequestedProductsModel>? products,
       String? id,
       String? expirationDate,
       String? status) async {
@@ -67,5 +67,20 @@ class ProviderLoanFormRepository {
       throw data['message'];
     }
     return data['message'];
+  }
+
+  Future<String> acceptUnderTakingAndagentAgreement(
+      String id, String status) async {
+    try {
+      final response = await providerLoanFormDataProvider
+          .acceptUnderTakingAndagentAgreement(id, status);
+      final data = jsonDecode(response);
+      if (data['httpStatus'] != 200) {
+        throw data['message'];
+      }
+      return data['message'];
+    } catch (e) {
+      throw e.toString();
+    }
   }
 }

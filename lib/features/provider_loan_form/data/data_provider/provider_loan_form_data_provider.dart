@@ -46,7 +46,21 @@ class ProviderLoanFormDataProvider {
       };
       final response = await apiProvider.postRequest(
           "/api/product/supplier/request/$id", body);
-      print({response.body});
+      return response.body;
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  Future<String> acceptUnderTakingAndagentAgreement(
+      String id, String status) async {
+    try {
+      final apiProvider = ProviderSetup.getApiProvider(ApiConstants.baseUrl);
+      final body = {
+        "status": status,
+      };
+      final response = await apiProvider.postRequest(
+          "/api/product/supplier/request/accept-and-agent-agreement/$id", body);
       return response.body;
     } catch (e) {
       throw e.toString();

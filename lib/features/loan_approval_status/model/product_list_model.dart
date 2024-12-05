@@ -13,7 +13,7 @@ class StatusProductListModel {
   final String? promiseToPurchaseDocument;
   final String? murabahaAgreementDocument;
   final String? agentAgreementDocument;
-  final String? undertakingAgreementtDocument;
+  final String? undertakingAgreementDocument;
   StatusProductListModel({
     required this.id,
     required this.buyerFullName,
@@ -26,7 +26,7 @@ class StatusProductListModel {
     this.promiseToPurchaseDocument,
     this.murabahaAgreementDocument,
     this.agentAgreementDocument,
-    this.undertakingAgreementtDocument,
+    this.undertakingAgreementDocument,
   });
 
   StatusProductListModel copyWith({
@@ -41,7 +41,7 @@ class StatusProductListModel {
     String? promiseToPurchaseDocument,
     String? murabahaAgreementDocument,
     String? agentAgreementDocument,
-    String? undertakingAgreementtDocument,
+    String? undertakingAgreementDocument,
   }) {
     return StatusProductListModel(
       id: id ?? this.id,
@@ -59,8 +59,8 @@ class StatusProductListModel {
           murabahaAgreementDocument ?? this.murabahaAgreementDocument,
       agentAgreementDocument:
           agentAgreementDocument ?? this.agentAgreementDocument,
-      undertakingAgreementtDocument:
-          undertakingAgreementtDocument ?? this.undertakingAgreementtDocument,
+      undertakingAgreementDocument:
+          undertakingAgreementDocument ?? this.undertakingAgreementDocument,
     );
   }
 
@@ -77,7 +77,7 @@ class StatusProductListModel {
       'promiseToPurchaseDocument': promiseToPurchaseDocument,
       'murabahaAgreementDocument': murabahaAgreementDocument,
       'agentAgreementDocument': agentAgreementDocument,
-      'undertakingAgreementtDocument': undertakingAgreementtDocument,
+      'undertakingAgreementDocument': undertakingAgreementDocument,
     };
   }
 
@@ -95,8 +95,8 @@ class StatusProductListModel {
       promiseToPurchaseDocument: map['promiseToPurchaseDocument'] as String?,
       murabahaAgreementDocument: map['murabahaAgreementDocument'] as String?,
       agentAgreementDocument: map['agentAgreementDocument'] as String?,
-      undertakingAgreementtDocument:
-          map['undertakingAgreementtDocument'] as String?,
+      undertakingAgreementDocument:
+          map['undertakingAgreementDocument'] as String?,
     );
   }
 
@@ -108,7 +108,7 @@ class StatusProductListModel {
 
   @override
   String toString() {
-    return 'StatusProductListModel( id: $id, buyerFullName: $buyerFullName, supplierFullName: $supplierFullName, sectorName: $sectorName, requestedAt: $requestedAt, totalAmount: $totalAmount, repaymentCycleDuration: $repaymentCycleDuration, status: $status, promiseToPurchaseDocument: $promiseToPurchaseDocument, murabahaAgreementDocument: $murabahaAgreementDocument, agentAgreementDocument: $agentAgreementDocument, undertakingAgreementtDocument: $undertakingAgreementtDocument)';
+    return 'StatusProductListModel( id: $id, buyerFullName: $buyerFullName, supplierFullName: $supplierFullName, sectorName: $sectorName, requestedAt: $requestedAt, totalAmount: $totalAmount, repaymentCycleDuration: $repaymentCycleDuration, status: $status, promiseToPurchaseDocument: $promiseToPurchaseDocument, murabahaAgreementDocument: $murabahaAgreementDocument, agentAgreementDocument: $agentAgreementDocument, undertakingAgreementDocument: $undertakingAgreementDocument)';
   }
 
   @override
@@ -126,7 +126,7 @@ class StatusProductListModel {
         other.promiseToPurchaseDocument == promiseToPurchaseDocument &&
         other.murabahaAgreementDocument == murabahaAgreementDocument &&
         other.agentAgreementDocument == agentAgreementDocument &&
-        other.undertakingAgreementtDocument == undertakingAgreementtDocument;
+        other.undertakingAgreementDocument == undertakingAgreementDocument;
   }
 
   @override
@@ -142,6 +142,6 @@ class StatusProductListModel {
         promiseToPurchaseDocument.hashCode ^
         murabahaAgreementDocument.hashCode ^
         agentAgreementDocument.hashCode ^
-        undertakingAgreementtDocument.hashCode;
+        undertakingAgreementDocument.hashCode;
   }
 }

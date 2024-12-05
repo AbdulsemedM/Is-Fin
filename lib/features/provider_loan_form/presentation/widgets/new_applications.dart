@@ -27,6 +27,10 @@ class _NewApplicationsState extends State<NewApplications> {
                   return GestureDetector(
                     onTap: () {},
                     child: ProviderLoanListWidget(
+                      undertakingAgreementtDocument:
+                          transaction.undertakingAgreementDocument,
+                      agentAgreementDocument:
+                          transaction.agentAgreementDocument,
                       status: transaction.status,
                       id: transaction.id,
                       name: transaction.buyerFullName,
@@ -44,7 +48,9 @@ class _NewApplicationsState extends State<NewApplications> {
                                       : transaction.status ==
                                               "MURABAHA_AGREEMENT"
                                           ? Icons.list
-                                          : Icons.close,
+                                          : transaction.status == "UNDER_TAKING"
+                                              ? Icons.takeout_dining_outlined
+                                              : Icons.close,
                       iconColor: transaction.status == "PENDING"
                           ? Colors.orange
                           : transaction.status == "ACCEPTED"
@@ -56,7 +62,9 @@ class _NewApplicationsState extends State<NewApplications> {
                                       : transaction.status ==
                                               "MURABAHA_AGREEMENT"
                                           ? Colors.purple
-                                          : Colors.red,
+                                          : transaction.status == "UNDER_TAKING"
+                                              ? Colors.brown
+                                              : Colors.red,
                     ),
                   );
                 }).toList(),

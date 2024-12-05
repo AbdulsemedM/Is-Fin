@@ -46,3 +46,20 @@ final class RequestedProductsPriceSentFailure extends ProviderLoanFormState {
 
   RequestedProductsPriceSentFailure(this.errorMessage);
 }
+
+final class AcceptUnderTakingAndagentAgreementLoading
+    extends ProviderLoanFormState {}
+
+final class AcceptUnderTakingAndAgentAgreementSuccess
+    extends ProviderLoanFormState {
+  final String message;
+
+  AcceptUnderTakingAndAgentAgreementSuccess(this.message);
+}
+
+final class AcceptUnderTakingAndAgentAgreementFailure
+    extends ProviderLoanFormState {
+  final String errorMessage;
+
+  AcceptUnderTakingAndAgentAgreementFailure(this.errorMessage);
+}

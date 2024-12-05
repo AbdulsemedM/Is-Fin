@@ -22,3 +22,10 @@ final class SendRequestedProductsPrice extends ProviderLoanFormEvent {
   SendRequestedProductsPrice(
       this.products, this.id, this.expirationDate, this.status);
 }
+
+final class AcceptUnderTakingAndagentAgreement extends ProviderLoanFormEvent {
+  final String id;
+  final String status;
+
+  AcceptUnderTakingAndagentAgreement(this.id, this.status);
+}

@@ -93,6 +93,22 @@ class LoanListWidget extends StatelessWidget {
                         id: id,
                         murabahaAgreementDocument: murabahaAgreementDocument!,
                       )));
+        } else if (status == "UNDER_TAKING") {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text('Under Taking'),
+              content: const Text(
+                  'The loan application is approved and will be fulfilled once the product owner confirms it.'),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Close'))
+              ],
+            ),
+          );
         }
       },
       child: Container(

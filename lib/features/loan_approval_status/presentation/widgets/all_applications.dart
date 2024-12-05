@@ -28,7 +28,7 @@ class _AllLoanApplicationsState extends State<AllLoanApplications> {
                 transaction.murabahaAgreementDocument ?? "",
             agentAgreementDocument: transaction.agentAgreementDocument ?? "",
             undertakingAgreementtDocument:
-                transaction.undertakingAgreementtDocument ?? "",
+                transaction.undertakingAgreementDocument ?? "",
             status: transaction.status,
             name: transaction.supplierFullName,
             amount: transaction.totalAmount?.toString() ?? "",
@@ -44,7 +44,9 @@ class _AllLoanApplicationsState extends State<AllLoanApplications> {
                             ? Icons.access_alarms_outlined
                             : transaction.status == "MURABAHA_AGREEMENT"
                                 ? Icons.list
-                                : Icons.close,
+                                : transaction.status == "UNDER_TAKING"
+                                    ? Icons.takeout_dining_outlined
+                                    : Icons.close,
             iconColor: transaction.status == "PENDING"
                 ? Colors.orange
                 : transaction.status == "ACCEPTED"
@@ -55,7 +57,9 @@ class _AllLoanApplicationsState extends State<AllLoanApplications> {
                             ? Colors.amber
                             : transaction.status == "MURABAHA_AGREEMENT"
                                 ? Colors.purple
-                                : Colors.red,
+                                : transaction.status == "UNDER_TAKING"
+                                    ? Colors.brown
+                                    : Colors.red,
           );
         }).toList(),
       ),

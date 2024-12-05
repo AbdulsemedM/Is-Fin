@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ifb_loan/features/provider_loan_form/presentation/screen/provider_loan_form_screen.dart';
+import 'package:ifb_loan/features/provider_loan_form/presentation/screen/provider_undertaking_screen.dart';
 import 'package:intl/intl.dart';
 
 class ProviderLoanListWidget extends StatelessWidget {
@@ -11,6 +12,8 @@ class ProviderLoanListWidget extends StatelessWidget {
   final Color iconColor;
   final String id;
   final String status;
+  final String? undertakingAgreementtDocument;
+  final String? agentAgreementDocument;
 
   const ProviderLoanListWidget({
     super.key,
@@ -22,6 +25,8 @@ class ProviderLoanListWidget extends StatelessWidget {
     required this.icon,
     required this.iconColor,
     required this.status,
+    required this.undertakingAgreementtDocument,
+    required this.agentAgreementDocument,
   });
 
   @override
@@ -83,6 +88,15 @@ class ProviderLoanListWidget extends StatelessWidget {
               ],
             ),
           );
+        } else if (status == "UNDER_TAKING") {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ProviderUndertakingScreen(
+                      id: id,
+                      undertakingAgreementtDocument:
+                          undertakingAgreementtDocument!,
+                      agentAgreementDocument: agentAgreementDocument!)));
         }
       },
       child: Container(
