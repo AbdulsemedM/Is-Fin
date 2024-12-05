@@ -187,7 +187,7 @@ class _FinancesScreenState extends State<FinancesScreen> {
                       ),
                     )
                   : SizedBox(
-                      height: ScreenConfig.screenHeight * 0.4,
+                      height: ScreenConfig.screenHeight * 0.35,
                       child: ListView.builder(
                         padding: const EdgeInsets.all(16.0),
                         itemCount: myActiveLoans.length,
@@ -196,13 +196,10 @@ class _FinancesScreenState extends State<FinancesScreen> {
                           return GestureDetector(
                             onTap: () {
                               Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => LoanRepaymentScreen(
-                                    // loanId: loan.id, // Pass relevant loan data
-                                  ),
-                                ),
-                              );
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          LoanRepaymentScreen()));
                             },
                             child: LoanCard(
                               loanTitle: loan.name, // Dynamic title
@@ -230,7 +227,7 @@ class _FinancesScreenState extends State<FinancesScreen> {
 
   Image _getLoanImage(String type) {
     // Return different images based on loan type
-    switch (type) {
+    switch (type.toLowerCase()) {
       case 'electronics':
         return Image.asset(
           'assets/images/elec.png',

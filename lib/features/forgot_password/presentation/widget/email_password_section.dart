@@ -122,9 +122,11 @@ class EmailPasswordSection extends StatelessWidget {
             validator: (value) {
               if (value?.isEmpty == true) {
                 return 'password is required';
-              } else if (value!.length < 6) {
-                return 'Password must be at least 6 characters long';
-              } else if (value != passwordController.text) {
+              }
+              //  else if (value!.length < 6) {
+              //   return 'Password must be at least 6 characters long';
+              // } 
+              else if (value != passwordController.text) {
                 return 'Password does not match';
               }
               return null;

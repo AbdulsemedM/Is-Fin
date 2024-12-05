@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ifb_loan/features/forgot_password/presentation/widget/email_password_section.dart';
-import 'package:ifb_loan/features/forgot_password/presentation/widget/otp_section.dart';
+import 'package:ifb_loan/features/otp/presentation/screen/otp_screen.dart';
 
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({super.key});
@@ -29,11 +29,14 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   @override
   Widget build(BuildContext context) {
     bool loading = false;
-    bool phoneSent = false;
+    // bool phoneSent = false;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Forgot Password"),
+        title: Text(
+          "Forgot Password",
+          style: Theme.of(context).textTheme.displaySmall,
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -49,45 +52,45 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               loading: loading,
               onSendOtp: () async {
                 if (myKey.currentState!.validate()) {
-                  setState(() {
-                    loading = true;
-                  });
-                  await Future.delayed(const Duration(seconds: 4));
-                  setState(() {
-                    loading = false;
-                  });
-                  phoneSent = true;
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => OtpScreen(
+                                phoneNumber: _emailController.text,
+                                password: _passwordController.text,
+                              )));
+                  // phoneSent = true;
                 }
               },
             ),
 
             const SizedBox(height: 24),
 
-            // Divider
-            const Divider(
-              color: Colors.grey,
-              thickness: 1,
-            ),
+            // // Divider
+            // const Divider(
+            //   color: Colors.grey,
+            //   thickness: 1,
+            // ),
 
-            const SizedBox(height: 24),
+            // const SizedBox(height: 24),
 
             // OTP Input and Submit Button
-            OtpSection(
-              myKey1: myKey1,
-              otpController: _otpController,
-              loading: loading,
-              onSubmit: () async {
-                if (myKey1.currentState!.validate() && phoneSent) {
-                  setState(() {
-                    loading = true;
-                  });
-                  await Future.delayed(const Duration(seconds: 4));
-                  setState(() {
-                    loading = false;
-                  });
-                }
-              },
-            ),
+            // OtpSection(
+            //   myKey1: myKey1,
+            //   otpController: _otpController,
+            //   loading: loading,
+            //   onSubmit: () async {
+            //     if (myKey1.currentState!.validate() && phoneSent) {
+            //       setState(() {
+            //         loading = true;
+            //       });
+            //       await Future.delayed(const Duration(seconds: 4));
+            //       setState(() {
+            //         loading = false;
+            //       });
+            //     }
+            //   },
+            // ),
           ],
         ),
       ),

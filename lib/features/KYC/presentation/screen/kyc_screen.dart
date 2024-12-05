@@ -18,14 +18,14 @@ class CompleteKYCDetail extends StatefulWidget {
 }
 
 class _CompleteKYCDetailState extends State<CompleteKYCDetail> {
-  int _selectedValue = 1; // Initial tab selected
+  int _selectedValue = 3; // Initial tab selected
   final UserManager userManager = UserManager();
 
   // Define your different screens as widgets
   final Map<int, Widget> _screens = const {
+    3: BankLink(),
     1: PersonalInfo(),
     2: BusinessInfo(),
-    3: BankLink(),
     4: UploadImages(),
   };
   @override
@@ -70,6 +70,12 @@ class _CompleteKYCDetailState extends State<CompleteKYCDetail> {
                 child: CustomSlidingSegmentedControl<int>(
                   initialValue: _selectedValue,
                   children: const {
+                    3: Text(
+                      'Bank Link',
+                      style: TextStyle(
+                          color: AppColors.bgColor,
+                          fontWeight: FontWeight.w500),
+                    ),
                     1: Text(
                       'Pers. Info.',
                       style: TextStyle(
@@ -78,12 +84,6 @@ class _CompleteKYCDetailState extends State<CompleteKYCDetail> {
                     ),
                     2: Text(
                       'Bus. Info',
-                      style: TextStyle(
-                          color: AppColors.bgColor,
-                          fontWeight: FontWeight.w500),
-                    ),
-                    3: Text(
-                      'Bank Link',
                       style: TextStyle(
                           color: AppColors.bgColor,
                           fontWeight: FontWeight.w500),
