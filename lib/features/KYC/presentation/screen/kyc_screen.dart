@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
+import 'package:ifb_loan/configuration/phone_number_manager.dart';
 import 'package:ifb_loan/features/KYC/bloc/kyc_bloc.dart';
 import 'package:ifb_loan/features/KYC/presentation/widgets/bank_link.dart';
 import 'package:ifb_loan/features/KYC/presentation/widgets/business_info.dart';
@@ -18,6 +19,7 @@ class CompleteKYCDetail extends StatefulWidget {
 
 class _CompleteKYCDetailState extends State<CompleteKYCDetail> {
   int _selectedValue = 1; // Initial tab selected
+  final UserManager userManager = UserManager();
 
   // Define your different screens as widgets
   final Map<int, Widget> _screens = const {
@@ -42,11 +44,12 @@ class _CompleteKYCDetailState extends State<CompleteKYCDetail> {
         style: Theme.of(context).textTheme.displaySmall,
       )),
       body: BlocListener<KycBloc, KycState>(
-        listener: (context, state) {
+        listener: (context, state) async {
           if (state is KycStatusFetchedLoading) {
             // print("here accessing the status");
           }
           if (state is KycStatusFetchedSuccess) {
+            await userManager.setKYCStatus(state.kycStatusInfo.approvalStatus);
             if (state.kycStatusInfo.approvalStatus == "REJECTED") {
               _showRejectDialog(context, state.kycStatusInfo.rejectReason!);
             }

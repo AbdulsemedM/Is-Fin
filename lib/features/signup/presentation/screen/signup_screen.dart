@@ -58,11 +58,15 @@ class _SignupScreenState extends State<SignupScreen> {
               SizedBox(
                 height: ScreenConfig.screenHeight * 0.02,
               ),
-              const Row(
+              Row(
                 children: [
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Icon(Icons.arrow_back_ios_new_outlined),
+                    child: GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Icon(Icons.arrow_back_ios_new_outlined)),
                   )
                 ],
               ),
@@ -97,7 +101,8 @@ class _SignupScreenState extends State<SignupScreen> {
                         Row(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8.0),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
                               child: Text(
                                 "Full Name",
                                 style: Theme.of(context)
@@ -126,7 +131,8 @@ class _SignupScreenState extends State<SignupScreen> {
                         Row(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8.0),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
                               child: Text(
                                 "Phone Number",
                                 style: Theme.of(context)
@@ -148,8 +154,8 @@ class _SignupScreenState extends State<SignupScreen> {
                           validator: (value) {
                             if (value?.isEmpty == true) {
                               return 'Phone number is required';
-                            } else if (value!.length < 10) {
-                              return 'Phone number should be at least 10 digits';
+                            } else if (value!.length != 10) {
+                              return 'Invalid phone number format';
                             } else if (!value.startsWith("09")) {
                               return 'Invalid phone number format';
                             }
@@ -159,7 +165,8 @@ class _SignupScreenState extends State<SignupScreen> {
                         Row(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8.0),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
                               child: Text(
                                 "Password",
                                 style: Theme.of(context)
@@ -200,7 +207,8 @@ class _SignupScreenState extends State<SignupScreen> {
                                     });
                                   },
                                 )),
-                            contentPadding: const EdgeInsets.symmetric(vertical: 16),
+                            contentPadding:
+                                const EdgeInsets.symmetric(vertical: 16),
                           ),
                           validator: (value) {
                             if (value?.isEmpty == true) {
@@ -214,7 +222,8 @@ class _SignupScreenState extends State<SignupScreen> {
                         Row(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8.0),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
                               child: Text(
                                 "Confirm Password",
                                 style: Theme.of(context)
@@ -255,7 +264,8 @@ class _SignupScreenState extends State<SignupScreen> {
                                     });
                                   },
                                 )),
-                            contentPadding: const EdgeInsets.symmetric(vertical: 16),
+                            contentPadding:
+                                const EdgeInsets.symmetric(vertical: 16),
                           ),
                           validator: (value) {
                             if (value?.isEmpty == true) {

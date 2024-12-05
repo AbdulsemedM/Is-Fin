@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:ifb_loan/features/provider_loan_form/models/requested_products_model.dart';
 
 class ProductTable extends StatelessWidget {
-  final List<Map<String, String>> products;
+  final List<RequestedProductsModel> products;
+  final Function(RequestedProductsModel) onProductRemove;
+  final Function(RequestedProductsModel, String) onProductPrice;
 
-  const ProductTable({super.key, required this.products});
+  const ProductTable({
+    super.key,
+    required this.products,
+    required this.onProductRemove,
+    required this.onProductPrice,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -13,15 +22,59 @@ class ProductTable extends StatelessWidget {
         Container(
           color: Colors.grey[300],
           padding: const EdgeInsets.all(8.0),
-          child: const Row(
+          child: Row(
             children: [
-              Expanded(
-                  child: Text('Name',
-                      style: TextStyle(fontWeight: FontWeight.bold))),
-              Expanded(
-                  child: Text('Desc.',
-                      style: TextStyle(fontWeight: FontWeight.bold))),
-              Text('Price', style: TextStyle(fontWeight: FontWeight.bold)),
+              const Expanded(
+                flex: 2,
+                child: Text(
+                  'Name',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+              Container(
+                width: 1,
+                color: Colors.black,
+              ),
+              const Expanded(
+                flex: 3,
+                child: Text(
+                  'Desc.',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+              Container(
+                width: 1,
+                color: Colors.black,
+              ),
+              const Expanded(
+                flex: 2,
+                child: Text(
+                  'Qnt.',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+              Container(
+                width: 1,
+                color: Colors.black,
+              ),
+              const Expanded(
+                flex: 3,
+                child: Text(
+                  'Price',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+              Container(
+                width: 1,
+                color: Colors.black,
+              ),
+              // const Expanded(
+              //   flex: 2,
+              //   child: Text(
+              //     'Remove',
+              //     style: TextStyle(fontWeight: FontWeight.bold),
+              //   ),
+              // ),
             ],
           ),
         ),
@@ -34,11 +87,39 @@ class ProductTable extends StatelessWidget {
               itemBuilder: (context, index) {
                 final product = products[index];
                 return ProductRow(
-                  name: product['name'] ?? '',
-                  description: product['description'] ?? '',
-                  onRemove: () {
-                    // Handle product removal
+                  quantity: product.quantity.toString(),
+                  name: product.productName,
+                  description: product.description,
+                  onRemove: () async {
+                    final shouldRemove = await showDialog<bool>(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Remove Product'),
+                          content: Text(
+                              'Are you sure you want to remove ${product.productName}?'),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(false),
+                              child: const Text('Cancel'),
+                            ),
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(true),
+                              child: const Text('Remove'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+
+                    if (shouldRemove == true) {
+                      onProductRemove(product);
+                    }
                   },
+                  onProductPriceChange: (String price) {
+                    onProductPrice(product, price);
+                  },
+                  unitOfMeasurement: product.unitOfMeasurement,
                 );
               },
             ),
@@ -49,51 +130,149 @@ class ProductTable extends StatelessWidget {
   }
 }
 
-class ProductRow extends StatelessWidget {
+class ProductRow extends StatefulWidget {
   final String name;
   final String description;
+  final String quantity;
+  final String unitOfMeasurement;
   final VoidCallback onRemove;
+  final Function(String) onProductPriceChange;
 
-  const ProductRow({super.key, 
+  const ProductRow({
+    super.key,
     required this.name,
     required this.description,
+    required this.quantity,
+    required this.unitOfMeasurement,
     required this.onRemove,
+    required this.onProductPriceChange,
   });
 
   @override
+  State<ProductRow> createState() => _ProductRowState();
+}
+
+class _ProductRowState extends State<ProductRow> {
+  // final FocusNode _focusNode = FocusNode();
+  // bool _isEnabled = false;
+
+  @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0),
-      child: Row(
-        children: [
-          // Product name and quantity
-          Expanded(
-            child: Text(name, style: const TextStyle(fontWeight: FontWeight.bold)),
-          ),
-          // Product description
-          Expanded(
-            child: Text(description),
-          ),
-          // Price text field and delete button
-          Row(
-            children: [
-              SizedBox(
-                width: 80,
-                child: const TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Price',
-                  ),
-                  keyboardType: TextInputType.number,
+    return InkWell(
+      onTap: () {
+        // Show the modal dialog
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text(widget.name),
+              content: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const SizedBox(height: 8),
+                    Text(
+                      'Description:',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                    Text(widget.description),
+                    const SizedBox(height: 16),
+                    Text(
+                      'Quantity:',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                    Text(widget.quantity),
+                    const SizedBox(height: 16),
+                    Text(
+                      'Unit of measurement:',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                    Text(widget.unitOfMeasurement),
+                  ],
                 ),
               ),
-              IconButton(
-                icon: const Icon(Icons.close),
-                onPressed: onRemove,
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: const Text('Close'),
+                ),
+              ],
+            );
+          },
+        );
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4.0),
+        child: Row(
+          children: [
+            Expanded(
+              flex: 2,
+              child: Text(
+                widget.name,
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
-            ],
-          ),
-        ],
+            ),
+            Container(
+              width: 1,
+              color: Colors.black,
+            ),
+            Expanded(
+              flex: 3,
+              child: Text(widget.description),
+            ),
+            Container(
+              width: 1,
+              color: Colors.black,
+            ),
+            Expanded(
+              flex: 2,
+              child: Text(widget.quantity),
+            ),
+            Container(
+              width: 1,
+              color: Colors.black,
+            ),
+            Expanded(
+              flex: 3,
+              child: TextField(
+                // focusNode: _focusNode,
+                // enabled: _isEnabled,
+                onTap: () {
+                  setState(() {
+                    // _isEnabled = true;
+                  });
+                },
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(
+                    RegExp(r'^\d*\.?\d*$'),
+                  ),
+                ],
+                onChanged: widget.onProductPriceChange,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Price',
+                ),
+              ),
+            ),
+            Container(
+              width: 1,
+              color: Colors.black,
+            ),
+            IconButton(
+              icon: const Icon(Icons.close),
+              onPressed: widget.onRemove,
+            ),
+          ],
+        ),
       ),
     );
   }

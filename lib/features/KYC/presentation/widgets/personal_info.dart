@@ -143,6 +143,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                 loading = true;
               });
             } else if (state is KycPersonalSentSuccess) {
+              context.read<KycBloc>().add(KYCStatusFetched());
               setState(() {
                 loading = false;
               });
@@ -295,11 +296,11 @@ class _PersonalInfoState extends State<PersonalInfo> {
                           ),
                           items: const [
                             DropdownMenuItem(
-                              value: 'Male',
+                              value: 'MALE',
                               child: Text('Male'),
                             ),
                             DropdownMenuItem(
-                              value: 'Female',
+                              value: 'FEMALE',
                               child: Text('Female'),
                             ),
                           ],
@@ -567,10 +568,13 @@ class _PersonalInfoState extends State<PersonalInfo> {
                               validator: (value) {
                                 if (value?.isEmpty == true) {
                                   return 'Phone number is required';
-                                } else if (value!.length < 10) {
-                                  return 'Phone number should be at least 10 digits';
+                                } else if (value!.length != 10) {
+                                  return 'Invalid phone number format';
                                 } else if (!value.startsWith("09")) {
                                   return 'Invalid phone number format';
+                                } else if (!RegExp(r'^\d+$')
+                                    .hasMatch(value.trim())) {
+                                  return 'This field must contain only numbers';
                                 }
                                 return null;
                               },
@@ -669,10 +673,12 @@ class _PersonalInfoState extends State<PersonalInfo> {
                         validator: (value) {
                           if (value?.isEmpty == true) {
                             return 'Phone number is required';
-                          } else if (value!.length < 10) {
-                            return 'Phone number should be at least 10 digits';
+                          } else if (value!.length != 10) {
+                            return 'Invalid phone number format';
                           } else if (!value.startsWith("09")) {
                             return 'Invalid phone number format';
+                          } else if (!RegExp(r'^\d+$').hasMatch(value.trim())) {
+                            return 'This field must contain only numbers';
                           }
                           return null;
                         },

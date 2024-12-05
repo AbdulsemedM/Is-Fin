@@ -85,6 +85,7 @@ class _AddBisinessPartnerScreenState extends State<AddBisinessPartnerScreen> {
                   key: myKey1,
                   child: TextFormField(
                     controller: _phoneNumberController,
+                    keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       labelText: 'Business Partne\'s Phone Number',
                       filled: true,
@@ -97,8 +98,8 @@ class _AddBisinessPartnerScreenState extends State<AddBisinessPartnerScreen> {
                     validator: (value) {
                       if (value?.isEmpty == true) {
                         return 'Phone number is required';
-                      } else if (value!.length < 10) {
-                        return 'Phone number should be at least 10 digits';
+                      } else if (value!.length != 10) {
+                        return 'Invalid phone number format';
                       } else if (!value.startsWith("09")) {
                         return 'Invalid phone number format';
                       }

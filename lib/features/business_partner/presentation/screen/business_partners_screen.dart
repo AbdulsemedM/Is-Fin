@@ -83,7 +83,12 @@ class _BusinessPartnersScreenState extends State<BusinessPartnersScreen> {
         child: loading
             ? const Center(child: CircularProgressIndicator())
             : myProviders.isEmpty
-                ? const Center(child: Text("No Business Partners Found"))
+                ? Center(
+                    child: Text(
+                    textAlign: TextAlign.center,
+                    "No Business Partners Found, Press the + button to add",
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ))
                 : SingleChildScrollView(
                     child: Column(
                       children: myProviders

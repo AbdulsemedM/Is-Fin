@@ -51,6 +51,8 @@ class _BusinessInfoState extends State<BusinessInfo> {
   final TextEditingController _zoneController = TextEditingController();
   final TextEditingController _woredaController = TextEditingController();
   final TextEditingController _kebeleController = TextEditingController();
+  final TextEditingController _businessLevelController =
+      TextEditingController();
   PhoneNumberManager phoneManager = PhoneNumberManager();
   BusinessInfoModel? businessData;
   String? validateField(String? value) {
@@ -58,6 +60,15 @@ class _BusinessInfoState extends State<BusinessInfo> {
       return 'This field is required';
     } else if (value.trim().length < 2) {
       return 'This field must be at least 2 characters long';
+    }
+    return null; // Return null if validation passes
+  }
+
+  String? validateNumberField(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'This field is required';
+    } else if (!RegExp(r'^\d+$').hasMatch(value.trim())) {
+      return 'This field must contain only numbers';
     }
     return null; // Return null if validation passes
   }
@@ -125,6 +136,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
                 loading = true;
               });
             } else if (state is KycBusinessSentSuccess) {
+              context.read<KycBloc>().add(KYCStatusFetched());
               setState(() {
                 loading = false;
               });
@@ -262,7 +274,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
                     Expanded(
                       child: TextFormField(
                         controller: _tinNoController,
-                        validator: (value) => validateField(value),
+                        validator: (value) => validateNumberField(value),
                         decoration: InputDecoration(
                           labelText: 'Tin No.',
                           filled: true,
@@ -292,8 +304,8 @@ class _BusinessInfoState extends State<BusinessInfo> {
                         ),
                         items: const [
                           DropdownMenuItem(
-                            value: 'Small business trade',
-                            child: Text('Small business trade'),
+                            value: 'Small Business Trade',
+                            child: Text('Small Business Trade'),
                           ),
                           DropdownMenuItem(
                             value: 'Agriculture',
@@ -322,6 +334,14 @@ class _BusinessInfoState extends State<BusinessInfo> {
                           DropdownMenuItem(
                             value: 'Education',
                             child: Text('Education'),
+                          ),
+                          DropdownMenuItem(
+                            value: 'Building and Construction',
+                            child: Text('Building and Construction'),
+                          ),
+                          DropdownMenuItem(
+                            value: 'Other',
+                            child: Text('Other'),
                           ),
                         ],
                         onChanged: (value) {
@@ -449,10 +469,10 @@ class _BusinessInfoState extends State<BusinessInfo> {
                             value: 'Loan',
                             child: Text('Loan'),
                           ),
-                          DropdownMenuItem(
-                            value: 'Inheritance',
-                            child: Text('Inheritance'),
-                          ),
+                          // DropdownMenuItem(
+                          //   value: 'Inheritance',
+                          //   child: Text('Inheritance'),
+                          // ),
                         ],
                         onChanged: (value) {
                           setState(() {
@@ -462,45 +482,42 @@ class _BusinessInfoState extends State<BusinessInfo> {
                       ),
                     ),
                     const SizedBox(width: 16),
-                    // Expanded(
-                    //   child: DropdownButtonFormField<String>(
-                    //     value: _typeofBusinessController.text,
-                    //     decoration: InputDecoration(
-                    //       labelText: 'Type of Business',
-                    //       filled: true,
-                    //       fillColor: Colors.grey[200],
-                    //       border: OutlineInputBorder(
-                    //         borderRadius: BorderRadius.circular(8.0),
-                    //         borderSide: BorderSide.none,
-                    //       ),
-                    //     ),
-                    //     items: const [
-                    //       DropdownMenuItem(
-                    //         value: 'Own',
-                    //         child: Text('Own'),
-                    //       ),
-                    //       DropdownMenuItem(
-                    //         value: 'Family',
-                    //         child: Text('Family'),
-                    //       ),
-                    //       DropdownMenuItem(
-                    //         value: 'Fund',
-                    //         child: Text('Fund'),
-                    //       ),
-                    //       DropdownMenuItem(
-                    //         value: 'Loan',
-                    //         child: Text('Loan'),
-                    //       ),
-                    //       DropdownMenuItem(
-                    //         value: 'Inheritance',
-                    //         child: Text('Inheritance'),
-                    //       ),
-                    //     ],
-                    //     onChanged: (value) {
-                    //       // Handle value change
-                    //     },
-                    //   ),
-                    // ),
+                    Expanded(
+                      child: DropdownButtonFormField<String>(
+                        value: _businessLevelController.text.isNotEmpty
+                            ? _businessLevelController.text
+                            : null,
+                        validator: (value) => validateDropDown(value),
+                        decoration: InputDecoration(
+                          labelText: 'Business Level',
+                          filled: true,
+                          fillColor: Colors.grey[200],
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            borderSide: BorderSide.none,
+                          ),
+                        ),
+                        items: const [
+                          DropdownMenuItem(
+                            value: 'Startup',
+                            child: Text('Startup'),
+                          ),
+                          DropdownMenuItem(
+                            value: 'Growing',
+                            child: Text('Growing'),
+                          ),
+                          DropdownMenuItem(
+                            value: 'Advanced',
+                            child: Text('Advanced'),
+                          ),
+                        ],
+                        onChanged: (value) {
+                          setState(() {
+                            _businessLevelController.text = value!;
+                          });
+                        },
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 16),
@@ -509,7 +526,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
                     Expanded(
                       child: TextFormField(
                         controller: _startingCapitalController,
-                        validator: (value) => validateField(value),
+                        validator: (value) => validateNumberField(value),
                         decoration: InputDecoration(
                           labelText: 'Starting Capital',
                           filled: true,
@@ -524,7 +541,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
                     const SizedBox(width: 16),
                     Expanded(
                       child: TextFormField(
-                        validator: (value) => validateField(value),
+                        validator: (value) => validateNumberField(value),
                         controller: _currentCapitalController,
                         decoration: InputDecoration(
                           labelText: 'Current Capital',
@@ -583,7 +600,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
                         controller: _monthlySalesController,
                         validator: (value) => validateField(value),
                         decoration: InputDecoration(
-                          labelText: 'Monthly Sales(ETB)',
+                          labelText: 'Annual Sales(ETB)',
                           filled: true,
                           fillColor: Colors.grey[200],
                           border: OutlineInputBorder(
@@ -599,7 +616,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
                         controller: _monthlyRevenueController,
                         validator: (value) => validateField(value),
                         decoration: InputDecoration(
-                          labelText: 'Monthly Revenue(ETB)',
+                          labelText: 'Annual Revenue(ETB)',
                           filled: true,
                           fillColor: Colors.grey[200],
                           border: OutlineInputBorder(

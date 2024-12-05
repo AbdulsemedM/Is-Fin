@@ -94,6 +94,7 @@ class _BankLinkState extends State<BankLink> {
                 accountSent = true;
               });
             } else if (state is KycAccountSentSuccess) {
+              context.read<KycBloc>().add(KYCStatusFetched());
               setState(() {
                 accountLoading = false;
               });
@@ -132,6 +133,7 @@ class _BankLinkState extends State<BankLink> {
                 // displaySnack(context, state.errorMessage, Colors.red);
               });
             } else if (state is KycOTPSentSuccess) {
+              context.read<KycBloc>().add(KYCStatusFetched());
               setState(() {
                 displaySnack(
                     context, "Account Verified Successfully", Colors.black);
@@ -171,12 +173,13 @@ class _BankLinkState extends State<BankLink> {
               Row(
                 children: [
                   Expanded(
-                    flex: 2, // Make the text field take more space
+                    flex: 2,
                     child: Form(
                       key: myKey1,
                       child: TextFormField(
                         enabled: !accountSent,
                         controller: _accountNumberController,
+                        keyboardType: TextInputType.number,
                         validator: (value) => validateAccountField(value),
                         decoration: InputDecoration(
                           labelText: 'Account Number',
@@ -240,6 +243,7 @@ class _BankLinkState extends State<BankLink> {
                       child: TextFormField(
                         enabled: accountSent,
                         controller: _otpController,
+                        keyboardType: TextInputType.number,
                         validator: (value) => validateOTPField(value),
                         decoration: InputDecoration(
                           labelText: 'OTP',

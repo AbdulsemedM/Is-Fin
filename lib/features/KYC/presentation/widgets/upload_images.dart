@@ -156,6 +156,7 @@ class _UploadImagesState extends State<UploadImages> {
             loading = true;
           });
         } else if (state is KycImagesSentSuccess) {
+          context.read<KycBloc>().add(KYCStatusFetched());
           setState(() {
             loading = false;
           });
