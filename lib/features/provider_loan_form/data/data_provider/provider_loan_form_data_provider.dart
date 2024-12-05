@@ -60,7 +60,7 @@ class ProviderLoanFormDataProvider {
         "status": status,
       };
       final response = await apiProvider.postRequest(
-          "/api/product/supplier/request/accept-and-agent-agreement/$id", body);
+          "/api/product/supplier/agreement/$id", body);
       return response.body;
     } catch (e) {
       throw e.toString();

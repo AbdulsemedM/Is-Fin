@@ -49,12 +49,15 @@ class _NewApplicationsState extends State<NewApplications> {
                                               "MURABAHA_AGREEMENT"
                                           ? Icons.list
                                           : transaction.status == "UNDER_TAKING"
-                                              ? Icons.takeout_dining_outlined
-                                              : Icons.close,
+                                              ? Icons.bubble_chart_outlined
+                                              : transaction.status ==
+                                                      "AGREEMENT_ACCEPTED"
+                                                  ? Icons.done
+                                                  : Icons.close,
                       iconColor: transaction.status == "PENDING"
                           ? Colors.orange
                           : transaction.status == "ACCEPTED"
-                              ? Colors.green
+                              ? Colors.lime
                               : transaction.status == "APPROVED"
                                   ? Colors.blue
                                   : transaction.status == "UNDER_REVIEW"
@@ -63,8 +66,11 @@ class _NewApplicationsState extends State<NewApplications> {
                                               "MURABAHA_AGREEMENT"
                                           ? Colors.purple
                                           : transaction.status == "UNDER_TAKING"
-                                              ? Colors.brown
-                                              : Colors.red,
+                                              ? Colors.cyan
+                                              : transaction.status ==
+                                                      "AGREEMENT_ACCEPTED"
+                                                  ? Colors.green
+                                                  : Colors.red,
                     ),
                   );
                 }).toList(),
