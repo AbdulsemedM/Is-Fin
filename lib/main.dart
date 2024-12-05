@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
+import 'package:ifb_loan/app/utils/localization_string.dart';
 import 'package:ifb_loan/configuration/phone_number_manager.dart';
 import 'package:ifb_loan/features/KYC/bloc/kyc_bloc.dart';
 import 'package:ifb_loan/features/KYC/data/data_provider/KYC_data_provider.dart';
@@ -39,6 +41,8 @@ void main() async {
     statusBarColor: AppColors.primaryDarkColor,
     statusBarIconBrightness: Brightness.light,
   ));
+  String? lang = await LanguageManager().getLanguage();
+  lang ??= '';
   runApp(MultiBlocProvider(
     providers: [
       BlocProvider(
@@ -65,7 +69,10 @@ void main() async {
           create: (contex) =>
               FinancesBloc(FinancesRepository(FinanceDataProvider()))),
     ],
-    child: MyApp(isFirstTime: isFirstTime),
+    child: MyApp(
+      isFirstTime: isFirstTime,
+      lang: lang,
+    ),
   ));
 }
 
@@ -83,13 +90,22 @@ Future<bool> _checkFirstTime() async {
 }
 
 class MyApp extends StatelessWidget {
+  final String lang;
   final bool isFirstTime;
-  const MyApp({super.key, required this.isFirstTime});
+  const MyApp({super.key, required this.isFirstTime, required this.lang});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
+      translations: LocalizationString(),
+      locale: lang == "English"
+          ? const Locale('en', 'US')
+          : lang == "አማርኛ"
+              ? const Locale('am', 'ET')
+              : lang == "Afaan Oromoo"
+                  ? const Locale('or', 'ET')
+                  : const Locale("en", "US"),
       debugShowCheckedModeBanner: false,
       // title: 'Flutter Demo',
       theme: AppTheme.themeData(),

@@ -18,6 +18,24 @@ class PhoneNumberManager {
   }
 }
 
+class LanguageManager {
+  static const String _languageKey = 'language';
+
+  // Setter method to store the phone number in SharedPreferences
+  Future<void> setLanguage(String lang) async {
+    print(lang);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_languageKey, lang);
+  }
+
+  // Getter method to retrieve the phone number from SharedPreferences
+  Future<String?> getLanguage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print(prefs.getString(_languageKey));
+    return prefs.getString(_languageKey);
+  }
+}
+
 class UserManager {
   static const String _fullNameKey = 'fullName';
   static const String _kycStatusKey = 'kycStatus';

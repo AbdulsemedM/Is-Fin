@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:ifb_loan/app/app_button.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
 import 'package:ifb_loan/app/utils/dialog_utils.dart';
+import 'package:ifb_loan/configuration/phone_number_manager.dart';
 import 'package:ifb_loan/features/dashborad/dashboard_page.dart';
 import 'package:ifb_loan/features/forgot_password/presentation/screen/forgot_password.dart';
 import 'package:ifb_loan/features/login/bloc/login_bloc.dart';
@@ -54,18 +57,23 @@ class _LoginScreenState extends State<LoginScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      "Language",
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                    const Icon(Icons.arrow_drop_down)
-                  ],
+              GestureDetector(
+                onTap: () async {
+                  await buildLanguageDialog(context);
+                },
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        "English".tr,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      const Icon(Icons.arrow_drop_down)
+                    ],
+                  ),
                 ),
               ),
               SizedBox(
@@ -288,5 +296,57 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       )),
     );
+  }
+
+  buildLanguageDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (builder) {
+          return AlertDialog(
+            backgroundColor: Colors.grey[200],
+            title: Text('Choose Language'.tr),
+            content: SizedBox(
+              width: double.maxFinite,
+              child: ListView.separated(
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: GestureDetector(
+                        child: Text(locale[index]['name']),
+                        onTap: () async {
+                          String selectedLocale = locale[index]['name'];
+                          print(selectedLocale);
+                          LanguageManager preferences = LanguageManager();
+                          await preferences.setLanguage(selectedLocale);
+                          print("here");
+                          print(locale[index]['locale']);
+                          updateLanguage(locale[index]['locale']);
+
+                          // await prefs.setBool('repeat', true);
+                        },
+                      ),
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return const Divider(
+                      color: Colors.grey,
+                    );
+                  },
+                  itemCount: locale.length),
+            ),
+          );
+        });
+  }
+
+  final List locale = [
+    {'name': 'English', 'locale': const Locale('en', 'US')},
+    {'name': 'Afaan Oromoo', 'locale': const Locale('or', 'ET')},
+    {'name': 'አማርኛ', 'locale': const Locale('am', 'ET')},
+    // {'name': 'Somali', 'locale': Locale('en', 'US')},
+  ];
+  updateLanguage(Locale locale) async {
+    Get.back();
+    Get.updateLocale(locale);
   }
 }
