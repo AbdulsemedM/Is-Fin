@@ -9,9 +9,10 @@ class OtpDataProvider {
       final body = {
         'otp': otp,
         'password': password,
-        'phoneNUmber': phoneNUmber,
+        'phoneNumber': phoneNUmber,
       };
-      final response = await apiProvider.postRequest("otp", body);
+      final response =
+          await apiProvider.postRequest("/api/user/verifyOtp", body);
       return response.body;
     } catch (e) {
       throw e.toString();
@@ -22,9 +23,9 @@ class OtpDataProvider {
     try {
       final apiProvider = ProviderSetup.getApiProvider(ApiConstants.baseUrl);
       final body = {
-        'phoneNUmber': phoneNumber,
+        'phoneNumber': phoneNumber,
       };
-      final response = await apiProvider.postRequest("otp", body);
+      final response = await apiProvider.postRequest("/api/user/reset", body);
       return response.body;
     } catch (e) {
       throw e.toString();

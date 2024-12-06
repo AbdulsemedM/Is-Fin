@@ -25,6 +25,9 @@ import 'package:ifb_loan/features/loan_approval_status/data/repository/loan_appr
 import 'package:ifb_loan/features/login/bloc/login_bloc.dart';
 import 'package:ifb_loan/features/login/data/data_provider/login_data_provider.dart';
 import 'package:ifb_loan/features/login/data/repository/login_repository.dart';
+import 'package:ifb_loan/features/otp/bloc/otp_bloc.dart';
+import 'package:ifb_loan/features/otp/data/data_provider/otp_data_provider.dart';
+import 'package:ifb_loan/features/otp/data/repository/otp_repository.dart';
 import 'package:ifb_loan/features/provider_loan_form/bloc/provider_loan_form_bloc.dart';
 import 'package:ifb_loan/features/provider_loan_form/data/data_provider/provider_loan_form_data_provider.dart';
 import 'package:ifb_loan/features/provider_loan_form/data/repository/provider_loan_form_repository.dart';
@@ -68,6 +71,9 @@ void main() async {
       BlocProvider(
           create: (contex) =>
               FinancesBloc(FinancesRepository(FinanceDataProvider()))),
+      BlocProvider(
+          create: (contex) =>
+              OtpBloc(OtpRepository(otpDataProvider: OtpDataProvider()))),
     ],
     child: MyApp(
       isFirstTime: isFirstTime,

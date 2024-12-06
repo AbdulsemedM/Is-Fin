@@ -12,7 +12,7 @@ class OtpRepository {
       final String otpData =
           await otpDataProvider.sendOTP(otp, password, phoneNUmber);
       final data = jsonDecode(otpData);
-      if (data['httpStatus'] == 200) {
+      if (data['httpStatus'] != 200) {
         throw data['message'];
       }
       return data['message'];
@@ -25,7 +25,7 @@ class OtpRepository {
     try {
       final String otpData = await otpDataProvider.sendPhoneNumber(phoneNUmber);
       final data = jsonDecode(otpData);
-      if (data['httpStatus'] == 200) {
+      if (data['httpStatus'] != 200) {
         throw data['message'];
       }
       return data['message'];

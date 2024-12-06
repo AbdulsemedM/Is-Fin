@@ -26,9 +26,9 @@ class _OtpScreenState extends State<OtpScreen> {
   @override
   void initState() {
     super.initState();
-    context
-        .read<OtpBloc>()
-        .add(SendPhoneNumber(phoneNumber: widget.phoneNumber));
+    // context
+    //     .read<OtpBloc>()
+    //     .add(SendPhoneNumber(phoneNumber: widget.phoneNumber));
   }
 
   @override
@@ -63,6 +63,7 @@ class _OtpScreenState extends State<OtpScreen> {
             setState(() {
               loading = false;
             });
+            displaySnack(context, "Password changed successfuly", Colors.black);
             Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(builder: (context) => const LoginScreen()),
               (route) => false, // This removes all previous routes

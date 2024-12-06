@@ -48,7 +48,7 @@ class EmailPasswordSection extends StatelessWidget {
             decoration: AppDecorations.getAppInputDecoration(
               myBorder: false,
               pIconData: Icons.phone_android,
-              hintText: '0987654321',
+              hintText: 'Ex. 0987654321',
               context: context,
             ),
             validator: (value) {
@@ -79,7 +79,7 @@ class EmailPasswordSection extends StatelessWidget {
           ),
           TextFormField(
             controller: passwordController,
-            keyboardType: TextInputType.number,
+            keyboardType: TextInputType.text,
             decoration: AppDecorations.getAppInputDecoration(
               myBorder: false,
               pIconData: Icons.lock,
@@ -112,7 +112,7 @@ class EmailPasswordSection extends StatelessWidget {
           ),
           TextFormField(
             controller: confirmPasswordController,
-            keyboardType: TextInputType.number,
+            keyboardType: TextInputType.text,
             decoration: AppDecorations.getAppInputDecoration(
               myBorder: false,
               pIconData: Icons.lock,
@@ -125,7 +125,7 @@ class EmailPasswordSection extends StatelessWidget {
               }
               //  else if (value!.length < 6) {
               //   return 'Password must be at least 6 characters long';
-              // } 
+              // }
               else if (value != passwordController.text) {
                 return 'Password does not match';
               }
