@@ -91,6 +91,9 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
           if (state is ProviderFetchSuccess) {
             setState(() {
               myProviders = state.providers;
+              if (myProviders.length == 0) {
+                displaySnack(context, "No providers found", Colors.red);
+              }
               isProviderFetched = true;
             });
           }

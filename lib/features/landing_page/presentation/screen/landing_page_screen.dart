@@ -68,7 +68,7 @@ class _LandingPageState extends State<LandingPage> {
               _buildPage(
                 context,
                 animationPath: 'assets/animation/animation3.json',
-                title: 'Transforming Lives, Empowering Communities',
+                title: 'Empowering Communities, Transforming Lives',
                 description:
                     'Making a difference by uplifting individuals and strengthening communities.',
               ),
