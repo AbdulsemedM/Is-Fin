@@ -16,10 +16,12 @@ class _NewLoanApplicationsState extends State<NewLoanApplications> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        ///////////////////////////////
         // Navigator.push(
         //     context,
         //     MaterialPageRoute(
         //         builder: (context) => const ProviderLoanFormScreen()));
+
       },
       child: SizedBox(
         height: ScreenConfig.screenHeight * 0.77,
