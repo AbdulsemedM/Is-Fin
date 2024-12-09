@@ -68,7 +68,7 @@ class _BusinessPartnersScreenState extends State<BusinessPartnersScreen> {
             context
                 .read<LoanAppBloc>()
                 .add(UpdateProvidersEvent(state.providers));
-            print("sent from the business page");
+            // print("sent from the business page");
             setState(() {
               loading = false;
               myProviders = state.providers;
