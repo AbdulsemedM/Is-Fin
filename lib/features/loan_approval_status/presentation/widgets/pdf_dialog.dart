@@ -85,7 +85,7 @@ class _PdfDialogState extends State<PdfDialog> {
           duration: Duration(seconds: 3),
         ),
       );
-      debugPrint('Error downloading PDF: $e');
+      // debugPrint('Error downloading PDF: $e');
     } finally {
       setState(() {
         _isDownloading = false;

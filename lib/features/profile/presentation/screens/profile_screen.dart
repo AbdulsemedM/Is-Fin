@@ -51,7 +51,7 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
         name = myName;
       });
     } catch (e) {
-      print('Error fetching user status: $e');
+      // print('Error fetching user status: $e');
     }
   }
 
@@ -87,7 +87,7 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
         if (state is KycPersonalFetchedSuccess && progressLoading) {
           setState(() {
             if (!isPersonalFetched) {
-              print("KycPersonalFetchedSuccess");
+              // print("KycPersonalFetchedSuccess");
               kycStatus += 25;
               steps.add("Perssonal Info.");
               isPersonalFetched = true;
@@ -96,7 +96,7 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
         } else if (state is KycBusinessFetchedSuccess && progressLoading) {
           setState(() {
             if (!isBusinessFetched) {
-              print("KycBusinessFetchedSuccess");
+              // print("KycBusinessFetchedSuccess");
               kycStatus += 25;
               steps.add("Business Info.");
               isBusinessFetched = true;
@@ -105,7 +105,7 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
         } else if (state is KycAccountFetchedSuccess && progressLoading) {
           setState(() {
             if (!isAccountFetched) {
-              print("KycAccountFetchedSuccess");
+              // print("KycAccountFetchedSuccess");
               kycStatus += 25;
               steps.add("Account Info.");
               isAccountFetched = true;
@@ -119,7 +119,7 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
               String? renewedId =
                   (images.renewedId?.isNotEmpty ?? false) ? "Done" : null;
               if (renewedId != null) {
-                print("renewedId");
+                // print("renewedId");
                 kycStatus += 6.25;
                 addStep("Images Info.");
               }
@@ -127,7 +127,7 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
               String? tinNumber =
                   (images.tinNumber?.isNotEmpty ?? false) ? "Done" : null;
               if (tinNumber != null) {
-                print("tinNumber");
+                // print("tinNumber");
                 kycStatus += 6.25;
                 addStep("Images Info.");
               }
@@ -138,7 +138,7 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
                       ? "Done"
                       : null;
               if (regCertificate != null) {
-                print("regCertificate");
+                // print("regCertificate");
                 kycStatus += 6.25;
                 addStep("Images Info.");
               }
@@ -148,7 +148,7 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
                       ? "Done"
                       : null;
               if (tradeLicense != null) {
-                print("tradeLicense");
+                // print("tradeLicense");
                 kycStatus += 6.25;
                 addStep("Images Info.");
               }

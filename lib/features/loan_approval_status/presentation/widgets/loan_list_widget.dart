@@ -109,6 +109,22 @@ class LoanListWidget extends StatelessWidget {
               ],
             ),
           );
+        } else if (status == "AGREEMENT_ACCEPTED") {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text('Agreements Accepted'),
+              content: const Text(
+                  'The loan application is now waiting a fund release from the bank.'),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Close'))
+              ],
+            ),
+          );
         }
       },
       child: Container(

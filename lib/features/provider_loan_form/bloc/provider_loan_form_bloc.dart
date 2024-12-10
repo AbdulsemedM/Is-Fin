@@ -39,7 +39,7 @@ class ProviderLoanFormBloc
           await providerLoanFormRepository.fetchRequestedProductsById(event.id);
       emit(RequestedProductsFetchedSuccess(
           requestedProducts: requestedProducts));
-      print('Requested Products: ${requestedProducts.length}');
+      // print('Requested Products: ${requestedProducts.length}');
     } catch (e) {
       emit(RequestedProductsFetchedFailure(e.toString()));
     }

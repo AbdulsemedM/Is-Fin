@@ -50,7 +50,7 @@ class ProviderLoanFormRepository {
         throw "Invalid response format: Expected a list";
       }
     } catch (e) {
-      print('Error: $e');
+      // print('Error: $e');
       rethrow;
     }
   }

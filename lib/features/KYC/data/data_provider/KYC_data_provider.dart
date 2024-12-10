@@ -47,7 +47,7 @@ class KycDataProvider {
       // return "body";
     } catch (e) {
       // print("here is the response");
-      print(e.toString());
+      // print(e.toString());
       throw e.toString();
     }
   }

@@ -90,11 +90,11 @@ class _BusinessPartnersScreenState extends State<BusinessPartnersScreen> {
                               id: provider['phoneNumber'] ?? "N/A",
                               onAccept: () {
                                 // Handle Accept Action
-                                print("Accepted: ${provider['fullName']}");
+                                // print("Accepted: ${provider['fullName']}");
                               },
                               onReject: () {
                                 // Handle Reject Action
-                                print("Rejected: ${provider['fullName']}");
+                                // print("Rejected: ${provider['fullName']}");
                               },
                             ),
                           )

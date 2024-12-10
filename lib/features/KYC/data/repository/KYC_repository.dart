@@ -45,7 +45,7 @@ class KycRepository {
       if (data['httpStatus'] != 200) {
         throw data['message'];
       }
-      print(data['response']);
+      // print(data['response']);
       try {
         savePersonalInfo(PersonalInfoModel.fromMap(data['response']));
       } catch (e) {}
@@ -87,7 +87,7 @@ class KycRepository {
       if (data['httpStatus'] != 200) {
         throw data['message'];
       }
-      print(data['response']);
+      // print(data['response']);
       try {
         saveBusinessInfo(BusinessInfoModel.fromMap(data['response']));
       } catch (e) {}
@@ -111,7 +111,7 @@ class KycRepository {
         throw data['message'];
       }
       saveAccountInfo(accountNumber);
-      print(data['message']);
+      // print(data['message']);
       return data['message'];
     } catch (e) {
       // Print and re-throw the exception for the message only
@@ -261,7 +261,7 @@ class KycRepository {
     // Convert to JSON and save
     String? phone = await phoneManager.getPhoneNumber();
     await prefs.setString('personal_info_$phone', personalInfo.toJson());
-    print("Personal info saved successfully.");
+    // print("Personal info saved successfully.");
   }
 
   Future<void> saveBusinessInfo(BusinessInfoModel businessInfo) async {
@@ -269,7 +269,7 @@ class KycRepository {
     // Convert to JSON and save
     String? phone = await phoneManager.getPhoneNumber();
     await prefs.setString('business_info_$phone', businessInfo.toJson());
-    print("Business info saved successfully.");
+    // print("Business info saved successfully.");
   }
 
   Future<void> saveAccountInfo(String accountNumber) async {
@@ -277,7 +277,7 @@ class KycRepository {
     // Convert to JSON and save
     String? phone = await phoneManager.getPhoneNumber();
     await prefs.setString('account_info_$phone', accountNumber);
-    print("Account info saved successfully.");
+    // print("Account info saved successfully.");
   }
 
   Future<void> saveImageInfo(String imageInfo) async {
@@ -285,6 +285,6 @@ class KycRepository {
     // Convert to JSON and save
     String? phone = await phoneManager.getPhoneNumber();
     await prefs.setString('images_info_${imageInfo}_$phone', "Done");
-    print("image info saved successfully.");
+    // print("image info saved successfully.");
   }
 }

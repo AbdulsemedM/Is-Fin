@@ -43,7 +43,7 @@ class _FinancesScreenState extends State<FinancesScreen> {
         kycStatus = kyc;
       });
     } catch (e) {
-      print('Error fetching user status: $e');
+      // print('Error fetching user status: $e');
     }
   }
 

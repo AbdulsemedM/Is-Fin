@@ -5,7 +5,7 @@ class PhoneNumberManager {
 
   // Setter method to store the phone number in SharedPreferences
   Future<void> setPhoneNumber(String phoneNumber) async {
-    print(phoneNumber);
+    // print(phoneNumber);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString(_phoneNumberKey, phoneNumber);
   }
@@ -13,7 +13,7 @@ class PhoneNumberManager {
   // Getter method to retrieve the phone number from SharedPreferences
   Future<String?> getPhoneNumber() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    print(prefs.getString(_phoneNumberKey));
+    // print(prefs.getString(_phoneNumberKey));
     return prefs.getString(_phoneNumberKey);
   }
 }
@@ -23,7 +23,7 @@ class LanguageManager {
 
   // Setter method to store the phone number in SharedPreferences
   Future<void> setLanguage(String lang) async {
-    print(lang);
+    // print(lang);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString(_languageKey, lang);
   }
@@ -31,7 +31,7 @@ class LanguageManager {
   // Getter method to retrieve the phone number from SharedPreferences
   Future<String?> getLanguage() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    print(prefs.getString(_languageKey));
+    // print(prefs.getString(_languageKey));
     return prefs.getString(_languageKey);
   }
 }
@@ -42,7 +42,7 @@ class UserManager {
 
   // Setter method to store the full name in SharedPreferences
   Future<void> setFullName(String fullName) async {
-    print('Setting Full Name: $fullName');
+    // print('Setting Full Name: $fullName');
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString(_fullNameKey, fullName);
   }
@@ -51,13 +51,13 @@ class UserManager {
   Future<String?> getFullName() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? fullName = prefs.getString(_fullNameKey);
-    print('Retrieved Full Name: $fullName');
+    // print('Retrieved Full Name: $fullName');
     return fullName;
   }
 
   // Setter method to store the KYC status in SharedPreferences
   Future<void> setKYCStatus(String kycStatus) async {
-    print('Setting KYC Status: $kycStatus');
+    // print('Setting KYC Status: $kycStatus');
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString(_kycStatusKey, kycStatus);
   }
@@ -66,7 +66,7 @@ class UserManager {
   Future<String?> getKYCStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? kycStatus = prefs.getString(_kycStatusKey);
-    print('Retrieved KYC Status: $kycStatus');
+    // print('Retrieved KYC Status: $kycStatus');
     return kycStatus;
   }
 }

@@ -131,7 +131,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
               setState(() {
                 mySectors = state.sectors;
                 isSectorFetched = true;
-                print(mySectors.length);
+                // print(mySectors.length);
               });
             }
             if (state is RepaymentFetchSuccess) {
@@ -295,7 +295,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                                               _productUoMController.clear();
                                               loading1 = false;
                                             });
-                                            print(myProducts.length);
+                                            // print(myProducts.length);
                                           }
                                         },
                                   buttonText: loading1
@@ -332,7 +332,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                           setState(() {
                             myProducts.remove(product);
                           });
-                          print(myProducts.length);
+                          // print(myProducts.length);
                         },
                         onEdit: () {
                           setState(() {

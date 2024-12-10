@@ -40,8 +40,8 @@ class _ProviderLoanListScreenState extends State<ProviderLoanListScreen> {
         } else if (state is ProviderLoanFormListFetchedSuccess) {
           setState(() {
             loanApplications = state.productList;
-            print("loanApplications.length");
-            print(loanApplications.length);
+            // print("loanApplications.length");
+            // print(loanApplications.length);
             isLoading = false;
           });
         } else if (state is ProviderLoanFormListFetchedFailure) {

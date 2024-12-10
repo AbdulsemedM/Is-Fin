@@ -61,7 +61,7 @@ class _ProviderLoanFormScreenState extends State<ProviderLoanFormScreen> {
           } else if (state is RequestedProductsFetchedFailure) {
             displaySnack(context, state.errorMessage, Colors.red);
           } else if (state is RequestedProductsFetchedLoading) {
-            print('Loading...');
+            // print('Loading...');
           } else if (state is RequestedProductsPriceSentSuccess) {
             displaySnack(context, state.message, Colors.green);
             context
