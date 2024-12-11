@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-// import 'package:ifb_loan/app/app_button.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
-// import 'package:ifb_loan/app/utils/app_theme.dart';
 import 'package:ifb_loan/features/login/presentation/screen/login_screen.dart';
-// import 'package:ifb_loan/features/otp/presentation/screen/otp_screen.dart';
 
 class SplashScreenPage extends StatefulWidget {
   const SplashScreenPage({super.key});
@@ -17,7 +14,6 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
   @override
   void initState() {
     super.initState();
-    // Delaying navigation to LoginScreen for demonstration
     Future.delayed(Duration(seconds: 2), () {
       Navigator.pushReplacement(
           context,
