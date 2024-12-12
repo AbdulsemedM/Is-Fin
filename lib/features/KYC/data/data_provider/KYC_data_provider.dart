@@ -80,6 +80,7 @@ class KycDataProvider {
               businessInfo.businessAddressDto.businessAdressKebele
         }
       };
+      print(body);
       final apiProvider = ProviderSetup.getApiProvider(ApiConstants.baseUrl);
       final response =
           await apiProvider.postRequest("/api/kyc/businessInfo", body);
