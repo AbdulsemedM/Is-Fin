@@ -7,18 +7,21 @@ import 'package:ifb_loan/app/utils/dialog_utils.dart';
 import 'package:ifb_loan/features/loan_approval_status/bloc/loan_approval_status_bloc.dart';
 import 'package:ifb_loan/features/loan_approval_status/model/offered_products_price_model.dart';
 import 'package:ifb_loan/features/loan_approval_status/presentation/widgets/loan_status_table.dart';
+import 'package:ifb_loan/features/loan_approval_status/presentation/widgets/murabaha_details_card.dart';
 import 'package:ifb_loan/features/loan_approval_status/presentation/widgets/pdf_dialog.dart';
 import 'package:intl/intl.dart';
 
 class LoanApprovalStatus extends StatefulWidget {
   final String id;
   final String name;
-  final String pdfUrl;
+  final String agencyPdfUrl;
+  final String promisePdfUrl;
   const LoanApprovalStatus({
     super.key,
     required this.id,
     required this.name,
-    required this.pdfUrl,
+    required this.agencyPdfUrl,
+    required this.promisePdfUrl,
   });
 
   @override
@@ -37,6 +40,8 @@ class _LoanApprovalStatusState extends State<LoanApprovalStatus> {
     context
         .read<LoanApprovalStatusBloc>()
         .add(OfferedProductsPriceFetch(id: widget.id));
+    print(widget.promisePdfUrl);
+    print(widget.agencyPdfUrl);
   }
 
   void compareProducts(List<OfferedProductsPriceModel> currentProducts) {
@@ -153,13 +158,24 @@ class _LoanApprovalStatusState extends State<LoanApprovalStatus> {
                           ),
                         ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 16.0),
-                        child: Text(
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.bodyLarge,
-                            "If you accept these offer from the merchant click the button bellow and the bank officials will review the loan application"),
+                      // Padding(
+                      //   padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      //   child: Text(
+                      //       textAlign: TextAlign.center,
+                      //       style: Theme.of(context).textTheme.bodyLarge,
+                      //       "If you accept these offer from the merchant click the button bellow and the bank officials will review the loan application"),
+                      // ),
+                      const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: MurabahaDetailsCard(
+                          purchaseCost: 'ETB 10,000',
+                          markup: 'ETB 1,500',
+                          totalPrice: 'ETB 11,500',
+                          duration: '12 Months',
+                          processingFees: 'ETB 200',
+                        ),
                       ),
+
                       MyButton(
                           backgroundColor: loading
                               ? AppColors.iconColor
@@ -203,15 +219,20 @@ class _LoanApprovalStatusState extends State<LoanApprovalStatus> {
                                     }
                                   : () async {
                                       final bool result = await _showPdfDialog(
-                                          context, widget.pdfUrl);
+                                          context, widget.agencyPdfUrl);
                                       // print("result");
                                       // print(result);
                                       if (result == true && mounted) {
-                                        context
-                                            .read<LoanApprovalStatusBloc>()
-                                            .add(AcceptOffer(
-                                                id: widget.id,
-                                                status: "APPROVED"));
+                                        final bool result2 =
+                                            await _showPdfDialog(
+                                                context, widget.agencyPdfUrl);
+                                        if (result2 == true && mounted) {
+                                          context
+                                              .read<LoanApprovalStatusBloc>()
+                                              .add(AcceptOffer(
+                                                  id: widget.id,
+                                                  status: "APPROVED"));
+                                        }
                                       }
                                     },
                           buttonText: loading

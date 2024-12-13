@@ -11,13 +11,14 @@ import 'package:lottie/lottie.dart';
 class ProviderUndertakingScreen extends StatefulWidget {
   final String id;
   final String undertakingAgreementtDocument;
-  final String agentAgreementDocument;
+  // final String agentAgreementDocument;
 
-  const ProviderUndertakingScreen(
-      {super.key,
-      required this.id,
-      required this.undertakingAgreementtDocument,
-      required this.agentAgreementDocument});
+  const ProviderUndertakingScreen({
+    super.key,
+    required this.id,
+    required this.undertakingAgreementtDocument,
+    // required this.agentAgreementDocument
+  });
 
   @override
   State<ProviderUndertakingScreen> createState() =>
@@ -126,21 +127,21 @@ class _ProviderUndertakingScreenState extends State<ProviderUndertakingScreen> {
                     onPressed: loading
                         ? () {}
                         : () async {
-                            final result1 = await _showPdfDialog(
-                                context, widget.agentAgreementDocument);
-                            if (result1) {
-                              final result2 = await _showPdfDialog(context,
-                                  widget.undertakingAgreementtDocument);
-                              if (result2) {
-                                context.read<ProviderLoanFormBloc>().add(
-                                    AcceptUnderTakingAndagentAgreement(
-                                        widget.id, "APPROVED"));
-                              } else {
-                                setState(() {
-                                  loading = false;
-                                });
-                              }
+                            // final result1 = await _showPdfDialog(
+                            //     context, widget.agentAgreementDocument);
+                            // if (result1) {
+                            final result2 = await _showPdfDialog(
+                                context, widget.undertakingAgreementtDocument);
+                            if (result2) {
+                              context.read<ProviderLoanFormBloc>().add(
+                                  AcceptUnderTakingAndagentAgreement(
+                                      widget.id, "APPROVED"));
+                            } else {
+                              setState(() {
+                                loading = false;
+                              });
                             }
+                            // }
                           },
                     buttonText: loading
                         ? SizedBox(

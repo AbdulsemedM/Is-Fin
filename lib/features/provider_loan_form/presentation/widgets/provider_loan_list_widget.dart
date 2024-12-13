@@ -93,10 +93,11 @@ class ProviderLoanListWidget extends StatelessWidget {
               context,
               MaterialPageRoute(
                   builder: (context) => ProviderUndertakingScreen(
-                      id: id,
-                      undertakingAgreementtDocument:
-                          undertakingAgreementtDocument!,
-                      agentAgreementDocument: agentAgreementDocument!)));
+                        id: id,
+                        undertakingAgreementtDocument:
+                            undertakingAgreementtDocument!,
+                        // agentAgreementDocument: agentAgreementDocument!
+                      )));
         } else if (status == "AGREEMENT_ACCEPTED") {
           showDialog(
             context: context,

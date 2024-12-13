@@ -44,7 +44,8 @@ class LoanListWidget extends StatelessWidget {
                   builder: (context) => LoanApprovalStatus(
                         id: id,
                         name: name,
-                        pdfUrl: promiseToPurchaseDocument!,
+                        promisePdfUrl: promiseToPurchaseDocument!,
+                        agencyPdfUrl: agentAgreementDocument!,
                       )));
           // Navigator.push(
           //     context,
