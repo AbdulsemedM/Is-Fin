@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
 import 'package:ifb_loan/app/utils/dialog_utils.dart';
 import 'package:ifb_loan/configuration/phone_number_manager.dart';
 import 'package:ifb_loan/features/KYC/presentation/screen/kyc_screen.dart';
 import 'package:ifb_loan/features/business_partner/presentation/screen/business_partners_screen.dart';
+import 'package:ifb_loan/features/home/bloc/home_bloc.dart';
 // import 'package:ifb_loan/configuration/auth_service.dart';
 import 'package:ifb_loan/features/home/presentation/widgets/home_icon_widget.dart';
 import 'package:ifb_loan/features/home/presentation/widgets/multiple_range_guage_widget.dart';
@@ -24,14 +26,17 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   String name = "";
   String kycStatus = "null";
+  String score = '0';
   UserManager userManager = UserManager();
   @override
   void initState() {
     super.initState();
+    context.read<HomeBloc>().add(FetcheCreditScore());
     fetchUserStatus();
   }
 
   fetchUserStatus() async {
+    print("Fetching user status");
     try {
       String myName = (await userManager.getFullName())!;
       String kyc = (await userManager.getKYCStatus()).toString();
@@ -157,11 +162,38 @@ class _HomeScreenState extends State<HomeScreen> {
           // ),
           // SizedBox(height: ScreenConfig.screenHeight * 0.03),
           // LoanStatusCard(),
-          const SizedBox(
-            height: 250,
-            child: MultipleRangeGaugeWidget(
-              value: 67,
-            ),
+          // const SizedBox(
+          //   height: 250,
+          //   child: MultipleRangeGaugeWidget(
+          //     value: 723,
+          //   ),
+          // ),
+          BlocBuilder<HomeBloc, HomeState>(
+            builder: (context, state) {
+              if (state is CreditScoreFetchedSuccess) {
+                // setState(() {
+                score = state.score;
+                // });
+                return SizedBox(
+                  height: 250,
+                  child: MultipleRangeGaugeWidget(
+                    value: double.parse(state.score),
+                  ),
+                );
+              } else if (state is CreditScoreFetchedFailure) {
+                return Center(
+                  child: Text(state.errorMessage),
+                );
+              } else if (state is CreditScoreFetchedLoading) {
+                return const Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              }
+              return SizedBox.shrink(); // Default empty state
+            },
           ),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -182,31 +214,31 @@ class _HomeScreenState extends State<HomeScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    _buildLegendItem(context, 'Very Poor', Colors.red, '0-20'),
-                    _buildLegendItem(context, 'Poor', Colors.orange, '21-40'),
+                    _buildLegendItem(context, 'Very Poor', Colors.red, '0-170'),
+                    _buildLegendItem(context, 'Poor', Colors.orange, '171-340'),
                     _buildLegendItem(
-                        context, 'Average', Colors.yellow, '41-60'),
+                        context, 'Average', Colors.yellow, '341-510'),
                     _buildLegendItem(
-                        context, 'Good', Colors.lightGreen, '61-80'),
+                        context, 'Good', Colors.lightGreen, '511-680'),
                     _buildLegendItem(
-                        context, 'Excellent', Colors.green, '81-100'),
+                        context, 'Excellent', Colors.green, '681-850'),
                   ],
                 ),
                 const SizedBox(height: 12),
                 Text(
-                  'Your Credit Score: 67',
+                  'Your Credit Score:  $score',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Your score falls in the "Good" range. Keep maintaining timely payments to improve further!',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Colors.grey[600],
-                      ),
-                ),
+                    'Complete your KYC to achieve a good credit score. A verified KYC helps improve your financial profile!',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(color: Colors.grey[600])),
               ],
             ),
           ),
@@ -244,7 +276,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const CompleteKYCDetail()));
+                            builder: (context) =>
+                                const CompleteKYCDetail())).then((_) {
+                      fetchUserStatus();
+                    });
                   },
                 ),
                 HomeIconWidget(
@@ -311,7 +346,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: Colors.white),
                     ),
                     description:
-                        'Murabaha at Coop Bank is a Sharia-compliant financing product where the bank buys goods for customers and resells them at a disclosed profit, allowing interest-free financing in line with Islamic principles.',
+                        'Musharaka is a partnership-based financing method where both the bank and the customer contribute capital to a joint venture or project, sharing profits according to a pre-agreed ratio while losses are shared in proportion to their respective capital contributions, adhering to Sharia principles.',
                     onGetStarted: () {
                       // print("Get Started clicked");
                     },
@@ -329,7 +364,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: Colors.white),
                     ),
                     description:
-                        'Murabaha at Coop Bank is a Sharia-compliant financing product where the bank buys goods for customers and resells them at a disclosed profit, allowing interest-free financing in line with Islamic principles.',
+                        'Mudaraba is a profit-sharing agreement where one party (the bank) provides the capital, and the other party (the entrepreneur) manages the business, with profits shared as per a pre-agreed ratio, and losses borne solely by the capital provider in line with Islamic financing norms.',
                     onGetStarted: () {
                       // print("Get Started clicked");
                     },

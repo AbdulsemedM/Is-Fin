@@ -5,7 +5,7 @@ class HomeDataProvider {
   Future<String> fetchCreditScore() async {
     try {
       final apiProvider = ProviderSetup.getApiProvider(ApiConstants.baseUrl);
-      final response = await apiProvider.getRequest("endpoint");
+      final response = await apiProvider.getRequest("/api/kyc/score");
       return response.body;
     } catch (e) {
       throw e.toString();

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class MultipleRangeGaugeWidget extends StatelessWidget {
@@ -19,7 +20,7 @@ class MultipleRangeGaugeWidget extends StatelessWidget {
         axes: [
           RadialAxis(
             minimum: 0,
-            maximum: 100,
+            maximum: 850,
             showLabels: true,
             showTicks: true,
             axisLineStyle: const AxisLineStyle(
@@ -28,35 +29,35 @@ class MultipleRangeGaugeWidget extends StatelessWidget {
             ranges: [
               GaugeRange(
                 startValue: 0,
-                endValue: 20,
+                endValue: 170,
                 color: Colors.red,
                 startWidth: 30,
                 endWidth: 30,
               ),
               GaugeRange(
-                startValue: 20,
-                endValue: 40,
+                startValue: 171,
+                endValue: 340,
                 color: Colors.orange,
                 startWidth: 30,
                 endWidth: 30,
               ),
               GaugeRange(
-                startValue: 40,
-                endValue: 60,
+                startValue: 341,
+                endValue: 510,
                 color: Colors.yellow,
                 startWidth: 30,
                 endWidth: 30,
               ),
               GaugeRange(
-                startValue: 60,
-                endValue: 80,
+                startValue: 511,
+                endValue: 680,
                 color: Colors.lightGreen,
                 startWidth: 30,
                 endWidth: 30,
               ),
               GaugeRange(
-                startValue: 80,
-                endValue: 100,
+                startValue: 681,
+                endValue: 850,
                 color: Colors.green,
                 startWidth: 30,
                 endWidth: 30,
@@ -80,7 +81,8 @@ class MultipleRangeGaugeWidget extends StatelessWidget {
             annotations: [
               GaugeAnnotation(
                 widget: Text(
-                  '${value.toStringAsFixed(1)}%', // Display the value dynamically
+                  NumberFormat('#,###')
+                      .format(value), // Display the value dynamically
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,

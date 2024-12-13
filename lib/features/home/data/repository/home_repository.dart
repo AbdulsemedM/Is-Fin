@@ -13,7 +13,7 @@ class HomeRepository {
       if (data['httpStatus'] != 200) {
         throw data['message'];
       }
-      return data['response']['creditScore'];
+      return data['response']['total_score'].toString();
     } catch (e) {
       rethrow;
     }
