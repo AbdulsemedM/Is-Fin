@@ -294,7 +294,10 @@ class _AddBisinessPartnerScreenState extends State<AddBisinessPartnerScreen> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    const ProviderKycScreen()));
+                                                    ProviderKycScreen(
+                                                        phoneNumber:
+                                                            phoneNumberController
+                                                                .text)));
                                       }
                                     },
                                     child: const Text('Add'),

@@ -31,6 +31,9 @@ import 'package:ifb_loan/features/login/data/repository/login_repository.dart';
 import 'package:ifb_loan/features/otp/bloc/otp_bloc.dart';
 import 'package:ifb_loan/features/otp/data/data_provider/otp_data_provider.dart';
 import 'package:ifb_loan/features/otp/data/repository/otp_repository.dart';
+import 'package:ifb_loan/features/provider_KYC/bloc/provider_kyc_bloc.dart';
+import 'package:ifb_loan/features/provider_KYC/data/data_provider/provider_KYC_data_provider.dart';
+import 'package:ifb_loan/features/provider_KYC/data/repository/provider_KYC_repository.dart';
 import 'package:ifb_loan/features/provider_loan_form/bloc/provider_loan_form_bloc.dart';
 import 'package:ifb_loan/features/provider_loan_form/data/data_provider/provider_loan_form_data_provider.dart';
 import 'package:ifb_loan/features/provider_loan_form/data/repository/provider_loan_form_repository.dart';
@@ -79,6 +82,9 @@ void main() async {
               OtpBloc(OtpRepository(otpDataProvider: OtpDataProvider()))),
       BlocProvider(
           create: (contex) => HomeBloc(HomeRepository(HomeDataProvider()))),
+      BlocProvider(
+          create: (contex) => ProviderKycBloc(
+              ProviderKYCRepository(ProviderKycDataProvider()))),
     ],
     child: MyApp(
       isFirstTime: isFirstTime,

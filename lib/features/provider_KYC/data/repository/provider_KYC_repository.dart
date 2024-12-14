@@ -8,9 +8,9 @@ import 'package:ifb_loan/features/KYC/models/image_models/images_model.dart';
 import 'package:ifb_loan/features/KYC/models/personal_info/personal_info_model.dart';
 import 'package:ifb_loan/features/provider_KYC/data/data_provider/provider_KYC_data_provider.dart';
 
-class ProviderKycRepository {
+class ProviderKYCRepository {
   final ProviderKycDataProvider providerKycDataProvider;
-  ProviderKycRepository(this.providerKycDataProvider);
+  ProviderKYCRepository(this.providerKycDataProvider);
   PhoneNumberManager phoneManager = PhoneNumberManager();
   Future<String> sendPersonalKYC(
       PersonalInfoModel personalInfo, String phoneNumber) async {

@@ -7,7 +7,8 @@ import 'package:ifb_loan/features/provider_KYC/presentation/widget/provider_file
 import 'package:ifb_loan/features/provider_KYC/presentation/widget/provider_personal_info_widget.dart';
 
 class ProviderKycScreen extends StatefulWidget {
-  const ProviderKycScreen({super.key});
+  final String phoneNumber;
+  const ProviderKycScreen({super.key, required this.phoneNumber});
 
   @override
   State<ProviderKycScreen> createState() => _ProviderKycScreenState();
@@ -17,11 +18,11 @@ class _ProviderKycScreenState extends State<ProviderKycScreen> {
   int _selectedValue = 3; // Initial tab selected
 
   // Define your different screens as widgets
-  final Map<int, Widget> _screens = const {
-    3: ProviderAccountWidget(),
-    1: ProviderPersonalInfoWidget(),
-    2: ProviderBusinessInfoWidget(),
-    4: ProviderFileUploadWidget(),
+  late final Map<int, Widget> _screens = {
+    3: ProviderAccountWidget(phoneNumber: widget.phoneNumber),
+    1: ProviderPersonalInfoWidget(phoneNumber: widget.phoneNumber),
+    2: ProviderBusinessInfoWidget(phoneNumber: widget.phoneNumber), 
+    4: ProviderFileUploadWidget(phoneNumber: widget.phoneNumber),
   };
   @override
   Widget build(BuildContext context) {

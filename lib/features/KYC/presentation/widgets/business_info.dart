@@ -871,9 +871,9 @@ class _BusinessInfoState extends State<BusinessInfo> {
                                 color: AppColors.primaryColor,
                               ),
                             )
-                          : const Text(
-                              "Submit",
-                              style: TextStyle(color: Colors.white),
+                          : Text(
+                              businessData != null ? "Re-Submit" : "Submit",
+                              style: const TextStyle(color: Colors.white),
                             )),
                 ),
                 const SizedBox(width: 16),
