@@ -53,6 +53,7 @@ dependencies:
   pinput: ^5.0.0
   math_expressions: ^2.4.0
   get: ^4.6.6
+  path_provider: ^2.1.1
 
 dev_dependencies:
   flutter_test:

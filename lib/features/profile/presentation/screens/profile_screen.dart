@@ -11,6 +11,7 @@ import 'package:ifb_loan/features/business_partner/presentation/screen/business_
 import 'package:ifb_loan/features/profile/presentation/widgets/custome_list_button.dart';
 import 'package:ifb_loan/features/profile/presentation/widgets/kyc_card_widget.dart';
 import 'package:ifb_loan/features/profile/presentation/widgets/loan_status_card.dart';
+import 'package:ifb_loan/features/profile/presentation/widgets/profile_image_widget.dart';
 import 'package:ifb_loan/features/profile/presentation/widgets/upper_circular_design.dart';
 import 'package:ifb_loan/features/provider_loan_form/presentation/screen/provider_loan_list_screen.dart';
 
@@ -197,7 +198,8 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
             Stack(
               children: [
                 CustomPaint(
-                  size: Size(double.infinity, MediaQuery.of(context).size.height * 0.25),
+                  size: Size(double.infinity,
+                      MediaQuery.of(context).size.height * 0.25),
                   painter: CurvedPainter(),
                 ),
                 Positioned(
@@ -207,11 +209,7 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
                   child: const Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      CircleAvatar(
-                        radius: 60,
-                        backgroundImage: AssetImage(
-                            'assets/images/profile.png'), // Replace with actual image
-                      ),
+                      ProfileImageWidget(),
                       // SizedBox(height: 10),
                     ],
                   ),
@@ -222,7 +220,8 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: Text(
                 "Hi, $name.",
-                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
             Padding(
@@ -266,7 +265,8 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
                     failedLoans: 0,
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
                     child: Text(
                       "If you are here as a product seller and wanted to fill a form or check status please click the button bellow",
                       textAlign: TextAlign.center,
@@ -276,34 +276,34 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 16),
                     child: MyButton(
-                      backgroundColor: loading
-                          ? AppColors.iconColor
-                          : AppColors.primaryDarkColor,
-                      onPressed: loading
-                          ? () {}
-                          : () {
-                              // setState(() {
-                              //   loading = true;
-                              // });
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const ProviderLoanListScreen()));
-                            },
-                      buttonText: loading
-                          ? SizedBox(
-                              height: ScreenConfig.screenHeight * 0.02,
-                              width: ScreenConfig.screenHeight * 0.02,
-                              child: const CircularProgressIndicator(
-                                strokeWidth: 3,
-                                color: AppColors.primaryColor,
-                              ),
-                            )
-                          : const Text(
-                              "Click Here",
-                              style: TextStyle(color: Colors.white),
-                            )),
+                        backgroundColor: loading
+                            ? AppColors.iconColor
+                            : AppColors.primaryDarkColor,
+                        onPressed: loading
+                            ? () {}
+                            : () {
+                                // setState(() {
+                                //   loading = true;
+                                // });
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const ProviderLoanListScreen()));
+                              },
+                        buttonText: loading
+                            ? SizedBox(
+                                height: ScreenConfig.screenHeight * 0.02,
+                                width: ScreenConfig.screenHeight * 0.02,
+                                child: const CircularProgressIndicator(
+                                  strokeWidth: 3,
+                                  color: AppColors.primaryColor,
+                                ),
+                              )
+                            : const Text(
+                                "Click Here",
+                                style: TextStyle(color: Colors.white),
+                              )),
                   ),
                 ],
               ),
