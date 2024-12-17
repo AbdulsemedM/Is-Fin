@@ -600,7 +600,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
                         controller: _monthlySalesController,
                         validator: (value) => validateField(value),
                         decoration: InputDecoration(
-                          labelText: 'Annual Sales(ETB)',
+                          labelText: 'Annual Income(ETB)',
                           filled: true,
                           fillColor: Colors.grey[200],
                           border: OutlineInputBorder(
@@ -610,22 +610,22 @@ class _BusinessInfoState extends State<BusinessInfo> {
                         ),
                       ),
                     ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: TextFormField(
-                        controller: _monthlyRevenueController,
-                        validator: (value) => validateField(value),
-                        decoration: InputDecoration(
-                          labelText: 'Annual Revenue(ETB)',
-                          filled: true,
-                          fillColor: Colors.grey[200],
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                            borderSide: BorderSide.none,
-                          ),
-                        ),
-                      ),
-                    ),
+                    // const SizedBox(width: 16),
+                    // Expanded(
+                    //   child: TextFormField(
+                    //     controller: _monthlyRevenueController,
+                    //     validator: (value) => validateField(value),
+                    //     decoration: InputDecoration(
+                    //       labelText: 'Annual Revenue(ETB)',
+                    //       filled: true,
+                    //       fillColor: Colors.grey[200],
+                    //       border: OutlineInputBorder(
+                    //         borderRadius: BorderRadius.circular(8.0),
+                    //         borderSide: BorderSide.none,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
                 const SizedBox(height: 16),
@@ -850,7 +850,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
                                         monthlySales:
                                             _monthlySalesController.text,
                                         monthlyRevenue:
-                                            _monthlyRevenueController.text,
+                                            _businessLevelController.text,
                                         businessAddressDto: BusinessAddressModel(
                                             businessAddressregion:
                                                 _regionController.text,
@@ -890,6 +890,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
     if (businessData!.websiteUrl != null) {
       _websiteURLController.text = businessData!.websiteUrl!;
     }
+    _businessLevelController.text = businessData!.monthlyRevenue;
     _tinNoController.text = businessData!.tinNumber;
     _typeofBusinessController.text = businessData!.businessType;
     _yearofEstablishmentController.text = businessData!.yearOfEstablishment;

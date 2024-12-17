@@ -75,3 +75,17 @@ final class AcceptMurabahaOfferFailure extends LoanApprovalStatusState {
 
   AcceptMurabahaOfferFailure(this.errorMessage);
 }
+
+final class FetchMurabahaCardLoading extends LoanApprovalStatusState {}
+
+final class FetchMurabahaCardSuccess extends LoanApprovalStatusState {
+  final MurabahaCardModel murabahaCard;
+
+  FetchMurabahaCardSuccess(this.murabahaCard);
+}
+
+final class FetchMurabahaCardFailure extends LoanApprovalStatusState {
+  final String errorMessage;
+
+  FetchMurabahaCardFailure(this.errorMessage);
+}

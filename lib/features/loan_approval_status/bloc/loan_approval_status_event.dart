@@ -29,3 +29,8 @@ final class AcceptMurabahaOffer extends LoanApprovalStatusEvent {
   final String status;
   AcceptMurabahaOffer({required this.id, required this.status});
 }
+
+final class FetchMurabahaCard extends LoanApprovalStatusEvent {
+  final String id;
+  FetchMurabahaCard({required this.id});
+}

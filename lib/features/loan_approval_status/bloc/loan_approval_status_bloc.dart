@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:ifb_loan/features/loan_approval_status/data/repository/loan_approval_status_repository.dart';
 import 'package:ifb_loan/features/loan_approval_status/model/murabah_aggrement_model.dart';
+import 'package:ifb_loan/features/loan_approval_status/model/murabaha_card_model.dart';
 import 'package:ifb_loan/features/loan_approval_status/model/offered_products_price_model.dart';
 import 'package:ifb_loan/features/loan_approval_status/model/product_list_model.dart';
 
@@ -18,6 +19,7 @@ class LoanApprovalStatusBloc
     on<AcceptOffer>(_onAcceptOffer);
     on<AcceptMurabahaOffer>(_onAcceptMurabahaOffer);
     on<FetchMurabahaAgreement>(_onFetchMurabahaAgreement);
+    on<FetchMurabahaCard>(_onFetchMurabahaCard);
   }
 
   Future<void> _onFetchLoanApprovalStatusList(FetchLoanApprovalStatusList event,
@@ -80,6 +82,18 @@ class LoanApprovalStatusBloc
       emit(AcceptMurabahaOfferSuccess(message));
     } catch (e) {
       emit(AcceptMurabahaOfferFailure(e.toString()));
+    }
+  }
+
+  Future<void> _onFetchMurabahaCard(
+      FetchMurabahaCard event, Emitter<LoanApprovalStatusState> emit) async {
+    emit(FetchMurabahaCardLoading());
+    try {
+      final murabahaCard =
+          await loanApprovalStatusRepository.fetchMurabahaCard(event.id);
+      emit(FetchMurabahaCardSuccess(murabahaCard));
+    } catch (e) {
+      emit(FetchMurabahaCardFailure(e.toString()));
     }
   }
 }

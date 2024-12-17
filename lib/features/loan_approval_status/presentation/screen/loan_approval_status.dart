@@ -5,6 +5,7 @@ import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
 import 'package:ifb_loan/app/utils/dialog_utils.dart';
 import 'package:ifb_loan/features/loan_approval_status/bloc/loan_approval_status_bloc.dart';
+import 'package:ifb_loan/features/loan_approval_status/model/murabaha_card_model.dart';
 import 'package:ifb_loan/features/loan_approval_status/model/offered_products_price_model.dart';
 import 'package:ifb_loan/features/loan_approval_status/presentation/widgets/loan_status_table.dart';
 import 'package:ifb_loan/features/loan_approval_status/presentation/widgets/murabaha_details_card.dart';
@@ -33,6 +34,7 @@ class _LoanApprovalStatusState extends State<LoanApprovalStatus> {
   var checker = false;
   List<OfferedProductsPriceModel> originalProducts = [];
   List<OfferedProductsPriceModel> myOfferedProductPrices = [];
+  MurabahaCardModel? murabahaCard;
 
   @override
   void initState() {
@@ -40,6 +42,9 @@ class _LoanApprovalStatusState extends State<LoanApprovalStatus> {
     context
         .read<LoanApprovalStatusBloc>()
         .add(OfferedProductsPriceFetch(id: widget.id));
+    context
+        .read<LoanApprovalStatusBloc>()
+        .add(FetchMurabahaCard(id: widget.id));
     print(widget.promisePdfUrl);
     print(widget.agencyPdfUrl);
   }
@@ -85,6 +90,13 @@ class _LoanApprovalStatusState extends State<LoanApprovalStatus> {
           setState(() => loading = false);
           displaySnack(context, state.errorMessage, Colors.red);
           Navigator.pop(context);
+        }
+        if (state is FetchMurabahaCardSuccess) {
+          print("murabahaCard");
+          print(state.murabahaCard);
+          setState(() {
+            murabahaCard = state.murabahaCard;
+          });
         }
       },
       child: Scaffold(
@@ -165,16 +177,21 @@ class _LoanApprovalStatusState extends State<LoanApprovalStatus> {
                       //       style: Theme.of(context).textTheme.bodyLarge,
                       //       "If you accept these offer from the merchant click the button bellow and the bank officials will review the loan application"),
                       // ),
-                      const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: MurabahaDetailsCard(
-                          purchaseCost: 'ETB 10,000',
-                          markup: 'ETB 1,500',
-                          totalPrice: 'ETB 11,500',
-                          duration: '12 Months',
-                          processingFees: 'ETB 200',
+                      if (murabahaCard != null)
+                        Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: MurabahaDetailsCard(
+                            purchaseCost:
+                                "${NumberFormat("#,###.##").format(double.parse(murabahaCard!.purchaseCost))} ETB",
+                            markup:
+                                "${NumberFormat("#,###.##").format(double.parse(murabahaCard!.markUp))} ETB",
+                            totalPrice:
+                                "${NumberFormat("#,###.##").format(double.parse(murabahaCard!.totalMurabahaPrice))} ETB",
+                            duration: murabahaCard!.durationofFinancing,
+                            processingFees:
+                                "${NumberFormat("#,###.##").format(double.parse(murabahaCard!.processingFee))} ETB",
+                          ),
                         ),
-                      ),
 
                       MyButton(
                           backgroundColor: loading

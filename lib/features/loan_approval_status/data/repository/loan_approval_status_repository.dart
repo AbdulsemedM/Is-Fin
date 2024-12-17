@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:ifb_loan/features/loan_approval_status/data/data_provider/loan_approval_status_data_provider.dart';
 import 'package:ifb_loan/features/loan_approval_status/model/murabah_aggrement_model.dart';
+import 'package:ifb_loan/features/loan_approval_status/model/murabaha_card_model.dart';
 import 'package:ifb_loan/features/loan_approval_status/model/offered_products_price_model.dart';
 import 'package:ifb_loan/features/loan_approval_status/model/product_list_model.dart';
 
@@ -87,6 +88,22 @@ class LoanApprovalStatusRepository {
         throw data['message'];
       }
       return data['message'];
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<MurabahaCardModel> fetchMurabahaCard(String id) async {
+    try {
+      final response =
+          await loanApprovalStatusDataProvider.fetchMurabahaCard(id);
+      final data = jsonDecode(response);
+      if (data['httpStatus'] != 200) {
+        throw data['message'];
+      }
+      print("data['response']");
+      print(data['response']);
+      return MurabahaCardModel.fromMap(data['response']);
     } catch (e) {
       rethrow;
     }
