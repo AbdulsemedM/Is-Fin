@@ -88,7 +88,7 @@ class _ProviderUndertakingScreenState extends State<ProviderUndertakingScreen> {
                     padding:
                         EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                     child: Text(
-                      'Sign the product undertaking and supplier as agent agreements to proceed.',
+                      'Sign the product undertaking agreement to proceed.',
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 16, color: Colors.black54),
                     ),

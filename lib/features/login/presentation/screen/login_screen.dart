@@ -41,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
             setState(() {
               loading = false;
             });
-            displaySnack(context, "Logged in successfully", Colors.black);
+            displaySnack(context, "Logged in successfully".tr, Colors.black);
             Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -94,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(
                 height: 10,
               ),
-              Text("Login",
+              Text("Login".tr,
                   style: Theme.of(context)
                       .textTheme
                       .displayMedium
@@ -112,7 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               padding:
                                   const EdgeInsets.symmetric(vertical: 8.0),
                               child: Text(
-                                "Phone Number",
+                                "Phone Number".tr,
                                 style: Theme.of(context)
                                     .textTheme
                                     .displaySmall
@@ -132,11 +132,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           validator: (value) {
                             if (value?.isEmpty == true) {
-                              return 'Phone number is required';
+                              return 'Phone number is required'.tr;
                             } else if (value!.length != 10) {
-                              return 'Invalid phone number format';
+                              return 'Invalid phone number format'.tr;
                             } else if (!value.startsWith("09")) {
-                              return 'Invalid phone number format';
+                              return 'Invalid phone number format'.tr;
                             }
                             return null;
                           },
@@ -147,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               padding:
                                   const EdgeInsets.symmetric(vertical: 8.0),
                               child: Text(
-                                "Password",
+                                "Password".tr,
                                 style: Theme.of(context)
                                     .textTheme
                                     .displaySmall
@@ -191,9 +191,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           validator: (value) {
                             if (value?.isEmpty == true) {
-                              return 'Password is required';
+                              return 'Password is required'.tr;
                             } else if (value!.length < 6) {
-                              return 'Password must be at least 6 characters';
+                              return 'Password must be at least 6 characters'
+                                  .tr;
                             }
                             return null;
                           },
@@ -214,7 +215,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   );
                                 },
                                 child: Text(
-                                  "Forgot Password?",
+                                  "Forgot Password?".tr,
                                   style: Theme.of(context)
                                       .textTheme
                                       .displaySmall
@@ -256,8 +257,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                     color: AppColors.primaryColor,
                                   ),
                                 )
-                              : const Text(
-                                  "Login",
+                              : Text(
+                                  "Login".tr,
                                   style: TextStyle(color: AppColors.bg1),
                                 ),
                         ),
@@ -271,7 +272,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Don't have an account?  ",
+                    "Don't have an account?  ".tr,
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   GestureDetector(
@@ -282,7 +283,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               builder: (context) => const SignupScreen()));
                     },
                     child: Text(
-                      "Sign up",
+                      "Signup".tr,
                       style: TextStyle(
                           color: AppColors.primaryDarkColor,
                           fontSize: ScreenConfig.screenWidth * 0.04,

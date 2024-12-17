@@ -225,7 +225,7 @@ class _LoanApprovalStatusState extends State<LoanApprovalStatus> {
                                       if (result == true && mounted) {
                                         final bool result2 =
                                             await _showPdfDialog(
-                                                context, widget.agencyPdfUrl);
+                                                context, widget.promisePdfUrl);
                                         if (result2 == true && mounted) {
                                           context
                                               .read<LoanApprovalStatusBloc>()

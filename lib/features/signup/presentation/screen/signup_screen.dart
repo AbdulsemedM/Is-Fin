@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:ifb_loan/app/app_button.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
@@ -78,14 +79,15 @@ class _SignupScreenState extends State<SignupScreen> {
               //         height: ScreenConfig.screenHeight * 0.12,
               //         child: Image.asset("assets/images/ifb2.png"))),
               SizedBox(height: ScreenConfig.screenHeight * 0.02),
-              Text("Signup", style: Theme.of(context).textTheme.displayLarge),
+              Text("Signup".tr,
+                  style: Theme.of(context).textTheme.displayLarge),
               const SizedBox(
                 height: 10,
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                    "Enter your details below to create your account and get started",
+                    "Enter your details below to create your account and get started".tr,
                     textAlign: TextAlign.center,
                     style: Theme.of(context)
                         .textTheme
@@ -104,7 +106,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               padding:
                                   const EdgeInsets.symmetric(vertical: 8.0),
                               child: Text(
-                                "Full Name",
+                                "Full Name".tr,
                                 style: Theme.of(context)
                                     .textTheme
                                     .displaySmall
