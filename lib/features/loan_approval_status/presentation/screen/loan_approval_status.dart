@@ -208,7 +208,7 @@ class _LoanApprovalStatusState extends State<LoanApprovalStatus> {
                                           return AlertDialog(
                                             title: const Text("Confirmation"),
                                             content: const Text(
-                                                "Are you sure you want to resubmit the offer?"),
+                                                "Are you sure you want to resubmit your new offer?"),
                                             actions: [
                                               TextButton(
                                                   onPressed: () =>
