@@ -81,10 +81,7 @@ class KycDataProvider {
       final response =
           await apiProvider.postRequest("/api/kyc/businessInfo", body);
       return response.body;
-      // return "body";
     } catch (e) {
-      // print("here is the response");
-      // print(e.toString());
       throw e.toString();
     }
   }
