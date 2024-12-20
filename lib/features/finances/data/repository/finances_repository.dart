@@ -17,6 +17,7 @@ class FinancesRepository {
         final loan = (data['response'] as List)
             .map((myLoan) => ActiveLoanModel.fromMap(myLoan))
             .toList();
+        print(loan);
         return loan;
       } else {
         throw 'Invalid data format';

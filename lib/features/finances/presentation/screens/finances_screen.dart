@@ -195,13 +195,29 @@ class _FinancesScreenState extends State<FinancesScreen> {
                           final loan = myActiveLoans[index];
                           return GestureDetector(
                             onTap: () {
+                              loan.id;
+                              loan.name;
+                              loan.sector;
+                              loan.totalPayableAmount;
+                              loan.productQuantity;
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          LoanRepaymentScreen()));
+                                      builder: (context) => LoanRepaymentScreen(
+                                          penalty: loan.penaltyAmount,
+                                          outStandingAmount:
+                                              loan.outstandingAmount,
+                                          name: loan.name,
+                                          id: loan.id,
+                                          sector: loan.sector,
+                                          totalPayableAmount:
+                                              loan.totalPayableAmount,
+                                          productQuantity:
+                                              loan.productQuantity)));
                             },
                             child: LoanCard(
+                              penalty: loan.penaltyAmount,
+                              outStandingAmount: loan.outstandingAmount,
                               loanTitle: loan.name, // Dynamic title
                               loanDescription:
                                   loan.productQuantity, // Dynamic description

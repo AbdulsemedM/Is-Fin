@@ -233,7 +233,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                    'Complete your KYC to achieve a good credit score. A verified KYC helps improve your financial profile!',
+                    kycStatus == "null" ||
+                            kycStatus == "Not Filled" ||
+                            kycStatus == "IN_PROGRESS"
+                        ? 'Complete your KYC to achieve a good credit score. A verified KYC helps improve your financial profile!'
+                        : 'Your KYC is verified. A verified KYC helps improve your financial profile!',
                     textAlign: TextAlign.center,
                     style: Theme.of(context)
                         .textTheme

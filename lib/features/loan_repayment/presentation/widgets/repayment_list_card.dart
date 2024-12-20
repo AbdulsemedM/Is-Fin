@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class PaymentCard extends StatelessWidget {
-  final int roundNumber;
+  // final int roundNumber;
   final String date;
   final String status;
   final Color statusColor;
@@ -10,7 +10,7 @@ class PaymentCard extends StatelessWidget {
 
   const PaymentCard({
     super.key,
-    required this.roundNumber,
+    // required this.roundNumber,
     required this.date,
     required this.status,
     required this.statusColor,
@@ -34,13 +34,13 @@ class PaymentCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                'Round $roundNumber',
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16.0,
-                ),
-              ),
+              // Text(
+              //   'Round $roundNumber',
+              //   style: const TextStyle(
+              //     fontWeight: FontWeight.bold,
+              //     fontSize: 16.0,
+              //   ),
+              // ),
               Text(
                 status,
                 style: TextStyle(

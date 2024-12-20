@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class LoanCard extends StatelessWidget {
   final String loanTitle;
@@ -8,6 +9,8 @@ class LoanCard extends StatelessWidget {
   final Color backgroundColor;
   final String currency;
   final Widget image;
+  final String penalty;
+  final String outStandingAmount;
 
   const LoanCard({
     super.key,
@@ -18,6 +21,8 @@ class LoanCard extends StatelessWidget {
     required this.backgroundColor,
     this.currency = 'ETB',
     required this.image,
+    required this.penalty,
+    required this.outStandingAmount,
   });
 
   @override
@@ -38,17 +43,15 @@ class LoanCard extends StatelessWidget {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              loanTitle,
-              style: const TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
-            ),
+            Text(loanTitle,
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                )),
             const SizedBox(height: 4),
             Text(
-              loanDescription,
+              "Quantity: ${NumberFormat('#,###').format(double.parse(loanDescription))}",
               style: TextStyle(
                 fontSize: 14,
                 color: Colors.grey[700],
@@ -56,7 +59,25 @@ class LoanCard extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             Text(
-              '${amount} $currency',
+              '${NumberFormat('#,###.##').format(double.parse(amount))} $currency',
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              'As of today: ${NumberFormat('#,###.##').format(double.parse(outStandingAmount))} ETB',
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              'Penalty: ${NumberFormat('#,###.##').format(double.parse(penalty))} ETB',
               style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
