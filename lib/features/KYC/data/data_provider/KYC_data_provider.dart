@@ -94,12 +94,8 @@ class KycDataProvider {
       final apiProvider = ProviderSetup.getApiProvider(ApiConstants.baseUrl);
       final response = await apiProvider.postRequest(
           "/api/kyc/account/accountLinkReq", body);
-      // print(response.body);
       return response.body;
-      // return "body";
     } catch (e) {
-      // print("here is the response");
-      // print(e.toString());
       throw e.toString();
     }
   }
