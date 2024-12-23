@@ -181,8 +181,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 );
               } else if (state is CreditScoreFetchedFailure) {
-                return Center(
-                  child: Text(state.errorMessage),
+                return const Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text("Something went wrong"),
+                  ),
                 );
               } else if (state is CreditScoreFetchedLoading) {
                 return const Center(
