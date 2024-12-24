@@ -6,6 +6,7 @@ import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
 import 'package:ifb_loan/app/utils/dialog_utils.dart';
 import 'package:ifb_loan/features/signup/bloc/signup_bloc.dart';
+import 'package:ifb_loan/features/signup/presentation/screen/signup_otp.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -36,18 +37,25 @@ class _SignupScreenState extends State<SignupScreen> {
           listener: (context, state) {
             // print("all the states");
             // print(state);
-            if (state is SignupLoading) {
+            if (state is OtpSentLoading) {
               setState(() {
                 loading = true;
               });
-            } else if (state is SignupSuccess) {
+            } else if (state is OtpSentSuccess) {
               setState(() {
                 loading = false;
               });
-              displaySnack(
-                  context, "Account created successfully", Colors.black);
-              Navigator.pop(context); // Navigate back on success
-            } else if (state is SignupFailure) {
+              displaySnack(context, "Fill the OTP sent to your phone number",
+                  Colors.black);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => SignupOtp(
+                          name: fullNameController.text,
+                          phoneNumber: phoneNumberController.text,
+                          password: passwordController
+                              .text))); // Navigate back on success
+            } else if (state is OtpSentFailure) {
               setState(() {
                 loading = false;
               });
@@ -87,7 +95,8 @@ class _SignupScreenState extends State<SignupScreen> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                    "Enter your details below to create your account and get started".tr,
+                    "Enter your details below to create your account and get started"
+                        .tr,
                     textAlign: TextAlign.center,
                     style: Theme.of(context)
                         .textTheme
@@ -291,12 +300,16 @@ class _SignupScreenState extends State<SignupScreen> {
                               ? () {} // Disable button when loading is true
                               : () {
                                   if (myKey.currentState!.validate()) {
-                                    context.read<SignupBloc>().add(SignupSent(
-                                          fullName: fullNameController.text,
+                                    // context.read<SignupBloc>().add(SignupSent(
+                                    //       fullName: fullNameController.text,
+                                    //       phoneNumber:
+                                    //           phoneNumberController.text,
+                                    //       password: passwordController.text,
+                                    //       // email: emailController.text,
+                                    //     ));
+                                    context.read<SignupBloc>().add(SendOtp(
                                           phoneNumber:
                                               phoneNumberController.text,
-                                          password: passwordController.text,
-                                          // email: emailController.text,
                                         ));
                                   }
                                 },

@@ -94,7 +94,7 @@ class _OverallLoanListState extends State<OverallLoanList> {
                             productQuantity: loan.productQuantity,
                           ),
                         ),
-                      );
+                      ).then((value) => fetchLoans());
                     }
                   },
                   child: Padding(

@@ -211,19 +211,21 @@ class _FinancesScreenState extends State<FinancesScreen> {
                               loan.totalPayableAmount;
                               loan.productQuantity;
                               Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => LoanRepaymentScreen(
-                                          penalty: loan.penaltyAmount,
-                                          outStandingAmount:
-                                              loan.outstandingAmount,
-                                          name: loan.name,
-                                          id: loan.id,
-                                          sector: loan.sector,
-                                          totalPayableAmount:
-                                              loan.totalPayableAmount,
-                                          productQuantity:
-                                              loan.productQuantity)));
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              LoanRepaymentScreen(
+                                                  penalty: loan.penaltyAmount,
+                                                  outStandingAmount:
+                                                      loan.outstandingAmount,
+                                                  name: loan.name,
+                                                  id: loan.id,
+                                                  sector: loan.sector,
+                                                  totalPayableAmount:
+                                                      loan.totalPayableAmount,
+                                                  productQuantity:
+                                                      loan.productQuantity)))
+                                  .then((value) => fetchLoans());
                             },
                             child: LoanCard(
                               penalty: loan.penaltyAmount,

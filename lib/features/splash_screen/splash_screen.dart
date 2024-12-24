@@ -94,7 +94,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 15.0),
                       child: Text(
-                        "RIZQ",
+                        "Michu Mizan",
                         style: Theme.of(context)
                             .textTheme
                             .displayLarge

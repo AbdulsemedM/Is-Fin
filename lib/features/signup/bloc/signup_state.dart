@@ -18,3 +18,17 @@ final class SignupFailure extends SignupState {
 
   SignupFailure(this.errorMessage);
 }
+
+final class OtpSentLoading extends SignupState {}
+
+final class OtpSentSuccess extends SignupState {
+  final String message;
+
+  OtpSentSuccess(this.message);
+}
+
+final class OtpSentFailure extends SignupState {
+  final String errorMessage;
+
+  OtpSentFailure(this.errorMessage);
+}

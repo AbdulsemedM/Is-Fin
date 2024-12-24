@@ -50,6 +50,7 @@ class _LoanListScreenState extends State<LoanListScreen> {
           } else if (state is LoanApprovalListFetchedSuccess) {
             setState(() {
               _loanList = state.productList;
+              _loanList.sort((a, b) => b.requestedAt.compareTo(a.requestedAt));
               isLoading = false;
             });
           } else if (state is LoanApprovalListFetchedFailure) {

@@ -40,6 +40,8 @@ class _ProviderLoanListScreenState extends State<ProviderLoanListScreen> {
         } else if (state is ProviderLoanFormListFetchedSuccess) {
           setState(() {
             loanApplications = state.productList;
+            loanApplications
+                .sort((a, b) => b.requestedAt.compareTo(a.requestedAt));
             // print("loanApplications.length");
             // print(loanApplications.length);
             isLoading = false;

@@ -104,7 +104,12 @@ class _LoanRepaymentScreenState extends State<LoanRepaymentScreen> {
                             loanId: widget.id,
                           ),
                         ),
-                      );
+                      ).then((value) {
+                        print('value');
+                        context
+                            .read<LoanRepaymentBloc>()
+                            .add(GetRepaymentHistoryEvent());
+                      });
                     },
                     buttonText: Text("Pay",
                         style: Theme.of(context)
@@ -137,11 +142,14 @@ class _LoanRepaymentScreenState extends State<LoanRepaymentScreen> {
                           child: Text("No repayment history found"));
                     }
                     return SizedBox(
-                      height: ScreenConfig.screenHeight * 0.7,
+                      height: ScreenConfig.screenHeight * 0.55,
                       child: ListView.builder(
                         itemCount: state.repaymentHistory.length,
                         itemBuilder: (context, index) {
-                          final payment = state.repaymentHistory[index];
+                          var payments = List.from(state.repaymentHistory)
+                            ..sort((a, b) => b.paymentDate.compareTo(a.paymentDate));
+                          final payment = payments[index];
+
                           return PaymentCard(
                             transactionId: payment.transactionId,
                             date: payment.paymentDate,

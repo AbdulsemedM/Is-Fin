@@ -85,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Image.asset("assets/images/rizq4.png"))),
               SizedBox(height: ScreenConfig.screenHeight * 0.02),
               Text(
-                "RIZQ Financing",
+                "Michu Mizan",
                 style: Theme.of(context)
                     .textTheme
                     .displayLarge

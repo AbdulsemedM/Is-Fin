@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ifb_loan/app/utils/app_colors.dart';
+// import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
 import 'package:ifb_loan/app/utils/dialog_utils.dart';
 import 'package:ifb_loan/configuration/phone_number_manager.dart';
@@ -14,7 +14,7 @@ import 'package:ifb_loan/features/home/presentation/widgets/slider_widget.dart';
 // import 'package:ifb_loan/features/home/presentation/widgets/balance.dart';
 import 'package:ifb_loan/features/loan_application/presentation/screen/loan_application_screen.dart';
 import 'package:ifb_loan/features/provider_loan_form/presentation/screen/provider_loan_list_screen.dart';
-import 'package:ifb_loan/features/settings/presentation/screens/settings_screen.dart';
+// import 'package:ifb_loan/features/settings/presentation/screens/settings_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -26,7 +26,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   String name = "";
   String kycStatus = "null";
-  String score = '0';
   UserManager userManager = UserManager();
   @override
   void initState() {
@@ -124,21 +123,21 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const SettingsScreen()));
-                  },
-                  child: const CircleAvatar(
-                    radius: 25,
-                    backgroundColor: AppColors.primaryColor,
-                    child: Center(
-                      child: Icon(Icons.person),
-                    ),
-                  ),
-                )
+                // GestureDetector(
+                //   onTap: () {
+                //     Navigator.push(
+                //         context,
+                //         MaterialPageRoute(
+                //             builder: (context) => const SettingsScreen()));
+                //   },
+                //   child: const CircleAvatar(
+                //     radius: 25,
+                //     backgroundColor: AppColors.primaryColor,
+                //     child: Center(
+                //       child: Icon(Icons.person),
+                //     ),
+                //   ),
+                // )
               ],
             ),
           ),
@@ -171,9 +170,6 @@ class _HomeScreenState extends State<HomeScreen> {
           BlocBuilder<HomeBloc, HomeState>(
             builder: (context, state) {
               if (state is CreditScoreFetchedSuccess) {
-                // setState(() {
-                score = state.score;
-                // });
                 return SizedBox(
                   height: 250,
                   child: MultipleRangeGaugeWidget(
@@ -195,59 +191,69 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 );
               }
-              return SizedBox.shrink(); // Default empty state
+              return const SizedBox.shrink(); // Default empty state
             },
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.1),
-                  spreadRadius: 1,
-                  blurRadius: 5,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-            ),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    _buildLegendItem(context, 'Very Poor', Colors.red, '0-170'),
-                    _buildLegendItem(context, 'Poor', Colors.orange, '171-340'),
-                    _buildLegendItem(
-                        context, 'Average', Colors.yellow, '341-510'),
-                    _buildLegendItem(
-                        context, 'Good', Colors.lightGreen, '511-680'),
-                    _buildLegendItem(
-                        context, 'Excellent', Colors.green, '681-850'),
+          BlocBuilder<HomeBloc, HomeState>(
+            builder: (context, state) {
+              final score =
+                  state is CreditScoreFetchedSuccess ? state.score : '0';
+
+              return Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.1),
+                      spreadRadius: 1,
+                      blurRadius: 5,
+                      offset: const Offset(0, 2),
+                    ),
                   ],
                 ),
-                const SizedBox(height: 12),
-                Text(
-                  'Your Credit Score:  $score',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        _buildLegendItem(
+                            context, 'Very Poor', Colors.red, '0-170'),
+                        _buildLegendItem(
+                            context, 'Poor', Colors.orange, '171-340'),
+                        _buildLegendItem(
+                            context, 'Average', Colors.yellow, '341-510'),
+                        _buildLegendItem(
+                            context, 'Good', Colors.lightGreen, '511-680'),
+                        _buildLegendItem(
+                            context, 'Excellent', Colors.green, '681-850'),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      'Your Credit Score: $score',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                        kycStatus == "null" ||
+                                kycStatus == "Not Filled" ||
+                                kycStatus == "IN_PROGRESS"
+                            ? 'Complete your KYC to achieve a good credit score. A verified KYC helps improve your financial profile!'
+                            : 'Your KYC is verified. A verified KYC helps improve your financial profile!',
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.copyWith(color: Colors.grey[600])),
+                  ],
                 ),
-                const SizedBox(height: 8),
-                Text(
-                    kycStatus == "null" ||
-                            kycStatus == "Not Filled" ||
-                            kycStatus == "IN_PROGRESS"
-                        ? 'Complete your KYC to achieve a good credit score. A verified KYC helps improve your financial profile!'
-                        : 'Your KYC is verified. A verified KYC helps improve your financial profile!',
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium
-                        ?.copyWith(color: Colors.grey[600])),
-              ],
-            ),
+              );
+            },
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 14.0),

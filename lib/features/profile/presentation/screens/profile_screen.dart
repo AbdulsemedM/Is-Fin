@@ -260,8 +260,8 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
                   ),
                   const SizedBox(height: 10),
                   const LoanStatusCard(
-                    completedLoans: 13,
-                    pendingLoans: 2,
+                    completedLoans: 0,
+                    pendingLoans: 0,
                     failedLoans: 0,
                   ),
                   Padding(

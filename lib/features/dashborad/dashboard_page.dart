@@ -6,8 +6,8 @@ import 'package:ifb_loan/features/finances/presentation/screens/finances_screen.
 import 'package:ifb_loan/features/home/presentation/screens/home_screen.dart';
 import 'package:ifb_loan/features/login/presentation/screen/login_screen.dart';
 import 'package:ifb_loan/features/profile/presentation/screens/profile_screen.dart';
-import 'package:ifb_loan/features/revenue/presentaion/screen/revenue_calculator_screen.dart';
-import 'package:ifb_loan/features/revenue/presentaion/screen/revenue_screen.dart';
+// import 'package:ifb_loan/features/revenue/presentaion/screen/revenue_calculator_screen.dart';
+// import 'package:ifb_loan/features/revenue/presentaion/screen/revenue_screen.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -33,7 +33,7 @@ class _DashboardPageState extends State<DashboardPage> {
   List<Widget> buildScreens() => [
         const HomeScreen(),
         const FinancesScreen(),
-        const RevenueScreen(),
+        // const RevenueScreen(),
         const ProfileScreen()
       ];
   @override
@@ -62,31 +62,31 @@ class _DashboardPageState extends State<DashboardPage> {
               icon: const Icon(Icons.description_outlined),
               title: const Text("Finances"),
             ),
-            SalomonBottomBarItem(
-              icon: const Icon(Icons.calculate_outlined),
-              title: const Text("Revenue"),
-            ),
+            // SalomonBottomBarItem(
+            //   icon: const Icon(Icons.calculate_outlined),
+            //   title: const Text("Revenue"),
+            // ),
             SalomonBottomBarItem(
               icon: const Icon(Icons.person),
               title: const Text("Profile"),
             ),
           ],
         ),
-        floatingActionButton: currentIndex == 2
-            ? FloatingActionButton(
-                backgroundColor: AppColors.primaryDarkColor,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          const RevenueCalculatorScreen(), // Replace with your RevenueCalculatorScreen
-                    ),
-                  );
-                },
-                child: const Icon(Icons.add),
-              )
-            : null,
+        // floatingActionButton: currentIndex == 2
+        //     ? FloatingActionButton(
+        //         backgroundColor: AppColors.primaryDarkColor,
+        //         onPressed: () {
+        //           Navigator.push(
+        //             context,
+        //             MaterialPageRoute(
+        //               builder: (context) =>
+        //                   const RevenueCalculatorScreen(), // Replace with your RevenueCalculatorScreen
+        //             ),
+        //           );
+        //         },
+        //         child: const Icon(Icons.add),
+        //       )
+        //     : null,
       ),
     );
   }

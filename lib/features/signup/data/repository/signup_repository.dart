@@ -9,10 +9,10 @@ class SignupRepository {
   SignupRepository(this.signupDataProvider);
 
   Future<SignupModel> sendSignup(String fullName, String phoneNumber,
-      String password, String? email) async {
+      String password, String otp, String? email) async {
     try {
       final signupData = await signupDataProvider.sendSignup(
-          fullName, phoneNumber, password, email);
+          fullName, phoneNumber, password, otp, email);
 
       final data = jsonDecode(signupData);
 
@@ -21,6 +21,21 @@ class SignupRepository {
       }
 
       return SignupModel.fromMap(data['response']);
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  Future<String> sendOtp(String phoneNumber) async {
+    try {
+      final signupData = await signupDataProvider.sendOtp(phoneNumber);
+      final data = jsonDecode(signupData);
+
+      if (data['httpStatus'] != 200) {
+        throw data['message'];
+      }
+
+      return data['message'];
     } catch (e) {
       throw e.toString();
     }
