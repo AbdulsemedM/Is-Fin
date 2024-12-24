@@ -19,6 +19,7 @@ class LoanListScreen extends StatefulWidget {
 class _LoanListScreenState extends State<LoanListScreen> {
   final _selectedSegment = ValueNotifier('new');
   List<StatusProductListModel> _loanList = [];
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -42,13 +43,20 @@ class _LoanListScreenState extends State<LoanListScreen> {
       body: BlocListener<LoanApprovalStatusBloc, LoanApprovalStatusState>(
         listener: (context, state) {
           if (state is LoanApprovalListFetchedLoading) {
+            setState(() {
+              isLoading = true;
+            });
             // Show loading indicator if needed
           } else if (state is LoanApprovalListFetchedSuccess) {
             setState(() {
               _loanList = state.productList;
+              isLoading = false;
             });
           } else if (state is LoanApprovalListFetchedFailure) {
             // Show error message
+            setState(() {
+              isLoading = false;
+            });
             displaySnack(context, state.errorMessage, Colors.red);
           }
         },
@@ -84,26 +92,31 @@ class _LoanListScreenState extends State<LoanListScreen> {
                       },
                     ),
                     const SizedBox(height: 20),
-                    ValueListenableBuilder<String>(
-                      valueListenable: _selectedSegment,
-                      builder: (_, selectedSegment, __) {
-                        if (selectedSegment == 'new') {
-                          return NewLoanApplications(
-                            loanformList: _loanList,
-                          );
-                        } else if (selectedSegment == 'all') {
-                          return AllLoanApplications(
-                            loanformList: _loanList,
-                          );
-                        } else if (selectedSegment == 'approved') {
-                          return ApprovedLoanApplicatins(
-                            loanformList: _loanList,
-                          );
-                        }
-                        return const SizedBox
-                            .shrink(); // Empty widget if no match
-                      },
-                    ),
+                    if (isLoading)
+                      const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    else
+                      ValueListenableBuilder<String>(
+                        valueListenable: _selectedSegment,
+                        builder: (_, selectedSegment, __) {
+                          if (selectedSegment == 'new') {
+                            return NewLoanApplications(
+                              loanformList: _loanList,
+                            );
+                          } else if (selectedSegment == 'all') {
+                            return AllLoanApplications(
+                              loanformList: _loanList,
+                            );
+                          } else if (selectedSegment == 'approved') {
+                            return ApprovedLoanApplicatins(
+                              loanformList: _loanList,
+                            );
+                          }
+                          return const SizedBox
+                              .shrink(); // Empty widget if no match
+                        },
+                      ),
                     // SizedBox(
                     //   height: 100,
                     //   child: ListView(

@@ -26,4 +26,18 @@ class LoanRepaymentRepository {
       throw e.toString();
     }
   }
+
+  Future<Map<String, dynamic>> makePayment(String loanId, String amount) async {
+    try {
+      final response =
+          await loanRepaymentDataProvider.makePayment(loanId, amount);
+      final data = jsonDecode(response);
+      if (data['httpStatus'] != 201) {
+        throw data['message'];
+      }
+      return data['response'];
+    } catch (e) {
+      throw e.toString();
+    }
+  }
 }

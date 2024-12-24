@@ -5,8 +5,9 @@ import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
 import 'package:ifb_loan/features/finances/presentation/widgets/loan_display_card.dart';
 import 'package:ifb_loan/features/loan_repayment/bloc/loan_repayment_bloc.dart';
+import 'package:ifb_loan/features/loan_repayment/presentation/screen/payment_page.dart';
 import 'package:ifb_loan/features/loan_repayment/presentation/widgets/repayment_list_card.dart';
-import 'package:ifb_loan/features/repayment/presentation/screen/reciept_screen.dart';
+// import 'package:ifb_loan/features/repayment/presentation/screen/reciept_screen.dart';
 import 'package:intl/intl.dart';
 
 class LoanRepaymentScreen extends StatefulWidget {
@@ -54,18 +55,18 @@ class _LoanRepaymentScreenState extends State<LoanRepaymentScreen> {
             children: [
               GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ReceiptPage(
-                        transactionId:
-                            'TXN123', // Replace with actual transaction ID
-                        customerName:
-                            'John Doe', // Replace with actual customer name
-                        amount: 199.99, // Replace with actual amount
-                      ),
-                    ),
-                  );
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => const ReceiptPage(
+                  //       transactionId:
+                  //           'TXN123', // Replace with actual transaction ID
+                  //       customerName:
+                  //           'John Doe', // Replace with actual customer name
+                  //       amount: 199.99, // Replace with actual amount
+                  //     ),
+                  //   ),
+                  // );
                 },
                 child: LoanCard(
                   penalty: widget.penalty,
@@ -95,7 +96,16 @@ class _LoanRepaymentScreenState extends State<LoanRepaymentScreen> {
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 child: MyButton(
                     backgroundColor: AppColors.primaryDarkColor,
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PaymentPage(
+                            loanId: widget.id,
+                          ),
+                        ),
+                      );
+                    },
                     buttonText: Text("Pay",
                         style: Theme.of(context)
                             .textTheme
@@ -133,7 +143,7 @@ class _LoanRepaymentScreenState extends State<LoanRepaymentScreen> {
                         itemBuilder: (context, index) {
                           final payment = state.repaymentHistory[index];
                           return PaymentCard(
-                            // roundNumber: payment.round,
+                            transactionId: payment.transactionId,
                             date: payment.paymentDate,
                             status: "Paid",
                             statusColor: Colors.green,

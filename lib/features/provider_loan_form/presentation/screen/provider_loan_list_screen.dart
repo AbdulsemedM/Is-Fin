@@ -92,46 +92,49 @@ class _ProviderLoanListScreenState extends State<ProviderLoanListScreen> {
                             },
                           ),
                           const SizedBox(height: 20),
-                          ValueListenableBuilder<String>(
-                            valueListenable: _selectedSegment,
-                            builder: (_, selectedSegment, __) {
-                              List<StatusProductListModel> filteredList = [];
-                              if (selectedSegment == 'new') {
-                                filteredList = loanApplications
-                                    .where((app) => app.status == 'PENDING')
-                                    .toList();
-                                print(filteredList.length);
-                              } else if (selectedSegment == 'all') {
-                                filteredList = loanApplications;
-                              } else if (selectedSegment == 'approved') {
-                                filteredList = loanApplications
-                                    .where((app) => app.status == 'PENDING')
-                                    .toList();
-                              }
+                          if (isLoading)
+                            const Center(child: CircularProgressIndicator())
+                          else
+                            ValueListenableBuilder<String>(
+                              valueListenable: _selectedSegment,
+                              builder: (_, selectedSegment, __) {
+                                List<StatusProductListModel> filteredList = [];
+                                if (selectedSegment == 'new') {
+                                  filteredList = loanApplications
+                                      .where((app) => app.status == 'PENDING')
+                                      .toList();
+                                  print(filteredList.length);
+                                } else if (selectedSegment == 'all') {
+                                  filteredList = loanApplications;
+                                } else if (selectedSegment == 'approved') {
+                                  filteredList = loanApplications
+                                      .where((app) => app.status == 'PENDING')
+                                      .toList();
+                                }
 
-                              // if (filteredList.isEmpty) {
-                              //   return Center(
-                              //     child: Text(
-                              //       "No applications found",
-                              //       style:
-                              //           Theme.of(context).textTheme.bodyLarge,
-                              //     ),
-                              //   );
-                              // }
+                                // if (filteredList.isEmpty) {
+                                //   return Center(
+                                //     child: Text(
+                                //       "No applications found",
+                                //       style:
+                                //           Theme.of(context).textTheme.bodyLarge,
+                                //     ),
+                                //   );
+                                // }
 
-                              if (selectedSegment == 'new') {
-                                return NewApplications(
-                                    loanformList: loanApplications);
-                              } else if (selectedSegment == 'all') {
-                                return AllApplications(
-                                    loanformList: loanApplications);
-                              } else if (selectedSegment == 'approved') {
-                                return ApprovedApplicatins(
-                                    loanformList: loanApplications);
-                              }
-                              return const SizedBox.shrink();
-                            },
-                          ),
+                                if (selectedSegment == 'new') {
+                                  return NewApplications(
+                                      loanformList: loanApplications);
+                                } else if (selectedSegment == 'all') {
+                                  return AllApplications(
+                                      loanformList: loanApplications);
+                                } else if (selectedSegment == 'approved') {
+                                  return ApprovedApplicatins(
+                                      loanformList: loanApplications);
+                                }
+                                return const SizedBox.shrink();
+                              },
+                            ),
                         ],
                       ),
                     ],

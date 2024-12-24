@@ -16,3 +16,20 @@ final class LoanRepaymentFailure extends LoanRepaymentState {
   final String errorMessage;
   LoanRepaymentFailure(this.errorMessage);
 }
+
+final class LoanRepaymentPaymentLoading extends LoanRepaymentState {}
+
+final class LoanRepaymentPaymentSuccess extends LoanRepaymentState {
+  final String transactionId;
+  final String customerName;
+  final String amount;
+  LoanRepaymentPaymentSuccess(
+      {required this.transactionId,
+      required this.customerName,
+      required this.amount});
+}
+
+final class LoanRepaymentPaymentFailure extends LoanRepaymentState {
+  final String errorMessage;
+  LoanRepaymentPaymentFailure(this.errorMessage);
+}

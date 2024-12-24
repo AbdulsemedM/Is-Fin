@@ -9,6 +9,7 @@ class ActiveLoanModel {
   final String totalPayableAmount;
   final String penaltyAmount;
   final String outstandingAmount;
+  final String loanStatus;
   ActiveLoanModel({
     required this.id,
     required this.name,
@@ -17,6 +18,7 @@ class ActiveLoanModel {
     required this.totalPayableAmount,
     required this.penaltyAmount,
     required this.outstandingAmount,
+    required this.loanStatus,
   });
 
   ActiveLoanModel copyWith({
@@ -27,6 +29,7 @@ class ActiveLoanModel {
     String? totalPayableAmount,
     String? penaltyAmount,
     String? outstandingAmount,
+    String? loanStatus,
   }) {
     return ActiveLoanModel(
       id: id ?? this.id,
@@ -36,6 +39,7 @@ class ActiveLoanModel {
       totalPayableAmount: totalPayableAmount ?? this.totalPayableAmount,
       penaltyAmount: penaltyAmount ?? this.penaltyAmount,
       outstandingAmount: outstandingAmount ?? this.outstandingAmount,
+      loanStatus: loanStatus ?? this.loanStatus,
     );
   }
 
@@ -48,6 +52,7 @@ class ActiveLoanModel {
       'totalPayableAmount': totalPayableAmount,
       'penaltyAmount': penaltyAmount,
       'outstandingAmount': outstandingAmount,
+      'loanStatus': loanStatus,
     };
   }
 
@@ -60,6 +65,7 @@ class ActiveLoanModel {
       totalPayableAmount: map['totalPayableAmount'] as String,
       penaltyAmount: map['penaltyAmount'] as String,
       outstandingAmount: map['outstandingAmount'] as String,
+      loanStatus: map['loanStatus'] as String,
     );
   }
 
@@ -70,7 +76,7 @@ class ActiveLoanModel {
 
   @override
   String toString() {
-    return 'ActiveLoanModel(id: $id, name: $name, sector: $sector, productQuantity: $productQuantity, totalPayableAmount: $totalPayableAmount, penaltyAmount: $penaltyAmount, outstandingAmount: $outstandingAmount)';
+    return 'ActiveLoanModel(id: $id, name: $name, sector: $sector, productQuantity: $productQuantity, totalPayableAmount: $totalPayableAmount, penaltyAmount: $penaltyAmount, outstandingAmount: $outstandingAmount, loanStatus: $loanStatus)';
   }
 
   @override
@@ -83,7 +89,8 @@ class ActiveLoanModel {
         other.productQuantity == productQuantity &&
         other.totalPayableAmount == totalPayableAmount &&
         other.penaltyAmount == penaltyAmount &&
-        other.outstandingAmount == outstandingAmount;
+        other.outstandingAmount == outstandingAmount &&
+        other.loanStatus == loanStatus;
   }
 
   @override
@@ -94,6 +101,7 @@ class ActiveLoanModel {
         productQuantity.hashCode ^
         totalPayableAmount.hashCode ^
         penaltyAmount.hashCode ^
-        outstandingAmount.hashCode;
+        outstandingAmount.hashCode ^
+        loanStatus.hashCode;
   }
 }

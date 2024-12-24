@@ -7,6 +7,7 @@ class PaymentCard extends StatelessWidget {
   final Color statusColor;
   final String amount;
   final String currency;
+  final String transactionId;
 
   const PaymentCard({
     super.key,
@@ -16,6 +17,7 @@ class PaymentCard extends StatelessWidget {
     required this.statusColor,
     required this.amount,
     required this.currency,
+    required this.transactionId,
   });
 
   @override
@@ -34,13 +36,13 @@ class PaymentCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // Text(
-              //   'Round $roundNumber',
-              //   style: const TextStyle(
-              //     fontWeight: FontWeight.bold,
-              //     fontSize: 16.0,
-              //   ),
-              // ),
+              Text(
+                transactionId,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16.0,
+                ),
+              ),
               Text(
                 status,
                 style: TextStyle(

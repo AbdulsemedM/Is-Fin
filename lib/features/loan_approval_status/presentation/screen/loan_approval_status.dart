@@ -107,13 +107,27 @@ class _LoanApprovalStatusState extends State<LoanApprovalStatus> {
           ),
         ),
         body: BlocBuilder<LoanApprovalStatusBloc, LoanApprovalStatusState>(
+          buildWhen: (previous, current) =>
+              current is OfferedProductsPriceFetchedSuccess ||
+              current is OfferedProductsPriceFetchedLoading ||
+              current is OfferedProductsPriceFetchedFailure,
           builder: (context, state) {
-            if (state is OfferedProductsPriceFetchedLoading) {
+            // Show loading only when both data fetches are in progress
+            if (state is OfferedProductsPriceFetchedLoading &&
+                murabahaCard == null) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
             }
 
+            // Show error if products fetch failed
+            if (state is OfferedProductsPriceFetchedFailure) {
+              return Center(
+                child: Text(state.errorMessage),
+              );
+            }
+
+            // Show the main content if we have products, even if murabahaCard is still loading
             if (state is OfferedProductsPriceFetchedSuccess) {
               if (originalProducts.isEmpty) {
                 originalProducts = List.from(state.productList);
@@ -317,13 +331,10 @@ class _LoanApprovalStatusState extends State<LoanApprovalStatus> {
               );
             }
 
-            if (state is OfferedProductsPriceFetchedFailure) {
-              return Center(
-                child: Text(state.errorMessage),
-              );
-            }
-
-            return const SizedBox.shrink();
+            // Fallback empty state
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           },
         ),
       ),

@@ -125,12 +125,34 @@ class _ReceiptPageState extends State<ReceiptPage> {
                     const Divider(thickness: 2),
                     _buildReceiptRow('Transaction ID:', widget.transactionId),
                     _buildReceiptRow('Customer Name:', widget.customerName),
-                    _buildReceiptRow(
-                        'Amount:', currencyFormat.format(widget.amount)),
+                    _buildReceiptRow('Amount:', ("ETB ${widget.amount}")),
                     _buildReceiptRow(
                         'Date:', DateFormat('dd/MM/yyyy HH:mm').format(_date)),
                     const Divider(thickness: 2),
                     const SizedBox(height: 20),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        padding: const EdgeInsets.all(
+                            8.0), // Add padding inside the rectangle
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              color: Colors.grey,
+                              width: 1.5), // Border color and width
+                          borderRadius: BorderRadius.circular(
+                              8), // Optional: Rounded corners
+                          color: Colors.white, // Optional: Background color
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Image.asset('assets/images/coop.png', height: 30),
+                            const SizedBox(width: 10),
+                            const Text('Bank Smarter, Live Better'),
+                          ],
+                        ),
+                      ),
+                    ),
                     Center(
                       child: Text(
                         'Thank you for your business!',

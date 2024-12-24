@@ -11,6 +11,7 @@ import 'package:ifb_loan/features/finances/presentation/widgets/loan_display_car
 import 'package:ifb_loan/features/loan_application/presentation/screen/loan_application_screen.dart';
 import 'package:ifb_loan/features/loan_approval_status/presentation/screen/loan_list_screen.dart';
 import 'package:ifb_loan/features/loan_repayment/presentation/screen/loan_repayment_screen.dart';
+import 'package:ifb_loan/features/loan_repayment/presentation/screen/overall_loan_list.dart';
 
 class FinancesScreen extends StatefulWidget {
   const FinancesScreen({super.key});
@@ -24,6 +25,7 @@ class _FinancesScreenState extends State<FinancesScreen> {
   UserManager userManager = UserManager();
   var loading = false;
   List<ActiveLoanModel> myActiveLoans = [];
+  List<ActiveLoanModel> myOverallLoans = [];
   @override
   void initState() {
     super.initState();
@@ -116,6 +118,11 @@ class _FinancesScreenState extends State<FinancesScreen> {
                                 builder: (context) =>
                                     const LoanApplicationScreen()));
                       }
+                    } else if (index == 1) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => OverallLoanList()));
                     } else if (index == 3) {
                       if (kycStatus == "null" ||
                           kycStatus == "Not Filled" ||
@@ -165,7 +172,10 @@ class _FinancesScreenState extends State<FinancesScreen> {
               });
             } else if (state is ActiveLoansFetchedSuccess) {
               setState(() {
-                myActiveLoans = state.activeLoans;
+                myOverallLoans = state.activeLoans;
+                myActiveLoans = state.activeLoans
+                    .where((element) => element.loanStatus == "ACTIVE")
+                    .toList();
                 loading = false;
               });
             } else if (state is ActiveLoansFetchedFailure) {

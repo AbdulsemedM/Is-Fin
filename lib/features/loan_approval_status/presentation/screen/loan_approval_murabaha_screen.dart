@@ -119,7 +119,7 @@ class _LoanApprovalMurabahaScreenState extends State<LoanApprovalMurabahaScreen>
           }
         },
         child: isLoading
-            ? CircularProgressIndicator()
+            ? const Center(child: CircularProgressIndicator())
             : AnimatedContainer(
                 duration: const Duration(seconds: 2),
                 curve: Curves.easeInOut,

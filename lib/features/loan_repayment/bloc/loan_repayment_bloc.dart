@@ -10,6 +10,7 @@ class LoanRepaymentBloc extends Bloc<LoanRepaymentEvent, LoanRepaymentState> {
   LoanRepaymentBloc(this.loanRepaymentRepository)
       : super(LoanRepaymentInitial()) {
     on<GetRepaymentHistoryEvent>(_onGetRepaymentHistory);
+    on<MakePaymentEvent>(_onMakePayment);
   }
 
   Future<void> _onGetRepaymentHistory(
@@ -20,6 +21,22 @@ class LoanRepaymentBloc extends Bloc<LoanRepaymentEvent, LoanRepaymentState> {
       emit(LoanRepaymentSuccess(response));
     } catch (e) {
       emit(LoanRepaymentFailure(e.toString()));
+    }
+  }
+
+  Future<void> _onMakePayment(
+      MakePaymentEvent event, Emitter<LoanRepaymentState> emit) async {
+    emit(LoanRepaymentPaymentLoading());
+    try {
+      final response =
+          await loanRepaymentRepository.makePayment(event.loanId, event.amount);
+      print(response);
+      emit(LoanRepaymentPaymentSuccess(
+          transactionId: response['transactionId'],
+          customerName: response['fullName'],
+          amount: response['amount']));
+    } catch (e) {
+      emit(LoanRepaymentPaymentFailure(e.toString()));
     }
   }
 }
