@@ -7,9 +7,10 @@ class LoanRepaymentRepository {
   final LoanRepaymentDataProvider loanRepaymentDataProvider;
   LoanRepaymentRepository(this.loanRepaymentDataProvider);
 
-  Future<List<RepaymentHistoryModel>> getRepaymentHistory() async {
+  Future<List<RepaymentHistoryModel>> getRepaymentHistory(String loanId) async {
     try {
-      final response = await loanRepaymentDataProvider.getRepaymentHistory();
+      final response =
+          await loanRepaymentDataProvider.getRepaymentHistory(loanId);
       final data = jsonDecode(response);
       if (data['httpStatus'] != 200) {
         throw data['message'];

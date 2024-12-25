@@ -118,7 +118,7 @@ class _PaymentPageState extends State<PaymentPage> {
                       print(state.transactionId);
                       context
                           .read<LoanRepaymentBloc>()
-                          .add(GetRepaymentHistoryEvent());
+                          .add(GetRepaymentHistoryEvent(loanId: widget.loanId));
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(

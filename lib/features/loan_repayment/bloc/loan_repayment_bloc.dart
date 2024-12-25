@@ -17,7 +17,8 @@ class LoanRepaymentBloc extends Bloc<LoanRepaymentEvent, LoanRepaymentState> {
       GetRepaymentHistoryEvent event, Emitter<LoanRepaymentState> emit) async {
     emit(LoanRepaymentLoading());
     try {
-      final response = await loanRepaymentRepository.getRepaymentHistory();
+      final response =
+          await loanRepaymentRepository.getRepaymentHistory(event.loanId);
       emit(LoanRepaymentSuccess(response));
     } catch (e) {
       emit(LoanRepaymentFailure(e.toString()));

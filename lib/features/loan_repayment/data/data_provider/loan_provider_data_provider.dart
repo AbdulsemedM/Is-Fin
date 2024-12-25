@@ -2,10 +2,10 @@ import 'package:ifb_loan/configuration/api_constants.dart';
 import 'package:ifb_loan/providers/provider_setup.dart';
 
 class LoanRepaymentDataProvider {
-  Future<String> getRepaymentHistory() async {
+  Future<String> getRepaymentHistory(String loanId) async {
     try {
       final apiProvider = ProviderSetup.getApiProvider(ApiConstants.baseUrl);
-      final response = await apiProvider.getRequest("/api/payment");
+      final response = await apiProvider.getRequest("/api/payment/$loanId");
       return response.body;
     } catch (e) {
       throw e.toString();

@@ -36,7 +36,9 @@ class _LoanRepaymentScreenState extends State<LoanRepaymentScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<LoanRepaymentBloc>().add(GetRepaymentHistoryEvent());
+    context
+        .read<LoanRepaymentBloc>()
+        .add(GetRepaymentHistoryEvent(loanId: widget.id));
   }
 
   @override
@@ -108,7 +110,7 @@ class _LoanRepaymentScreenState extends State<LoanRepaymentScreen> {
                         print('value');
                         context
                             .read<LoanRepaymentBloc>()
-                            .add(GetRepaymentHistoryEvent());
+                            .add(GetRepaymentHistoryEvent(loanId: widget.id));
                       });
                     },
                     buttonText: Text("Pay",
@@ -147,7 +149,8 @@ class _LoanRepaymentScreenState extends State<LoanRepaymentScreen> {
                         itemCount: state.repaymentHistory.length,
                         itemBuilder: (context, index) {
                           var payments = List.from(state.repaymentHistory)
-                            ..sort((a, b) => b.paymentDate.compareTo(a.paymentDate));
+                            ..sort((a, b) =>
+                                b.paymentDate.compareTo(a.paymentDate));
                           final payment = payments[index];
 
                           return PaymentCard(
