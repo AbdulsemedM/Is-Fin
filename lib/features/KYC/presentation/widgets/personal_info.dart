@@ -71,6 +71,13 @@ class _PersonalInfoState extends State<PersonalInfo> {
     return null; // Return null if validation passes
   }
 
+  String? newValidateField(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'This field is required';
+    }
+    return null; // Return null if validation passes
+  }
+
   String? validateDropDown(String? value) {
     if (value == null || value.isEmpty) {
       return 'This field is required';
@@ -442,7 +449,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                     Expanded(
                       child: TextFormField(
                         controller: _idNoController,
-                        validator: (value) => validateField(value),
+                        validator: (value) => newValidateField(value),
                         decoration: InputDecoration(
                           labelText: 'ID. No.',
                           filled: true,
@@ -593,7 +600,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                           Expanded(
                             child: TextFormField(
                               controller: _sIdNoController,
-                              validator: (value) => validateField(value),
+                              validator: (value) => newValidateField(value),
                               decoration: InputDecoration(
                                 labelText: 'ID. No.',
                                 filled: true,
@@ -697,7 +704,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                     Expanded(
                       child: TextFormField(
                         controller: _cIdNoController,
-                        validator: (value) => validateField(value),
+                        validator: (value) => newValidateField(value),
                         decoration: InputDecoration(
                           labelText: 'ID. No.',
                           filled: true,
@@ -814,7 +821,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                     Expanded(
                       child: TextFormField(
                         controller: _woredaController,
-                        validator: (value) => validateField(value),
+                        validator: (value) => newValidateField(value),
                         decoration: InputDecoration(
                           labelText: 'Woreda',
                           filled: true,
@@ -830,7 +837,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                     Expanded(
                       child: TextFormField(
                         controller: _kebeleController,
-                        validator: (value) => validateField(value),
+                        validator: (value) => newValidateField(value),
                         decoration: InputDecoration(
                           labelText: 'Kebele',
                           filled: true,

@@ -64,6 +64,15 @@ class _BusinessInfoState extends State<BusinessInfo> {
     return null; // Return null if validation passes
   }
 
+  String? newValidateField(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'This field is required';
+    } else if (value.trim().length < 1) {
+      return 'This field must be at least 1 characters long';
+    }
+    return null; // Return null if validation passes
+  }
+
   String? validateNumberField(String? value) {
     if (value == null || value.trim().isEmpty) {
       return 'This field is required';
@@ -562,7 +571,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
                     Expanded(
                       child: TextFormField(
                         controller: _startingEmployeeNoController,
-                        validator: (value) => validateField(value),
+                        validator: (value) => newValidateField(value),
                         decoration: InputDecoration(
                           labelText: 'Starting Employee No.',
                           filled: true,
@@ -578,7 +587,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
                     Expanded(
                       child: TextFormField(
                         controller: _currentEmployeeNoController,
-                        validator: (value) => validateField(value),
+                        validator: (value) => newValidateField(value),
                         decoration: InputDecoration(
                           labelText: 'Current Employee No.',
                           filled: true,
@@ -731,7 +740,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
                     Expanded(
                       child: TextFormField(
                         controller: _woredaController,
-                        validator: (value) => validateField(value),
+                        validator: (value) => newValidateField(value),
                         decoration: InputDecoration(
                           labelText: 'Woreda',
                           filled: true,
@@ -747,7 +756,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
                     Expanded(
                       child: TextFormField(
                         controller: _kebeleController,
-                        validator: (value) => validateField(value),
+                        validator: (value) => newValidateField(value),
                         decoration: InputDecoration(
                           labelText: 'Kebele',
                           filled: true,
