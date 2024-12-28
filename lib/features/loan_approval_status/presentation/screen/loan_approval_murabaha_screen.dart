@@ -6,6 +6,7 @@ import 'package:ifb_loan/app/utils/app_theme.dart';
 import 'package:ifb_loan/app/utils/dialog_utils.dart';
 import 'package:ifb_loan/features/loan_approval_status/bloc/loan_approval_status_bloc.dart';
 import 'package:ifb_loan/features/loan_approval_status/presentation/widgets/pdf_dialog.dart';
+import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 
 class LoanApprovalMurabahaScreen extends StatefulWidget {
@@ -198,7 +199,8 @@ class _LoanApprovalMurabahaScreenState extends State<LoanApprovalMurabahaScreen>
                     const TextSpan(
                         text: "The total price as the owner gives is "),
                     TextSpan(
-                      text: "ETB $originalPrice",
+                      text:
+                          "ETB ${NumberFormat('#,###.##').format(double.parse(originalPrice))}",
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.blue,
@@ -245,19 +247,189 @@ class _LoanApprovalMurabahaScreenState extends State<LoanApprovalMurabahaScreen>
             onPressed: isLoading
                 ? () {}
                 : () async {
-                    bool result = await _showPdfDialog(
-                        context, widget.murabahaAgreementDocument);
-                    if (result && mounted) {
-                      // Store context in local variable
-                      final currentContext = context;
-                      currentContext.read<LoanApprovalStatusBloc>().add(
-                          AcceptMurabahaOffer(
-                              id: widget.id, status: "APPROVED"));
-                    } else if (result == false) {
-                      final currentContext = context;
-                      currentContext.read<LoanApprovalStatusBloc>().add(
-                          AcceptMurabahaOffer(
-                              id: widget.id, status: "REJECTED"));
+                    bool accept = await showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        title: Column(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                color: Colors.blue.shade50,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                Icons.shopping_bag_rounded,
+                                size: 40,
+                                color: Colors.blue.shade700,
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            Text(
+                              "Pick your product",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.blue.shade700,
+                                  ),
+                            ),
+                          ],
+                        ),
+                        content: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(16),
+                                decoration: BoxDecoration(
+                                  color: Colors.blue.shade50,
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.store_rounded,
+                                      color: Colors.blue.shade700,
+                                    ),
+                                    const SizedBox(width: 12),
+                                    Expanded(
+                                      child: Text(
+                                        "Are you sure you are ready to pick your product from $supplierName?",
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          height: 1.5,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                              Container(
+                                padding: const EdgeInsets.all(16),
+                                decoration: BoxDecoration(
+                                  color: Colors.orange.shade50,
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.info_outline_rounded,
+                                      color: Colors.orange.shade700,
+                                    ),
+                                    const SizedBox(width: 12),
+                                    Expanded(
+                                      child: Text(
+                                        "Please ensure you are at the product pickup location and ready to sign the Murabaha agreement.",
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          height: 1.5,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        actions: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(context, false),
+                                  style: TextButton.styleFrom(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 12),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      side: BorderSide(
+                                          color: Colors.grey.shade300),
+                                    ),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.close_rounded,
+                                        color: Colors.grey.shade700,
+                                        size: 20,
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Text(
+                                        "Not Ready",
+                                        style: TextStyle(
+                                          color: Colors.grey.shade700,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: ElevatedButton(
+                                  onPressed: () => Navigator.pop(context, true),
+                                  style: ElevatedButton.styleFrom(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 12),
+                                    backgroundColor: Colors.blue.shade700,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                  ),
+                                  child: const Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.check_rounded,
+                                        color: Colors.white,
+                                        size: 20,
+                                      ),
+                                      SizedBox(width: 8),
+                                      Text(
+                                        "I'm Ready",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                        contentPadding:
+                            const EdgeInsets.fromLTRB(24, 0, 24, 24),
+                        actionsPadding:
+                            const EdgeInsets.fromLTRB(24, 0, 24, 24),
+                      ),
+                    );
+                    if (accept) {
+                      bool result = await _showPdfDialog(
+                          context, widget.murabahaAgreementDocument);
+                      if (result && mounted) {
+                        // Store context in local variable
+                        final currentContext = context;
+                        currentContext.read<LoanApprovalStatusBloc>().add(
+                            AcceptMurabahaOffer(
+                                id: widget.id, status: "APPROVED"));
+                      }
+                      // else if (result == false) {
+                      // final currentContext = context;
+                      // currentContext.read<LoanApprovalStatusBloc>().add(
+                      //     AcceptMurabahaOffer(
+                      //         id: widget.id, status: "REJECTED"));
+                      // }
                     }
                   },
             buttonText: isLoading
