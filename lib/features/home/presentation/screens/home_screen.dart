@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 // import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
 import 'package:ifb_loan/app/utils/dialog_utils.dart';
@@ -52,11 +53,11 @@ class _HomeScreenState extends State<HomeScreen> {
   String _getGreeting() {
     final hour = DateTime.now().hour;
     if (hour < 12) {
-      return "Good Morning!";
+      return "Good Morning!".tr;
     } else if (hour < 17) {
-      return "Good Afternoon!";
+      return "Good Afternoon!".tr;
     } else {
-      return "Good Evening!";
+      return "Good Evening!".tr;
     }
   }
 
@@ -74,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         const SizedBox(height: 4),
         Text(
-          label,
+          label.tr,
           style: Theme.of(context).textTheme.bodySmall,
         ),
         Text(
@@ -104,14 +105,45 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Hello $name!",
-                        style: Theme.of(context)
-                            .textTheme
-                            .displaySmall
-                            ?.copyWith(
-                                fontWeight: FontWeight.w700, fontSize: 28),
-                        overflow: TextOverflow.ellipsis,
+                      Row(
+                        children: [
+                          Expanded(
+                            child: RichText(
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: "Hello ".tr,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .displaySmall
+                                        ?.copyWith(
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 28),
+                                  ),
+                                  TextSpan(
+                                    text: name,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .displaySmall
+                                        ?.copyWith(
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 28),
+                                  ),
+                                  TextSpan(
+                                    text: " 👋",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .displaySmall
+                                        ?.copyWith(
+                                          fontSize: 24,
+                                        ),
+                                  ),
+                                ],
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
                       ),
                       Text(
                         _getGreeting(),
@@ -177,11 +209,20 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 );
               } else if (state is CreditScoreFetchedFailure) {
-                return const Center(
-                  child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text("Something went wrong"),
-                  ),
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const SizedBox(
+                      height: 250,
+                      child: MultipleRangeGaugeWidget(
+                        value: 0,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text("Something went wrong".tr),
+                    ),
+                  ],
                 );
               } else if (state is CreditScoreFetchedLoading) {
                 return const Center(
@@ -232,19 +273,35 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                     const SizedBox(height: 12),
-                    Text(
-                      'Your Credit Score: $score',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Your Credit Score: '.tr,
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium
+                              ?.copyWith(fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          score,
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium
+                              ?.copyWith(fontWeight: FontWeight.bold),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 8),
                     Text(
                         kycStatus == "null" ||
                                 kycStatus == "Not Filled" ||
-                                kycStatus == "IN_PROGRESS"
+                                kycStatus == "IN_PROGRESS" ||
+                                kycStatus == "REJECTED"
                             ? 'Complete your KYC to achieve a good credit score. A verified KYC helps improve your financial profile!'
-                            : 'Your KYC is verified. A verified KYC helps improve your financial profile!',
+                                .tr
+                            : 'Your KYC is verified. A verified KYC helps improve your financial profile!'
+                                .tr,
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
                             .textTheme
@@ -258,19 +315,21 @@ class _HomeScreenState extends State<HomeScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 14.0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 HomeIconWidget(
-                  title: 'Loan App',
+                  title: 'Loan App'.tr,
                   icon: Icons.account_balance_wallet,
                   iconColor: Colors.blue,
                   onClicked: () {
                     if (kycStatus == "null" ||
                         kycStatus == "Not Filled" ||
-                        kycStatus == "IN_PROGRESS") {
+                        kycStatus == "IN_PROGRESS" ||
+                        kycStatus == "REJECTED") {
                       displaySnack(
                           context,
-                          "Please fill KYC before going to loan applications.",
+                          "Please fill KYC before going to loan applications."
+                              .tr,
                           Colors.red);
                     } else {
                       Navigator.push(
@@ -282,8 +341,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
                 HomeIconWidget(
-                  title: 'KYC',
-                  icon: Icons.store,
+                  title: 'Verify'.tr,
+                  icon: Icons.fingerprint,
                   iconColor: Colors.orange,
                   onClicked: () {
                     Navigator.push(
@@ -296,7 +355,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
                 HomeIconWidget(
-                  title: 'Provider',
+                  title: 'Provider'.tr,
                   icon: Icons.person_add,
                   iconColor: Colors.deepOrange,
                   onClicked: () {
@@ -308,7 +367,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
                 HomeIconWidget(
-                  title: 'Provider Form',
+                  title: 'Provider Form'.tr,
                   icon: Icons.list_alt_rounded,
                   iconColor: Colors.purple,
                   onClicked: () {
@@ -330,7 +389,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ExpandableCard(
-                    title: 'Murabaha',
+                    title: 'Murabaha'.tr,
                     iconContainer: Container(
                       padding: const EdgeInsets.all(8),
                       decoration: const BoxDecoration(
@@ -341,14 +400,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: Colors.white),
                     ),
                     description:
-                        'Murabaha at Coop Bank is a Sharia-compliant financing product where the bank buys goods for customers and resells them at a disclosed profit, allowing interest-free financing in line with Islamic principles.',
+                        'Murabaha at Coop Bank is a Sharia-compliant financing product where the bank buys goods for customers and resells them at a disclosed profit, allowing interest-free financing in line with Islamic principles.'
+                            .tr,
                     onGetStarted: () {
                       // print("Get Started clicked");
                     },
                     cardColor: const Color(0xFFFAC7A6), // Custom card color
                   ),
                   ExpandableCard(
-                    title: 'Musharaka',
+                    title: 'Musharaka'.tr,
                     iconContainer: Container(
                       padding: const EdgeInsets.all(8),
                       decoration: const BoxDecoration(
@@ -359,14 +419,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: Colors.white),
                     ),
                     description:
-                        'Musharaka is a partnership-based financing method where both the bank and the customer contribute capital to a joint venture or project, sharing profits according to a pre-agreed ratio while losses are shared in proportion to their respective capital contributions, adhering to Sharia principles.',
+                        'Musharaka is a partnership-based financing method where both the bank and the customer contribute capital to a joint venture or project, sharing profits according to a pre-agreed ratio while losses are shared in proportion to their respective capital contributions, adhering to Sharia principles.'
+                            .tr,
                     onGetStarted: () {
                       // print("Get Started clicked");
                     },
                     cardColor: const Color(0xFFA6D9FA), // Custom card color
                   ),
                   ExpandableCard(
-                    title: 'Mudarabah',
+                    title: 'Mudarabah'.tr,
                     iconContainer: Container(
                       padding: const EdgeInsets.all(8),
                       decoration: const BoxDecoration(
@@ -377,7 +438,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: Colors.white),
                     ),
                     description:
-                        'Mudaraba is a profit-sharing agreement where one party (the bank) provides the capital, and the other party (the entrepreneur) manages the business, with profits shared as per a pre-agreed ratio, and losses borne solely by the capital provider in line with Islamic financing norms.',
+                        'Mudaraba is a profit-sharing agreement where one party (the bank) provides the capital, and the other party (the entrepreneur) manages the business, with profits shared as per a pre-agreed ratio, and losses borne solely by the capital provider in line with Islamic financing norms.'
+                            .tr,
                     onGetStarted: () {
                       // print("Get Started clicked");
                     },

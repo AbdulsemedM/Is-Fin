@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:ifb_loan/app/app_button.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
@@ -57,18 +58,18 @@ class _BusinessInfoState extends State<BusinessInfo> {
   BusinessInfoModel? businessData;
   String? validateField(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'This field is required';
+      return 'This field is required'.tr;
     } else if (value.trim().length < 2) {
-      return 'This field must be at least 2 characters long';
+      return 'This field must be at least 2 characters long'.tr;
     }
     return null; // Return null if validation passes
   }
 
   String? newValidateField(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'This field is required';
+      return 'This field is required'.tr;
     } else if (value.trim().length < 1) {
-      return 'This field must be at least 1 characters long';
+      return 'This field must be at least 1 characters long'.tr;
     }
     return null; // Return null if validation passes
   }
@@ -77,14 +78,14 @@ class _BusinessInfoState extends State<BusinessInfo> {
     if (value == null || value.trim().isEmpty) {
       return 'This field is required';
     } else if (!RegExp(r'^\d+$').hasMatch(value.trim())) {
-      return 'This field must contain only numbers';
+      return 'This field must contain only numbers'.tr;
     }
     return null; // Return null if validation passes
   }
 
   String? validateDropDown(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Please select a gender';
+      return 'This field is required'.tr;
     }
     return null; // Validation passed
   }
@@ -150,7 +151,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
                 loading = false;
               });
               displaySnack(
-                  context, "Business info. sent successfully", Colors.black);
+                  context, "Business info. sent successfully".tr, Colors.black);
             } else if (state is KycBusinessSentFailure) {
               setState(() {
                 loading = false;
@@ -166,8 +167,8 @@ class _BusinessInfoState extends State<BusinessInfo> {
                 _initializeTextFields();
                 loading = false;
               });
-              displaySnack(
-                  context, "Business info fetched successfully", Colors.black);
+              displaySnack(context, "Business info fetched successfully".tr,
+                  Colors.black);
             } else if (state is KycBusinessFetchedFailure) {
               setState(() {
                 loading = false;
@@ -221,22 +222,22 @@ class _BusinessInfoState extends State<BusinessInfo> {
             key: myKey,
             child: Column(
               children: [
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text("Complete all the fields below"),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("Complete all the fields below".tr),
                 ),
-                const Row(
+                Row(
                   children: [
-                    Expanded(
+                    const Expanded(
                         child: Divider(
                       color: Colors.grey, // Set the color of the divider
                       thickness: 1,
                     )),
                     Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text("Business Info."),
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text("Business Info.".tr),
                     ),
-                    Expanded(
+                    const Expanded(
                         child: Divider(
                       color: Colors.grey, // Set the color of the divider
                       thickness: 1,
@@ -250,7 +251,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
                         controller: _businessNameController,
                         validator: (value) => validateField(value),
                         decoration: InputDecoration(
-                          labelText: 'Business Name',
+                          labelText: 'Business Name'.tr,
                           filled: true,
                           fillColor: Colors.grey[200],
                           border: OutlineInputBorder(
@@ -265,7 +266,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
                       child: TextFormField(
                         controller: _websiteURLController,
                         decoration: InputDecoration(
-                          labelText: 'Website url (optional)',
+                          labelText: 'Website url (optional).tr',
                           filled: true,
                           fillColor: Colors.grey[200],
                           border: OutlineInputBorder(
@@ -285,7 +286,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
                         controller: _tinNoController,
                         validator: (value) => validateNumberField(value),
                         decoration: InputDecoration(
-                          labelText: 'Tin No.',
+                          labelText: 'Tin No.'.tr,
                           filled: true,
                           fillColor: Colors.grey[200],
                           border: OutlineInputBorder(
@@ -303,7 +304,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
                             : null,
                         validator: (value) => validateDropDown(value),
                         decoration: InputDecoration(
-                          labelText: 'Business Type',
+                          labelText: 'Business Type'.tr,
                           filled: true,
                           fillColor: Colors.grey[200],
                           border: OutlineInputBorder(
@@ -311,46 +312,46 @@ class _BusinessInfoState extends State<BusinessInfo> {
                             borderSide: BorderSide.none,
                           ),
                         ),
-                        items: const [
+                        items: [
                           DropdownMenuItem(
                             value: 'Small Business Trade',
-                            child: Text('Small Business Trade'),
+                            child: Text('Small Business Trade'.tr),
                           ),
                           DropdownMenuItem(
                             value: 'Agriculture',
-                            child: Text('Agriculture'),
+                            child: Text('Agriculture'.tr),
                           ),
                           DropdownMenuItem(
                             value: 'Manufacturing',
-                            child: Text('Manufacturing'),
+                            child: Text('Manufacturing'.tr),
                           ),
                           DropdownMenuItem(
                             value: 'Hospitality',
-                            child: Text('Hospitality'),
+                            child: Text('Hospitality'.tr),
                           ),
                           DropdownMenuItem(
                             value: 'Transport',
-                            child: Text('Transport'),
+                            child: Text('Transport'.tr),
                           ),
                           DropdownMenuItem(
                             value: 'Technology',
-                            child: Text('Technology'),
+                            child: Text('Technology'.tr),
                           ),
                           DropdownMenuItem(
                             value: 'Halal Tourism',
-                            child: Text('Halal Tourism'),
+                            child: Text('Halal Tourism'.tr),
                           ),
                           DropdownMenuItem(
                             value: 'Education',
-                            child: Text('Education'),
+                            child: Text('Education'.tr),
                           ),
                           DropdownMenuItem(
                             value: 'Building and Construction',
-                            child: Text('Building and Construction'),
+                            child: Text('Building and Construction'.tr),
                           ),
                           DropdownMenuItem(
                             value: 'Other',
-                            child: Text('Other'),
+                            child: Text('Other'.tr),
                           ),
                         ],
                         onChanged: (value) {
@@ -370,7 +371,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
                         validator: (value) => validateField(value),
                         readOnly: true, // Makes the field non-editable
                         decoration: InputDecoration(
-                          labelText: 'Year of Establishment',
+                          labelText: 'Year of Establishment'.tr,
                           filled: true,
                           fillColor: Colors.grey[200],
                           border: OutlineInputBorder(
@@ -408,7 +409,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
                             : null,
                         validator: (value) => validateDropDown(value),
                         decoration: InputDecoration(
-                          labelText: 'Ownership',
+                          labelText: 'Ownership'.tr,
                           filled: true,
                           fillColor: Colors.grey[200],
                           border: OutlineInputBorder(
@@ -416,22 +417,22 @@ class _BusinessInfoState extends State<BusinessInfo> {
                             borderSide: BorderSide.none,
                           ),
                         ),
-                        items: const [
+                        items: [
                           DropdownMenuItem(
                             value: 'Sole',
-                            child: Text('Sole'),
+                            child: Text('Sole'.tr),
                           ),
                           DropdownMenuItem(
                             value: 'Partnership',
-                            child: Text('Partnership'),
+                            child: Text('Partnership'.tr),
                           ),
                           DropdownMenuItem(
                             value: 'PLC',
-                            child: Text('PLC'),
+                            child: Text('PLC'.tr),
                           ),
                           DropdownMenuItem(
                             value: 'Cooperative',
-                            child: Text('Cooperative'),
+                            child: Text('Cooperative'.tr),
                           )
                         ],
                         onChanged: (value) {
@@ -453,7 +454,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
                             : null,
                         validator: (value) => validateDropDown(value),
                         decoration: InputDecoration(
-                          labelText: 'Finance Source',
+                          labelText: 'Finance Source'.tr,
                           filled: true,
                           fillColor: Colors.grey[200],
                           border: OutlineInputBorder(
@@ -461,22 +462,22 @@ class _BusinessInfoState extends State<BusinessInfo> {
                             borderSide: BorderSide.none,
                           ),
                         ),
-                        items: const [
+                        items: [
                           DropdownMenuItem(
                             value: 'Own',
-                            child: Text('Own'),
+                            child: Text('Own'.tr),
                           ),
                           DropdownMenuItem(
                             value: 'Family',
-                            child: Text('Family'),
+                            child: Text('Family'.tr),
                           ),
                           DropdownMenuItem(
                             value: 'Fund',
-                            child: Text('Fund'),
+                            child: Text('Fund'.tr),
                           ),
                           DropdownMenuItem(
                             value: 'Loan',
-                            child: Text('Loan'),
+                            child: Text('Loan'.tr),
                           ),
                           // DropdownMenuItem(
                           //   value: 'Inheritance',
@@ -498,7 +499,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
                             : null,
                         validator: (value) => validateDropDown(value),
                         decoration: InputDecoration(
-                          labelText: 'Business Level',
+                          labelText: 'Business Level'.tr,
                           filled: true,
                           fillColor: Colors.grey[200],
                           border: OutlineInputBorder(
@@ -506,18 +507,18 @@ class _BusinessInfoState extends State<BusinessInfo> {
                             borderSide: BorderSide.none,
                           ),
                         ),
-                        items: const [
+                        items: [
                           DropdownMenuItem(
                             value: 'Startup',
-                            child: Text('Startup'),
+                            child: Text('Startup'.tr),
                           ),
                           DropdownMenuItem(
                             value: 'Growing',
-                            child: Text('Growing'),
+                            child: Text('Growing'.tr),
                           ),
                           DropdownMenuItem(
                             value: 'Advanced',
-                            child: Text('Advanced'),
+                            child: Text('Advanced'.tr),
                           ),
                         ],
                         onChanged: (value) {
@@ -537,7 +538,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
                         controller: _startingCapitalController,
                         validator: (value) => validateNumberField(value),
                         decoration: InputDecoration(
-                          labelText: 'Starting Capital',
+                          labelText: 'Starting Capital'.tr,
                           filled: true,
                           fillColor: Colors.grey[200],
                           border: OutlineInputBorder(
@@ -553,7 +554,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
                         validator: (value) => validateNumberField(value),
                         controller: _currentCapitalController,
                         decoration: InputDecoration(
-                          labelText: 'Current Capital',
+                          labelText: 'Current Capital'.tr,
                           filled: true,
                           fillColor: Colors.grey[200],
                           border: OutlineInputBorder(
@@ -573,7 +574,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
                         controller: _startingEmployeeNoController,
                         validator: (value) => newValidateField(value),
                         decoration: InputDecoration(
-                          labelText: 'Starting Employee No.',
+                          labelText: 'Starting Employee No.'.tr,
                           filled: true,
                           fillColor: Colors.grey[200],
                           border: OutlineInputBorder(
@@ -589,7 +590,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
                         controller: _currentEmployeeNoController,
                         validator: (value) => newValidateField(value),
                         decoration: InputDecoration(
-                          labelText: 'Current Employee No.',
+                          labelText: 'Current Employee No.'.tr,
                           filled: true,
                           fillColor: Colors.grey[200],
                           border: OutlineInputBorder(
@@ -609,7 +610,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
                         controller: _monthlySalesController,
                         validator: (value) => validateField(value),
                         decoration: InputDecoration(
-                          labelText: 'Annual Income(ETB)',
+                          labelText: 'Annual Income(ETB)'.tr,
                           filled: true,
                           fillColor: Colors.grey[200],
                           border: OutlineInputBorder(
@@ -638,18 +639,18 @@ class _BusinessInfoState extends State<BusinessInfo> {
                   ],
                 ),
                 const SizedBox(height: 16),
-                const Row(
+                Row(
                   children: [
-                    Expanded(
+                    const Expanded(
                         child: Divider(
                       color: Colors.grey, // Set the color of the divider
                       thickness: 1,
                     )),
                     Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text("Business Address Info."),
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text("Business Address Info.".tr),
                     ),
-                    Expanded(
+                    const Expanded(
                         child: Divider(
                       color: Colors.grey, // Set the color of the divider
                       thickness: 1,
@@ -666,7 +667,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
                               : null,
                           validator: (value) => validateDropDown(value),
                           decoration: InputDecoration(
-                            labelText: 'Region/ District',
+                            labelText: 'Region/ District'.tr,
                             filled: true,
                             fillColor: Colors.grey[200],
                             border: OutlineInputBorder(
@@ -709,7 +710,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
                               : null,
                           validator: (value) => validateDropDown(value),
                           decoration: InputDecoration(
-                            labelText: 'Zone/ Subcity',
+                            labelText: 'Zone/ Subcity'.tr,
                             filled: true,
                             fillColor: Colors.grey[200],
                             border: OutlineInputBorder(
@@ -742,7 +743,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
                         controller: _woredaController,
                         validator: (value) => newValidateField(value),
                         decoration: InputDecoration(
-                          labelText: 'Woreda',
+                          labelText: 'Woreda'.tr,
                           filled: true,
                           fillColor: Colors.grey[200],
                           border: OutlineInputBorder(
@@ -758,7 +759,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
                         controller: _kebeleController,
                         validator: (value) => newValidateField(value),
                         decoration: InputDecoration(
-                          labelText: 'Kebele',
+                          labelText: 'Kebele'.tr,
                           filled: true,
                           fillColor: Colors.grey[200],
                           border: OutlineInputBorder(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:ifb_loan/app/app_button.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
@@ -33,7 +34,7 @@ class EmailPasswordSection extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Text(
-                  "Phone Number",
+                  "Phone Number".tr,
                   style: Theme.of(context)
                       .textTheme
                       .displaySmall
@@ -53,11 +54,11 @@ class EmailPasswordSection extends StatelessWidget {
             ),
             validator: (value) {
               if (value?.isEmpty == true) {
-                return 'Phone number is required';
+                return 'Phone number is required'.tr;
               } else if (value!.length != 10) {
-                return 'Invalid phone number format';
+                return 'Invalid phone number format'.tr;
               } else if (!value.startsWith("09")) {
-                return 'Invalid phone number format';
+                return 'Invalid phone number format'.tr;
               }
               return null;
             },
@@ -68,7 +69,7 @@ class EmailPasswordSection extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Text(
-                  "New Password",
+                  "New Password".tr,
                   style: Theme.of(context)
                       .textTheme
                       .displaySmall
@@ -88,9 +89,9 @@ class EmailPasswordSection extends StatelessWidget {
             ),
             validator: (value) {
               if (value?.isEmpty == true) {
-                return 'password is required';
+                return 'Password is required'.tr;
               } else if (value!.length < 6) {
-                return 'Password must be at least 6 characters long';
+                return 'Password must be at least 6 characters long'.tr;
               }
               return null;
             },
@@ -101,7 +102,7 @@ class EmailPasswordSection extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Text(
-                  "Confirm Password",
+                  "Confirm Password".tr,
                   style: Theme.of(context)
                       .textTheme
                       .displaySmall
@@ -121,13 +122,13 @@ class EmailPasswordSection extends StatelessWidget {
             ),
             validator: (value) {
               if (value?.isEmpty == true) {
-                return 'password is required';
+                return 'Confirm password is required'.tr;
               }
               //  else if (value!.length < 6) {
               //   return 'Password must be at least 6 characters long';
               // }
               else if (value != passwordController.text) {
-                return 'Password does not match';
+                return 'Password does not match'.tr;
               }
               return null;
             },
@@ -148,8 +149,8 @@ class EmailPasswordSection extends StatelessWidget {
                       color: AppColors.primaryColor,
                     ),
                   )
-                : const Text(
-                    "Send OTP",
+                : Text(
+                    "Send OTP".tr,
                     style: TextStyle(color: AppColors.bg1),
                   ),
           ),

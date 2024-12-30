@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:ifb_loan/app/app_button.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
@@ -29,7 +30,7 @@ class _AddBisinessPartnerScreenState extends State<AddBisinessPartnerScreen> {
   GlobalKey<FormState> myKey2 = GlobalKey();
   String? validateField(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'This field is required';
+      return 'This field is required'.tr;
     }
     return null; // Return null if validation passes
   }
@@ -39,7 +40,7 @@ class _AddBisinessPartnerScreenState extends State<AddBisinessPartnerScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Add Business Partner",
+          "Add Business Partner".tr,
           style: Theme.of(context).textTheme.displaySmall,
         ),
       ),
@@ -90,7 +91,7 @@ class _AddBisinessPartnerScreenState extends State<AddBisinessPartnerScreen> {
                     controller: _phoneNumberController,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
-                      labelText: 'Business Partne\'s Phone Number',
+                      labelText: 'Business Partne\'s Phone Number'.tr,
                       filled: true,
                       fillColor: Colors.grey[200],
                       border: OutlineInputBorder(
@@ -100,11 +101,11 @@ class _AddBisinessPartnerScreenState extends State<AddBisinessPartnerScreen> {
                     ),
                     validator: (value) {
                       if (value?.isEmpty == true) {
-                        return 'Phone number is required';
+                        return 'Phone number is required'.tr;
                       } else if (value!.length != 10) {
-                        return 'Invalid phone number format';
+                        return 'Invalid phone number format'.tr;
                       } else if (!value.startsWith("09")) {
-                        return 'Invalid phone number format';
+                        return 'Invalid phone number format'.tr;
                       }
                       return null;
                     },
@@ -134,8 +135,8 @@ class _AddBisinessPartnerScreenState extends State<AddBisinessPartnerScreen> {
                               color: AppColors.primaryColor,
                             ),
                           )
-                        : const Text(
-                            "Verify Partner",
+                        : Text(
+                            "Verify Partner".tr,
                             style: TextStyle(color: Colors.white),
                           )),
                 const Padding(
@@ -149,7 +150,7 @@ class _AddBisinessPartnerScreenState extends State<AddBisinessPartnerScreen> {
                       TextFormField(
                         controller: _partnerNameController,
                         decoration: InputDecoration(
-                          labelText: 'Partners Name',
+                          labelText: 'Partners Name'.tr,
                           filled: true,
                           enabled: false,
                           fillColor: Colors.grey[200],
@@ -165,7 +166,7 @@ class _AddBisinessPartnerScreenState extends State<AddBisinessPartnerScreen> {
                         controller: _partnerPhoneNumberController,
                         enabled: false,
                         decoration: InputDecoration(
-                          labelText: 'Partne\'s Phone Number',
+                          labelText: 'Partne\'s Phone Number'.tr,
                           filled: true,
                           fillColor: Colors.grey[200],
                           border: OutlineInputBorder(
@@ -175,11 +176,12 @@ class _AddBisinessPartnerScreenState extends State<AddBisinessPartnerScreen> {
                         ),
                         validator: (value) {
                           if (value?.isEmpty == true) {
-                            return 'Phone number is required';
+                            return 'Phone number is required'.tr;
                           } else if (value!.length < 10) {
-                            return 'Phone number should be at least 10 digits';
+                            return 'Phone number should be at least 10 digits'
+                                .tr;
                           } else if (!value.startsWith("09")) {
-                            return 'Invalid phone number format';
+                            return 'Invalid phone number format'.tr;
                           }
                           return null;
                         },
@@ -210,16 +212,17 @@ class _AddBisinessPartnerScreenState extends State<AddBisinessPartnerScreen> {
                               color: AppColors.primaryColor,
                             ),
                           )
-                        : const Text(
-                            "Submit",
-                            style: TextStyle(color: Colors.white),
+                        : Text(
+                            "Submit".tr,
+                            style: const TextStyle(color: Colors.white),
                           )),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: Text(
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.bodyLarge,
-                      "If your business partner is not registered you can invite them to join the platform by the following link or you can fill all the KYC on behalf of them by clicking the bottom button and let them join the platform and just accept the loan term and conditions"),
+                      "If your business partner is not registered you can invite them to join the platform by the following link or you can fill all the KYC on behalf of them by clicking the bottom button and let them join the platform and just accept the loan term and conditions"
+                          .tr),
                 ),
                 UrlCard(
                   url:
@@ -239,7 +242,7 @@ class _AddBisinessPartnerScreenState extends State<AddBisinessPartnerScreen> {
                             showDialog(
                               context: context,
                               builder: (context) => AlertDialog(
-                                title: const Text('Phone Number'),
+                                title: Text('Phone Number'.tr),
                                 content: SingleChildScrollView(
                                   child: ConstrainedBox(
                                     constraints: const BoxConstraints(
@@ -248,8 +251,9 @@ class _AddBisinessPartnerScreenState extends State<AddBisinessPartnerScreen> {
                                       mainAxisSize: MainAxisSize
                                           .min, // Ensures the column wraps its content
                                       children: [
-                                        const Text(
-                                          'Add the phone number of the person to be registered',
+                                        Text(
+                                          'Add the phone number of the person to be registered'
+                                              .tr,
                                         ),
                                         Form(
                                           key: myKey,
@@ -265,12 +269,15 @@ class _AddBisinessPartnerScreenState extends State<AddBisinessPartnerScreen> {
                                             ),
                                             validator: (value) {
                                               if (value?.isEmpty == true) {
-                                                return 'Phone number is required';
+                                                return 'Phone number is required'
+                                                    .tr;
                                               } else if (value!.length != 10) {
-                                                return 'Invalid phone number format';
+                                                return 'Invalid phone number format'
+                                                    .tr;
                                               } else if (!value
                                                   .startsWith("09")) {
-                                                return 'Invalid phone number format';
+                                                return 'Invalid phone number format'
+                                                    .tr;
                                               }
                                               return null;
                                             },
@@ -285,7 +292,7 @@ class _AddBisinessPartnerScreenState extends State<AddBisinessPartnerScreen> {
                                     onPressed: () {
                                       Navigator.pop(context);
                                     },
-                                    child: const Text('Close'),
+                                    child: Text('Close'.tr),
                                   ),
                                   TextButton(
                                     onPressed: () {
@@ -300,7 +307,7 @@ class _AddBisinessPartnerScreenState extends State<AddBisinessPartnerScreen> {
                                                                 .text)));
                                       }
                                     },
-                                    child: const Text('Add'),
+                                    child: Text('Add'.tr),
                                   ),
                                 ],
                               ),
@@ -315,9 +322,9 @@ class _AddBisinessPartnerScreenState extends State<AddBisinessPartnerScreen> {
                               color: AppColors.primaryColor,
                             ),
                           )
-                        : const Text(
-                            "Register your Partner",
-                            style: TextStyle(color: Colors.white),
+                        : Text(
+                            "Register your Partner".tr,
+                            style: const TextStyle(color: Colors.white),
                           )),
               ],
             ),

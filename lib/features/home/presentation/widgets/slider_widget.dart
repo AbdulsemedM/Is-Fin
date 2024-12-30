@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
 
 class ExpandableCard extends StatefulWidget {
@@ -63,7 +64,7 @@ class _ExpandableCardState extends State<ExpandableCard> {
                     _isExpanded = !_isExpanded;
                   });
                 },
-                child: Text(_isExpanded ? 'Collapse' : 'Expand'),
+                child: Text(_isExpanded ? 'Collapse'.tr : 'Expand'.tr),
               ),
               // if (_isExpanded)
               //   ElevatedButton(

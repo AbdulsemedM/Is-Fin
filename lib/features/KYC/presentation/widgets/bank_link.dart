@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:ifb_loan/app/app_button.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
@@ -65,18 +66,18 @@ class _BankLinkState extends State<BankLink> {
 
   String? validateAccountField(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'This field is required';
+      return 'This field is required'.tr;
     } else if (value.trim().length != 13) {
-      return 'This field must be at least 13 digits long';
+      return 'This field must be at least 13 digits long'.tr;
     }
     return null; // Return null if validation passes
   }
 
   String? validateOTPField(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'This field is required';
+      return 'This field is required'.tr;
     } else if (value.trim().length != 6) {
-      return 'This field must be at least 6 digits long';
+      return 'This field must be at least 6 digits long'.tr;
     }
     return null; // Return null if validation passes
   }
@@ -99,7 +100,7 @@ class _BankLinkState extends State<BankLink> {
                 accountLoading = false;
               });
               displaySnack(
-                  context, "Account info. sent successfully", Colors.black);
+                  context, "Account info. sent successfully".tr, Colors.black);
             } else if (state is KycAccountSentFailure) {
               setState(() {
                 accountLoading = false;
@@ -136,7 +137,7 @@ class _BankLinkState extends State<BankLink> {
               context.read<KycBloc>().add(KYCStatusFetched());
               setState(() {
                 displaySnack(
-                    context, "Account Verified Successfully", Colors.black);
+                    context, "Account Verified Successfully".tr, Colors.black);
               });
             } else if (state is KycOTPSentFailure) {
               setState(() {
@@ -148,22 +149,22 @@ class _BankLinkState extends State<BankLink> {
           },
           child: Column(
             children: [
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text("Complete all the fields below"),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Complete all the fields below".tr),
               ),
-              const Row(
+              Row(
                 children: [
-                  Expanded(
+                  const Expanded(
                       child: Divider(
                     color: Colors.grey, // Set the color of the divider
                     thickness: 1,
                   )),
                   Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text("Bank Info."),
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("Bank Info.".tr),
                   ),
-                  Expanded(
+                  const Expanded(
                       child: Divider(
                     color: Colors.grey, // Set the color of the divider
                     thickness: 1,
@@ -182,7 +183,7 @@ class _BankLinkState extends State<BankLink> {
                         keyboardType: TextInputType.number,
                         validator: (value) => validateAccountField(value),
                         decoration: InputDecoration(
-                          labelText: 'Account Number',
+                          labelText: 'Account Number'.tr,
                           filled: true,
                           fillColor: Colors.grey[200],
                           border: OutlineInputBorder(
@@ -219,9 +220,9 @@ class _BankLinkState extends State<BankLink> {
                                 color: AppColors.primaryColor,
                               ),
                             )
-                          : const Text(
-                              "Submit",
-                              style: TextStyle(
+                          : Text(
+                              "Submit".tr,
+                              style: const TextStyle(
                                   color: Colors.white,
                                   // fontSize: 10,
                                   fontWeight: FontWeight.w600),
@@ -246,7 +247,7 @@ class _BankLinkState extends State<BankLink> {
                         keyboardType: TextInputType.number,
                         validator: (value) => validateOTPField(value),
                         decoration: InputDecoration(
-                          labelText: 'OTP',
+                          labelText: 'OTP'.tr,
                           filled: true,
                           fillColor: Colors.grey[200],
                           border: OutlineInputBorder(
@@ -283,12 +284,12 @@ class _BankLinkState extends State<BankLink> {
                                 ),
                               )
                             : !accountSent
-                                ? const Text(
-                                    "Add",
+                                ? Text(
+                                    "Add".tr,
                                     style: TextStyle(color: Colors.white),
                                   )
-                                : const Text(
-                                    "Add",
+                                : Text(
+                                    "Add".tr,
                                     style: TextStyle(color: Colors.white),
                                   )),
                   ),

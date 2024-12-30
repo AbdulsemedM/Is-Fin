@@ -134,7 +134,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               context: context),
                           validator: (value) {
                             if (value?.isEmpty == true) {
-                              return 'Full name is required';
+                              return 'Full name is required'.tr;
                             }
                             return null;
                           },
@@ -145,7 +145,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               padding:
                                   const EdgeInsets.symmetric(vertical: 8.0),
                               child: Text(
-                                "Phone Number",
+                                "Phone Number".tr,
                                 style: Theme.of(context)
                                     .textTheme
                                     .displaySmall
@@ -164,11 +164,11 @@ class _SignupScreenState extends State<SignupScreen> {
                               context: context),
                           validator: (value) {
                             if (value?.isEmpty == true) {
-                              return 'Phone number is required';
+                              return 'Phone number is required'.tr;
                             } else if (value!.length != 10) {
-                              return 'Invalid phone number format';
+                              return 'Invalid phone number format'.tr;
                             } else if (!value.startsWith("09")) {
-                              return 'Invalid phone number format';
+                              return 'Invalid phone number format'.tr;
                             }
                             return null;
                           },
@@ -179,7 +179,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               padding:
                                   const EdgeInsets.symmetric(vertical: 8.0),
                               child: Text(
-                                "Password",
+                                "Password".tr,
                                 style: Theme.of(context)
                                     .textTheme
                                     .displaySmall
@@ -223,9 +223,10 @@ class _SignupScreenState extends State<SignupScreen> {
                           ),
                           validator: (value) {
                             if (value?.isEmpty == true) {
-                              return 'Password is required';
+                              return 'Password is required'.tr;
                             } else if (value!.length < 6) {
-                              return 'Password must be at least 6 characters';
+                              return 'Password must be at least 6 characters'
+                                  .tr;
                             }
                             return null;
                           },
@@ -236,7 +237,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               padding:
                                   const EdgeInsets.symmetric(vertical: 8.0),
                               child: Text(
-                                "Confirm Password",
+                                "Confirm Password".tr,
                                 style: Theme.of(context)
                                     .textTheme
                                     .displaySmall
@@ -280,9 +281,9 @@ class _SignupScreenState extends State<SignupScreen> {
                           ),
                           validator: (value) {
                             if (value?.isEmpty == true) {
-                              return 'Confirm password is required';
+                              return 'Confirm password is required'.tr;
                             } else if (value != passwordController.text) {
-                              return "Password doesn't much";
+                              return "Password doesn't match".tr;
                             }
                             return null;
                           },
@@ -322,9 +323,9 @@ class _SignupScreenState extends State<SignupScreen> {
                                     color: AppColors.primaryColor,
                                   ),
                                 )
-                              : const Text(
-                                  "Signup",
-                                  style: TextStyle(color: AppColors.bg1),
+                              : Text(
+                                  "Signup".tr,
+                                  style: const TextStyle(color: AppColors.bg1),
                                 ),
                         ),
                       ],
@@ -337,7 +338,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Do you have an account?  ",
+                    "Do you have an account?  ".tr,
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   GestureDetector(
@@ -345,7 +346,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       Navigator.pop(context);
                     },
                     child: Text(
-                      "Login",
+                      "Login".tr,
                       style: TextStyle(
                           fontSize: ScreenConfig.screenWidth * 0.04,
                           fontWeight: FontWeight.w600,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:ifb_loan/app/app_button.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
@@ -227,10 +228,10 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: KycProgressCard(
-                title: 'KYC Completed',
+                title: 'KYC Completed'.tr,
                 percent: kycStatus / 100,
-                step1: step1,
-                step2: step2,
+                step1: step1.tr,
+                step2: step2.tr,
               ),
             ),
             Padding(
@@ -239,7 +240,7 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
                 children: [
                   CustomListButton(
                     icon: Icons.info,
-                    title: 'Complete KYC',
+                    title: 'Complete KYC'.tr,
                     onPressed: () {
                       Navigator.push(
                           context,
@@ -249,7 +250,7 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
                   ),
                   CustomListButton(
                     icon: Icons.add,
-                    title: 'Add Business Partner',
+                    title: 'Add Business Partner'.tr,
                     onPressed: () {
                       Navigator.push(
                           context,
@@ -268,7 +269,8 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
                     padding:
                         const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
                     child: Text(
-                      "If you are here as a product seller and wanted to fill a form or check status please click the button bellow",
+                      "If you are here as a product seller and wanted to fill a form or check status please click the button bellow"
+                          .tr,
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
@@ -300,9 +302,9 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
                                   color: AppColors.primaryColor,
                                 ),
                               )
-                            : const Text(
-                                "Click Here",
-                                style: TextStyle(color: Colors.white),
+                            : Text(
+                                "Click Here".tr,
+                                style: const TextStyle(color: Colors.white),
                               )),
                   ),
                 ],

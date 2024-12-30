@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:ifb_loan/app/utils/dialog_utils.dart';
 import 'package:ifb_loan/configuration/phone_number_manager.dart';
 import 'package:ifb_loan/features/KYC/models/image_models/images_model.dart';
@@ -122,7 +123,7 @@ class _UploadImagesState extends State<UploadImages> {
         _tradeLicenseImageBase64 == null &&
         _registrationCertImageBase64 == null &&
         _tinImageBase64 == null) {
-      displaySnack(context, "Please upload at least one image.", Colors.red);
+      displaySnack(context, "Please upload at least one image.".tr, Colors.red);
 
       return;
     }
@@ -143,7 +144,7 @@ class _UploadImagesState extends State<UploadImages> {
       setState(() {
         loading = false;
       });
-      displaySnack(context, "Images sent successfully!", Colors.black);
+      displaySnack(context, "Images sent successfully!".tr, Colors.black);
     });
   }
 
@@ -160,7 +161,7 @@ class _UploadImagesState extends State<UploadImages> {
           setState(() {
             loading = false;
           });
-          displaySnack(context, "Images sent successfully!", Colors.black);
+          displaySnack(context, "Images sent successfully!".tr, Colors.black);
         } else if (state is KycImagesSentFailure) {
           setState(() {
             loading = false;
@@ -204,19 +205,19 @@ class _UploadImagesState extends State<UploadImages> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              const Text("Upload the following files"),
-              const Row(
+              Text("Upload the following files".tr),
+              Row(
                 children: [
-                  Expanded(
+                  const Expanded(
                       child: Divider(
                     color: Colors.grey,
                     thickness: 1,
                   )),
                   Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text("Personal and Business Info."),
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("Personal and Business Info.".tr),
                   ),
-                  Expanded(
+                  const Expanded(
                       child: Divider(
                     color: Colors.grey,
                     thickness: 1,
@@ -224,28 +225,30 @@ class _UploadImagesState extends State<UploadImages> {
                 ],
               ),
               ..._buildImageSection(
-                existsRenewedId == null ? 'Renewed Id.' : 'Renewed Id.(Sent)',
+                existsRenewedId == null
+                    ? 'Renewed Id.'.tr
+                    : 'Renewed Id.(Sent)'.tr,
                 _idImageName,
                 'id',
               ),
               ..._buildImageSection(
                 existsTradeLicense == null
-                    ? 'Renewed Trade License'
-                    : "Renewed Trade License(Sent)",
+                    ? 'Renewed Trade License'.tr
+                    : "Renewed Trade License(Sent)".tr,
                 _tradeLicenseImageName,
                 'tradeLicense', // Fix: Change from 'license' to 'tradeLicense'
               ),
               ..._buildImageSection(
                 existsRegCertificate == null
-                    ? 'Commercial Registration Certificate'
-                    : 'Commercial Registration Certificate(Sent)',
+                    ? 'Commercial Registration Certificate'.tr
+                    : 'Commercial Registration Certificate(Sent)'.tr,
                 _registrationCertImageName,
                 'registrationCert', // Fix: Ensure the key matches getBase64StringByType
               ),
               ..._buildImageSection(
                 existsTinNumber == null
-                    ? 'TIN No. (Applicant\'s)'
-                    : 'TIN No. (Applicant\'s)(Sent)',
+                    ? 'TIN No. (Applicant\'s)'.tr
+                    : 'TIN No. (Applicant\'s)(Sent)'.tr,
                 _tinImageName,
                 'tin',
               ),
@@ -265,9 +268,9 @@ class _UploadImagesState extends State<UploadImages> {
                               color: AppColors.primaryColor,
                             ),
                           )
-                        : const Text(
-                            "Submit",
-                            style: TextStyle(color: Colors.white),
+                        : Text(
+                            "Submit".tr,
+                            style: const TextStyle(color: Colors.white),
                           )),
               ),
             ],
@@ -333,9 +336,17 @@ class _UploadImagesState extends State<UploadImages> {
         ],
       ),
       if (imageName != null)
-        Text(
-          'Selected: $imageName',
-          style: const TextStyle(fontSize: 14, color: Colors.grey),
+        Row(
+          children: [
+            Text(
+              'Selected: '.tr,
+              style: const TextStyle(fontSize: 14, color: Colors.grey),
+            ),
+            Text(
+              imageName,
+              style: const TextStyle(fontSize: 14, color: Colors.grey),
+            ),
+          ],
         ),
       const SizedBox(height: 16),
     ];

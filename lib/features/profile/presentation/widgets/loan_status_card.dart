@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 // import 'package:ifb_loan/app/utils/app_theme.dart';
 
@@ -60,7 +61,7 @@ class LoanStatusCard extends StatelessWidget {
         const SizedBox(height: 4),
         Flexible(
           child: Text(
-            label,
+            label.tr,
             textAlign: TextAlign.center,
             style: const TextStyle(
               fontSize: 14,

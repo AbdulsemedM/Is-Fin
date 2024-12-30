@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:ifb_loan/app/app_button.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
@@ -53,34 +54,34 @@ class _PersonalInfoState extends State<PersonalInfo> {
 
   String? validateName(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'This field is required';
+      return 'This field is required'.tr;
     } else if (!RegExp(r'^[a-zA-Z\s]+$').hasMatch(value)) {
-      return 'Please enter a valid name (letters and spaces only)';
+      return 'Please enter a valid name (letters and spaces only)'.tr;
     } else if (value.trim().length < 2) {
-      return 'Name must be at least 2 characters long';
+      return 'Name must be at least 2 characters long'.tr;
     }
     return null; // Return null if validation passes
   }
 
   String? validateField(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'This field is required';
+      return 'This field is required'.tr;
     } else if (value.trim().length < 2) {
-      return 'This field must be at least 2 characters long';
+      return 'This field must be at least 2 characters long'.tr;
     }
     return null; // Return null if validation passes
   }
 
   String? newValidateField(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'This field is required';
+      return 'This field is required'.tr;
     }
     return null; // Return null if validation passes
   }
 
   String? validateDropDown(String? value) {
     if (value == null || value.isEmpty) {
-      return 'This field is required';
+      return 'This field is required'.tr;
     }
     return null; // Validation passed
   }
@@ -154,8 +155,8 @@ class _PersonalInfoState extends State<PersonalInfo> {
               setState(() {
                 loading = false;
               });
-              displaySnack(
-                  context, "Personal info. sent successfully!", Colors.black);
+              displaySnack(context, "Personal info. sent successfully!".tr,
+                  Colors.black);
             } else if (state is KycPersonalSentFailure) {
               setState(() {
                 loading = false;
@@ -225,22 +226,22 @@ class _PersonalInfoState extends State<PersonalInfo> {
             key: myKey,
             child: Column(
               children: [
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text("Complete all the fields below"),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("Complete all the fields below".tr),
                 ),
-                const Row(
+                Row(
                   children: [
-                    Expanded(
+                    const Expanded(
                         child: Divider(
                       color: Colors.grey, // Set the color of the divider
                       thickness: 1,
                     )),
                     Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text("Personal Info."),
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text("Personal Info.".tr),
                     ),
-                    Expanded(
+                    const Expanded(
                         child: Divider(
                       color: Colors.grey, // Set the color of the divider
                       thickness: 1,
@@ -254,7 +255,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                         validator: (value) => validateName(value),
                         controller: _firstNameController,
                         decoration: InputDecoration(
-                          labelText: 'First Name',
+                          labelText: 'First Name'.tr,
                           filled: true,
                           fillColor: Colors.grey[200],
                           border: OutlineInputBorder(
@@ -270,7 +271,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                         controller: _lastNameController,
                         validator: (value) => validateName(value),
                         decoration: InputDecoration(
-                          labelText: 'Last Name',
+                          labelText: 'Last Name'.tr,
                           filled: true,
                           fillColor: Colors.grey[200],
                           border: OutlineInputBorder(
@@ -293,7 +294,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                               : null,
                           validator: (value) => validateDropDown(value),
                           decoration: InputDecoration(
-                            labelText: 'Gender',
+                            labelText: 'Gender'.tr,
                             filled: true,
                             fillColor: Colors.grey[200],
                             border: OutlineInputBorder(
@@ -301,14 +302,14 @@ class _PersonalInfoState extends State<PersonalInfo> {
                               borderSide: BorderSide.none,
                             ),
                           ),
-                          items: const [
+                          items: [
                             DropdownMenuItem(
                               value: 'MALE',
-                              child: Text('Male'),
+                              child: Text('Male'.tr),
                             ),
                             DropdownMenuItem(
                               value: 'FEMALE',
-                              child: Text('Female'),
+                              child: Text('Female'.tr),
                             ),
                           ],
                           onChanged: (value) {
@@ -327,7 +328,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                               : null,
                           validator: (value) => validateDropDown(value),
                           decoration: InputDecoration(
-                            labelText: 'Id. Type',
+                            labelText: 'Id. Type'.tr,
                             filled: true,
                             fillColor: Colors.grey[200],
                             border: OutlineInputBorder(
@@ -335,18 +336,18 @@ class _PersonalInfoState extends State<PersonalInfo> {
                               borderSide: BorderSide.none,
                             ),
                           ),
-                          items: const [
+                          items: [
                             DropdownMenuItem(
                               value: 'Driver\'s License',
-                              child: Text('Driver\'s License'),
+                              child: Text('Driver\'s License'.tr),
                             ),
                             DropdownMenuItem(
                               value: 'Passport',
-                              child: Text('Passport'),
+                              child: Text('Passport'.tr),
                             ),
                             DropdownMenuItem(
                               value: 'National ID',
-                              child: Text('National ID'),
+                              child: Text('National ID'.tr),
                             ),
                           ],
                           onChanged: (value) {
@@ -365,7 +366,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                       child: TextFormField(
                         readOnly: true, // Makes the field non-editable
                         decoration: InputDecoration(
-                          labelText: 'Date of Birth',
+                          labelText: 'Date of Birth'.tr,
                           filled: true,
                           fillColor: Colors.grey[200],
                           border: OutlineInputBorder(
@@ -408,7 +409,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                               : null,
                           validator: (value) => validateDropDown(value),
                           decoration: InputDecoration(
-                            labelText: 'Education level',
+                            labelText: 'Education level'.tr,
                             filled: true,
                             fillColor: Colors.grey[200],
                             border: OutlineInputBorder(
@@ -416,22 +417,22 @@ class _PersonalInfoState extends State<PersonalInfo> {
                               borderSide: BorderSide.none,
                             ),
                           ),
-                          items: const [
+                          items: [
                             DropdownMenuItem(
                               value: 'Primary',
-                              child: Text('Primary'),
+                              child: Text('Primary'.tr),
                             ),
                             DropdownMenuItem(
                               value: 'Secondary',
-                              child: Text('Secondary'),
+                              child: Text('Secondary'.tr),
                             ),
                             DropdownMenuItem(
                               value: 'BSc',
-                              child: Text('BSc.'),
+                              child: Text('BSc.'.tr),
                             ),
                             DropdownMenuItem(
                               value: 'MSc',
-                              child: Text('MSc.'),
+                              child: Text('MSc.'.tr),
                             ),
                           ],
                           onChanged: (value) {
@@ -451,7 +452,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                         controller: _idNoController,
                         validator: (value) => newValidateField(value),
                         decoration: InputDecoration(
-                          labelText: 'ID. No.',
+                          labelText: 'ID. No.'.tr,
                           filled: true,
                           fillColor: Colors.grey[200],
                           border: OutlineInputBorder(
@@ -470,7 +471,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                               : null,
                           validator: (value) => validateDropDown(value),
                           decoration: InputDecoration(
-                            labelText: 'Marital Status',
+                            labelText: 'Marital Status'.tr,
                             filled: true,
                             fillColor: Colors.grey[200],
                             border: OutlineInputBorder(
@@ -478,22 +479,22 @@ class _PersonalInfoState extends State<PersonalInfo> {
                               borderSide: BorderSide.none,
                             ),
                           ),
-                          items: const [
+                          items: [
                             DropdownMenuItem(
                               value: 'Single',
-                              child: Text('Single'),
+                              child: Text('Single'.tr),
                             ),
                             DropdownMenuItem(
                               value: 'Married',
-                              child: Text('Married'),
+                              child: Text('Married'.tr),
                             ),
                             DropdownMenuItem(
                               value: 'Divorced',
-                              child: Text('Divorced'),
+                              child: Text('Divorced'.tr),
                             ),
                             DropdownMenuItem(
                               value: 'Widowed',
-                              child: Text('Widowed'),
+                              child: Text('Widowed'.tr),
                             ),
                           ],
                           onChanged: (value) {
@@ -513,18 +514,18 @@ class _PersonalInfoState extends State<PersonalInfo> {
                 if (_maritalStatusController.text == "Married")
                   Column(
                     children: [
-                      const Row(
+                      Row(
                         children: [
-                          Expanded(
+                          const Expanded(
                               child: Divider(
                             color: Colors.grey, // Set the color of the divider
                             thickness: 1,
                           )),
                           Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text("Spouse info."),
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text("Spouse info.".tr),
                           ),
-                          Expanded(
+                          const Expanded(
                               child: Divider(
                             color: Colors.grey, // Set the color of the divider
                             thickness: 1,
@@ -538,7 +539,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                               controller: _sFirstNameController,
                               validator: (value) => validateName(value),
                               decoration: InputDecoration(
-                                labelText: 'First Name',
+                                labelText: 'First Name'.tr,
                                 filled: true,
                                 fillColor: Colors.grey[200],
                                 border: OutlineInputBorder(
@@ -554,7 +555,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                               controller: _sLastNameController,
                               validator: (value) => validateName(value),
                               decoration: InputDecoration(
-                                labelText: 'Last Name',
+                                labelText: 'Last Name'.tr,
                                 filled: true,
                                 fillColor: Colors.grey[200],
                                 border: OutlineInputBorder(
@@ -574,19 +575,20 @@ class _PersonalInfoState extends State<PersonalInfo> {
                               controller: _sPhoneNoController,
                               validator: (value) {
                                 if (value?.isEmpty == true) {
-                                  return 'Phone number is required';
+                                  return 'Phone number is required'.tr;
                                 } else if (value!.length != 10) {
-                                  return 'Invalid phone number format';
+                                  return 'Invalid phone number format'.tr;
                                 } else if (!value.startsWith("09")) {
-                                  return 'Invalid phone number format';
+                                  return 'Invalid phone number format'.tr;
                                 } else if (!RegExp(r'^\d+$')
                                     .hasMatch(value.trim())) {
-                                  return 'This field must contain only numbers';
+                                  return 'This field must contain only numbers'
+                                      .tr;
                                 }
                                 return null;
                               },
                               decoration: InputDecoration(
-                                labelText: 'Phone Number',
+                                labelText: 'Phone Number'.tr,
                                 filled: true,
                                 fillColor: Colors.grey[200],
                                 border: OutlineInputBorder(
@@ -602,7 +604,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                               controller: _sIdNoController,
                               validator: (value) => newValidateField(value),
                               decoration: InputDecoration(
-                                labelText: 'ID. No.',
+                                labelText: 'ID. No.'.tr,
                                 filled: true,
                                 fillColor: Colors.grey[200],
                                 border: OutlineInputBorder(
@@ -618,18 +620,18 @@ class _PersonalInfoState extends State<PersonalInfo> {
                   ),
 
                 const SizedBox(height: 16),
-                const Row(
+                Row(
                   children: [
-                    Expanded(
+                    const Expanded(
                         child: Divider(
                       color: Colors.grey, // Set the color of the divider
                       thickness: 1,
                     )),
                     Padding(
                       padding: EdgeInsets.all(8.0),
-                      child: Text("Altenative contact person"),
+                      child: Text("Altenative contact person".tr),
                     ),
-                    Expanded(
+                    const Expanded(
                         child: Divider(
                       color: Colors.grey, // Set the color of the divider
                       thickness: 1,
@@ -643,7 +645,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                         controller: _cFirstNameController,
                         validator: (value) => validateName(value),
                         decoration: InputDecoration(
-                          labelText: 'First Name',
+                          labelText: 'First Name'.tr,
                           filled: true,
                           fillColor: Colors.grey[200],
                           border: OutlineInputBorder(
@@ -659,7 +661,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                         controller: _cLastNameController,
                         validator: (value) => validateName(value),
                         decoration: InputDecoration(
-                          labelText: 'Last Name',
+                          labelText: 'Last Name'.tr,
                           filled: true,
                           fillColor: Colors.grey[200],
                           border: OutlineInputBorder(
@@ -679,18 +681,18 @@ class _PersonalInfoState extends State<PersonalInfo> {
                         controller: _cPhoneNoController,
                         validator: (value) {
                           if (value?.isEmpty == true) {
-                            return 'Phone number is required';
+                            return 'Phone number is required'.tr;
                           } else if (value!.length != 10) {
-                            return 'Invalid phone number format';
+                            return 'Invalid phone number format'.tr;
                           } else if (!value.startsWith("09")) {
-                            return 'Invalid phone number format';
+                            return 'Invalid phone number format'.tr;
                           } else if (!RegExp(r'^\d+$').hasMatch(value.trim())) {
-                            return 'This field must contain only numbers';
+                            return 'This field must contain only numbers'.tr;
                           }
                           return null;
                         },
                         decoration: InputDecoration(
-                          labelText: 'Phone Number',
+                          labelText: 'Phone Number'.tr,
                           filled: true,
                           fillColor: Colors.grey[200],
                           border: OutlineInputBorder(
@@ -706,7 +708,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                         controller: _cIdNoController,
                         validator: (value) => newValidateField(value),
                         decoration: InputDecoration(
-                          labelText: 'ID. No.',
+                          labelText: 'ID. No.'.tr,
                           filled: true,
                           fillColor: Colors.grey[200],
                           border: OutlineInputBorder(
@@ -719,18 +721,18 @@ class _PersonalInfoState extends State<PersonalInfo> {
                   ],
                 ),
                 const SizedBox(height: 16),
-                const Row(
+                Row(
                   children: [
-                    Expanded(
+                    const Expanded(
                         child: Divider(
                       color: Colors.grey, // Set the color of the divider
                       thickness: 1,
                     )),
                     Padding(
                       padding: EdgeInsets.all(8.0),
-                      child: Text("Residential Info."),
+                      child: Text("Residential Info.".tr),
                     ),
-                    Expanded(
+                    const Expanded(
                         child: Divider(
                       color: Colors.grey, // Set the color of the divider
                       thickness: 1,
@@ -747,7 +749,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                               : null,
                           validator: (value) => validateDropDown(value),
                           decoration: InputDecoration(
-                            labelText: 'Region/ District',
+                            labelText: 'Region/ District'.tr,
                             filled: true,
                             fillColor: Colors.grey[200],
                             border: OutlineInputBorder(
@@ -790,7 +792,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                               : null,
                           validator: (value) => validateDropDown(value),
                           decoration: InputDecoration(
-                            labelText: 'Zone/ Subcity',
+                            labelText: 'Zone/ Subcity'.tr,
                             filled: true,
                             fillColor: Colors.grey[200],
                             border: OutlineInputBorder(
@@ -823,7 +825,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                         controller: _woredaController,
                         validator: (value) => newValidateField(value),
                         decoration: InputDecoration(
-                          labelText: 'Woreda',
+                          labelText: 'Woreda'.tr,
                           filled: true,
                           fillColor: Colors.grey[200],
                           border: OutlineInputBorder(
@@ -839,7 +841,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                         controller: _kebeleController,
                         validator: (value) => newValidateField(value),
                         decoration: InputDecoration(
-                          labelText: 'Kebele',
+                          labelText: 'Kebele'.tr,
                           filled: true,
                           fillColor: Colors.grey[200],
                           border: OutlineInputBorder(
@@ -909,7 +911,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                             ),
                           )
                         : Text(
-                            personalData != null ? "Re-Submit" : "Submit",
+                            personalData != null ? "Re-Submit".tr : "Submit".tr,
                             style: const TextStyle(color: Colors.white),
                           )),
                 const SizedBox(height: 16),

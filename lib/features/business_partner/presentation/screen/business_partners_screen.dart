@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/dialog_utils.dart';
 import 'package:ifb_loan/features/business_partner/bloc/providers_bloc.dart';
@@ -47,7 +48,7 @@ class _BusinessPartnersScreenState extends State<BusinessPartnersScreen> {
       ),
       appBar: AppBar(
         title: Text(
-          "Business Partners",
+          "Business Partners".tr,
           style: Theme.of(context).textTheme.displaySmall,
         ),
       ),
@@ -78,7 +79,7 @@ class _BusinessPartnersScreenState extends State<BusinessPartnersScreen> {
                 ? Center(
                     child: Text(
                     textAlign: TextAlign.center,
-                    "No Business Partners Found, Press the + button to add",
+                    "No Business Partners Found, Press the + button to add".tr,
                     style: Theme.of(context).textTheme.bodyLarge,
                   ))
                 : SingleChildScrollView(

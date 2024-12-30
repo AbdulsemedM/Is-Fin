@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:ifb_loan/app/utils/dialog_utils.dart';
 import 'package:ifb_loan/features/forgot_password/presentation/widget/email_password_section.dart';
 import 'package:ifb_loan/features/otp/bloc/otp_bloc.dart';
@@ -37,7 +38,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Forgot Password",
+          "Forgot Password".tr,
           style: Theme.of(context).textTheme.displaySmall,
         ),
       ),

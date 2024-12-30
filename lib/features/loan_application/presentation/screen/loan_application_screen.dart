@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:ifb_loan/app/app_button.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
@@ -54,25 +55,25 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
 
   String? validateField(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'This field is required';
+      return 'This field is required'.tr;
     }
     return null; // Return null if validation passes
   }
 
   String? validateQuantityField(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Please enter a quantity';
+      return 'Please enter a quantity'.tr;
     }
     final doubleValue = double.tryParse(value);
     if (doubleValue == null) {
-      return 'Please enter a valid number';
+      return 'Please enter a valid number'.tr;
     }
     return null;
   }
 
   String? validateDropDown(String? value) {
     if (value == null || value.isEmpty) {
-      return 'This field is required';
+      return 'This field is required'.tr;
     }
     return null; // Validation passed
   }
@@ -82,7 +83,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Apply for Murabaha Loan",
+          "Apply for Murabaha Loan".tr,
           style: Theme.of(context).textTheme.displaySmall,
         ),
       ),
@@ -91,7 +92,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
           if (state is ProviderFetchSuccess) {
             setState(() {
               myProviders = state.providers;
-              if (myProviders.length == 0) {
+              if (myProviders.isEmpty) {
                 displaySnack(context, "No providers found", Colors.red);
               }
               isProviderFetched = true;
@@ -109,7 +110,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                 loading = false;
               });
               displaySnack(
-                  context, "Product request sent successfully", Colors.black);
+                  context, "Product request sent successfully".tr, Colors.black);
               Navigator.pop(context);
             } else if (state is ProductsSentFailure) {
               setState(() {
@@ -166,7 +167,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                                   controller: _productNameController,
                                   validator: (value) => validateField(value),
                                   decoration: InputDecoration(
-                                    labelText: 'Name of Product',
+                                    labelText: 'Name of Product'.tr,
                                     filled: true,
                                     fillColor: Colors.grey[200],
                                     border: OutlineInputBorder(
@@ -190,7 +191,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                                     ),
                                   ],
                                   decoration: InputDecoration(
-                                    labelText: 'Quantity of Asset',
+                                    labelText: 'Quantity of Asset'.tr,
                                     filled: true,
                                     fillColor: Colors.grey[200],
                                     border: OutlineInputBorder(
@@ -213,7 +214,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                               validator: (value) => validateField(value),
                               maxLines: 3,
                               decoration: InputDecoration(
-                                labelText: 'Product Desc.',
+                                labelText: 'Product Desc.'.tr,
                                 filled: true,
                                 fillColor: Colors.grey[200],
                                 border: OutlineInputBorder(
@@ -235,7 +236,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                                       : null,
                                   validator: (value) => validateDropDown(value),
                                   decoration: InputDecoration(
-                                    labelText: 'Unit of Measurement',
+                                    labelText: 'Unit of Measurement'.tr,
                                     filled: true,
                                     fillColor: Colors.grey[200],
                                     border: OutlineInputBorder(
@@ -360,7 +361,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                               : null,
                           validator: (value) => validateDropDown(value),
                           decoration: InputDecoration(
-                            labelText: 'Sector',
+                            labelText: 'Sector'.tr,
                             filled: true,
                             fillColor: Colors.grey[200],
                             border: OutlineInputBorder(
@@ -391,7 +392,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                                         : null,
                                 validator: (value) => validateDropDown(value),
                                 decoration: InputDecoration(
-                                  labelText: 'Provider',
+                                  labelText: 'Provider'.tr,
                                   filled: true,
                                   fillColor: Colors.grey[200],
                                   border: OutlineInputBorder(
@@ -403,8 +404,13 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                                   return DropdownMenuItem(
                                     value: providers[
                                         'phoneNumber'], // Use ID as the value
-                                    child: Text(providers['fullName']
-                                        .toString()), // Display the name in the dropdown
+                                    child: Text(
+                                      providers['fullName'].toString().length >
+                                              13
+                                          ? '${providers['fullName'].toString().substring(0, 13)}...'
+                                          : providers['fullName'].toString(),
+                                    ),
+                                    // Display the name in the dropdown
                                   );
                                 }).toList(),
                                 onChanged: (value) {
@@ -421,7 +427,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                                         : null,
                                 validator: (value) => validateDropDown(value),
                                 decoration: InputDecoration(
-                                  labelText: 'Repayment Plan',
+                                  labelText: 'Repayment Plan'.tr,
                                   filled: true,
                                   fillColor: Colors.grey[200],
                                   border: OutlineInputBorder(
@@ -470,7 +476,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                                       )));
                                 } else {
                                   displaySnack(context,
-                                      "Please add products first", Colors.red);
+                                      "Please add products first".tr, Colors.red);
                                 }
                               }
                             },
@@ -483,8 +489,8 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                                 color: AppColors.primaryColor,
                               ),
                             )
-                          : const Text(
-                              "Apply Loan",
+                          : Text(
+                              "Apply Loan".tr,
                               style: TextStyle(color: Colors.white),
                             )),
                   const SizedBox(height: 10)

@@ -2,6 +2,7 @@ import 'package:custom_sliding_segmented_control/custom_sliding_segmented_contro
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/configuration/phone_number_manager.dart';
 import 'package:ifb_loan/features/KYC/bloc/kyc_bloc.dart';
@@ -40,7 +41,7 @@ class _CompleteKYCDetailState extends State<CompleteKYCDetail> {
     return Scaffold(
       appBar: AppBar(
           title: Text(
-        'Complete KYC',
+        'Complete KYC'.tr,
         style: Theme.of(context).textTheme.displaySmall,
       )),
       body: BlocListener<KycBloc, KycState>(
@@ -69,28 +70,28 @@ class _CompleteKYCDetailState extends State<CompleteKYCDetail> {
                 scrollDirection: Axis.horizontal,
                 child: CustomSlidingSegmentedControl<int>(
                   initialValue: _selectedValue,
-                  children: const {
+                  children: {
                     3: Text(
-                      'Bank Link',
-                      style: TextStyle(
+                      'Bank Link'.tr,
+                      style: const TextStyle(
                           color: AppColors.bgColor,
                           fontWeight: FontWeight.w500),
                     ),
                     1: Text(
-                      'Pers. Info.',
-                      style: TextStyle(
+                      'Pers. Info.'.tr,
+                      style: const TextStyle(
                           color: AppColors.bgColor,
                           fontWeight: FontWeight.w500),
                     ),
                     2: Text(
-                      'Bus. Info',
-                      style: TextStyle(
+                      'Bus. Info.'.tr,
+                      style: const TextStyle(
                           color: AppColors.bgColor,
                           fontWeight: FontWeight.w500),
                     ),
                     4: Text(
-                      'Upload Image',
-                      style: TextStyle(
+                      'Upload Image'.tr,
+                      style: const TextStyle(
                           color: AppColors.bgColor,
                           fontWeight: FontWeight.w500),
                     ),
@@ -137,16 +138,16 @@ class _CompleteKYCDetailState extends State<CompleteKYCDetail> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: Colors.red[50], // Light red background for rejection
-          title: const Row(
+          title: Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.cancel_rounded, // A red cancel icon to signify rejection
                 color: Colors.red,
               ),
               SizedBox(width: 10),
               Text(
-                "Rejected",
-                style: TextStyle(
+                "Rejected".tr,
+                style: const TextStyle(
                   color: Colors.red, // Red text for the title
                   fontWeight: FontWeight.bold,
                 ),
@@ -163,9 +164,9 @@ class _CompleteKYCDetailState extends State<CompleteKYCDetail> {
                 ),
               ),
               const SizedBox(height: 10),
-              const Text(
-                "You can resubmit your KYC info. and we'll review it ASAP.",
-                style: TextStyle(
+              Text(
+                "You can resubmit your KYC info. and we'll review it ASAP.".tr,
+                style: const TextStyle(
                   fontSize: 14,
                   color: Colors.red, // Same color theme for supporting text
                 ),
@@ -177,9 +178,9 @@ class _CompleteKYCDetailState extends State<CompleteKYCDetail> {
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
               },
-              child: const Text(
-                "OK",
-                style: TextStyle(color: Colors.red),
+              child: Text(
+                "OK".tr,
+                style: const TextStyle(color: Colors.red),
               ),
             ),
           ],
@@ -195,35 +196,35 @@ class _CompleteKYCDetailState extends State<CompleteKYCDetail> {
         return AlertDialog(
           backgroundColor:
               Colors.yellow[50], // Light yellow background for pending
-          title: const Row(
+          title: Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.hourglass_empty, // An hourglass icon to indicate pending
                 color: Colors.orange,
               ),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               Text(
-                "Pending",
-                style: TextStyle(
+                "Pending".tr,
+                style: const TextStyle(
                   color: Colors.orange, // Orange text for the title
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ],
           ),
-          content: const Column(
+          content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                "Your KYC submission is under review.",
-                style: TextStyle(
+                "Your KYC submission is under review.".tr,
+                style: const TextStyle(
                   color: Colors.orange, // Darker orange for the content text
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Text(
-                "We will notify you once the review is complete.",
-                style: TextStyle(
+                "We will notify you once the review is complete.".tr,
+                style: const TextStyle(
                   fontSize: 14,
                   color: Colors.orange, // Same color theme for supporting text
                 ),
@@ -235,9 +236,9 @@ class _CompleteKYCDetailState extends State<CompleteKYCDetail> {
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
               },
-              child: const Text(
-                "OK",
-                style: TextStyle(color: Colors.orange),
+              child: Text(
+                "OK".tr,
+                style: const TextStyle(color: Colors.orange),
               ),
             ),
           ],
@@ -253,35 +254,35 @@ class _CompleteKYCDetailState extends State<CompleteKYCDetail> {
         return AlertDialog(
           backgroundColor:
               Colors.green[50], // Light green background for success
-          title: const Row(
+          title: Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.check_circle, // A green checkmark icon for success
                 color: Colors.green,
               ),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               Text(
-                "Success",
-                style: TextStyle(
+                "Success".tr,
+                style: const TextStyle(
                   color: Colors.green, // Green text for the title
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ],
           ),
-          content: const Column(
+          content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                "Your KYC submission has been approved.",
-                style: TextStyle(
+                "Your KYC submission has been approved.".tr,
+                style: const TextStyle(
                   color: Colors.green, // Darker green for the content text
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Text(
-                "Thank you for completing your KYC process.",
-                style: TextStyle(
+                "Thank you for completing your KYC process.".tr,
+                style: const TextStyle(
                   fontSize: 14,
                   color: Colors.green, // Same color theme for supporting text
                 ),
@@ -293,8 +294,8 @@ class _CompleteKYCDetailState extends State<CompleteKYCDetail> {
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
               },
-              child: const Text(
-                "OK",
+              child: Text(
+                "OK".tr,
                 style: TextStyle(color: Colors.green),
               ),
             ),

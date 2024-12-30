@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/dialog_utils.dart';
 import 'package:ifb_loan/configuration/auth_service.dart';
@@ -56,11 +57,11 @@ class _DashboardPageState extends State<DashboardPage> {
           items: [
             SalomonBottomBarItem(
               icon: const Icon(Icons.home_outlined),
-              title: const Text("Home"),
+              title: Text("Home".tr),
             ),
             SalomonBottomBarItem(
               icon: const Icon(Icons.description_outlined),
-              title: const Text("Finances"),
+              title: Text("Finances".tr),
             ),
             // SalomonBottomBarItem(
             //   icon: const Icon(Icons.calculate_outlined),
@@ -68,7 +69,7 @@ class _DashboardPageState extends State<DashboardPage> {
             // ),
             SalomonBottomBarItem(
               icon: const Icon(Icons.person),
-              title: const Text("Profile"),
+              title: Text("Profile".tr),
             ),
           ],
         ),
@@ -97,12 +98,12 @@ class _DashboardPageState extends State<DashboardPage> {
       builder: (context) {
         return AlertDialog(
           backgroundColor: Colors.white,
-          title: const Text("Confirm Logout"),
-          content: const Text("Do you want to Logout?"),
+          title: Text("Confirm Logout".tr),
+          content: Text("Do you want to Logout?".tr),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.of(context).pop(false),
-              child: const Text("No"),
+              child: Text("No".tr),
             ),
             TextButton(
               onPressed: () async {
@@ -131,12 +132,12 @@ class _DashboardPageState extends State<DashboardPage> {
                   // Handle any errors during logout
                   if (context.mounted) {
                     Navigator.pop(context); // Pop loading dialog
-                    displaySnack(context, 'Error logging out', Colors.red);
+                    displaySnack(context, 'Error logging out'.tr, Colors.red);
                   }
                 }
               },
-              child: const Text(
-                "Yes",
+              child: Text(
+                "Yes".tr,
                 style: TextStyle(color: Colors.red),
               ),
             ),

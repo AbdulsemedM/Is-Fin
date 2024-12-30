@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
 import 'package:ifb_loan/app/utils/dialog_utils.dart';
 import 'package:ifb_loan/configuration/phone_number_manager.dart';
@@ -57,7 +58,7 @@ class _FinancesScreenState extends State<FinancesScreen> {
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 24.0),
             child: Text(
-              "Finances",
+              "Finances".tr,
               style: Theme.of(context)
                   .textTheme
                   .displayMedium!
@@ -88,12 +89,12 @@ class _FinancesScreenState extends State<FinancesScreen> {
                               ? Colors.green.shade200
                               : Colors.red.shade200,
                   title: index == 0
-                      ? "Loan Request"
+                      ? "Loan Request".tr
                       : index == 1
-                          ? "Loan Repay"
+                          ? "Loan Repay".tr
                           : index == 2
-                              ? "Loan Status"
-                              : "Add Provider",
+                              ? "Loan Status".tr
+                              : "Add Provider".tr,
                   subtitle: 'Subtitle $index',
                   containerColor: index == 0
                       ? Colors.blue.shade100
@@ -109,7 +110,8 @@ class _FinancesScreenState extends State<FinancesScreen> {
                           kycStatus == "IN_PROGRESS") {
                         displaySnack(
                             context,
-                            "Please fill KYC before going to loan applications.",
+                            "Please fill KYC before going to loan applications."
+                                .tr,
                             Colors.red);
                       } else {
                         Navigator.push(
@@ -122,14 +124,15 @@ class _FinancesScreenState extends State<FinancesScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => OverallLoanList()));
+                              builder: (context) => const OverallLoanList()));
                     } else if (index == 3) {
                       if (kycStatus == "null" ||
                           kycStatus == "Not Filled" ||
                           kycStatus == "IN_PROGRESS") {
                         displaySnack(
                             context,
-                            "Please fill KYC before going to add business partner.",
+                            "Please fill KYC before going to add business partner."
+                                .tr,
                             Colors.red);
                       } else {
                         Navigator.push(
@@ -155,7 +158,7 @@ class _FinancesScreenState extends State<FinancesScreen> {
           child: Row(
             children: [
               Text(
-                "Overall loan History",
+                "Overall loan History".tr,
                 style: Theme.of(context)
                     .textTheme
                     .displaySmall!
@@ -186,13 +189,13 @@ class _FinancesScreenState extends State<FinancesScreen> {
             }
           },
           child: loading
-              ? Center(
+              ? const Center(
                   child: CircularProgressIndicator(),
                 )
               : myActiveLoans.isEmpty
                   ? Center(
                       child: Text(
-                        'No active loans available',
+                        'No active loans available'.tr,
                         style: TextStyle(fontSize: 16, color: Colors.black54),
                       ),
                     )

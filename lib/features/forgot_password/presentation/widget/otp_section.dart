@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:ifb_loan/app/app_button.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
@@ -29,7 +30,7 @@ class OtpSection extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Text(
-                  "Enter OTP",
+                  "Enter OTP".tr,
                   style: Theme.of(context)
                       .textTheme
                       .displaySmall
@@ -49,9 +50,9 @@ class OtpSection extends StatelessWidget {
             ),
             validator: (value) {
               if (value?.isEmpty == true) {
-                return 'OTP is required';
+                return 'OTP is required'.tr;
               } else if (value!.length != 6) {
-                return 'Invalid OTP format';
+                return 'Invalid OTP format'.tr;
               }
               return null;
             },
