@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:ifb_loan/features/loan_approval_status/presentation/screen/loan_approval_murabaha_screen.dart';
 import 'package:ifb_loan/features/loan_approval_status/presentation/screen/loan_approval_status.dart';
 import 'package:intl/intl.dart';
@@ -58,15 +59,16 @@ class LoanListWidget extends StatelessWidget {
           showDialog(
             context: context,
             builder: (context) => AlertDialog(
-              title: const Text('Pending'),
-              content: const Text(
-                  'The loan application is pending approval from the merchant'),
+              title: Text('Pending'.tr),
+              content: Text(
+                  'The loan application is pending approval from the merchant'
+                      .tr),
               actions: [
                 TextButton(
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: const Text('Close'))
+                    child: Text('Close'.tr))
               ],
             ),
           );
@@ -74,15 +76,16 @@ class LoanListWidget extends StatelessWidget {
           showDialog(
             context: context,
             builder: (context) => AlertDialog(
-              title: const Text('Under Review'),
-              content: const Text(
-                  'The loan application is under review by the Bank officers'),
+              title: Text('Under Review'.tr),
+              content: Text(
+                  'The loan application is under review by the Bank officers'
+                      .tr),
               actions: [
                 TextButton(
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: const Text('Close'))
+                    child: Text('Close'.tr))
               ],
             ),
           );
@@ -98,15 +101,16 @@ class LoanListWidget extends StatelessWidget {
           showDialog(
             context: context,
             builder: (context) => AlertDialog(
-              title: const Text('Under Taking'),
-              content: const Text(
-                  'The loan application is approved and will be fulfilled once the product owner confirms it.'),
+              title: Text('Under Taking'.tr),
+              content: Text(
+                  'The loan application is approved and will be fulfilled once the product owner confirms it.'
+                      .tr),
               actions: [
                 TextButton(
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: const Text('Close'))
+                    child: Text('Close'.tr))
               ],
             ),
           );
@@ -114,15 +118,14 @@ class LoanListWidget extends StatelessWidget {
           showDialog(
             context: context,
             builder: (context) => AlertDialog(
-              title: const Text('Agreements Accepted'),
-              content: const Text(
-                  'The loan application is now waiting a fund release from the bank.'),
+              title: Text('Agreements Accepted'.tr),
+              content: Text('The loan application is now closed.'.tr),
               actions: [
                 TextButton(
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: const Text('Close'))
+                    child: Text('Close'.tr))
               ],
             ),
           );

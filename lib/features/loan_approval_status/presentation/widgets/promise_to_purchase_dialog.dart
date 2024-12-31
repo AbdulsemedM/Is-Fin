@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class PromiseToPurchaseDialog extends StatefulWidget {
   final String agreementText;
@@ -58,7 +59,7 @@ class _PromiseToPurchaseDialogState extends State<PromiseToPurchaseDialog> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                "Promise to Purchase Agreement",
+                "Promise to Purchase Agreement".tr,
                 style: Theme.of(context).textTheme.displayMedium,
                 textAlign: TextAlign.center,
               ),
@@ -104,13 +105,13 @@ class _PromiseToPurchaseDialogState extends State<PromiseToPurchaseDialog> {
                     onPressed: () {
                       Navigator.of(context).pop(false); // Dismiss dialog
                     },
-                    child: const Text("Cancel"),
+                    child: Text("Cancel".tr),
                   ),
                   ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).pop(true); // Agreement confirmed
                     },
-                    child: const Text("Agree"),
+                    child: Text("Agree".tr),
                   ),
                 ],
               ),

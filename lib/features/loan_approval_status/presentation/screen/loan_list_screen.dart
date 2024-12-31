@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_segment/flutter_advanced_segment.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/dialog_utils.dart';
 import 'package:ifb_loan/features/loan_approval_status/bloc/loan_approval_status_bloc.dart';
@@ -36,7 +37,7 @@ class _LoanListScreenState extends State<LoanListScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Loan Requests",
+          "Loan Requests".tr,
           style: Theme.of(context).textTheme.displaySmall,
         ),
       ),
@@ -67,7 +68,7 @@ class _LoanListScreenState extends State<LoanListScreen> {
             child: Column(
               children: [
                 Text(
-                  "Fill a Form",
+                  "Fill a Form".tr,
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Column(
@@ -86,10 +87,10 @@ class _LoanListScreenState extends State<LoanListScreen> {
                       backgroundColor: AppColors.iconColor,
                       sliderColor: AppColors.primaryDarkColor,
                       controller: _selectedSegment,
-                      segments: const {
-                        'new': 'New',
-                        'all': 'All',
-                        'approved': 'Approved',
+                      segments: {
+                        'new': 'New'.tr,
+                        'all': 'All'.tr,
+                        'approved': 'Approved'.tr,
                       },
                     ),
                     const SizedBox(height: 20),

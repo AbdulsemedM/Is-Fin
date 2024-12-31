@@ -91,7 +91,7 @@ class _AddBisinessPartnerScreenState extends State<AddBisinessPartnerScreen> {
                     controller: _phoneNumberController,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
-                      labelText: 'Business Partne\'s Phone Number'.tr,
+                      labelText: 'Business Partner\'s Phone Number'.tr,
                       filled: true,
                       fillColor: Colors.grey[200],
                       border: OutlineInputBorder(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:lottie/lottie.dart';
 
@@ -38,9 +39,9 @@ class LoanApprovedScreen extends StatelessWidget {
                       repeat: true,
                     ),
                     const SizedBox(height: 30),
-                    const Text(
-                      'Congratulations!',
-                      style: TextStyle(
+                    Text(
+                      'Congratulations!'.tr,
+                      style: const TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -55,32 +56,41 @@ class LoanApprovedScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    const Text(
-                      'Your loan has been approved!',
-                      style: TextStyle(
+                    Text(
+                      'Your loan has been approved!'.tr,
+                      style: const TextStyle(
                         fontSize: 18,
                         color: Colors.white70,
                       ),
                     ),
                     const SizedBox(height: 30),
                     Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 10,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.2),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Text(
-                        'ETB $amount',
-                        style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 10,
                         ),
-                      ),
-                    ),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Row(children: [
+                          Text(
+                            'ETB '.tr,
+                            style: const TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Text(
+                            amount,
+                            style: const TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ])),
                   ],
                 ),
               ),
@@ -90,10 +100,11 @@ class LoanApprovedScreen extends StatelessWidget {
               color: Colors.white,
               child: Column(
                 children: [
-                  const Text(
-                    'Your loan application has been successfully approved. You will be contacted shortly by our team for the next steps.',
+                  Text(
+                    'Your loan application has been successfully approved. You will be contacted shortly by our team for the next steps.'
+                        .tr,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                       color: Colors.grey,
                     ),
@@ -112,9 +123,9 @@ class LoanApprovedScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
-                      child: const Text(
-                        'Back to Home',
-                        style: TextStyle(
+                      child: Text(
+                        'Back to Home'.tr,
+                        style: const TextStyle(
                           fontSize: 18,
                           color: Colors.white,
                         ),

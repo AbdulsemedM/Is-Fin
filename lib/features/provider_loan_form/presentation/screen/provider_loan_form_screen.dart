@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 // import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:ifb_loan/app/app_button.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
@@ -48,7 +49,7 @@ class _ProviderLoanFormScreenState extends State<ProviderLoanFormScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Product Owner Form",
+          "Product Owner Form".tr,
           style: Theme.of(context).textTheme.displaySmall,
         ),
       ),
@@ -77,13 +78,13 @@ class _ProviderLoanFormScreenState extends State<ProviderLoanFormScreen> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Text(
-                        "Fill product prices form for ${widget.name}'s request"),
-                  ),
-                ),
+                // Center(
+                //   child: Padding(
+                //     padding: const EdgeInsets.symmetric(vertical: 8.0),
+                //     child: Text(
+                //         "Fill product prices form for ${widget.name}'s request"),
+                //   ),
+                // ),
                 BlocBuilder<ProviderLoanFormBloc, ProviderLoanFormState>(
                   builder: (context, state) {
                     if (state is RequestedProductsFetchedLoading) {
@@ -91,8 +92,8 @@ class _ProviderLoanFormScreenState extends State<ProviderLoanFormScreen> {
                     }
 
                     if (products.isEmpty) {
-                      return const Center(
-                        child: Text('No products found'),
+                      return Center(
+                        child: Text('No products found'.tr),
                       );
                     }
 
@@ -101,7 +102,8 @@ class _ProviderLoanFormScreenState extends State<ProviderLoanFormScreen> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            "Please enter the individual price for each product",
+                            "Please enter the individual price for each product"
+                                .tr,
                             style: Theme.of(context)
                                 .textTheme
                                 .titleMedium
@@ -136,15 +138,30 @@ class _ProviderLoanFormScreenState extends State<ProviderLoanFormScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Text(
-                                'Total Price: ETB ${_calculateTotalPrice()}',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleLarge
-                                    ?.copyWith(
-                                      fontWeight: FontWeight.bold,
+                              RichText(
+                                text: TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: 'Total Price: ',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                     ),
-                              ),
+                                    TextSpan(
+                                      text: 'ETB ${_calculateTotalPrice()}',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                    ),
+                                  ],
+                                ),
+                              )
                             ],
                           ),
                         ),
@@ -161,8 +178,8 @@ class _ProviderLoanFormScreenState extends State<ProviderLoanFormScreen> {
                       vertical: 16.0, horizontal: 16.0),
                   child: TextField(
                     controller: _dateController,
-                    decoration: const InputDecoration(
-                      labelText: 'Price Expiration Date',
+                    decoration: InputDecoration(
+                      labelText: 'Price Expiration Date'.tr,
                       border: OutlineInputBorder(),
                       suffixIcon: Icon(Icons.calendar_today),
                     ),
@@ -201,7 +218,7 @@ class _ProviderLoanFormScreenState extends State<ProviderLoanFormScreen> {
                             if (expirationDate == null) {
                               displaySnack(
                                   context,
-                                  "Please select a price expiration date",
+                                  "Please select a price expiration date".tr,
                                   Colors.red);
                               return;
                             }
@@ -213,7 +230,7 @@ class _ProviderLoanFormScreenState extends State<ProviderLoanFormScreen> {
                             if (hasNullPrice) {
                               displaySnack(
                                   context,
-                                  "Please fill in all product prices",
+                                  "Please fill in all product prices".tr,
                                   Colors.red);
                               return;
                             }
@@ -237,8 +254,8 @@ class _ProviderLoanFormScreenState extends State<ProviderLoanFormScreen> {
                               color: AppColors.primaryColor,
                             ),
                           )
-                        : const Text(
-                            "Submit",
+                        : Text(
+                            "Submit".tr,
                             style: TextStyle(color: AppColors.bg1),
                           ),
                   ),
@@ -294,8 +311,9 @@ class _ProviderLoanFormScreenState extends State<ProviderLoanFormScreen> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text('Confirm $action'),
-              content: Text('Are you sure you want to $action this request?'),
+              title: Text('Confirm $action'.tr),
+              content:
+                  Text('Are you sure you want to $action this request?'.tr),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(false),

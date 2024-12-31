@@ -492,42 +492,42 @@ class _BusinessInfoState extends State<BusinessInfo> {
                       ),
                     ),
                     const SizedBox(width: 16),
-                    Expanded(
-                      child: DropdownButtonFormField<String>(
-                        value: _businessLevelController.text.isNotEmpty
-                            ? _businessLevelController.text
-                            : null,
-                        validator: (value) => validateDropDown(value),
-                        decoration: InputDecoration(
-                          labelText: 'Business Level'.tr,
-                          filled: true,
-                          fillColor: Colors.grey[200],
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                            borderSide: BorderSide.none,
-                          ),
-                        ),
-                        items: [
-                          DropdownMenuItem(
-                            value: 'Startup',
-                            child: Text('Startup'.tr),
-                          ),
-                          DropdownMenuItem(
-                            value: 'Growing',
-                            child: Text('Growing'.tr),
-                          ),
-                          DropdownMenuItem(
-                            value: 'Advanced',
-                            child: Text('Advanced'.tr),
-                          ),
-                        ],
-                        onChanged: (value) {
-                          setState(() {
-                            _businessLevelController.text = value!;
-                          });
-                        },
-                      ),
-                    ),
+                    // Expanded(
+                    //   child: DropdownButtonFormField<String>(
+                    //     value: _businessLevelController.text.isNotEmpty
+                    //         ? _businessLevelController.text
+                    //         : null,
+                    //     validator: (value) => validateDropDown(value),
+                    //     decoration: InputDecoration(
+                    //       labelText: 'Business Level'.tr,
+                    //       filled: true,
+                    //       fillColor: Colors.grey[200],
+                    //       border: OutlineInputBorder(
+                    //         borderRadius: BorderRadius.circular(8.0),
+                    //         borderSide: BorderSide.none,
+                    //       ),
+                    //     ),
+                    //     items: [
+                    //       DropdownMenuItem(
+                    //         value: 'Startup',
+                    //         child: Text('Startup'.tr),
+                    //       ),
+                    //       DropdownMenuItem(
+                    //         value: 'Growing',
+                    //         child: Text('Growing'.tr),
+                    //       ),
+                    //       DropdownMenuItem(
+                    //         value: 'Advanced',
+                    //         child: Text('Advanced'.tr),
+                    //       ),
+                    //     ],
+                    //     onChanged: (value) {
+                    //       setState(() {
+                    //         _businessLevelController.text = value!;
+                    //       });
+                    //     },
+                    //   ),
+                    // ),
                   ],
                 ),
                 const SizedBox(height: 16),

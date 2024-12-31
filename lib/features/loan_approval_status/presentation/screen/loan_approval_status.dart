@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:ifb_loan/app/app_button.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
@@ -102,7 +103,7 @@ class _LoanApprovalStatusState extends State<LoanApprovalStatus> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            "Loan Approval Status",
+            "Loan Approval Status".tr,
             style: Theme.of(context).textTheme.displaySmall,
           ),
         ),
@@ -134,8 +135,8 @@ class _LoanApprovalStatusState extends State<LoanApprovalStatus> {
               }
 
               if (state.productList.isEmpty) {
-                return const Center(
-                  child: Text('No products found'),
+                return Center(
+                  child: Text('No products found'.tr),
                 );
               }
 
@@ -148,7 +149,8 @@ class _LoanApprovalStatusState extends State<LoanApprovalStatus> {
                       Text(
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.bodyLarge,
-                          'Your loan application from ${widget.name}\'s has been approved by the product owner and now it is under review by the bank\'s officials. The bank will put it\'s benefits to the product and will let you know the final offer soon.'),
+                          'This loan application has been approved by the product owner and now it is under review by the bank\'s officials. The bank will put it\'s benefits to the product and will let you know the final offer soon.'
+                              .tr),
                       LoanStatusTable(
                         items: state.productList,
                         onProductRemove: (product) {
@@ -169,18 +171,30 @@ class _LoanApprovalStatusState extends State<LoanApprovalStatus> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Total Price",
+                            "Total Price".tr,
                             style: Theme.of(context)
                                 .textTheme
                                 .displaySmall!
                                 .copyWith(fontWeight: FontWeight.w600),
                           ),
-                          Text(
-                            "ETB ${NumberFormat('#,###').format(calculateTotal(state.productList))}",
-                            style: Theme.of(context)
-                                .textTheme
-                                .displaySmall!
-                                .copyWith(fontWeight: FontWeight.w600),
+                          Row(
+                            children: [
+                              Text(
+                                "ETB ".tr,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .displaySmall!
+                                    .copyWith(fontWeight: FontWeight.w600),
+                              ),
+                              Text(
+                                NumberFormat('#,###')
+                                    .format(calculateTotal(state.productList)),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .displaySmall!
+                                    .copyWith(fontWeight: FontWeight.w600),
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -220,20 +234,21 @@ class _LoanApprovalStatusState extends State<LoanApprovalStatus> {
                                         context: context,
                                         builder: (BuildContext context) {
                                           return AlertDialog(
-                                            title: const Text("Confirmation"),
-                                            content: const Text(
-                                                "Are you sure you want to resubmit your new offer?"),
+                                            title: Text("Confirmation".tr),
+                                            content: Text(
+                                                "Are you sure you want to resubmit your new offer?"
+                                                    .tr),
                                             actions: [
                                               TextButton(
                                                   onPressed: () =>
                                                       Navigator.pop(
                                                           context, false),
-                                                  child: const Text("No")),
+                                                  child: Text("No".tr)),
                                               TextButton(
                                                   onPressed: () =>
                                                       Navigator.pop(
                                                           context, true),
-                                                  child: const Text("Yes")),
+                                                  child: Text("Yes".tr)),
                                             ],
                                           );
                                         },
@@ -276,8 +291,10 @@ class _LoanApprovalStatusState extends State<LoanApprovalStatus> {
                                   ),
                                 )
                               : Text(
-                                  !checker ? "Accept Offer" : "Resubmit Offer",
-                                  style: TextStyle(color: Colors.white),
+                                  !checker
+                                      ? "Accept Offer".tr
+                                      : "Resubmit Offer".tr,
+                                  style: const TextStyle(color: Colors.white),
                                 )),
                       const SizedBox(height: 16),
                       MyButton(
@@ -290,18 +307,18 @@ class _LoanApprovalStatusState extends State<LoanApprovalStatus> {
                                     context: context,
                                     builder: (BuildContext context) {
                                       return AlertDialog(
-                                        title: const Text("Confirmation"),
-                                        content: const Text(
-                                            "Are you sure you want to reject the offer?"),
+                                        title: Text("Confirmation".tr),
+                                        content: Text(
+                                            "Are you sure you want to reject the offer?".tr),
                                         actions: [
                                           TextButton(
                                               onPressed: () =>
                                                   Navigator.pop(context, false),
-                                              child: const Text("No")),
+                                              child: Text("No".tr)),
                                           TextButton(
                                               onPressed: () =>
                                                   Navigator.pop(context, true),
-                                              child: const Text("Yes")),
+                                              child: Text("Yes".tr)),
                                         ],
                                       );
                                     },
@@ -321,9 +338,9 @@ class _LoanApprovalStatusState extends State<LoanApprovalStatus> {
                                     color: AppColors.primaryColor,
                                   ),
                                 )
-                              : const Text(
-                                  "Reject Offer",
-                                  style: TextStyle(color: Colors.white),
+                              : Text(
+                                  "Reject Offer".tr,
+                                  style: const TextStyle(color: Colors.white),
                                 )),
                     ],
                   ),

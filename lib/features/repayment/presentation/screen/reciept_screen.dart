@@ -109,7 +109,7 @@ class _ReceiptPageState extends State<ReceiptPage> {
                     // Bank Logo
                     Center(
                       child: Image.asset(
-                        'assets/images/rizq4.png',
+                        'assets/images/mizan1.png',
                         height: 100,
                       ),
                     ),

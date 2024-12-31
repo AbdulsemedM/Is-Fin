@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:ifb_loan/features/provider_loan_form/models/requested_products_model.dart';
 
 class ProductTable extends StatelessWidget {
@@ -24,10 +25,10 @@ class ProductTable extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Row(
             children: [
-              const Expanded(
+              Expanded(
                 flex: 2,
                 child: Text(
-                  'Name',
+                  'Name'.tr,
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
@@ -35,10 +36,10 @@ class ProductTable extends StatelessWidget {
                 width: 1,
                 color: Colors.black,
               ),
-              const Expanded(
+              Expanded(
                 flex: 3,
                 child: Text(
-                  'Desc.',
+                  'Desc.'.tr,
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
@@ -46,10 +47,10 @@ class ProductTable extends StatelessWidget {
                 width: 1,
                 color: Colors.black,
               ),
-              const Expanded(
+              Expanded(
                 flex: 2,
                 child: Text(
-                  'Qnt.',
+                  'Qnt.'.tr,
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
@@ -57,10 +58,10 @@ class ProductTable extends StatelessWidget {
                 width: 1,
                 color: Colors.black,
               ),
-              const Expanded(
+              Expanded(
                 flex: 3,
                 child: Text(
-                  'Price',
+                  'Price'.tr,
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
@@ -95,17 +96,23 @@ class ProductTable extends StatelessWidget {
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: const Text('Remove Product'),
-                          content: Text(
-                              'Are you sure you want to remove ${product.productName}?'),
+                          title: Text('Remove Product'.tr),
+                          content: Row(
+                            children: [
+                              Text('Are you sure you want to remove '.tr),
+                              Text(
+                                "(${product.productName})?",
+                              ),
+                            ],
+                          ),
                           actions: [
                             TextButton(
                               onPressed: () => Navigator.of(context).pop(false),
-                              child: const Text('Cancel'),
+                              child: Text('Cancel'.tr),
                             ),
                             TextButton(
                               onPressed: () => Navigator.of(context).pop(true),
-                              child: const Text('Remove'),
+                              child: Text('Remove'.tr),
                             ),
                           ],
                         );
@@ -173,7 +180,7 @@ class _ProductRowState extends State<ProductRow> {
                   children: [
                     const SizedBox(height: 8),
                     Text(
-                      'Description:',
+                      'Description'.tr,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
@@ -181,7 +188,7 @@ class _ProductRowState extends State<ProductRow> {
                     Text(widget.description),
                     const SizedBox(height: 16),
                     Text(
-                      'Quantity:',
+                      'Quantity'.tr,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
@@ -189,7 +196,7 @@ class _ProductRowState extends State<ProductRow> {
                     Text(widget.quantity),
                     const SizedBox(height: 16),
                     Text(
-                      'Unit of measurement:',
+                      'Unit of measurement'.tr,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
@@ -201,7 +208,7 @@ class _ProductRowState extends State<ProductRow> {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: const Text('Close'),
+                  child: Text('Close'.tr),
                 ),
               ],
             );
@@ -257,9 +264,9 @@ class _ProductRowState extends State<ProductRow> {
                   ),
                 ],
                 onChanged: widget.onProductPriceChange,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Price',
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
+                  hintText: 'Price'.tr,
                 ),
               ),
             ),

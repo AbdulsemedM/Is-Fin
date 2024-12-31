@@ -18,9 +18,24 @@ class ApiProvider {
     required this.errorInterceptor,
     required this.loggingInterceptor,
   });
+
+  bool _isAuthEndpoint(String endpoint) {
+    // Add all authentication-related endpoints here
+    return endpoint.contains('/api/auth/requestOtp') ||
+        endpoint.contains('/api/auth/signin') ||
+        endpoint.contains('/api/auth/signup');
+  }
+
+  Future<Map<String, String>> _getHeaders(String endpoint) async {
+    if (_isAuthEndpoint(endpoint)) {
+      return {'Content-Type': 'application/json'};
+    }
+    return await authInterceptor.getHeaders();
+  }
+
   Future<http.Response> getRequest(String endpoint) async {
     final url = Uri.parse('${ApiConstants.baseUrl}$endpoint');
-    final headers = await authInterceptor.getHeaders();
+    final headers = await _getHeaders(endpoint);
 
     try {
       final response = await http.get(url, headers: headers);
@@ -37,7 +52,7 @@ class ApiProvider {
   Future<http.Response> postRequest(
       String endpoint, Map<dynamic, dynamic> body) async {
     final url = Uri.parse('${ApiConstants.baseUrl}$endpoint');
-    final headers = await authInterceptor.getHeaders();
+    final headers = await _getHeaders(endpoint);
 
     try {
       final response = await http.post(
@@ -58,7 +73,7 @@ class ApiProvider {
   Future<http.Response> putRequest(
       String endpoint, Map<dynamic, dynamic> body) async {
     final url = Uri.parse('${ApiConstants.baseUrl}$endpoint');
-    final headers = await authInterceptor.getHeaders();
+    final headers = await _getHeaders(endpoint);
     try {
       final response =
           await http.put(url, headers: headers, body: jsonEncode(body));

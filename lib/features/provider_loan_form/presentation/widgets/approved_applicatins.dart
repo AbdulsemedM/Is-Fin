@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
 import 'package:ifb_loan/features/loan_approval_status/model/product_list_model.dart';
 import 'package:ifb_loan/features/provider_loan_form/presentation/widgets/provider_loan_list_widget.dart';
@@ -16,8 +17,8 @@ class _ApprovedApplicatinsState extends State<ApprovedApplicatins> {
   @override
   Widget build(BuildContext context) {
     return widget.loanformList.isEmpty
-        ? const Center(
-            child: Text("There are no loans found"),
+        ? Center(
+            child: Text("There are no loans found".tr),
           )
         : SizedBox(
             height: ScreenConfig.screenHeight * 0.77,

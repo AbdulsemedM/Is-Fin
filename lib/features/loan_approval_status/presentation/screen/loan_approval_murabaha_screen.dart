@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:ifb_loan/app/app_button.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
@@ -78,7 +79,7 @@ class _LoanApprovalMurabahaScreenState extends State<LoanApprovalMurabahaScreen>
       backgroundColor: Colors.orange[100],
       appBar: AppBar(
         title: Text(
-          'Murabaha Agreement',
+          'Murabaha Agreement'.tr,
           style: Theme.of(context).textTheme.displaySmall,
         ),
       ),
@@ -179,7 +180,7 @@ class _LoanApprovalMurabahaScreenState extends State<LoanApprovalMurabahaScreen>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Congratulations!",
+                "Congratulations!".tr,
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -188,7 +189,8 @@ class _LoanApprovalMurabahaScreenState extends State<LoanApprovalMurabahaScreen>
               ),
               const SizedBox(height: 12),
               Text(
-                "Your loan application from $supplierName has been approved by the product owner and the bank officials.",
+                "This loan application has been approved by the product owner and the bank officials."
+                    .tr,
                 style: const TextStyle(fontSize: 16),
               ),
               const SizedBox(height: 12),
@@ -196,35 +198,52 @@ class _LoanApprovalMurabahaScreenState extends State<LoanApprovalMurabahaScreen>
                 text: TextSpan(
                   style: const TextStyle(fontSize: 16, color: Colors.black),
                   children: [
-                    const TextSpan(
-                        text: "The total price as the owner gives is "),
+                    TextSpan(text: "The total price as the owner gives is ".tr),
                     TextSpan(
-                      text:
-                          "ETB ${NumberFormat('#,###.##').format(double.parse(originalPrice))}",
+                      text: "ETB ".tr,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.blue,
                       ),
                     ),
-                    const TextSpan(
+                    TextSpan(
+                      text: NumberFormat('#,###.##')
+                          .format(double.parse(originalPrice)),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue,
+                      ),
+                    ),
+                    TextSpan(
                         text:
-                            ", then the bank has added its benefits to the product price, making the final offer "),
+                            ", then the bank has added its benefits to the product price, making the final offer "
+                                .tr),
                     TextSpan(
-                      text:
-                          "ETB ${double.parse(markUp) + double.parse(originalPrice)}",
+                      text: "ETB ".tr,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.blue,
                       ),
                     ),
-                    TextSpan(text: " in $repaymentPlan repayment duration."),
+                    TextSpan(
+                      text: NumberFormat('#,###.##').format(
+                          double.parse(markUp) + double.parse(originalPrice)),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue,
+                      ),
+                    ),
+                    TextSpan(text: " in ".tr),
+                    TextSpan(text: repaymentPlan),
+                    TextSpan(text: "repayment duration.".tr),
                   ],
                 ),
               ),
               const SizedBox(height: 12),
-              const Text(
-                "Now, you must accept this offer and pick your product from the owner as soon as possible.",
-                style: TextStyle(fontSize: 16),
+              Text(
+                "Now, you must accept this offer and pick your product from the owner as soon as possible."
+                    .tr,
+                style: const TextStyle(fontSize: 16),
               ),
             ],
           ),
@@ -269,7 +288,7 @@ class _LoanApprovalMurabahaScreenState extends State<LoanApprovalMurabahaScreen>
                             ),
                             const SizedBox(height: 16),
                             Text(
-                              "Pick your product",
+                              "Pick your product".tr,
                               style: Theme.of(context)
                                   .textTheme
                                   .titleLarge
@@ -298,7 +317,8 @@ class _LoanApprovalMurabahaScreenState extends State<LoanApprovalMurabahaScreen>
                                     const SizedBox(width: 12),
                                     Expanded(
                                       child: Text(
-                                        "Are you sure you are ready to pick your product from $supplierName?",
+                                        "Are you sure you are ready to pick your product?"
+                                            .tr,
                                         style: const TextStyle(
                                           fontSize: 16,
                                           height: 1.5,
@@ -324,7 +344,8 @@ class _LoanApprovalMurabahaScreenState extends State<LoanApprovalMurabahaScreen>
                                     const SizedBox(width: 12),
                                     Expanded(
                                       child: Text(
-                                        "Please ensure you are at the product pickup location and ready to sign the Murabaha agreement.",
+                                        "Please ensure you are at the product pickup location and ready to sign the Murabaha agreement."
+                                            .tr,
                                         style: const TextStyle(
                                           fontSize: 16,
                                           height: 1.5,
@@ -363,7 +384,7 @@ class _LoanApprovalMurabahaScreenState extends State<LoanApprovalMurabahaScreen>
                                       ),
                                       const SizedBox(width: 8),
                                       Text(
-                                        "Not Ready",
+                                        "Not Ready".tr,
                                         style: TextStyle(
                                           color: Colors.grey.shade700,
                                           fontSize: 16,
@@ -385,18 +406,18 @@ class _LoanApprovalMurabahaScreenState extends State<LoanApprovalMurabahaScreen>
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                   ),
-                                  child: const Row(
+                                  child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Icon(
+                                      const Icon(
                                         Icons.check_rounded,
                                         color: Colors.white,
                                         size: 20,
                                       ),
-                                      SizedBox(width: 8),
+                                      const SizedBox(width: 8),
                                       Text(
-                                        "I'm Ready",
-                                        style: TextStyle(
+                                        "I'm Ready".tr,
+                                        style: const TextStyle(
                                           color: Colors.white,
                                           fontSize: 16,
                                         ),
@@ -441,9 +462,9 @@ class _LoanApprovalMurabahaScreenState extends State<LoanApprovalMurabahaScreen>
                       color: AppColors.primaryColor,
                     ),
                   )
-                : const Text(
-                    "Accept Offer",
-                    style: TextStyle(color: AppColors.bg1),
+                : Text(
+                    "Accept Offer".tr,
+                    style: const TextStyle(color: AppColors.bg1),
                   ),
           ),
         );

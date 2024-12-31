@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:ifb_loan/features/loan_approval_status/model/offered_products_price_model.dart';
 import 'package:intl/intl.dart';
 
@@ -23,12 +24,12 @@ class LoanStatusTable extends StatelessWidget {
         columnSpacing: 16,
         headingRowColor: WidgetStateColor.resolveWith(
             (states) => Colors.grey[300]!), // Light grey color for header
-        columns: const [
+        columns: [
           // DataColumn(label: Text('No.')),
-          DataColumn(label: Text('Name')),
-          DataColumn(label: Text('Quantity')),
-          DataColumn(label: Text('Total')),
-          DataColumn(label: Text('Actions')),
+          DataColumn(label: Text('Name'.tr)),
+          DataColumn(label: Text('Quantity'.tr)),
+          DataColumn(label: Text('Total'.tr)),
+          DataColumn(label: Text('Actions'.tr)),
         ],
         rows: List<DataRow>.generate(
           items.length,
@@ -44,21 +45,67 @@ class LoanStatusTable extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Product Name: ${item.productName}'),
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: 'Product Name: '.tr,
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                              TextSpan(
+                                text: item.productName,
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                            ],
+                          ),
+                        ),
                         const SizedBox(height: 8),
-                        Text(
-                            'Unit Price: ${NumberFormat('#,###').format(item.productPrice)}'),
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: 'Unit Price: '.tr,
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                              TextSpan(
+                                text: NumberFormat('#,###')
+                                    .format(item.productPrice),
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                            ],
+                          ),
+                        ),
                         const SizedBox(height: 8),
-                        Text('Quantity: ${item.quantity}'),
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(text: 'Quantity: '.tr),
+                              TextSpan(
+                                text: item.quantity.toString(),
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                            ],
+                          ),
+                        ),
                         const SizedBox(height: 8),
-                        Text(
-                            'Total: ${NumberFormat('#,###').format(item.productPrice * item.quantity)}'),
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(text: 'Total: '.tr),
+                              TextSpan(
+                                text: NumberFormat('#,###')
+                                    .format(item.productPrice * item.quantity),
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                     actions: [
                       TextButton(
                         onPressed: () => Navigator.pop(context),
-                        child: const Text('Close'),
+                        child: Text('Close'.tr),
                       ),
                     ],
                   ),
@@ -85,18 +132,18 @@ class LoanStatusTable extends StatelessWidget {
                           showDialog(
                             context: context,
                             builder: (context) => AlertDialog(
-                              title: const Text('Edit Quantity'),
+                              title: Text('Edit Quantity'.tr),
                               content: TextField(
                                 controller: quantityController,
                                 keyboardType: TextInputType.number,
-                                decoration: const InputDecoration(
-                                  labelText: 'Quantity',
+                                decoration: InputDecoration(
+                                  labelText: 'Quantity'.tr,
                                 ),
                               ),
                               actions: [
                                 TextButton(
                                   onPressed: () => Navigator.pop(context),
-                                  child: const Text('Cancel'),
+                                  child: Text('Cancel'.tr),
                                 ),
                                 TextButton(
                                   onPressed: () {
@@ -104,7 +151,7 @@ class LoanStatusTable extends StatelessWidget {
                                         item, quantityController.text);
                                     Navigator.pop(context);
                                   },
-                                  child: const Text('Save'),
+                                  child: Text('Save'.tr),
                                 ),
                               ],
                             ),
@@ -118,13 +165,24 @@ class LoanStatusTable extends StatelessWidget {
                           showDialog(
                             context: context,
                             builder: (context) => AlertDialog(
-                              title: const Text('Delete Product'),
-                              content: Text(
-                                  'Are you sure you want to delete ${item.productName}?'),
+                              title: Text('Delete Product'.tr),
+                              content: RichText(
+                                text: TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text:
+                                          'Are you sure you want to delete '.tr,
+                                    ),
+                                    TextSpan(
+                                      text: item.productName,
+                                    ),
+                                  ],
+                                ),
+                              ),
                               actions: [
                                 TextButton(
                                   onPressed: () => Navigator.pop(context),
-                                  child: const Text('Cancel'),
+                                  child: Text('Cancel'.tr),
                                 ),
                                 TextButton(
                                   onPressed: () {
@@ -134,7 +192,7 @@ class LoanStatusTable extends StatelessWidget {
                                   style: TextButton.styleFrom(
                                     foregroundColor: Colors.red,
                                   ),
-                                  child: const Text('Delete'),
+                                  child: Text('Delete'.tr),
                                 ),
                               ],
                             ),

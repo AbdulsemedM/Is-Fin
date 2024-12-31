@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class MurabahaDetailsCard extends StatelessWidget {
   final String purchaseCost;
@@ -30,15 +31,15 @@ class MurabahaDetailsCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildRow(context, 'Purchase Cost', purchaseCost),
+            _buildRow(context, 'Purchase Cost'.tr, purchaseCost),
             const Divider(),
-            _buildRow(context, 'Mark up', markup),
+            _buildRow(context, 'Mark up'.tr, markup),
             const Divider(),
-            _buildRow(context, 'Total Murabaha Price', totalPrice),
+            _buildRow(context, 'Total Murabaha Price'.tr, totalPrice),
             const Divider(),
-            _buildRow(context, 'Duration of Financing', duration),
+            _buildRow(context, 'Duration of Financing'.tr, duration),
             const Divider(),
-            _buildRow(context, 'Processing Fees', processingFees),
+            _buildRow(context, 'Processing Fees'.tr, processingFees),
           ],
         ),
       ),

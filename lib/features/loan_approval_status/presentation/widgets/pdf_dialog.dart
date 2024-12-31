@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:dio/dio.dart';
 import 'package:path_provider/path_provider.dart';
@@ -72,15 +73,15 @@ class _PdfDialogState extends State<PdfDialog> {
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('PDF saved to: $filePath'),
+          content: Text('PDF saved'.tr),
           backgroundColor: Colors.green,
           duration: const Duration(seconds: 3),
         ),
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Failed to download PDF'),
+        SnackBar(
+          content: Text('Failed to download PDF'.tr),
           backgroundColor: Colors.red,
           duration: Duration(seconds: 3),
         ),
@@ -120,7 +121,7 @@ class _PdfDialogState extends State<PdfDialog> {
                         _isLoading = false;
                       });
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text("Failed to load PDF.")),
+                        SnackBar(content: Text("Failed to load PDF.".tr)),
                       );
                     },
                   ),
@@ -168,9 +169,9 @@ class _PdfDialogState extends State<PdfDialog> {
                       ),
                     ),
                     icon: const Icon(Icons.close, size: 16),
-                    label: const Text(
-                      'Reject',
-                      style: TextStyle(fontSize: 12),
+                    label: Text(
+                      'Reject'.tr,
+                      style: const TextStyle(fontSize: 12),
                     ),
                   ),
                   ElevatedButton.icon(
@@ -183,9 +184,9 @@ class _PdfDialogState extends State<PdfDialog> {
                       ),
                     ),
                     icon: const Icon(Icons.check, size: 16),
-                    label: const Text(
-                      'Accept',
-                      style: TextStyle(fontSize: 12),
+                    label: Text(
+                      'Accept'.tr,
+                      style: const TextStyle(fontSize: 12),
                     ),
                   ),
                 ],

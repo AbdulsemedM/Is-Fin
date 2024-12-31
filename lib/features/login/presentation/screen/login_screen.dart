@@ -82,14 +82,14 @@ class _LoginScreenState extends State<LoginScreen> {
               Center(
                   child: SizedBox(
                       height: ScreenConfig.screenHeight * 0.2,
-                      child: Image.asset("assets/images/rizq4.png"))),
+                      child: Image.asset("assets/images/mizan1.png"))),
               SizedBox(height: ScreenConfig.screenHeight * 0.02),
               Text(
-                "Michu Mizan",
+                "Michu Mizan".tr,
                 style: Theme.of(context)
                     .textTheme
                     .displayLarge
-                    ?.copyWith(color: const Color.fromARGB(255, 155, 78, 2)),
+                    ?.copyWith(color: const Color.fromARGB(255, 219, 111, 3)),
               ),
               const SizedBox(
                 height: 10,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
 import 'package:ifb_loan/features/login/presentation/screen/login_screen.dart';
@@ -67,8 +68,8 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: SizedBox(
-                        height: ScreenConfig.screenHeight * 0.05,
-                        child: Image.asset("assets/images/Rizq.png"),
+                        height: ScreenConfig.screenHeight * 0.2,
+                        child: Image.asset("assets/images/mizan1.png"),
                       ),
                     ),
                   ],
@@ -79,7 +80,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 15.0),
                       child: Text(
-                        "Welcome to",
+                        "Welcome to".tr,
                         style: Theme.of(context)
                             .textTheme
                             .displayLarge
@@ -94,7 +95,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 15.0),
                       child: Text(
-                        "Michu Mizan",
+                        "Michu Mizan".tr,
                         style: Theme.of(context)
                             .textTheme
                             .displayLarge
