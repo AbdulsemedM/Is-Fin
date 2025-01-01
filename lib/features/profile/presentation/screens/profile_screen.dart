@@ -122,7 +122,7 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
                   (images.renewedId?.isNotEmpty ?? false) ? "Done" : null;
               if (renewedId != null) {
                 // print("renewedId");
-                kycStatus += 6.25;
+                kycStatus += 8;
                 addStep("Images Info.");
               }
 
@@ -130,7 +130,7 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
                   (images.tinNumber?.isNotEmpty ?? false) ? "Done" : null;
               if (tinNumber != null) {
                 // print("tinNumber");
-                kycStatus += 6.25;
+                // kycStatus += 6.25;
                 addStep("Images Info.");
               }
 
@@ -141,7 +141,7 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
                       : null;
               if (regCertificate != null) {
                 // print("regCertificate");
-                kycStatus += 6.25;
+                kycStatus += 9;
                 addStep("Images Info.");
               }
 
@@ -151,7 +151,7 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
                       : null;
               if (tradeLicense != null) {
                 // print("tradeLicense");
-                kycStatus += 6.25;
+                kycStatus += 8;
                 addStep("Images Info.");
               }
 
