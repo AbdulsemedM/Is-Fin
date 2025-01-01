@@ -232,6 +232,13 @@ class _UploadImagesState extends State<UploadImages> {
                 'id',
               ),
               ..._buildImageSection(
+                existsTinNumber == null
+                    ? 'Id. Back Page (Optional)'.tr
+                    : 'Id. Back Page (Optional)(Sent)'.tr,
+                _tinImageName,
+                'tin',
+              ),
+              ..._buildImageSection(
                 existsTradeLicense == null
                     ? 'Renewed Trade License'.tr
                     : "Renewed Trade License(Sent)".tr,
@@ -244,13 +251,6 @@ class _UploadImagesState extends State<UploadImages> {
                     : 'Commercial Registration Certificate(Sent)'.tr,
                 _registrationCertImageName,
                 'registrationCert', // Fix: Ensure the key matches getBase64StringByType
-              ),
-              ..._buildImageSection(
-                existsTinNumber == null
-                    ? 'TIN No. (Applicant\'s)'.tr
-                    : 'TIN No. (Applicant\'s)(Sent)'.tr,
-                _tinImageName,
-                'tin',
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
