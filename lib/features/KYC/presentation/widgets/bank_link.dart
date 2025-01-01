@@ -221,7 +221,7 @@ class _BankLinkState extends State<BankLink> {
                               ),
                             )
                           : Text(
-                              "Submit".tr,
+                              "Add".tr,
                               style: const TextStyle(
                                   color: Colors.white,
                                   // fontSize: 10,
@@ -285,11 +285,11 @@ class _BankLinkState extends State<BankLink> {
                               )
                             : !accountSent
                                 ? Text(
-                                    "Add".tr,
+                                    "Submit".tr,
                                     style: TextStyle(color: Colors.white),
                                   )
                                 : Text(
-                                    "Add".tr,
+                                    "Submit".tr,
                                     style: TextStyle(color: Colors.white),
                                   )),
                   ),
