@@ -66,7 +66,11 @@ class _AllApplicationsState extends State<AllApplications> {
                                           : transaction.status ==
                                                   "AGREEMENT_ACCEPTED"
                                               ? Colors.green
-                                              : Colors.red,
+                                              : transaction.status ==
+                                                      "LOAN_ACCEPTED"
+                                                  ? const Color.fromARGB(
+                                                      255, 33, 243, 191)
+                                                  : Colors.red,
                 );
               }).toList(),
             ),

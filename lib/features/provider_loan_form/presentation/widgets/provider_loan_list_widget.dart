@@ -42,6 +42,21 @@ class ProviderLoanListWidget extends StatelessWidget {
                         id: id,
                         name: name,
                       )));
+        } else if (status == "LOAN_ACCEPTED") {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: Text('Loan Accepted'.tr),
+              content: Text('The loan application is now closed'.tr),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('Close'.tr))
+              ],
+            ),
+          );
         } else if (status == "ACCEPTED") {
           showDialog(
             context: context,
