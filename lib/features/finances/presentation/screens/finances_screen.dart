@@ -158,7 +158,7 @@ class _FinancesScreenState extends State<FinancesScreen> {
           child: Row(
             children: [
               Text(
-                "Overall loan History".tr,
+                "Active Loans".tr,
                 style: Theme.of(context)
                     .textTheme
                     .displaySmall!
@@ -218,6 +218,7 @@ class _FinancesScreenState extends State<FinancesScreen> {
                                       MaterialPageRoute(
                                           builder: (context) =>
                                               LoanRepaymentScreen(
+                                                  loanStatus: loan.loanStatus,
                                                   penalty: loan.penaltyAmount,
                                                   outStandingAmount:
                                                       loan.outstandingAmount,
@@ -231,6 +232,7 @@ class _FinancesScreenState extends State<FinancesScreen> {
                                   .then((value) => fetchLoans());
                             },
                             child: LoanCard(
+                              loanStatus: loan.loanStatus,
                               penalty: loan.penaltyAmount,
                               outStandingAmount: loan.outstandingAmount,
                               loanTitle: loan.name, // Dynamic title
@@ -238,7 +240,8 @@ class _FinancesScreenState extends State<FinancesScreen> {
                                   loan.productQuantity, // Dynamic description
                               amount: loan.totalPayableAmount, // Dynamic amount
                               // lender: loan.lenderName, // Dynamic lender name
-                              backgroundColor: _getBackgroundColor(index),
+                              backgroundColor:
+                                  _getBackgroundColor(loan.loanStatus),
                               image: _getLoanImage(
                                   loan.sector), // Dynamic image based on type
                             ),
@@ -251,9 +254,9 @@ class _FinancesScreenState extends State<FinancesScreen> {
     );
   }
 
-  Color _getBackgroundColor(int index) {
+  Color _getBackgroundColor(String status) {
     // Alternate colors for the loan cards
-    return index % 2 == 0 ? Colors.blue.shade100 : Colors.orange.shade100;
+    return status == "ACTIVE" ? Colors.blue.shade100 : Colors.orange.shade100;
   }
 
   Image _getLoanImage(String type) {

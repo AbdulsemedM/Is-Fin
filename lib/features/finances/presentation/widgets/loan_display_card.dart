@@ -11,6 +11,7 @@ class LoanCard extends StatelessWidget {
   final Widget image;
   final String penalty;
   final String outStandingAmount;
+  final String loanStatus;
 
   const LoanCard({
     super.key,
@@ -23,6 +24,7 @@ class LoanCard extends StatelessWidget {
     required this.image,
     required this.penalty,
     required this.outStandingAmount,
+    required this.loanStatus,
   });
 
   @override
@@ -43,12 +45,51 @@ class LoanCard extends StatelessWidget {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(loanTitle,
-                style: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
-                )),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(loanTitle,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    )),
+                if (loanStatus != "ACTIVE")
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: Colors.red.shade100,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: const Text(
+                      'Inactive',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.red,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                if (loanStatus == "ACTIVE")
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: Colors.green.shade100,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: const Text(
+                      'Active',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.green,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+              ],
+            ),
             const SizedBox(height: 4),
             Text(
               "Quantity: ${NumberFormat('#,###').format(double.parse(loanDescription))}",

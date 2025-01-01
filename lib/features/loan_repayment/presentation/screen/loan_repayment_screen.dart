@@ -18,6 +18,7 @@ class LoanRepaymentScreen extends StatefulWidget {
   final String productQuantity;
   final String penalty;
   final String outStandingAmount;
+  final String loanStatus;
   const LoanRepaymentScreen(
       {super.key,
       required this.name,
@@ -26,7 +27,8 @@ class LoanRepaymentScreen extends StatefulWidget {
       required this.totalPayableAmount,
       required this.productQuantity,
       required this.penalty,
-      required this.outStandingAmount});
+      required this.outStandingAmount,
+      required this.loanStatus});
 
   @override
   State<LoanRepaymentScreen> createState() => _LoanRepaymentScreenState();
@@ -71,13 +73,16 @@ class _LoanRepaymentScreenState extends State<LoanRepaymentScreen> {
                   // );
                 },
                 child: LoanCard(
+                  loanStatus: widget.loanStatus,
                   penalty: widget.penalty,
                   outStandingAmount: widget.outStandingAmount,
                   loanTitle: widget.name,
                   loanDescription: widget.productQuantity,
                   amount: widget.totalPayableAmount,
                   // lender: 'ABC General Trading',
-                  backgroundColor: Colors.blue.shade100,
+                  backgroundColor: widget.loanStatus == "ACTIVE"
+                      ? Colors.blue.shade100
+                      : Colors.orange.shade100,
                   image: widget.sector.toLowerCase() == "electronics"
                       ? Image.asset(
                           'assets/images/elec.png', // replace with your image asset
@@ -94,33 +99,34 @@ class _LoanRepaymentScreenState extends State<LoanRepaymentScreen> {
                             ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                child: MyButton(
-                    backgroundColor: AppColors.primaryDarkColor,
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => PaymentPage(
-                            loanId: widget.id,
+              if (widget.loanStatus == "ACTIVE")
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: MyButton(
+                      backgroundColor: AppColors.primaryDarkColor,
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PaymentPage(
+                              loanId: widget.id,
+                            ),
                           ),
-                        ),
-                      ).then((value) {
-                        print('value');
-                        context
-                            .read<LoanRepaymentBloc>()
-                            .add(GetRepaymentHistoryEvent(loanId: widget.id));
-                      });
-                    },
-                    buttonText: Text("Pay",
-                        style: Theme.of(context)
-                            .textTheme
-                            .displaySmall
-                            ?.copyWith(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600))),
-              ),
+                        ).then((value) {
+                          print('value');
+                          context
+                              .read<LoanRepaymentBloc>()
+                              .add(GetRepaymentHistoryEvent(loanId: widget.id));
+                        });
+                      },
+                      buttonText: Text("Pay",
+                          style: Theme.of(context)
+                              .textTheme
+                              .displaySmall
+                              ?.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600))),
+                ),
               const SizedBox(height: 16),
               Row(
                 children: [

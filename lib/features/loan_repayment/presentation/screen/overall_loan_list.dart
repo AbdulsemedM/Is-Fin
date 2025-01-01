@@ -80,32 +80,32 @@ class _OverallLoanListState extends State<OverallLoanList> {
                 final loan = loans[index];
                 return GestureDetector(
                   onTap: () {
-                    if (loan.loanStatus == 'ACTIVE') {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => LoanRepaymentScreen(
-                            penalty: loan.penaltyAmount,
-                            outStandingAmount: loan.outstandingAmount,
-                            name: loan.name,
-                            id: loan.id,
-                            sector: loan.sector,
-                            totalPayableAmount: loan.totalPayableAmount,
-                            productQuantity: loan.productQuantity,
-                          ),
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LoanRepaymentScreen(
+                          loanStatus: loan.loanStatus,
+                          penalty: loan.penaltyAmount,
+                          outStandingAmount: loan.outstandingAmount,
+                          name: loan.name,
+                          id: loan.id,
+                          sector: loan.sector,
+                          totalPayableAmount: loan.totalPayableAmount,
+                          productQuantity: loan.productQuantity,
                         ),
-                      ).then((value) => fetchLoans());
-                    }
+                      ),
+                    ).then((value) => fetchLoans());
                   },
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: LoanCard(
+                      loanStatus: loan.loanStatus,
                       penalty: loan.penaltyAmount,
                       outStandingAmount: loan.outstandingAmount,
                       loanTitle: loan.name,
                       loanDescription: loan.productQuantity,
                       amount: loan.totalPayableAmount,
-                      backgroundColor: _getBackgroundColor(index),
+                      backgroundColor: _getBackgroundColor(loan.loanStatus),
                       image: _getLoanImage(loan.sector),
                     ),
                   ),
@@ -118,9 +118,9 @@ class _OverallLoanListState extends State<OverallLoanList> {
     );
   }
 
-  Color _getBackgroundColor(int index) {
+  Color _getBackgroundColor(String status) {
     // Alternate colors for the loan cards
-    return index % 2 == 0 ? Colors.blue.shade100 : Colors.orange.shade100;
+    return status == "ACTIVE" ? Colors.blue.shade100 : Colors.orange.shade100;
   }
 
   Image _getLoanImage(String type) {
