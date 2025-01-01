@@ -45,7 +45,8 @@ class ApiProvider {
       return response;
     } catch (error) {
       loggingInterceptor.logError(error);
-      rethrow;
+      throw "Service not available";
+      // rethrow;
     }
   }
 
@@ -66,7 +67,8 @@ class ApiProvider {
       return response;
     } catch (error) {
       loggingInterceptor.logError(error);
-      rethrow;
+      throw "Service not available";
+      // rethrow;
     }
   }
 
@@ -83,7 +85,8 @@ class ApiProvider {
       return response;
     } catch (error) {
       loggingInterceptor.logError(error);
-      rethrow;
+      throw "Service not available";
+      // rethrow;
     }
   }
 }
