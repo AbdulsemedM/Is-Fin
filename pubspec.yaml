@@ -58,7 +58,7 @@ dependencies:
   image_gallery_saver_plus: ^3.0.5
   # image_gallery_saver: ^2.0.3
   permission_handler: ^10.0.0
-  # device_info_plus: ^11.2.0
+  swipe_refresh: ^1.1.2
 
 dev_dependencies:
   flutter_test:

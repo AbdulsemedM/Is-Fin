@@ -8,7 +8,7 @@ final class HomeInitial extends HomeState {}
 final class CreditScoreFetchedLoading extends HomeState {}
 
 final class CreditScoreFetchedSuccess extends HomeState {
-  final String score;
+  final CreditScoreModel score;
 
   CreditScoreFetchedSuccess({required this.score});
 }

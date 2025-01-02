@@ -205,7 +205,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 return SizedBox(
                   height: 250,
                   child: MultipleRangeGaugeWidget(
-                    value: double.parse(state.score),
+                    value: state.score.overallScore,
                   ),
                 );
               } else if (state is CreditScoreFetchedFailure) {
@@ -237,8 +237,12 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           BlocBuilder<HomeBloc, HomeState>(
             builder: (context, state) {
-              final score =
-                  state is CreditScoreFetchedSuccess ? state.score : '0';
+              final score = state is CreditScoreFetchedSuccess
+                  ? state.score.overallScore
+                  : '0';
+              final amountAllowed = state is CreditScoreFetchedSuccess
+                  ? state.score.amountAllowed
+                  : '0';
 
               return Container(
                 padding:
@@ -284,11 +288,84 @@ class _HomeScreenState extends State<HomeScreen> {
                               ?.copyWith(fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          score,
+                          score.toString(),
                           style: Theme.of(context)
                               .textTheme
                               .titleMedium
                               ?.copyWith(fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 12, horizontal: 16),
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  Colors.orange.shade100,
+                                  Colors.orange.shade50
+                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              ),
+                              borderRadius: BorderRadius.circular(12),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.orange.withOpacity(0.1),
+                                  blurRadius: 8,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ],
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Your Purchase Limit".tr,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.copyWith(
+                                        color: Colors.orange.shade700,
+                                      ),
+                                ),
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.account_balance_wallet,
+                                      color: Colors.orange.shade700,
+                                      size: 20,
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      amountAllowed.toString(),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineSmall
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.orange.shade900,
+                                          ),
+                                    ),
+                                    Text(
+                                      " ETB".tr,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.orange.shade700,
+                                          ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -300,8 +377,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 kycStatus == "REJECTED"
                             ? 'Complete your KYC to achieve a good credit score. A verified KYC helps improve your financial profile!'
                                 .tr
-                            : 'Your KYC is verified. A verified KYC helps improve your financial profile!'
-                                .tr,
+                            : 'Your KYC is verified!'.tr,
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
                             .textTheme
@@ -318,7 +394,7 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 HomeIconWidget(
-                  title: 'Loan App'.tr,
+                  title: 'Apply'.tr,
                   icon: Icons.account_balance_wallet,
                   iconColor: Colors.blue,
                   onClicked: () {

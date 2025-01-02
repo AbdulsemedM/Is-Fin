@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ifb_loan/features/home/data/repository/home_repository.dart';
+import 'package:ifb_loan/features/home/models/creadit_score_model.dart';
 
 part 'home_event.dart';
 part 'home_state.dart';

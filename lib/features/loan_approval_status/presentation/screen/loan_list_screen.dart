@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_segment/flutter_advanced_segment.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,6 +11,7 @@ import 'package:ifb_loan/features/loan_approval_status/model/product_list_model.
 import 'package:ifb_loan/features/loan_approval_status/presentation/widgets/all_applications.dart';
 import 'package:ifb_loan/features/loan_approval_status/presentation/widgets/approved_applicatins.dart';
 import 'package:ifb_loan/features/loan_approval_status/presentation/widgets/new_applications.dart';
+import 'package:swipe_refresh/swipe_refresh.dart';
 
 class LoanListScreen extends StatefulWidget {
   const LoanListScreen({super.key});
@@ -19,6 +22,7 @@ class LoanListScreen extends StatefulWidget {
 
 class _LoanListScreenState extends State<LoanListScreen> {
   final _selectedSegment = ValueNotifier('new');
+  final _controller = StreamController<SwipeRefreshState>.broadcast();
   List<StatusProductListModel> _loanList = [];
   bool isLoading = false;
 
@@ -28,8 +32,17 @@ class _LoanListScreenState extends State<LoanListScreen> {
     _fetchLoanList();
   }
 
-  void _fetchLoanList() {
+  void _fetchLoanList() async {
     context.read<LoanApprovalStatusBloc>().add(FetchLoanApprovalStatusList());
+    // Complete the refresh indicator after a short delay
+    await Future.delayed(const Duration(milliseconds: 500));
+    _controller.sink.add(SwipeRefreshState.hidden);
+  }
+
+  @override
+  void dispose() {
+    _controller.close();
+    super.dispose();
   }
 
   @override
@@ -62,10 +75,12 @@ class _LoanListScreenState extends State<LoanListScreen> {
             displaySnack(context, state.errorMessage, Colors.red);
           }
         },
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
-            child: Column(
+        child: SwipeRefresh.material(
+          stateStream: _controller.stream,
+          onRefresh: _fetchLoanList,
+          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
+          children: [
+            Column(
               children: [
                 Text(
                   "Fill a Form".tr,
@@ -138,7 +153,7 @@ class _LoanListScreenState extends State<LoanListScreen> {
                 ),
               ],
             ),
-          ),
+          ],
         ),
       ),
     );

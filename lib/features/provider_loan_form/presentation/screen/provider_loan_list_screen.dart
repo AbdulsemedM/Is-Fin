@@ -9,6 +9,8 @@ import 'package:ifb_loan/features/provider_loan_form/bloc/provider_loan_form_blo
 import 'package:ifb_loan/features/provider_loan_form/presentation/widgets/all_applications.dart';
 import 'package:ifb_loan/features/provider_loan_form/presentation/widgets/approved_applicatins.dart';
 import 'package:ifb_loan/features/provider_loan_form/presentation/widgets/new_applications.dart';
+import 'package:swipe_refresh/swipe_refresh.dart';
+import 'dart:async';
 // import 'package:ifb_loan/features/provider_loan_form/domain/entities/loan_application.dart';
 // import 'package:ifb_loan/features/provider_loan_form/presentation/bloc/provider_loan_bloc.dart';
 
@@ -21,13 +23,27 @@ class ProviderLoanListScreen extends StatefulWidget {
 
 class _ProviderLoanListScreenState extends State<ProviderLoanListScreen> {
   final _selectedSegment = ValueNotifier('new');
+  final _controller = StreamController<SwipeRefreshState>.broadcast();
   List<StatusProductListModel> loanApplications = [];
   bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
+    _fetchLoanList();
+  }
+
+  void _fetchLoanList() async {
     context.read<ProviderLoanFormBloc>().add(FetchProviderLoanFormList());
+    // Complete the refresh indicator after a short delay
+    await Future.delayed(const Duration(milliseconds: 500));
+    _controller.sink.add(SwipeRefreshState.hidden);
+  }
+
+  @override
+  void dispose() {
+    _controller.close();
+    super.dispose();
   }
 
   @override
@@ -43,8 +59,6 @@ class _ProviderLoanListScreenState extends State<ProviderLoanListScreen> {
             loanApplications = state.productList;
             loanApplications
                 .sort((a, b) => b.requestedAt.compareTo(a.requestedAt));
-            // print("loanApplications.length");
-            // print(loanApplications.length);
             isLoading = false;
           });
         } else if (state is ProviderLoanFormListFetchedFailure) {
@@ -63,11 +77,13 @@ class _ProviderLoanListScreenState extends State<ProviderLoanListScreen> {
         ),
         body: isLoading
             ? const Center(child: CircularProgressIndicator())
-            : SingleChildScrollView(
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
-                  child: Column(
+            : SwipeRefresh.material(
+                stateStream: _controller.stream,
+                onRefresh: _fetchLoanList,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
+                children: [
+                  Column(
                     children: [
                       Text(
                         "Fill a Form".tr,
@@ -142,7 +158,7 @@ class _ProviderLoanListScreenState extends State<ProviderLoanListScreen> {
                       ),
                     ],
                   ),
-                ),
+                ],
               ),
       ),
     );
