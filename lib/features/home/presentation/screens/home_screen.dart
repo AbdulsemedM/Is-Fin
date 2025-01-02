@@ -15,6 +15,7 @@ import 'package:ifb_loan/features/home/presentation/widgets/slider_widget.dart';
 // import 'package:ifb_loan/features/home/presentation/widgets/balance.dart';
 import 'package:ifb_loan/features/loan_application/presentation/screen/loan_application_screen.dart';
 import 'package:ifb_loan/features/provider_loan_form/presentation/screen/provider_loan_list_screen.dart';
+import 'package:intl/intl.dart';
 // import 'package:ifb_loan/features/settings/presentation/screens/settings_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -288,7 +289,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ?.copyWith(fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          score.toString(),
+                          NumberFormat("#,##0").format(double.tryParse(score.toString()) ?? 0),
                           style: Theme.of(context)
                               .textTheme
                               .titleMedium

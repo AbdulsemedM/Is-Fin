@@ -47,6 +47,7 @@ import 'package:ifb_loan/features/splash_screen/splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
+  
   WidgetsFlutterBinding.ensureInitialized();
   final bool isFirstTime = await _checkFirstTime();
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(

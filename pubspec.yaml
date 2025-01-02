@@ -59,6 +59,7 @@ dependencies:
   # image_gallery_saver: ^2.0.3
   permission_handler: ^10.0.0
   swipe_refresh: ^1.1.2
+  onesignal_flutter: ^3.5.1
 
 dev_dependencies:
   flutter_test:

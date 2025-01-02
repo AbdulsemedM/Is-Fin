@@ -16,6 +16,7 @@ class HomeRepository {
       }
       return CreditScoreModel.fromMap(data['response']);
     } catch (e) {
+      print(e.toString());
       rethrow;
     }
   }

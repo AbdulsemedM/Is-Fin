@@ -33,9 +33,13 @@ class CreditScoreModel {
 
   factory CreditScoreModel.fromMap(Map<String, dynamic> map) {
     return CreditScoreModel(
-      overallScore: map['overallScore'] as double,
+      overallScore: (map['overallScore'] is int)
+          ? (map['overallScore'] as int).toDouble()
+          : map['overallScore'] as double,
       remark: map['remark'] as String,
-      amountAllowed: map['amountAllowed'] as double,
+      amountAllowed: (map['amountAllowed'] is int)
+          ? (map['amountAllowed'] as int).toDouble()
+          : map['amountAllowed'] as double,
     );
   }
 
