@@ -7,6 +7,7 @@ import 'package:ifb_loan/app/utils/app_theme.dart';
 import 'package:ifb_loan/app/utils/dialog_utils.dart';
 import 'package:ifb_loan/features/signup/bloc/signup_bloc.dart';
 import 'package:ifb_loan/features/signup/presentation/screen/signup_otp.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -24,6 +25,8 @@ class _SignupScreenState extends State<SignupScreen> {
   bool obscurePassword1 = true;
   bool obscurePassword2 = true;
   GlobalKey<FormState> myKey = GlobalKey();
+  bool termsAccepted = false;
+
   @override
   Widget build(BuildContext context) {
     return
@@ -289,6 +292,65 @@ class _SignupScreenState extends State<SignupScreen> {
                           },
                         ),
                         SizedBox(
+                          height: ScreenConfig.screenHeight * 0.02,
+                        ),
+                        Row(
+                          children: [
+                            Checkbox(
+                              value: termsAccepted,
+                              onChanged: (value) {
+                                setState(() {
+                                  termsAccepted = value ?? false;
+                                });
+                              },
+                            ),
+                            Expanded(
+                              child: Wrap(
+                                children: [
+                                  Text(
+                                    "I agree to the ".tr,
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      // Replace with your terms URL
+                                      launchUrl(Uri.parse(
+                                          'https://michumizan.com/privacy-policy'));
+                                    },
+                                    child: Text(
+                                      "Terms".tr,
+                                      style: TextStyle(
+                                        color: AppColors.primaryDarkColor,
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                    ),
+                                  ),
+                                  Text(
+                                    " and ".tr,
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      // Replace with your conditions URL
+                                      launchUrl(Uri.parse(
+                                          'https://michumizan.com/privacy-policy'));
+                                    },
+                                    child: Text(
+                                      "Conditions".tr,
+                                      style: TextStyle(
+                                        color: AppColors.primaryDarkColor,
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
                           height: ScreenConfig.screenHeight * 0.04,
                         ),
                         MyButton(
@@ -298,20 +360,20 @@ class _SignupScreenState extends State<SignupScreen> {
                               ? AppColors.iconColor
                               : AppColors.primaryDarkColor,
                           onPressed: loading
-                              ? () {} // Disable button when loading is true
+                              ? () {} // Disable button when loading or terms not accepted
                               : () {
                                   if (myKey.currentState!.validate()) {
-                                    // context.read<SignupBloc>().add(SignupSent(
-                                    //       fullName: fullNameController.text,
-                                    //       phoneNumber:
-                                    //           phoneNumberController.text,
-                                    //       password: passwordController.text,
-                                    //       // email: emailController.text,
-                                    //     ));
-                                    context.read<SignupBloc>().add(SendOtp(
-                                          phoneNumber:
-                                              phoneNumberController.text,
-                                        ));
+                                    if (termsAccepted) {
+                                      context.read<SignupBloc>().add(SendOtp(
+                                            phoneNumber:
+                                                phoneNumberController.text,
+                                          ));
+                                    } else {
+                                      displaySnack(
+                                          context,
+                                          "You must accept the terms and conditions to proceed",
+                                          Colors.red);
+                                    }
                                   }
                                 },
                           buttonText: loading
