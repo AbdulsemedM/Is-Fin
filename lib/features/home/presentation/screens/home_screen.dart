@@ -325,7 +325,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "Your Purchase Limit".tr,
+                                  "Purchase Limit".tr,
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyMedium
@@ -394,29 +394,6 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 HomeIconWidget(
-                  title: 'Apply'.tr,
-                  icon: Icons.account_balance_wallet,
-                  iconColor: Colors.blue,
-                  onClicked: () {
-                    if (kycStatus == "null" ||
-                        kycStatus == "Not Filled" ||
-                        kycStatus == "IN_PROGRESS" ||
-                        kycStatus == "REJECTED") {
-                      displaySnack(
-                          context,
-                          "Please fill KYC before going to loan applications."
-                              .tr,
-                          Colors.red);
-                    } else {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  const LoanApplicationScreen()));
-                    }
-                  },
-                ),
-                HomeIconWidget(
                   title: 'Verify'.tr,
                   icon: Icons.fingerprint,
                   iconColor: Colors.orange,
@@ -440,6 +417,29 @@ class _HomeScreenState extends State<HomeScreen> {
                         MaterialPageRoute(
                             builder: (context) =>
                                 const BusinessPartnersScreen()));
+                  },
+                ),
+                HomeIconWidget(
+                  title: 'Apply'.tr,
+                  icon: Icons.account_balance_wallet,
+                  iconColor: Colors.blue,
+                  onClicked: () {
+                    if (kycStatus == "null" ||
+                        kycStatus == "Not Filled" ||
+                        kycStatus == "IN_PROGRESS" ||
+                        kycStatus == "REJECTED") {
+                      displaySnack(
+                          context,
+                          "Please fill KYC before going to loan applications."
+                              .tr,
+                          Colors.red);
+                    } else {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const LoanApplicationScreen()));
+                    }
                   },
                 ),
                 HomeIconWidget(
