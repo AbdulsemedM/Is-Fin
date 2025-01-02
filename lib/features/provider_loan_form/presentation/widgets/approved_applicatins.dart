@@ -52,7 +52,11 @@ class _ApprovedApplicatinsState extends State<ApprovedApplicatins> {
                                               : transaction.status ==
                                                       "LOAN_ACCEPTED"
                                                   ? Icons.check_circle
-                                                  : Icons.close,
+                                                  : transaction.status ==
+                                                          "CLOSED"
+                                                      ? Icons
+                                                          .auto_awesome_outlined
+                                                      : Icons.close,
                   iconColor: transaction.status == "PENDING"
                       ? Colors.orange
                       : transaction.status == "ACCEPTED"
@@ -72,7 +76,10 @@ class _ApprovedApplicatinsState extends State<ApprovedApplicatins> {
                                                       "LOAN_ACCEPTED"
                                                   ? const Color.fromARGB(
                                                       255, 33, 243, 191)
-                                                  : Colors.red,
+                                                  : transaction.status ==
+                                                          "CLOSED"
+                                                      ? Colors.indigo
+                                                      : Colors.red,
                 );
               }).toList(),
             ),

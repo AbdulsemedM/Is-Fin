@@ -50,7 +50,9 @@ class _AllLoanApplicationsState extends State<AllLoanApplications> {
                                         ? Icons.done
                                         : transaction.status == "LOAN_ACCEPTED"
                                             ? Icons.check_circle
-                                            : Icons.close,
+                                            : transaction.status == "CLOSED"
+                                                ? Icons.auto_awesome_outlined
+                                                : Icons.close,
             iconColor: transaction.status == "PENDING"
                 ? Colors.orange
                 : transaction.status == "ACCEPTED"
@@ -66,8 +68,11 @@ class _AllLoanApplicationsState extends State<AllLoanApplications> {
                                     : transaction.status == "AGREEMENT_ACCEPTED"
                                         ? Colors.green
                                         : transaction.status == "LOAN_ACCEPTED"
-                                            ? const Color.fromARGB(255, 33, 243, 191)
-                                            : Colors.red,
+                                            ? const Color.fromARGB(
+                                                255, 33, 243, 191)
+                                            : transaction.status == "CLOSED"
+                                                ? Colors.indigo
+                                                : Colors.red,
           );
         }).toList(),
       ),

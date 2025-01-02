@@ -144,6 +144,21 @@ class LoanListWidget extends StatelessWidget {
               ],
             ),
           );
+        } else if (status == "CLOSED") {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: Text('Closed'.tr),
+              content: Text('The loan application is closed.'.tr),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('Close'.tr))
+              ],
+            ),
+          );
         }
       },
       child: Container(
