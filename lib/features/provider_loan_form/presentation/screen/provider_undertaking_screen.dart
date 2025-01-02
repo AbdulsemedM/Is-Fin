@@ -77,7 +77,25 @@ class _ProviderUndertakingScreenState extends State<ProviderUndertakingScreen> {
                   ),
                   const SizedBox(height: 20),
                   const Text(
-                    'Step 1: Sign Agreements',
+                    'Step 1: Earmark the product',
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  const Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                    child: Text(
+                      "Mark the product requested for a loan to ensure it's reserved for the customer until the loan process is completed.",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 16, color: Colors.black54),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  const Text(
+                    'Step 2: Sign Agreements',
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
@@ -98,7 +116,7 @@ class _ProviderUndertakingScreenState extends State<ProviderUndertakingScreen> {
                   // Step 2: Product Transfer
                   const SizedBox(height: 20),
                   const Text(
-                    'Step 2: Transfer Product',
+                    'Step 3: Transfer Product',
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
@@ -127,21 +145,114 @@ class _ProviderUndertakingScreenState extends State<ProviderUndertakingScreen> {
                     onPressed: loading
                         ? () {}
                         : () async {
-                            // final result1 = await _showPdfDialog(
-                            //     context, widget.agentAgreementDocument);
-                            // if (result1) {
-                            final result2 = await _showPdfDialog(
-                                context, widget.undertakingAgreementtDocument);
-                            if (result2) {
-                              context.read<ProviderLoanFormBloc>().add(
-                                  AcceptUnderTakingAndagentAgreement(
-                                      widget.id, "APPROVED"));
-                            } else {
-                              setState(() {
-                                loading = false;
-                              });
+                            final result1 = await showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (context) => AlertDialog(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      title: Row(
+                                        children: [
+                                          Container(
+                                            padding: const EdgeInsets.all(8),
+                                            decoration: BoxDecoration(
+                                              color: Colors.orange[100],
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                            child: const Icon(Icons.label_important_outline,
+                                                color: Colors.deepOrange),
+                                          ),
+                                          const SizedBox(width: 12),
+                                          const Expanded(
+                                            child: Text(
+                                              "Earmark Product",
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      content: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Lottie.asset(
+                                            'assets/animation/earmark1.json',
+                                            height: 150,
+                                            repeat: true,
+                                          ),
+                                          const SizedBox(height: 16),
+                                          const Text(
+                                            "Have you earmarked the product?",
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 8),
+                                          const Text(
+                                            "Please ensure the product is reserved before proceeding with the loan process.",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              color: Colors.black54,
+                                              height: 1.3,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context, false),
+                                          child: Text(
+                                            "Cancel",
+                                            style: TextStyle(
+                                              color: Colors.grey[600],
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ),
+                                        ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.orange,
+                                            foregroundColor: Colors.white,
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 20,
+                                              vertical: 12,
+                                            ),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                          ),
+                                          onPressed: () =>
+                                              Navigator.pop(context, true),
+                                          child: const Text(
+                                            "Yes, Proceed",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                        ),
+                                      ],
+                                      actionsPadding: const EdgeInsets.fromLTRB(
+                                          16, 0, 16, 16),
+                                    ));
+                            if (result1) {
+                              final result2 = await _showPdfDialog(context,
+                                  widget.undertakingAgreementtDocument);
+                              if (result2) {
+                                context.read<ProviderLoanFormBloc>().add(
+                                    AcceptUnderTakingAndagentAgreement(
+                                        widget.id, "APPROVED"));
+                              } else {
+                                setState(() {
+                                  loading = false;
+                                });
+                              }
                             }
-                            // }
                           },
                     buttonText: loading
                         ? SizedBox(

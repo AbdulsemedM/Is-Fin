@@ -52,7 +52,7 @@ class LocalizationString extends Translations {
               "Complete your KYC to achieve a good credit score. A verified KYC helps improve your financial profile!",
           "Your KYC is verified. A verified KYC helps improve your financial profile!":
               "Your KYC is verified. A verified KYC helps improve your financial profile!",
-          "Loan App": "Loan App",
+          "Apply": "Apply",
           "Please fill KYC before going to loan applications.":
               "Please fill KYC before going to loan applications.",
           "Verify": "Verify",
@@ -413,7 +413,7 @@ class LocalizationString extends Translations {
               "ጥሩ የብድር ነጥብ ለማግኘት የእርስዎን KYC ያጠናቅቁ። የተረጋገጠ KYC የእርስዎን የፋይናንስ መገለጫ ለማሻሻል ይረዳል!",
           "Your KYC is verified. A verified KYC helps improve your financial profile!":
               "የእርስዎ KYC የተረጋገጠ ነጥብ ነው። የተረጋገጠ KYC የእርስዎን የፋይናንስ መገለጫ ለማሻሻል ይረዳል!",
-          "Loan App": "ብድር ማመልከቻ",
+          "Apply": "አመልክት",
 
           "Please fill KYC before going to loan applications.":
               "ወደ ብድር ማመልከቻዎች ከመሄድዎ በፊት እባክዎን KYC ይሙሉ",
@@ -760,7 +760,7 @@ class LocalizationString extends Translations {
               "Qabxii liqii gaarii argachuuf KYC keessan xumuraa. KYC mirkanaa’e piroofaayilii liqii keessan fooyyessuuf gargaara!",
           "Your KYC is verified. A verified KYC helps improve your financial profile!":
               "KYC keessan mirkanaa'eera. KYC mirkanaa’e piroofaayilii liqii keessan fooyyessuuf gargaara!",
-          "Loan App": "Liqii gaafadhaa",
+          "Apply": "Gaafadhaa",
           "Please fill KYC before going to loan applications.":
               "Maaloo dursa KYC keessan guutaa.",
           "Verify": "Dhugoomsaa",
