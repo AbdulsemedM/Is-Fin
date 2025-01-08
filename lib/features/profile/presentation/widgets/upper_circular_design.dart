@@ -6,7 +6,7 @@ class CurvedPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     // First curve (bottom-most)
     final paint1 = Paint()
-      ..color = const Color.fromARGB(255, 245, 225, 195)
+      ..color = AppColors.primaryColor.withOpacity(0.3)
       ..style = PaintingStyle.fill;
     final path1 = Path();
     path1.lineTo(0, size.height * 0.6);
@@ -18,7 +18,7 @@ class CurvedPainter extends CustomPainter {
 
     // Second curve (middle)
     final paint2 = Paint()
-      ..color = const Color.fromARGB(255, 231, 157, 82)
+      ..color = AppColors.primaryColor.withOpacity(0.6)
       ..style = PaintingStyle.fill;
     final path2 = Path();
     path2.lineTo(0, size.height * 0.4);

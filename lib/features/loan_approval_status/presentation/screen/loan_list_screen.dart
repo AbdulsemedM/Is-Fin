@@ -117,7 +117,13 @@ class _LoanListScreenState extends State<LoanListScreen> {
                         builder: (_, selectedSegment, __) {
                           if (selectedSegment == 'new') {
                             return NewLoanApplications(
-                              loanformList: _loanList,
+                              loanformList: _loanList.where((element) {
+                                final requestDate =
+                                    DateTime.parse(element.requestedAt);
+                                final fourDaysAgo = DateTime.now()
+                                    .subtract(const Duration(days: 7));
+                                return requestDate.isAfter(fourDaysAgo);
+                              }).toList(),
                             );
                           } else if (selectedSegment == 'all') {
                             return AllLoanApplications(
@@ -125,7 +131,14 @@ class _LoanListScreenState extends State<LoanListScreen> {
                             );
                           } else if (selectedSegment == 'approved') {
                             return ApprovedLoanApplicatins(
-                              loanformList: _loanList,
+                              loanformList: _loanList
+                                  .where((element) =>
+                                      element.status == 'ACCEPTED' ||
+                                      element.status == 'APPROVED' ||
+                                      element.status == 'LOAN_ACCEPTED' ||
+                                      element.status == 'CLOSED' ||
+                                      element.status == 'AGREEMENT_ACCEPTED')
+                                  .toList(),
                             );
                           }
                           return const SizedBox

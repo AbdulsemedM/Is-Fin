@@ -56,7 +56,8 @@ class KycProgressCard extends StatelessWidget {
               child: LinearProgressIndicator(
                 value: percent, // Set the progress value
                 backgroundColor: Colors.white,
-                valueColor: const AlwaysStoppedAnimation<Color>(Colors.blue),
+                valueColor:
+                    AlwaysStoppedAnimation<Color>(AppColors.secondaryColor),
                 minHeight: 10,
               ),
             ),

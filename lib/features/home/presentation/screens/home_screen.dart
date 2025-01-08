@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:ifb_loan/app/utils/app_colors.dart';
 // import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
 import 'package:ifb_loan/app/utils/dialog_utils.dart';
@@ -289,7 +290,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               ?.copyWith(fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          NumberFormat("#,##0").format(double.tryParse(score.toString()) ?? 0),
+                          NumberFormat("#,##0")
+                              .format(double.tryParse(score.toString()) ?? 0),
                           style: Theme.of(context)
                               .textTheme
                               .titleMedium
@@ -307,8 +309,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             decoration: BoxDecoration(
                               gradient: LinearGradient(
                                 colors: [
-                                  Colors.orange.shade100,
-                                  Colors.orange.shade50
+                                  AppColors.primaryColor.withOpacity(0.1),
+                                  AppColors.primaryColor.withOpacity(0.05)
                                 ],
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
@@ -316,7 +318,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               borderRadius: BorderRadius.circular(12),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.orange.withOpacity(0.1),
+                                  color:
+                                      AppColors.primaryColor.withOpacity(0.1),
                                   blurRadius: 8,
                                   offset: const Offset(0, 2),
                                 ),
@@ -331,14 +334,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                       .textTheme
                                       .bodyMedium
                                       ?.copyWith(
-                                        color: Colors.orange.shade700,
+                                        color: AppColors.primaryColor
+                                            .withOpacity(0.7),
                                       ),
                                 ),
                                 Row(
                                   children: [
                                     Icon(
                                       Icons.account_balance_wallet,
-                                      color: Colors.orange.shade700,
+                                      color: AppColors.primaryColor
+                                          .withOpacity(0.7),
                                       size: 20,
                                     ),
                                     const SizedBox(width: 8),
@@ -349,7 +354,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                           .headlineSmall
                                           ?.copyWith(
                                             fontWeight: FontWeight.bold,
-                                            color: Colors.orange.shade900,
+                                            color: AppColors.primaryColor
+                                                .withOpacity(0.9),
                                           ),
                                     ),
                                     Text(
@@ -359,7 +365,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                           .titleMedium
                                           ?.copyWith(
                                             fontWeight: FontWeight.w500,
-                                            color: Colors.orange.shade700,
+                                            color: AppColors.primaryColor
+                                                .withOpacity(0.9),
                                           ),
                                     ),
                                   ],

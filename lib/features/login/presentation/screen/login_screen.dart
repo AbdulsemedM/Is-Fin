@@ -89,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 style: Theme.of(context)
                     .textTheme
                     .displayLarge
-                    ?.copyWith(color: const Color.fromARGB(255, 219, 111, 3)),
+                    ?.copyWith(color: AppColors.primaryColor),
               ),
               const SizedBox(
                 height: 10,

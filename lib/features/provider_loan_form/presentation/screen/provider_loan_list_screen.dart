@@ -143,13 +143,29 @@ class _ProviderLoanListScreenState extends State<ProviderLoanListScreen> {
 
                                 if (selectedSegment == 'new') {
                                   return NewApplications(
-                                      loanformList: loanApplications);
+                                      loanformList:
+                                          loanApplications.where((element) {
+                                    final requestDate =
+                                        DateTime.parse(element.requestedAt);
+                                    final fourDaysAgo = DateTime.now()
+                                        .subtract(const Duration(days: 7));
+                                    return requestDate.isAfter(fourDaysAgo);
+                                  }).toList());
                                 } else if (selectedSegment == 'all') {
                                   return AllApplications(
                                       loanformList: loanApplications);
                                 } else if (selectedSegment == 'approved') {
                                   return ApprovedApplicatins(
-                                      loanformList: loanApplications);
+                                    loanformList: loanApplications
+                                        .where((element) =>
+                                            element.status == 'ACCEPTED' ||
+                                            element.status == 'APPROVED' ||
+                                            element.status == 'LOAN_ACCEPTED' ||
+                                            element.status == 'CLOSED' ||
+                                            element.status ==
+                                                'AGREEMENT_ACCEPTED')
+                                        .toList(),
+                                  );
                                 }
                                 return const SizedBox.shrink();
                               },

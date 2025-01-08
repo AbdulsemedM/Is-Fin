@@ -21,7 +21,7 @@ class LoanStatusCard extends StatelessWidget {
       height: MediaQuery.of(context).size.height * 0.12,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color.fromARGB(255, 243, 224, 193),
+        color: AppColors.primaryColor.withOpacity(0.3),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
