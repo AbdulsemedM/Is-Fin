@@ -34,7 +34,6 @@ class _LoanListScreenState extends State<LoanListScreen> {
 
   void _fetchLoanList() async {
     context.read<LoanApprovalStatusBloc>().add(FetchLoanApprovalStatusList());
-    // Complete the refresh indicator after a short delay
     await Future.delayed(const Duration(milliseconds: 500));
     _controller.sink.add(SwipeRefreshState.hidden);
   }
@@ -60,7 +59,6 @@ class _LoanListScreenState extends State<LoanListScreen> {
             setState(() {
               isLoading = true;
             });
-            // Show loading indicator if needed
           } else if (state is LoanApprovalListFetchedSuccess) {
             setState(() {
               _loanList = state.productList;
