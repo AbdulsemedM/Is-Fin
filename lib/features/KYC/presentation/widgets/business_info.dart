@@ -662,7 +662,10 @@ class _BusinessInfoState extends State<BusinessInfo> {
                     if (!loadValues)
                       Expanded(
                         child: DropdownButtonFormField<String>(
-                          value: _regionController.text.isNotEmpty
+                          value: _regionController.text.isNotEmpty &&
+                                  myRegions.any((region) =>
+                                      region.regionName ==
+                                      _regionController.text)
                               ? _regionController.text
                               : null,
                           validator: (value) => validateDropDown(value),
@@ -678,14 +681,13 @@ class _BusinessInfoState extends State<BusinessInfo> {
                           items: myRegions.map((region) {
                             return DropdownMenuItem(
                               value: region.regionName, // Use ID as the value
-                              child: Text(region
-                                  .regionName), // Display the name in the dropdown
+                              child: Text(region.regionName),
                             );
                           }).toList(),
                           onChanged: (value) {
+                            if (value == null) return;
                             setState(() {
-                              _regionController.text =
-                                  value!; // Store the selected region
+                              _regionController.text = value;
                             });
 
                             // Now fetch the zones after the state is updated
@@ -705,7 +707,9 @@ class _BusinessInfoState extends State<BusinessInfo> {
                     if (!loadValues)
                       Expanded(
                         child: DropdownButtonFormField<String>(
-                          value: _zoneController.text.isNotEmpty
+                          value: _zoneController.text.isNotEmpty &&
+                                  myZones.any((zone) =>
+                                      zone.zoneName == _zoneController.text)
                               ? _zoneController.text
                               : null,
                           validator: (value) => validateDropDown(value),
@@ -720,15 +724,14 @@ class _BusinessInfoState extends State<BusinessInfo> {
                           ),
                           items: myZones.map((zone) {
                             return DropdownMenuItem(
-                              value: zone.zoneName, // Use ID as the value
-                              child: Text(zone
-                                  .zoneName), // Display the name in the dropdown
+                              value: zone.zoneName,
+                              child: Text(zone.zoneName),
                             );
                           }).toList(),
                           onChanged: (value) {
+                            if (value == null) return;
                             setState(() {
-                              _zoneController.text =
-                                  value!; // Store the selected ID
+                              _zoneController.text = value;
                             });
                           },
                         ),

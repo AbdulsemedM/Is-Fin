@@ -744,7 +744,10 @@ class _PersonalInfoState extends State<PersonalInfo> {
                     if (!loadValues)
                       Expanded(
                         child: DropdownButtonFormField<String>(
-                          value: _regionController.text.isNotEmpty
+                          value: _regionController.text.isNotEmpty &&
+                                  myRegions.any((region) =>
+                                      region.regionName ==
+                                      _regionController.text)
                               ? _regionController.text
                               : null,
                           validator: (value) => validateDropDown(value),
@@ -759,27 +762,31 @@ class _PersonalInfoState extends State<PersonalInfo> {
                           ),
                           items: myRegions.map((region) {
                             return DropdownMenuItem(
-                              value: region.regionName, // Use ID as the value
-                              child: Text(region
-                                  .regionName), // Display the name in the dropdown
+                              value: region.regionName,
+                              child: Text(region.regionName),
                             );
                           }).toList(),
                           onChanged: (value) {
+                            if (value == null) return;
+
                             setState(() {
-                              _regionController.text =
-                                  value!; // Store the selected region
+                              _regionController.text = value;
                             });
 
-                            // Now fetch the zones after the state is updated
-                            String regionId = myRegions
-                                .firstWhere(
-                                    (region) => region.regionName == value)
-                                .id
-                                .toString();
+                            try {
+                              String regionId = myRegions
+                                  .firstWhere(
+                                      (region) => region.regionName == value)
+                                  .id
+                                  .toString();
 
-                            _zoneController.clear(); // Reset zone controller
-                            fetchzone(
-                                regionId); // Fetch zones based on the selected region
+                              _zoneController.clear();
+                              fetchzone(regionId);
+                            } catch (e) {
+                              // Handle the case where region is not found
+                              displaySnack(context,
+                                  "Selected region not found".tr, Colors.red);
+                            }
                           },
                         ),
                       ),
@@ -787,7 +794,9 @@ class _PersonalInfoState extends State<PersonalInfo> {
                     if (!loadValues)
                       Expanded(
                         child: DropdownButtonFormField<String>(
-                          value: _zoneController.text.isNotEmpty
+                          value: _zoneController.text.isNotEmpty &&
+                                  myZones.any((zone) =>
+                                      zone.zoneName == _zoneController.text)
                               ? _zoneController.text
                               : null,
                           validator: (value) => validateDropDown(value),
@@ -802,15 +811,15 @@ class _PersonalInfoState extends State<PersonalInfo> {
                           ),
                           items: myZones.map((zone) {
                             return DropdownMenuItem(
-                              value: zone.zoneName, // Use ID as the value
-                              child: Text(zone
-                                  .zoneName), // Display the name in the dropdown
+                              value: zone.zoneName,
+                              child: Text(zone.zoneName),
                             );
                           }).toList(),
                           onChanged: (value) {
+                            if (value == null) return;
+
                             setState(() {
-                              _zoneController.text =
-                                  value!; // Store the selected ID
+                              _zoneController.text = value;
                             });
                           },
                         ),
