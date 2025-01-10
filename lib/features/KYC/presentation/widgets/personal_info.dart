@@ -79,6 +79,22 @@ class _PersonalInfoState extends State<PersonalInfo> {
     return null; // Return null if validation passes
   }
 
+  String? validateIdNo(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'This field is required'.tr;
+    } else if (_idTypeController.text == 'Driver\'s License' &&
+        value.trim().length < 6) {
+      return 'Id. No. must be at least 6 characters long'.tr;
+    } else if (_idTypeController.text == 'Passport' &&
+        value.trim().length != 9) {
+      return 'Id. No. must be 9 characters long'.tr;
+    } else if (_idTypeController.text == 'National ID' &&
+        value.trim().length != 12) {
+      return 'Id. No. must be 12 characters long'.tr;
+    }
+    return null; // Return null if validation passes
+  }
+
   String? validateDropDown(String? value) {
     if (value == null || value.isEmpty) {
       return 'This field is required'.tr;
@@ -352,6 +368,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                           ],
                           onChanged: (value) {
                             setState(() {
+                              _idNoController.clear();
                               _idTypeController.text = value!;
                             });
                           },
@@ -364,7 +381,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                   children: [
                     Expanded(
                       child: TextFormField(
-                        readOnly: true, // Makes the field non-editable
+                        readOnly: true,
                         decoration: InputDecoration(
                           labelText: 'Date of Birth'.tr,
                           filled: true,
@@ -373,17 +390,22 @@ class _PersonalInfoState extends State<PersonalInfo> {
                             borderRadius: BorderRadius.circular(8.0),
                             borderSide: BorderSide.none,
                           ),
-                          suffixIcon: const Icon(
-                              Icons.calendar_today), // Adds a calendar icon
+                          suffixIcon: const Icon(Icons.calendar_today),
                         ),
                         onTap: () async {
+                          // Calculate the date 18 years ago from today
+                          final DateTime eighteenYearsAgo = DateTime.now()
+                              .subtract(const Duration(days: 365 * 18));
+
                           DateTime? pickedDate = await showDatePicker(
                             context: context,
-                            initialDate: DateTime.now(), // Default date
-                            firstDate: DateTime(1900), // Earliest date
-                            lastDate: DateTime
-                                .now(), // Latest date (no future dates allowed)
+                            initialDate:
+                                eighteenYearsAgo, // Set initial date to 18 years ago
+                            firstDate: DateTime(1900),
+                            lastDate:
+                                eighteenYearsAgo, // Set maximum date to 18 years ago
                           );
+
                           if (pickedDate != null) {
                             // Handle the selected date
                             // Format the date and update the field
@@ -449,8 +471,9 @@ class _PersonalInfoState extends State<PersonalInfo> {
                   children: [
                     Expanded(
                       child: TextFormField(
+                        enabled: _idTypeController.text.isNotEmpty,
                         controller: _idNoController,
-                        validator: (value) => newValidateField(value),
+                        validator: (value) => validateIdNo(value),
                         decoration: InputDecoration(
                           labelText: 'ID. No.'.tr,
                           filled: true,

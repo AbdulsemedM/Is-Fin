@@ -83,6 +83,17 @@ class _BusinessInfoState extends State<BusinessInfo> {
     return null; // Return null if validation passes
   }
 
+  String? validateTinNo(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'This field is required';
+    } else if (!RegExp(r'^\d+$').hasMatch(value.trim())) {
+      return 'This field must contain only numbers'.tr;
+    } else if (value.trim().length != 10) {
+      return 'Tin No. must be 10 characters long'.tr;
+    }
+    return null; // Return null if validation passes
+  }
+
   String? validateDropDown(String? value) {
     if (value == null || value.isEmpty) {
       return 'This field is required'.tr;
@@ -266,7 +277,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
                       child: TextFormField(
                         controller: _websiteURLController,
                         decoration: InputDecoration(
-                          labelText: 'Website url (optional).tr',
+                          labelText: 'Website url (optional)'.tr,
                           filled: true,
                           fillColor: Colors.grey[200],
                           border: OutlineInputBorder(
@@ -284,7 +295,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
                     Expanded(
                       child: TextFormField(
                         controller: _tinNoController,
-                        validator: (value) => validateNumberField(value),
+                        validator: (value) => validateTinNo(value),
                         decoration: InputDecoration(
                           labelText: 'Tin No.'.tr,
                           filled: true,
