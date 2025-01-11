@@ -44,23 +44,26 @@ class FinancesCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16.0),
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
               ),
             ),
-            const SizedBox(height: 8.0),
-            Text(
-              subtitle,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 14.0,
-                color: Colors.black54,
-              ),
-            ),
+            // const SizedBox(height: 8.0),
+            // Text(
+            //   subtitle,
+            //   textAlign: TextAlign.center,
+            //   style: const TextStyle(
+            //     fontSize: 14.0,
+            //     color: Colors.black54,
+            //   ),
+            // ),
           ],
         ),
       ),

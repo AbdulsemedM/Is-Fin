@@ -89,11 +89,11 @@ class _FinancesScreenState extends State<FinancesScreen> {
                               ? Colors.green.shade200
                               : Colors.red.shade200,
                   title: index == 0
-                      ? "Loan Request".tr
+                      ? "Finance Request".tr
                       : index == 1
-                          ? "Loan Repay".tr
+                          ? "Finance Repay".tr
                           : index == 2
-                              ? "Loan Status".tr
+                              ? "Finance Status".tr
                               : "Add Provider".tr,
                   subtitle: 'Subtitle $index',
                   containerColor: index == 0
