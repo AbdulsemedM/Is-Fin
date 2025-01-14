@@ -4,7 +4,7 @@ class PushNotificationService {
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   Future<String?> generateDeviceRecognitionToken() async {
     final deviceRecognitionToken = await _firebaseMessaging.getToken();
-    DataBaseReference ref = FirebaseDatabase.instance.ref();
+    // DataBaseReference ref = FirebaseDatabase.instance.ref();
     
   }
 }
