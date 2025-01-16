@@ -310,7 +310,9 @@ class _BusinessInfoState extends State<BusinessInfo> {
                     const SizedBox(width: 16),
                     Expanded(
                       child: DropdownButtonFormField<String>(
-                        value: _typeofBusinessController.text.isNotEmpty
+                        value: _typeofBusinessController.text.isNotEmpty &&
+                                ['Small Business Trade', 'Agriculture', 'Manufacturing', 'Hospitality', 'Transport', 'Technology', 'Halal Tourism', 'Education', 'Building and Construction', 'Other']
+                                    .contains(_typeofBusinessController.text)
                             ? _typeofBusinessController.text
                             : null,
                         validator: (value) => validateDropDown(value),
@@ -415,7 +417,9 @@ class _BusinessInfoState extends State<BusinessInfo> {
                     const SizedBox(width: 16),
                     Expanded(
                       child: DropdownButtonFormField<String>(
-                        value: _ownershipController.text.isNotEmpty
+                        value: _ownershipController.text.isNotEmpty &&
+                                ['Sole', 'Partnership', 'PLC', 'Cooperative']
+                                    .contains(_ownershipController.text)
                             ? _ownershipController.text
                             : null,
                         validator: (value) => validateDropDown(value),
@@ -460,7 +464,9 @@ class _BusinessInfoState extends State<BusinessInfo> {
                   children: [
                     Expanded(
                       child: DropdownButtonFormField<String>(
-                        value: _financeSourceController.text.isNotEmpty
+                        value: _financeSourceController.text.isNotEmpty &&
+                                ['Own', 'Family', 'Fund', 'Loan']
+                                    .contains(_financeSourceController.text)
                             ? _financeSourceController.text
                             : null,
                         validator: (value) => validateDropDown(value),
@@ -505,7 +511,9 @@ class _BusinessInfoState extends State<BusinessInfo> {
                     const SizedBox(width: 16),
                     Expanded(
                       child: DropdownButtonFormField<String>(
-                        value: _businessLevelController.text.isNotEmpty
+                        value: _businessLevelController.text.isNotEmpty &&
+                                ['Startup', 'Growing', 'Advanced']
+                                    .contains(_businessLevelController.text)
                             ? _businessLevelController.text
                             : null,
                         validator: (value) => validateDropDown(value),
@@ -533,9 +541,11 @@ class _BusinessInfoState extends State<BusinessInfo> {
                           ),
                         ],
                         onChanged: (value) {
-                          setState(() {
-                            _businessLevelController.text = value!;
-                          });
+                          if (value != null) {
+                            setState(() {
+                              _businessLevelController.text = value;
+                            });
+                          }
                         },
                       ),
                     ),

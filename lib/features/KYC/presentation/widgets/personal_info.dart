@@ -305,7 +305,9 @@ class _PersonalInfoState extends State<PersonalInfo> {
                     if (!loadValues)
                       Expanded(
                         child: DropdownButtonFormField<String>(
-                          value: _genderController.text.isNotEmpty
+                          value: _genderController.text.isNotEmpty &&
+                                  ['MALE', 'FEMALE']
+                                      .contains(_genderController.text)
                               ? _genderController.text
                               : null,
                           validator: (value) => validateDropDown(value),
@@ -339,7 +341,12 @@ class _PersonalInfoState extends State<PersonalInfo> {
                     if (!loadValues)
                       Expanded(
                         child: DropdownButtonFormField<String>(
-                          value: _idTypeController.text.isNotEmpty
+                          value: _idTypeController.text.isNotEmpty &&
+                                  [
+                                    'Driver\'s License',
+                                    'Passport',
+                                    'National ID'
+                                  ].contains(_idTypeController.text)
                               ? _idTypeController.text
                               : null,
                           validator: (value) => validateDropDown(value),
@@ -426,7 +433,9 @@ class _PersonalInfoState extends State<PersonalInfo> {
                     if (!loadValues)
                       Expanded(
                         child: DropdownButtonFormField<String>(
-                          value: _educationLevelController.text.isNotEmpty
+                          value: _educationLevelController.text.isNotEmpty &&
+                                  ['Primary', 'Secondary', 'BSc', 'MSc']
+                                      .contains(_educationLevelController.text)
                               ? _educationLevelController.text
                               : null,
                           validator: (value) => validateDropDown(value),
@@ -489,7 +498,9 @@ class _PersonalInfoState extends State<PersonalInfo> {
                     if (!loadValues)
                       Expanded(
                         child: DropdownButtonFormField<String>(
-                          value: _maritalStatusController.text.isNotEmpty
+                          value: _maritalStatusController.text.isNotEmpty &&
+                                  ['Single', 'Married', 'Divorced', 'Widowed']
+                                      .contains(_maritalStatusController.text)
                               ? _maritalStatusController.text
                               : null,
                           validator: (value) => validateDropDown(value),

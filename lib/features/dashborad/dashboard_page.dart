@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/dialog_utils.dart';
 import 'package:ifb_loan/configuration/auth_service.dart';
+import 'package:ifb_loan/configuration/push_notification/push_notification_service.dart';
 import 'package:ifb_loan/features/finances/presentation/screens/finances_screen.dart';
 import 'package:ifb_loan/features/home/presentation/screens/home_screen.dart';
 import 'package:ifb_loan/features/login/presentation/screen/login_screen.dart';
@@ -22,6 +23,13 @@ class _DashboardPageState extends State<DashboardPage> {
   @override
   void initState() {
     super.initState();
+    initializePushNotification();
+  }
+
+  initializePushNotification() {
+    PushNotificationService pushNotificationService = PushNotificationService();
+    pushNotificationService.generateDeviceRecognitionToken();
+    pushNotificationService.startListeningForNewNotifications(context);
   }
 
   Future<void> deleteToken() async {

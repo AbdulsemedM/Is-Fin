@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -44,16 +45,30 @@ import 'package:ifb_loan/features/signup/bloc/signup_bloc.dart';
 import 'package:ifb_loan/features/signup/data/data_provider/signup_data_provider.dart';
 import 'package:ifb_loan/features/signup/data/repository/signup_repository.dart';
 import 'package:ifb_loan/features/splash_screen/splash_screen.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
-  
   WidgetsFlutterBinding.ensureInitialized();
   final bool isFirstTime = await _checkFirstTime();
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: AppColors.primaryDarkColor,
     statusBarIconBrightness: Brightness.light,
   ));
+
+  try {
+    await Firebase.initializeApp();
+  } catch (e) {
+    debugPrint('Firebase initialization failed: $e');
+    // You might want to show a user-friendly message or handle the error appropriately
+  }
+
+  await Permission.notification.isDenied.then((isDenied) {
+    if (isDenied) {
+      Permission.notification.request();
+    }
+  });
+
   String? lang = await LanguageManager().getLanguage();
   lang ??= '';
   runApp(MultiBlocProvider(
