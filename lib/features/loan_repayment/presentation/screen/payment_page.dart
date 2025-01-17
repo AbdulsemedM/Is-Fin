@@ -4,12 +4,14 @@ import 'package:ifb_loan/app/app_button.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
 import 'package:ifb_loan/app/utils/dialog_utils.dart';
+import 'package:ifb_loan/features/finances/bloc/finances_bloc.dart';
 import 'package:ifb_loan/features/loan_repayment/bloc/loan_repayment_bloc.dart';
 import 'package:ifb_loan/features/repayment/presentation/screen/reciept_screen.dart';
 
 class PaymentPage extends StatefulWidget {
   final String loanId;
-  const PaymentPage({super.key, required this.loanId});
+  final String amount;
+  const PaymentPage({super.key, required this.loanId, required this.amount});
 
   @override
   State<PaymentPage> createState() => _PaymentPageState();
@@ -77,6 +79,52 @@ class _PaymentPageState extends State<PaymentPage> {
             ),
             Padding(
               padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+              child: Container(
+                padding: const EdgeInsets.all(16.0),
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [
+                      AppColors.secondaryColor,
+                      AppColors.secondaryDarkColor
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(12.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 10,
+                      offset: const Offset(0, 5),
+                    ),
+                  ],
+                ),
+                child: RichText(
+                  text: TextSpan(
+                    text: "Outstanding Amount\n",
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.white70,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    children: [
+                      TextSpan(
+                        text: widget.amount,
+                        style: const TextStyle(
+                          fontSize: 28,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding:
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
               child: Form(
                 key: myKey,
@@ -119,6 +167,7 @@ class _PaymentPageState extends State<PaymentPage> {
                       context
                           .read<LoanRepaymentBloc>()
                           .add(GetRepaymentHistoryEvent(loanId: widget.loanId));
+                      context.read<FinancesBloc>().add(FetchActiveLoans());
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
