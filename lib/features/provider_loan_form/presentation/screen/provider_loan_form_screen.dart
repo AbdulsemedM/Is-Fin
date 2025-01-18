@@ -274,10 +274,7 @@ class _ProviderLoanFormScreenState extends State<ProviderLoanFormScreen> {
                             if (await _showConfirmationDialog('Reject')) {
                               context.read<ProviderLoanFormBloc>().add(
                                   SendRequestedProductsPrice(
-                                      products,
-                                      widget.id,
-                                      expirationDate.toString(),
-                                      "REJECT"));
+                                      null, widget.id, null, "REJECTED"));
                             }
                             // context.read<ProviderLoanFormBloc>().add(
                             //     SendRequestedProductsPrice(products, widget.id,
