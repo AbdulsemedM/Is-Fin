@@ -32,7 +32,7 @@ class _AddBisinessPartnerScreenState extends State<AddBisinessPartnerScreen> {
     if (value == null || value.trim().isEmpty) {
       return 'This field is required'.tr;
     }
-    return null; // Return null if validation passes
+    return null;
   }
 
   @override
