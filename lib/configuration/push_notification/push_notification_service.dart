@@ -2,20 +2,43 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:google_api_availability/google_api_availability.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class PushNotificationService {
   static const int _maxRetries = 3;
   static const Duration _retryDelay = Duration(seconds: 2);
 
-   Future<String?> generateDeviceRecognitionToken() async {
+  static Future<void> initializeNotifications() async {
+    // Create high importance channel
+    const AndroidNotificationChannel channel = AndroidNotificationChannel(
+      'high_importance_channel',
+      'High Importance Notifications',
+      description: 'This channel is used for important notifications.',
+      importance: Importance.high,
+      playSound: true,
+      enableVibration: true,
+    );
+
+    // Create the channel
+    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
+
+    await flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(channel);
+  }
+
+  Future<String?> generateDeviceRecognitionToken() async {
     int retryCount = 0;
 
     while (retryCount < _maxRetries) {
       try {
         await Firebase.initializeApp();
-        
+
         // Check Google Play Services availability
-        final googlePlayServices = await GoogleApiAvailability.instance.checkGooglePlayServicesAvailability();
+        final googlePlayServices = await GoogleApiAvailability.instance
+            .checkGooglePlayServicesAvailability();
         if (googlePlayServices != GooglePlayServicesAvailability.success) {
           debugPrint('Google Play Services not available: $googlePlayServices');
           return null;
@@ -26,13 +49,12 @@ class PushNotificationService {
           debugPrint('FCM Token successfully generated: $fcmToken');
           return fcmToken;
         }
-        
-        throw Exception('FCM token is null');
 
+        throw Exception('FCM token is null');
       } catch (e) {
         retryCount++;
         debugPrint('Attempt $retryCount failed. Error: $e');
-        
+
         if (retryCount < _maxRetries) {
           debugPrint('Retrying in ${_retryDelay.inSeconds} seconds...');
           await Future.delayed(_retryDelay);
@@ -46,6 +68,8 @@ class PushNotificationService {
   }
 
   startListeningForNewNotifications(BuildContext context) async {
+    await initializeNotifications(); // Initialize notification channel
+
     ///1. Terminated
     FirebaseMessaging.instance
         .getInitialMessage()
@@ -60,6 +84,29 @@ class PushNotificationService {
     FirebaseMessaging.onMessage.listen((RemoteMessage remoteMsg) {
       String? title = remoteMsg.data['title'];
       print('Foreground Notification: $title');
+
+      RemoteNotification? notification = remoteMsg.notification;
+      AndroidNotification? android = remoteMsg.notification?.android;
+
+      if (notification != null && android != null) {
+        FlutterLocalNotificationsPlugin().show(
+          notification.hashCode,
+          notification.title,
+          notification.body,
+          const NotificationDetails(
+            android: AndroidNotificationDetails(
+              'high_importance_channel',
+              'High Importance Notifications',
+              channelDescription:
+                  'This channel is used for important notifications.',
+              importance: Importance.high,
+              priority: Priority.high,
+              playSound: true,
+              enableVibration: true,
+            ),
+          ),
+        );
+      }
     });
 
     ///3. Background

@@ -7,6 +7,7 @@ import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
 import 'package:ifb_loan/app/utils/localization_string.dart';
 import 'package:ifb_loan/configuration/phone_number_manager.dart';
+import 'package:ifb_loan/core/presentation/widgets/base_screen.dart';
 import 'package:ifb_loan/features/KYC/bloc/kyc_bloc.dart';
 import 'package:ifb_loan/features/KYC/data/data_provider/KYC_data_provider.dart';
 import 'package:ifb_loan/features/KYC/data/repository/KYC_repository.dart';
@@ -32,6 +33,7 @@ import 'package:ifb_loan/features/loan_repayment/data/repository/loan_repayment_
 import 'package:ifb_loan/features/login/bloc/login_bloc.dart';
 import 'package:ifb_loan/features/login/data/data_provider/login_data_provider.dart';
 import 'package:ifb_loan/features/login/data/repository/login_repository.dart';
+import 'package:ifb_loan/features/login/presentation/screen/login_screen.dart';
 import 'package:ifb_loan/features/otp/bloc/otp_bloc.dart';
 import 'package:ifb_loan/features/otp/data/data_provider/otp_data_provider.dart';
 import 'package:ifb_loan/features/otp/data/repository/otp_repository.dart';
@@ -47,6 +49,8 @@ import 'package:ifb_loan/features/signup/data/repository/signup_repository.dart'
 import 'package:ifb_loan/features/splash_screen/splash_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/widgets.dart';
+import 'core/services/background_timeout_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -108,9 +112,11 @@ void main() async {
           create: (contex) => LoanRepaymentBloc(
               LoanRepaymentRepository(LoanRepaymentDataProvider()))),
     ],
-    child: MyApp(
-      isFirstTime: isFirstTime,
-      lang: lang,
+    child: BaseScreen(
+      child: MyApp(
+        isFirstTime: isFirstTime,
+        lang: lang,
+      ),
     ),
   ));
 }
@@ -128,27 +134,67 @@ Future<bool> _checkFirstTime() async {
   return isFirstTime;
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   final String lang;
   final bool isFirstTime;
   const MyApp({super.key, required this.isFirstTime, required this.lang});
 
-  // This widget is the root of your application.
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    BackgroundTimeoutService.updateLastActiveTime();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    BackgroundTimeoutService.stopBackgroundTimer();
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.paused:
+        // App goes to background
+        BackgroundTimeoutService.startBackgroundTimer();
+        break;
+      case AppLifecycleState.resumed:
+        // App comes to foreground
+        BackgroundTimeoutService.stopBackgroundTimer();
+        BackgroundTimeoutService.updateLastActiveTime();
+        break;
+      default:
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       translations: LocalizationString(),
-      locale: lang == "English"
+      locale: widget.lang == "English"
           ? const Locale('en', 'US')
-          : lang == "አማርኛ"
+          : widget.lang == "አማርኛ"
               ? const Locale('am', 'ET')
-              : lang == "Afaan Oromoo"
+              : widget.lang == "Afaan Oromoo"
                   ? const Locale('or', 'ET')
                   : const Locale("en", "US"),
       debugShowCheckedModeBanner: false,
-      // title: 'Flutter Demo',
       theme: AppTheme.themeData(),
-      home: isFirstTime ? const LandingPage() : const SplashScreenPage(),
+      getPages: [
+        GetPage(
+          name: '/login',
+          page: () => const LoginScreen(),
+        ),
+      ],
+      home: widget.isFirstTime ? const LandingPage() : const SplashScreenPage(),
     );
   }
 }
