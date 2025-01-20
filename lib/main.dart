@@ -14,6 +14,7 @@ import 'package:ifb_loan/features/KYC/data/repository/KYC_repository.dart';
 import 'package:ifb_loan/features/business_partner/bloc/providers_bloc.dart';
 import 'package:ifb_loan/features/business_partner/data/data_provider/provider_data_provider.dart';
 import 'package:ifb_loan/features/business_partner/data/repository/provider_repository.dart';
+import 'package:ifb_loan/features/dashborad/bloc/dashboard_bloc.dart';
 import 'package:ifb_loan/features/finances/bloc/finances_bloc.dart';
 import 'package:ifb_loan/features/finances/data/data_provider/finance_data_provider.dart';
 import 'package:ifb_loan/features/finances/data/repository/finances_repository.dart';
@@ -111,6 +112,7 @@ void main() async {
       BlocProvider(
           create: (contex) => LoanRepaymentBloc(
               LoanRepaymentRepository(LoanRepaymentDataProvider()))),
+      BlocProvider(create: (contex) => DashboardBloc()),
     ],
     child: BaseScreen(
       child: MyApp(

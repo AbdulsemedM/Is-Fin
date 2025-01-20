@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/dialog_utils.dart';
 import 'package:ifb_loan/configuration/auth_service.dart';
 import 'package:ifb_loan/configuration/push_notification/push_notification_service.dart';
+import 'package:ifb_loan/features/dashborad/bloc/dashboard_bloc.dart';
 import 'package:ifb_loan/features/finances/presentation/screens/finances_screen.dart';
 import 'package:ifb_loan/features/home/presentation/screens/home_screen.dart';
 import 'package:ifb_loan/features/login/presentation/screen/login_screen.dart';
@@ -26,10 +29,16 @@ class _DashboardPageState extends State<DashboardPage> {
     initializePushNotification();
   }
 
-  initializePushNotification() {
+  initializePushNotification() async {
     PushNotificationService pushNotificationService = PushNotificationService();
-    pushNotificationService.generateDeviceRecognitionToken();
+    String? token =
+        await pushNotificationService.generateDeviceRecognitionToken();
     pushNotificationService.startListeningForNewNotifications(context);
+    // const storage = FlutterSecureStorage();
+    // storage.read(key: 'fcmToken').then((value) {
+    //   print('FCM Token from dashboard: $value');
+    BlocProvider.of<DashboardBloc>(context).add(SendFcmTokenEvent(token!));
+    // });
   }
 
   Future<void> deleteToken() async {

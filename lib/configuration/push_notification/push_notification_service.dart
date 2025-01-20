@@ -1,12 +1,15 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_api_availability/google_api_availability.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class PushNotificationService {
   static const int _maxRetries = 3;
   static const Duration _retryDelay = Duration(seconds: 2);
+  static const storage = FlutterSecureStorage();
+  static const String FCM_TOKEN_KEY = 'fcmToken';
 
   static Future<void> initializeNotifications() async {
     // Create high importance channel
@@ -32,11 +35,17 @@ class PushNotificationService {
   Future<String?> generateDeviceRecognitionToken() async {
     int retryCount = 0;
 
+    // First try to get the token from storage
+    String? storedToken = await storage.read(key: FCM_TOKEN_KEY);
+    if (storedToken != null && storedToken.isNotEmpty) {
+      debugPrint('Retrieved FCM Token from storage: $storedToken');
+      return storedToken;
+    }
+
     while (retryCount < _maxRetries) {
       try {
         await Firebase.initializeApp();
 
-        // Check Google Play Services availability
         final googlePlayServices = await GoogleApiAvailability.instance
             .checkGooglePlayServicesAvailability();
         if (googlePlayServices != GooglePlayServicesAvailability.success) {
@@ -45,12 +54,19 @@ class PushNotificationService {
         }
 
         final fcmToken = await FirebaseMessaging.instance.getToken();
-        if (fcmToken != null) {
-          debugPrint('FCM Token successfully generated: $fcmToken');
+        if (fcmToken != null && fcmToken.isNotEmpty) {
+          // Store FCM token in secure storage
+          await storage.write(key: FCM_TOKEN_KEY, value: fcmToken);
+          debugPrint('FCM Token generated and stored: $fcmToken');
+
+          // Verify storage
+          final verifyToken = await storage.read(key: FCM_TOKEN_KEY);
+          debugPrint('Verified stored token: $verifyToken');
+
           return fcmToken;
         }
 
-        throw Exception('FCM token is null');
+        throw Exception('FCM token is null or empty');
       } catch (e) {
         retryCount++;
         debugPrint('Attempt $retryCount failed. Error: $e');
@@ -65,6 +81,18 @@ class PushNotificationService {
       }
     }
     return null;
+  }
+
+  // Add a method to explicitly get the stored token
+  static Future<String?> getStoredToken() async {
+    try {
+      final token = await storage.read(key: FCM_TOKEN_KEY);
+      debugPrint('Retrieved stored FCM token: $token');
+      return token;
+    } catch (e) {
+      debugPrint('Error retrieving stored FCM token: $e');
+      return null;
+    }
   }
 
   startListeningForNewNotifications(BuildContext context) async {
