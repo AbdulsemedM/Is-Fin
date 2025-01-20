@@ -7,7 +7,7 @@ import 'package:ifb_loan/app/utils/app_theme.dart';
 import 'package:ifb_loan/app/utils/dialog_utils.dart';
 import 'package:ifb_loan/features/business_partner/bloc/providers_bloc.dart';
 import 'package:ifb_loan/features/business_partner/presentation/widget/url_card_widget.dart';
-import 'package:ifb_loan/features/provider_KYC/presentation/screen/provider_KYC_screen.dart';
+// import 'package:ifb_loan/features/provider_KYC/presentation/screen/provider_KYC_screen.dart';
 
 class AddBisinessPartnerScreen extends StatefulWidget {
   const AddBisinessPartnerScreen({super.key});
@@ -177,9 +177,8 @@ class _AddBisinessPartnerScreenState extends State<AddBisinessPartnerScreen> {
                         validator: (value) {
                           if (value?.isEmpty == true) {
                             return 'Phone number is required'.tr;
-                          } else if (value!.length < 10) {
-                            return 'Phone number should be at least 10 digits'
-                                .tr;
+                          } else if (value!.length != 10) {
+                            return 'Phone number should be 10 digits'.tr;
                           } else if (!value.startsWith("09")) {
                             return 'Invalid phone number format'.tr;
                           }
@@ -228,6 +227,8 @@ class _AddBisinessPartnerScreenState extends State<AddBisinessPartnerScreen> {
                   url:
                       'https://play.google.com/store/apps/details?id=com.example.app',
                   onShare: () {
+                    displaySnack(
+                        context, "Will be available soon", Colors.black);
                     // Define share functionality here
                   },
                 ),
@@ -239,79 +240,81 @@ class _AddBisinessPartnerScreenState extends State<AddBisinessPartnerScreen> {
                     onPressed: loading
                         ? () {}
                         : () {
-                            showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                title: Text('Phone Number'.tr),
-                                content: SingleChildScrollView(
-                                  child: ConstrainedBox(
-                                    constraints: const BoxConstraints(
-                                        maxHeight: 300), // Adjust as needed
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize
-                                          .min, // Ensures the column wraps its content
-                                      children: [
-                                        Text(
-                                          'Add the phone number of the person to be registered'
-                                              .tr,
-                                        ),
-                                        Form(
-                                          key: myKey,
-                                          child: TextFormField(
-                                            controller: phoneNumberController,
-                                            keyboardType: TextInputType.number,
-                                            decoration: AppDecorations
-                                                .getAppInputDecoration(
-                                              myBorder: false,
-                                              pIconData: Icons.phone_android,
-                                              hintText: 'eg: 0987654321',
-                                              context: context,
-                                            ),
-                                            validator: (value) {
-                                              if (value?.isEmpty == true) {
-                                                return 'Phone number is required'
-                                                    .tr;
-                                              } else if (value!.length != 10) {
-                                                return 'Invalid phone number format'
-                                                    .tr;
-                                              } else if (!value
-                                                  .startsWith("09")) {
-                                                return 'Invalid phone number format'
-                                                    .tr;
-                                              }
-                                              return null;
-                                            },
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: Text('Close'.tr),
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-                                      if (myKey.currentState!.validate()) {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ProviderKycScreen(
-                                                        phoneNumber:
-                                                            phoneNumberController
-                                                                .text)));
-                                      }
-                                    },
-                                    child: Text('Add'.tr),
-                                  ),
-                                ],
-                              ),
-                            );
+                            // showDialog(
+                            //   context: context,
+                            //   builder: (context) => AlertDialog(
+                            //     title: Text('Phone Number'.tr),
+                            //     content: SingleChildScrollView(
+                            //       child: ConstrainedBox(
+                            //         constraints: const BoxConstraints(
+                            //             maxHeight: 300), // Adjust as needed
+                            //         child: Column(
+                            //           mainAxisSize: MainAxisSize
+                            //               .min, // Ensures the column wraps its content
+                            //           children: [
+                            //             Text(
+                            //               'Add the phone number of the person to be registered'
+                            //                   .tr,
+                            //             ),
+                            //             Form(
+                            //               key: myKey,
+                            //               child: TextFormField(
+                            //                 controller: phoneNumberController,
+                            //                 keyboardType: TextInputType.number,
+                            //                 decoration: AppDecorations
+                            //                     .getAppInputDecoration(
+                            //                   myBorder: false,
+                            //                   pIconData: Icons.phone_android,
+                            //                   hintText: 'eg: 0987654321',
+                            //                   context: context,
+                            //                 ),
+                            //                 validator: (value) {
+                            //                   if (value?.isEmpty == true) {
+                            //                     return 'Phone number is required'
+                            //                         .tr;
+                            //                   } else if (value!.length != 10) {
+                            //                     return 'Invalid phone number format'
+                            //                         .tr;
+                            //                   } else if (!value
+                            //                       .startsWith("09")) {
+                            //                     return 'Invalid phone number format'
+                            //                         .tr;
+                            //                   }
+                            //                   return null;
+                            //                 },
+                            //               ),
+                            //             ),
+                            //           ],
+                            //         ),
+                            //       ),
+                            //     ),
+                            //     actions: [
+                            //       TextButton(
+                            //         onPressed: () {
+                            //           Navigator.pop(context);
+                            //         },
+                            //         child: Text('Close'.tr),
+                            //       ),
+                            //       TextButton(
+                            //         onPressed: () {
+                            //           if (myKey.currentState!.validate()) {
+                            //             Navigator.push(
+                            //                 context,
+                            //                 MaterialPageRoute(
+                            //                     builder: (context) =>
+                            //                         ProviderKycScreen(
+                            //                             phoneNumber:
+                            //                                 phoneNumberController
+                            //                                     .text)));
+                            //           }
+                            //         },
+                            //         child: Text('Add'.tr),
+                            //       ),
+                            //     ],
+                            //   ),
+                            // );
+                            displaySnack(context, "Will be available soon",
+                                Colors.black);
                           },
                     buttonText: loading
                         ? SizedBox(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
-import 'package:ifb_loan/app/utils/custom_app_bar.dart';
+// import 'package:ifb_loan/app/utils/custom_app_bar.dart';
 import 'package:ifb_loan/app/utils/dialog_utils.dart';
 import 'package:ifb_loan/features/business_partner/bloc/providers_bloc.dart';
 import 'package:ifb_loan/features/business_partner/presentation/screen/add_bisiness_partner_screen.dart';
@@ -47,15 +47,16 @@ class _BusinessPartnersScreenState extends State<BusinessPartnersScreen> {
           ),
         ),
       ),
-      appBar: CustomAppBar(
-        title: "Business Partners".tr,
+      appBar:
+          //  CustomAppBar(
+          //   title: "Business Partners".tr,
+          // ),
+          AppBar(
+        title: Text(
+          "Business Partners".tr,
+          style: Theme.of(context).textTheme.displaySmall,
+        ),
       ),
-      // AppBar(
-      //   title: Text(
-      //     "Business Partners".tr,
-      //     style: Theme.of(context).textTheme.displaySmall,
-      //   ),
-      // ),
       body: BlocListener<ProvidersBloc, ProvidersState>(
         listener: (context, state) {
           if (state is ProviderFetchLoading) {

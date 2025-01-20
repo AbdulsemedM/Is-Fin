@@ -38,8 +38,9 @@ class UrlCard extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.copy, color: Colors.grey[700]),
             onPressed: () {
-              Clipboard.setData(ClipboardData(text: url));
-              displaySnack(context, "URL copied to clipboard", Colors.black);
+              displaySnack(context, "Will be available soon", Colors.black);
+              // Clipboard.setData(ClipboardData(text: url));
+              // displaySnack(context, "URL copied to clipboard", Colors.black);
             },
           ),
 
