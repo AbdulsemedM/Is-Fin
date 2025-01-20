@@ -5,13 +5,63 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_api_availability/google_api_availability.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
+// This needs to be outside the class as a top-level function
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  await _showNotification(message);
+}
+
+// Helper function to show notifications
+Future<void> _showNotification(RemoteMessage message) async {
+  RemoteNotification? notification = message.notification;
+  AndroidNotification? android = message.notification?.android;
+
+  if (notification != null && android != null) {
+    FlutterLocalNotificationsPlugin().show(
+      notification.hashCode,
+      notification.title,
+      notification.body,
+      NotificationDetails(
+        android: AndroidNotificationDetails(
+          'high_importance_channel',
+          'High Importance Notifications',
+          channelDescription:
+              'This channel is used for important notifications.',
+          importance: Importance.high,
+          priority: Priority.high,
+          playSound: true,
+          sound:
+              const RawResourceAndroidNotificationSound('notification_sound'),
+          enableVibration: true,
+        ),
+      ),
+    );
+  }
+}
+
 class PushNotificationService {
   static const int _maxRetries = 3;
   static const Duration _retryDelay = Duration(seconds: 2);
   static const storage = FlutterSecureStorage();
   static const String FCM_TOKEN_KEY = 'fcmToken';
+  static final FlutterLocalNotificationsPlugin
+      _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
   static Future<void> initializeNotifications() async {
+    // Initialize Firebase
+    await Firebase.initializeApp();
+
+    // Set up background message handler
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+    // Request permissions
+    await FirebaseMessaging.instance.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+
     // Create high importance channel
     const AndroidNotificationChannel channel = AndroidNotificationChannel(
       'high_importance_channel',
@@ -19,17 +69,22 @@ class PushNotificationService {
       description: 'This channel is used for important notifications.',
       importance: Importance.high,
       playSound: true,
+      // sound: RawResourceAndroidNotificationSound('notification_sound'),
       enableVibration: true,
     );
 
     // Create the channel
-    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-        FlutterLocalNotificationsPlugin();
-
-    await flutterLocalNotificationsPlugin
+    await _flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
+
+    // Initialize local notifications
+    await _flutterLocalNotificationsPlugin.initialize(
+      const InitializationSettings(
+        android: AndroidInitializationSettings('@mipmap/ic_launcher'),
+      ),
+    );
   }
 
   Future<String?> generateDeviceRecognitionToken() async {
@@ -96,51 +151,35 @@ class PushNotificationService {
   }
 
   startListeningForNewNotifications(BuildContext context) async {
-    await initializeNotifications(); // Initialize notification channel
+    await initializeNotifications();
 
-    ///1. Terminated
+    // 1. Terminated state (app completely closed)
     FirebaseMessaging.instance
         .getInitialMessage()
-        .then((RemoteMessage? remoteMsg) {
-      if (remoteMsg != null) {
-        String? title = remoteMsg.data['title'];
-        print('Terminated Notification: $title');
+        .then((RemoteMessage? message) {
+      if (message != null) {
+        _showNotification(message);
       }
     });
 
-    ///2. Foreground
-    FirebaseMessaging.onMessage.listen((RemoteMessage remoteMsg) {
-      String? title = remoteMsg.data['title'];
-      print('Foreground Notification: $title');
-
-      RemoteNotification? notification = remoteMsg.notification;
-      AndroidNotification? android = remoteMsg.notification?.android;
-
-      if (notification != null && android != null) {
-        FlutterLocalNotificationsPlugin().show(
-          notification.hashCode,
-          notification.title,
-          notification.body,
-          const NotificationDetails(
-            android: AndroidNotificationDetails(
-              'high_importance_channel',
-              'High Importance Notifications',
-              channelDescription:
-                  'This channel is used for important notifications.',
-              importance: Importance.high,
-              priority: Priority.high,
-              playSound: true,
-              enableVibration: true,
-            ),
-          ),
-        );
-      }
+    // 2. Foreground state (app is open and in view)
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      debugPrint('Foreground Message received: ${message.notification?.title}');
+      _showNotification(message);
     });
 
-    ///3. Background
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage remoteMsg) {
-      String? title = remoteMsg.data['title'];
-      print('Background Notification: $title');
+    // 3. Background state (app is open but in background)
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      debugPrint('Background Message opened: ${message.notification?.title}');
+      _showNotification(message);
     });
+
+    // Set foreground notification presentation options
+    await FirebaseMessaging.instance
+        .setForegroundNotificationPresentationOptions(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
   }
 }
