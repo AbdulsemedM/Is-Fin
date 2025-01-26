@@ -83,7 +83,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Apply for Murabaha Loan".tr,
+          "Apply for Murabaha Finance".tr,
           style: Theme.of(context).textTheme.displaySmall,
         ),
       ),
@@ -109,8 +109,8 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
               setState(() {
                 loading = false;
               });
-              displaySnack(
-                  context, "Product request sent successfully".tr, Colors.black);
+              displaySnack(context, "Product request sent successfully".tr,
+                  Colors.black);
               Navigator.pop(context);
             } else if (state is ProductsSentFailure) {
               setState(() {
@@ -475,8 +475,10 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                                             _productRepaymentController.text,
                                       )));
                                 } else {
-                                  displaySnack(context,
-                                      "Please add products first".tr, Colors.red);
+                                  displaySnack(
+                                      context,
+                                      "Please add products first".tr,
+                                      Colors.red);
                                 }
                               }
                             },

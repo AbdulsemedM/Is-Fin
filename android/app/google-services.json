@@ -7,6 +7,25 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:303182793471:android:434f540af2aa2f05f99aca",
+        "android_client_info": {
+          "package_name": "com.coopbankoromiasc.michumizan"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAx7Q_NRWD9Zo7fZuZWCYyScdmES_DfLkQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:303182793471:android:4361d98e4bc8c6f0f99aca",
         "android_client_info": {
           "package_name": "com.example.ifb_loan"

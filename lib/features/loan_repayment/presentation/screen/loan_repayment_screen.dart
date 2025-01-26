@@ -56,7 +56,7 @@ class _LoanRepaymentScreenState extends State<LoanRepaymentScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Loan Repayment Status",
+          "Finance Repayment Status",
           style: Theme.of(context).textTheme.displaySmall,
         ),
       ),

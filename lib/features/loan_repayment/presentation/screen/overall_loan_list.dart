@@ -29,7 +29,7 @@ class _OverallLoanListState extends State<OverallLoanList> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Overall Loan List",
+          "Overall Finance List",
           style: Theme.of(context).textTheme.displaySmall,
         ),
       ),

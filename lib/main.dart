@@ -55,6 +55,10 @@ import 'core/services/background_timeout_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  if (!const bool.fromEnvironment('ALLOW_EMULATOR')) {
+    // Terminate or handle emulator-specific logic
+    print("Running on emulator is not allowed.");
+  }
   final bool isFirstTime = await _checkFirstTime();
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: AppColors.primaryDarkColor,

@@ -49,7 +49,7 @@ class _LoanListScreenState extends State<LoanListScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Loan Requests".tr,
+          "Finance Requests".tr,
           style: Theme.of(context).textTheme.displaySmall,
         ),
       ),

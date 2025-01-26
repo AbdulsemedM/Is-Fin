@@ -1,4 +1,4 @@
-package com.example.ifb_loan
+package com.coopbankoromiasc.michumizan
 
 import io.flutter.embedding.android.FlutterActivity
 
