@@ -166,7 +166,13 @@ class LoanListWidget extends StatelessWidget {
             context: context,
             builder: (context) => AlertDialog(
               title: Text('Rejected'.tr),
-              content: Text('The finance application is rejected.'.tr),
+              content: Column(
+                children: [
+                  Text('The finance application is rejected.'.tr),
+                  const SizedBox(height: 8),
+                  Text(rejectionReason ?? ""),
+                ],
+              ),
               actions: [
                 TextButton(
                     onPressed: () {

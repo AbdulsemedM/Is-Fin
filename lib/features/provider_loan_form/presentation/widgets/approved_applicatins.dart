@@ -28,6 +28,7 @@ class _ApprovedApplicatinsState extends State<ApprovedApplicatins> {
                   undertakingAgreementtDocument:
                       transaction.undertakingAgreementDocument,
                   agentAgreementDocument: transaction.agentAgreementDocument,
+                  rejectionReason: transaction.rejectionReason ?? "",
                   status: transaction.status,
                   id: transaction.id,
                   name: transaction.buyerFullName,

@@ -15,6 +15,7 @@ class ProviderLoanListWidget extends StatelessWidget {
   final String status;
   final String? undertakingAgreementtDocument;
   final String? agentAgreementDocument;
+  final String? rejectionReason;
 
   const ProviderLoanListWidget({
     super.key,
@@ -28,6 +29,7 @@ class ProviderLoanListWidget extends StatelessWidget {
     required this.status,
     required this.undertakingAgreementtDocument,
     required this.agentAgreementDocument,
+    required this.rejectionReason,
   });
 
   @override
@@ -96,7 +98,13 @@ class ProviderLoanListWidget extends StatelessWidget {
             context: context,
             builder: (context) => AlertDialog(
               title: Text('Rejected'.tr),
-              content: Text('The loan application is rejected'.tr),
+              content: Column(
+                children: [
+                  Text('The loan application is rejected'.tr),
+                  const SizedBox(height: 8),
+                  Text(rejectionReason ?? ""),
+                ],
+              ),
               actions: [
                 TextButton(
                     onPressed: () {
