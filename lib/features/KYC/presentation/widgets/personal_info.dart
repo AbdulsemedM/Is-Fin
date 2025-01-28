@@ -90,8 +90,8 @@ class _PersonalInfoState extends State<PersonalInfo> {
         value.trim().length != 9) {
       return 'Id. No. must be 9 characters long'.tr;
     } else if (_idTypeController.text == 'National ID' &&
-        value.trim().length != 12) {
-      return 'Id. No. must be 12 characters long'.tr;
+        (value.trim().length != 12 || !RegExp(r'^[0-9]+$').hasMatch(value))) {
+      return 'Id. No. must be 12 numbers long'.tr;
     }
     return null; // Return null if validation passes
   }

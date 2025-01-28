@@ -10,6 +10,7 @@ class KycDataProvider {
       final body = {
         "firstName": personalInfo.firstName,
         "lastName": personalInfo.lastName,
+        "middleName": personalInfo.middleName,
         "gender": personalInfo.gender,
         "idType": personalInfo.idType,
         "idNo": personalInfo.idNo,
