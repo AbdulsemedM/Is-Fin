@@ -28,17 +28,17 @@ class LoanStatusCard extends StatelessWidget {
         children: [
           Expanded(
             child: _buildLoanStatusItem(
-                completedLoans, 'Completed Loans', Colors.orange),
+                completedLoans, 'Completed Finances', Colors.orange),
           ),
           _buildDivider(),
           Expanded(
             child: _buildLoanStatusItem(
-                pendingLoans, 'Pending Loans', Colors.orange),
+                pendingLoans, 'Pending Finances', Colors.orange),
           ),
           _buildDivider(),
           Expanded(
             child: _buildLoanStatusItem(
-                failedLoans, 'Failed Loans', Colors.orange),
+                failedLoans, 'Failed Finances', Colors.orange),
           ),
         ],
       ),

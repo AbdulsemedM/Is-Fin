@@ -158,7 +158,7 @@ class _FinancesScreenState extends State<FinancesScreen> {
           child: Row(
             children: [
               Text(
-                "Active Loans".tr,
+                "Active Finances".tr,
                 style: Theme.of(context)
                     .textTheme
                     .displaySmall!
@@ -195,7 +195,7 @@ class _FinancesScreenState extends State<FinancesScreen> {
               : myActiveLoans.isEmpty
                   ? Center(
                       child: Text(
-                        'No active loans available'.tr,
+                        'No active finances available'.tr,
                         style: TextStyle(fontSize: 16, color: Colors.black54),
                       ),
                     )

@@ -71,7 +71,7 @@ class _ProviderLoanListScreenState extends State<ProviderLoanListScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            "Provider Loan Lists".tr,
+            "Provider Finances Lists".tr,
             style: Theme.of(context).textTheme.displaySmall,
           ),
         ),

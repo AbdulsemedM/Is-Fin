@@ -88,7 +88,7 @@ class _ProviderUndertakingScreenState extends State<ProviderUndertakingScreen> {
                     padding:
                         EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                     child: Text(
-                      "Mark the product requested for a loan to ensure it's reserved for the customer until the loan process is completed.",
+                      "Mark the product requested for a finance to ensure it's reserved for the customer until the process is completed.",
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 16, color: Colors.black54),
                     ),
@@ -127,7 +127,7 @@ class _ProviderUndertakingScreenState extends State<ProviderUndertakingScreen> {
                     padding:
                         EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                     child: Text(
-                      'Provide the product to the buyer on behalf of the bank to finalize the loan.',
+                      'Provide the product to the buyer on behalf of the bank to finalize the finance.',
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 16, color: Colors.black54),
                     ),
@@ -161,7 +161,8 @@ class _ProviderUndertakingScreenState extends State<ProviderUndertakingScreen> {
                                               borderRadius:
                                                   BorderRadius.circular(12),
                                             ),
-                                            child: const Icon(Icons.label_important_outline,
+                                            child: const Icon(
+                                                Icons.label_important_outline,
                                                 color: Colors.deepOrange),
                                           ),
                                           const SizedBox(width: 12),
@@ -194,7 +195,7 @@ class _ProviderUndertakingScreenState extends State<ProviderUndertakingScreen> {
                                           ),
                                           const SizedBox(height: 8),
                                           const Text(
-                                            "Please ensure the product is reserved before proceeding with the loan process.",
+                                            "Please ensure the product is reserved before proceeding with the finance process.",
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                               color: Colors.black54,

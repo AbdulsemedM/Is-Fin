@@ -189,7 +189,7 @@ class _LoanApprovalMurabahaScreenState extends State<LoanApprovalMurabahaScreen>
               ),
               const SizedBox(height: 12),
               Text(
-                "This loan application has been approved by the product owner and the bank officials."
+                "This finance application has been approved by the product owner and the bank officials."
                     .tr,
                 style: const TextStyle(fontSize: 16),
               ),

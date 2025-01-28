@@ -103,7 +103,7 @@ class _LoanApprovalStatusState extends State<LoanApprovalStatus> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            "Loan Approval Status".tr,
+            "Finance Approval Status".tr,
             style: Theme.of(context).textTheme.displaySmall,
           ),
         ),
@@ -149,7 +149,7 @@ class _LoanApprovalStatusState extends State<LoanApprovalStatus> {
                       Text(
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.bodyLarge,
-                          'This loan application has been approved by the product owner and now it is under review by the bank\'s officials. The bank will put it\'s benefits to the product and will let you know the final offer soon.'
+                          'This Finance application has been approved by the product owner and now it is under review by the bank\'s officials. The bank will put it\'s benefits to the product and will let you know the final offer soon.'
                               .tr),
                       LoanStatusTable(
                         items: state.productList,
@@ -309,7 +309,8 @@ class _LoanApprovalStatusState extends State<LoanApprovalStatus> {
                                       return AlertDialog(
                                         title: Text("Confirmation".tr),
                                         content: Text(
-                                            "Are you sure you want to reject the offer?".tr),
+                                            "Are you sure you want to reject the offer?"
+                                                .tr),
                                         actions: [
                                           TextButton(
                                               onPressed: () =>

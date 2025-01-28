@@ -149,7 +149,7 @@ class LoanListWidget extends StatelessWidget {
             context: context,
             builder: (context) => AlertDialog(
               title: Text('Closed'.tr),
-              content: Text('The loan application is closed.'.tr),
+              content: Text('The finance application is closed.'.tr),
               actions: [
                 TextButton(
                     onPressed: () {
