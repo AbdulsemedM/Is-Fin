@@ -14,6 +14,7 @@ class StatusProductListModel {
   final String? murabahaAgreementDocument;
   final String? agentAgreementDocument;
   final String? undertakingAgreementDocument;
+  final String? rejectionReason;
   StatusProductListModel({
     required this.id,
     required this.buyerFullName,
@@ -27,6 +28,7 @@ class StatusProductListModel {
     this.murabahaAgreementDocument,
     this.agentAgreementDocument,
     this.undertakingAgreementDocument,
+    this.rejectionReason,
   });
 
   StatusProductListModel copyWith({
@@ -42,6 +44,7 @@ class StatusProductListModel {
     String? murabahaAgreementDocument,
     String? agentAgreementDocument,
     String? undertakingAgreementDocument,
+    String? rejectionReason,
   }) {
     return StatusProductListModel(
       id: id ?? this.id,
@@ -61,6 +64,7 @@ class StatusProductListModel {
           agentAgreementDocument ?? this.agentAgreementDocument,
       undertakingAgreementDocument:
           undertakingAgreementDocument ?? this.undertakingAgreementDocument,
+      rejectionReason: rejectionReason ?? this.rejectionReason,
     );
   }
 
@@ -78,6 +82,7 @@ class StatusProductListModel {
       'murabahaAgreementDocument': murabahaAgreementDocument,
       'agentAgreementDocument': agentAgreementDocument,
       'undertakingAgreementDocument': undertakingAgreementDocument,
+      'rejectionReason': rejectionReason,
     };
   }
 
@@ -97,6 +102,7 @@ class StatusProductListModel {
       agentAgreementDocument: map['agentAgreementDocument'] as String?,
       undertakingAgreementDocument:
           map['undertakingAgreementDocument'] as String?,
+      rejectionReason: map['rejectionReason'] as String?,
     );
   }
 
@@ -108,7 +114,7 @@ class StatusProductListModel {
 
   @override
   String toString() {
-    return 'StatusProductListModel( id: $id, buyerFullName: $buyerFullName, supplierFullName: $supplierFullName, sectorName: $sectorName, requestedAt: $requestedAt, totalAmount: $totalAmount, repaymentCycleDuration: $repaymentCycleDuration, status: $status, promiseToPurchaseDocument: $promiseToPurchaseDocument, murabahaAgreementDocument: $murabahaAgreementDocument, agentAgreementDocument: $agentAgreementDocument, undertakingAgreementDocument: $undertakingAgreementDocument)';
+    return 'StatusProductListModel( id: $id, buyerFullName: $buyerFullName, supplierFullName: $supplierFullName, sectorName: $sectorName, requestedAt: $requestedAt, totalAmount: $totalAmount, repaymentCycleDuration: $repaymentCycleDuration, status: $status, promiseToPurchaseDocument: $promiseToPurchaseDocument, murabahaAgreementDocument: $murabahaAgreementDocument, agentAgreementDocument: $agentAgreementDocument, undertakingAgreementDocument: $undertakingAgreementDocument, rejectionReason: $rejectionReason )';
   }
 
   @override
@@ -126,7 +132,8 @@ class StatusProductListModel {
         other.promiseToPurchaseDocument == promiseToPurchaseDocument &&
         other.murabahaAgreementDocument == murabahaAgreementDocument &&
         other.agentAgreementDocument == agentAgreementDocument &&
-        other.undertakingAgreementDocument == undertakingAgreementDocument;
+        other.undertakingAgreementDocument == undertakingAgreementDocument &&
+        other.rejectionReason == rejectionReason;
   }
 
   @override
@@ -142,6 +149,7 @@ class StatusProductListModel {
         promiseToPurchaseDocument.hashCode ^
         murabahaAgreementDocument.hashCode ^
         agentAgreementDocument.hashCode ^
-        undertakingAgreementDocument.hashCode;
+        undertakingAgreementDocument.hashCode ^
+        rejectionReason.hashCode;
   }
 }

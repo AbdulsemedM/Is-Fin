@@ -17,6 +17,7 @@ class LoanListWidget extends StatelessWidget {
   final String? murabahaAgreementDocument;
   final String? agentAgreementDocument;
   final String? undertakingAgreementtDocument;
+  final String? rejectionReason;
 
   const LoanListWidget({
     super.key,
@@ -32,6 +33,7 @@ class LoanListWidget extends StatelessWidget {
     required this.murabahaAgreementDocument,
     required this.agentAgreementDocument,
     required this.undertakingAgreementtDocument,
+    required this.rejectionReason,
   });
 
   @override
@@ -150,6 +152,21 @@ class LoanListWidget extends StatelessWidget {
             builder: (context) => AlertDialog(
               title: Text('Closed'.tr),
               content: Text('The finance application is closed.'.tr),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('Close'.tr))
+              ],
+            ),
+          );
+        } else if (status == "REJECTED") {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: Text('Rejected'.tr),
+              content: Text('The finance application is rejected.'.tr),
               actions: [
                 TextButton(
                     onPressed: () {
