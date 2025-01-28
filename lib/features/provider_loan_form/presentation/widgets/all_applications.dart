@@ -29,7 +29,7 @@ class _AllApplicationsState extends State<AllApplications> {
                   undertakingAgreementtDocument:
                       transaction.undertakingAgreementDocument,
                   agentAgreementDocument: transaction.agentAgreementDocument,
-                  rejectionReason: transaction.rejectionReason ?? "",
+                  rejectionReason: transaction.rejectReason ?? "",
                   status: transaction.status,
                   id: transaction.id,
                   name: transaction.buyerFullName,

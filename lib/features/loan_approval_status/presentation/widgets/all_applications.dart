@@ -22,7 +22,7 @@ class _AllLoanApplicationsState extends State<AllLoanApplications> {
         children: widget.loanformList.map((transaction) {
           return LoanListWidget(
             id: transaction.id,
-            rejectionReason: transaction.rejectionReason ?? "",
+            rejectionReason: transaction.rejectReason ?? "",
             promiseToPurchaseDocument:
                 transaction.promiseToPurchaseDocument ?? "",
             murabahaAgreementDocument:

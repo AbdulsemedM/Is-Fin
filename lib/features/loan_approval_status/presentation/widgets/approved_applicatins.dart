@@ -21,7 +21,7 @@ class _ApprovedLoanApplicatinsState extends State<ApprovedLoanApplicatins> {
         children: widget.loanformList.map((transaction) {
           return LoanListWidget(
             id: transaction.id,
-            rejectionReason: transaction.rejectionReason ?? "",
+            rejectionReason: transaction.rejectReason ?? "",
             promiseToPurchaseDocument:
                 transaction.promiseToPurchaseDocument ?? "",
             murabahaAgreementDocument:

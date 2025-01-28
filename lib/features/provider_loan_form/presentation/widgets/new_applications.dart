@@ -32,7 +32,7 @@ class _NewApplicationsState extends State<NewApplications> {
                           transaction.undertakingAgreementDocument,
                       agentAgreementDocument:
                           transaction.agentAgreementDocument,
-                      rejectionReason: transaction.rejectionReason ?? "",
+                      rejectionReason: transaction.rejectReason ?? "",
                       status: transaction.status,
                       id: transaction.id,
                       name: transaction.buyerFullName,
