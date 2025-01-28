@@ -32,6 +32,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
   final TextEditingController _doBController = TextEditingController();
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _middleNameController = TextEditingController();
   final TextEditingController _genderController = TextEditingController();
   final TextEditingController _idTypeController = TextEditingController();
   final TextEditingController _idNoController = TextEditingController();
@@ -282,6 +283,28 @@ class _PersonalInfoState extends State<PersonalInfo> {
                       ),
                     ),
                     const SizedBox(width: 16),
+                    Expanded(
+                      child: TextFormField(
+                        validator: (value) => validateName(value),
+                        controller: _middleNameController,
+                        decoration: InputDecoration(
+                          labelText: 'Middle Name'.tr,
+                          filled: true,
+                          fillColor: Colors.grey[200],
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            borderSide: BorderSide.none,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                Row(
+                  children: [
                     Expanded(
                       child: TextFormField(
                         controller: _lastNameController,
@@ -909,6 +932,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                   personalinfo: PersonalInfoModel(
                                       firstName: _firstNameController.text,
                                       lastName: _lastNameController.text,
+                                      middleName: _middleNameController.text,
                                       gender: _genderController.text,
                                       idType: _idTypeController.text,
                                       dateOfBirth: _doBController.text,
@@ -970,6 +994,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
   void _initializeTextFields() async {
     _firstNameController.text = personalData!.firstName;
     _lastNameController.text = personalData!.lastName;
+    _middleNameController.text = personalData?.middleName ?? '';
     _genderController.text = personalData!.gender;
     _idTypeController.text = personalData!.idType;
     _doBController.text = personalData!.dateOfBirth;

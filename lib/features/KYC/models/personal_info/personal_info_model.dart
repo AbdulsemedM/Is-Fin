@@ -8,6 +8,7 @@ import 'package:ifb_loan/features/KYC/models/personal_info/spouse_info_model.dar
 class PersonalInfoModel {
   final String firstName;
   final String lastName;
+  final String middleName;
   final String gender;
   final String idNo;
   final String idType;
@@ -20,6 +21,7 @@ class PersonalInfoModel {
   PersonalInfoModel({
     required this.firstName,
     required this.lastName,
+    required this.middleName,
     required this.gender,
     required this.idNo,
     required this.idType,
@@ -34,6 +36,7 @@ class PersonalInfoModel {
   PersonalInfoModel copyWith({
     String? firstName,
     String? lastName,
+    String? middleName,
     String? gender,
     String? idNo,
     String? idType,
@@ -47,6 +50,7 @@ class PersonalInfoModel {
     return PersonalInfoModel(
       firstName: firstName ?? this.firstName,
       lastName: lastName ?? this.lastName,
+      middleName: middleName ?? this.middleName,
       gender: gender ?? this.gender,
       idNo: idNo ?? this.idNo,
       idType: idType ?? this.idType,
@@ -64,6 +68,7 @@ class PersonalInfoModel {
     return <String, dynamic>{
       'firstName': firstName,
       'lastName': lastName,
+      'middleName': middleName,
       'gender': gender,
       'idNo': idNo,
       'idType': idType,
@@ -80,6 +85,7 @@ class PersonalInfoModel {
     return PersonalInfoModel(
       firstName: map['firstName'] as String? ?? '',
       lastName: map['lastName'] as String? ?? '',
+      middleName: map['middleName'] as String? ?? '',
       gender: map['gender'] as String? ?? '',
       idNo: map['idNo'] as String? ?? '',
       idType: map['idType'] as String? ?? '',
@@ -124,7 +130,7 @@ class PersonalInfoModel {
 
   @override
   String toString() {
-    return 'PersonalInfoModel(firstName: $firstName, lastName: $lastName, gender: $gender, idNo: $idNo, idType: $idType, dateOfBirth: $dateOfBirth, educationLevel: $educationLevel, meritalStatus: $meritalStatus, spouseInformationDto: $spouseInformationDto, alternativeContactPerson: $alternativeContactPerson, residentialInfoDto: $residentialInfoDto)';
+    return 'PersonalInfoModel(firstName: $firstName, lastName: $lastName, middleName: $middleName, gender: $gender, idNo: $idNo, idType: $idType, dateOfBirth: $dateOfBirth, educationLevel: $educationLevel, meritalStatus: $meritalStatus, spouseInformationDto: $spouseInformationDto, alternativeContactPerson: $alternativeContactPerson, residentialInfoDto: $residentialInfoDto)';
   }
 
   @override
@@ -133,6 +139,7 @@ class PersonalInfoModel {
 
     return other.firstName == firstName &&
         other.lastName == lastName &&
+        other.middleName == middleName &&
         other.gender == gender &&
         other.idNo == idNo &&
         other.idType == idType &&
@@ -148,6 +155,7 @@ class PersonalInfoModel {
   int get hashCode {
     return firstName.hashCode ^
         lastName.hashCode ^
+        middleName.hashCode ^
         gender.hashCode ^
         idNo.hashCode ^
         idType.hashCode ^

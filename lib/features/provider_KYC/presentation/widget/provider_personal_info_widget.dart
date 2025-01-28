@@ -789,6 +789,7 @@ class _ProviderPersonalInfoWidgetState
                                   personalInfo: PersonalInfoModel(
                                       firstName: _firstNameController.text,
                                       lastName: _lastNameController.text,
+                                      middleName: "",
                                       gender: _genderController.text,
                                       idType: _idTypeController.text,
                                       dateOfBirth: _doBController.text,
