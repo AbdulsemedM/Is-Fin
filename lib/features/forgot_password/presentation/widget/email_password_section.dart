@@ -173,9 +173,9 @@ class EmailPasswordSection extends StatelessWidget {
     bool hasLetter = password.contains(RegExp(r'[a-zA-Z]'));
 
     // Check if password is not just sequential numbers or letters
-    bool isSequential = isSequentialString(password);
+    // bool isSequential = isSequentialString(password);
 
-    return hasNumber && hasLetter && !isSequential;
+    return hasNumber && hasLetter;
   }
 
   bool isSequentialString(String str) {

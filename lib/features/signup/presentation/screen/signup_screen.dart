@@ -228,9 +228,9 @@ class _SignupScreenState extends State<SignupScreen> {
                             if (value?.isEmpty == true) {
                               return 'Password is required'.tr;
                             } else if (!isPasswordStrong(value!)) {
-                              return 'Password must be at least 6 characters and contain both letters and numbers'
+                              return 'Must be 6 characters and contain both letters and numbers'
                                   .tr;
-                            } else if (!isSequentialString(value)) {
+                            } else if (isSequentialString(value)) {
                               return 'Password must not be sequential'.tr;
                             }
                             return null;
@@ -436,9 +436,9 @@ class _SignupScreenState extends State<SignupScreen> {
     bool hasLetter = password.contains(RegExp(r'[a-zA-Z]'));
 
     // Check if password is not just sequential numbers or letters
-    bool isSequential = isSequentialString(password);
+    // bool isSequential = isSequentialString(password);
 
-    return hasNumber && hasLetter && !isSequential;
+    return hasNumber && hasLetter;
   }
 
   bool isSequentialString(String str) {
