@@ -98,12 +98,25 @@ class ProviderLoanListWidget extends StatelessWidget {
             context: context,
             builder: (context) => AlertDialog(
               title: Text('Rejected'.tr),
-              content: Column(
-                children: [
-                  Text('The loan application is rejected'.tr),
-                  const SizedBox(height: 8),
-                  Text(rejectionReason ?? ""),
-                ],
+              content: ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxHeight: MediaQuery.of(context).size.height *
+                      0.7, // Max 70% of screen height
+                  maxWidth: MediaQuery.of(context).size.width *
+                      0.8, // Max 80% of screen width
+                ),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize:
+                        MainAxisSize.min, // Makes column wrap its content
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('The loan application is rejected'.tr),
+                      const SizedBox(height: 8),
+                      Text(rejectionReason ?? ""),
+                    ],
+                  ),
+                ),
               ),
               actions: [
                 TextButton(

@@ -12,6 +12,7 @@ class LoanCard extends StatelessWidget {
   final String penalty;
   final String outStandingAmount;
   final String loanStatus;
+  final String daysLeft;
 
   const LoanCard({
     super.key,
@@ -25,6 +26,7 @@ class LoanCard extends StatelessWidget {
     required this.penalty,
     required this.outStandingAmount,
     required this.loanStatus,
+    required this.daysLeft,
   });
 
   @override
@@ -99,14 +101,30 @@ class LoanCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 4),
-            Text(
-              '${NumberFormat('#,###.##').format(double.parse(amount))} $currency',
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
+            Row(children: [
+              Text("Total Amount: "),
+              Text(
+                '${NumberFormat('#,###.##').format(double.parse(amount))} $currency',
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
               ),
-            ),
+            ]),
+            const SizedBox(height: 4),
+            if (loanStatus == "ACTIVE")
+              Row(children: [
+                Text("Days Left: "),
+                Text(
+                  '$daysLeft',
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
+                ),
+              ]),
             const SizedBox(height: 4),
             Text(
               'As of today: ${NumberFormat('#,###.##').format(double.parse(outStandingAmount))} ETB',

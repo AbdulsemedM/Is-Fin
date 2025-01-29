@@ -227,9 +227,11 @@ class _SignupScreenState extends State<SignupScreen> {
                           validator: (value) {
                             if (value?.isEmpty == true) {
                               return 'Password is required'.tr;
-                            } else if (value!.length < 6) {
-                              return 'Password must be at least 6 characters'
+                            } else if (!isPasswordStrong(value!)) {
+                              return 'Password must be at least 6 characters and contain both letters and numbers'
                                   .tr;
+                            } else if (!isSequentialString(value)) {
+                              return 'Password must not be sequential'.tr;
                             }
                             return null;
                           },
@@ -422,5 +424,46 @@ class _SignupScreenState extends State<SignupScreen> {
         ),
       )),
     );
+  }
+
+  bool isPasswordStrong(String password) {
+    if (password.length < 6) return false;
+
+    // Check for at least one number
+    bool hasNumber = password.contains(RegExp(r'[0-9]'));
+
+    // Check for at least one letter
+    bool hasLetter = password.contains(RegExp(r'[a-zA-Z]'));
+
+    // Check if password is not just sequential numbers or letters
+    bool isSequential = isSequentialString(password);
+
+    return hasNumber && hasLetter && !isSequential;
+  }
+
+  bool isSequentialString(String str) {
+    // Convert to lowercase for case-insensitive check
+    str = str.toLowerCase();
+
+    // Check for sequential numbers (e.g., "123", "345")
+    String numbers = "0123456789";
+
+    // Check for sequential letters (e.g., "abc", "def")
+    String letters = "abcdefghijklmnopqrstuvwxyz";
+
+    // Check both forward and reverse sequences
+    for (int i = 0; i < str.length - 2; i++) {
+      String chunk = str.substring(i, i + 3);
+
+      // Check in numbers
+      if (numbers.contains(chunk)) return true;
+      if (numbers.split('').reversed.join().contains(chunk)) return true;
+
+      // Check in letters
+      if (letters.contains(chunk)) return true;
+      if (letters.split('').reversed.join().contains(chunk)) return true;
+    }
+
+    return false;
   }
 }

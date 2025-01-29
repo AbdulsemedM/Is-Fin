@@ -90,6 +90,7 @@ class _LoanRepaymentScreenState extends State<LoanRepaymentScreen> {
                         },
                         child: LoanCard(
                           loanStatus: activeLoan?.loanStatus ?? '',
+                          daysLeft: activeLoan?.daysLeft ?? '',
                           penalty: activeLoan?.penaltyAmount ?? '',
                           outStandingAmount:
                               activeLoan?.outstandingAmount ?? '',

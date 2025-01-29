@@ -265,7 +265,7 @@ class _ProviderUndertakingScreenState extends State<ProviderUndertakingScreen> {
                             ),
                           )
                         : const Text(
-                            "Finalize Loan Process",
+                            "Finalize Finance Process",
                             style: TextStyle(color: AppColors.bg1),
                           ),
                   ),

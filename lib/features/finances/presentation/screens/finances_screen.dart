@@ -233,6 +233,7 @@ class _FinancesScreenState extends State<FinancesScreen> {
                             },
                             child: LoanCard(
                               loanStatus: loan.loanStatus,
+                              daysLeft: loan.daysLeft,
                               penalty: loan.penaltyAmount,
                               outStandingAmount: loan.outstandingAmount,
                               loanTitle: loan.name, // Dynamic title

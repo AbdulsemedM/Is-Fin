@@ -100,6 +100,7 @@ class _OverallLoanListState extends State<OverallLoanList> {
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: LoanCard(
                       loanStatus: loan.loanStatus,
+                      daysLeft: loan.daysLeft,
                       penalty: loan.penaltyAmount,
                       outStandingAmount: loan.outstandingAmount,
                       loanTitle: loan.name,

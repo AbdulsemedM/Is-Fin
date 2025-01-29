@@ -166,19 +166,35 @@ class LoanListWidget extends StatelessWidget {
             context: context,
             builder: (context) => AlertDialog(
               title: Text('Rejected'.tr),
-              content: Column(
-                children: [
-                  Text('The finance application is rejected.'.tr),
-                  const SizedBox(height: 8),
-                  Text(rejectionReason ?? ""),
-                ],
+              content: ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxHeight: MediaQuery.of(context).size.height * 0.7, // Max 70% of screen height
+                  maxWidth: MediaQuery.of(context).size.width * 0.8,   // Max 80% of screen width
+                ),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min, // Makes column wrap its content
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'The finance application is rejected.'.tr,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      const SizedBox(height: 8),
+                      if (rejectionReason != null && rejectionReason!.isNotEmpty)
+                        Text(
+                          rejectionReason!,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                    ],
+                  ),
+                ),
               ),
               actions: [
                 TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text('Close'.tr))
+                  onPressed: () => Navigator.pop(context),
+                  child: Text('Close'.tr),
+                ),
               ],
             ),
           );
