@@ -79,7 +79,10 @@ class LoanStatusTable extends StatelessWidget {
                         RichText(
                           text: TextSpan(
                             children: [
-                              TextSpan(text: 'Quantity: '.tr),
+                              TextSpan(
+                                text: 'Quantity: '.tr,
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
                               TextSpan(
                                 text: item.quantity.toString(),
                                 style: Theme.of(context).textTheme.bodyLarge,
@@ -91,7 +94,10 @@ class LoanStatusTable extends StatelessWidget {
                         RichText(
                           text: TextSpan(
                             children: [
-                              TextSpan(text: 'Total: '.tr),
+                              TextSpan(
+                                text: 'Total: '.tr,
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
                               TextSpan(
                                 text: NumberFormat('#,###')
                                     .format(item.productPrice * item.quantity),

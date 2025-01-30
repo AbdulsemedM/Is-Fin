@@ -120,7 +120,7 @@ class LoanListWidget extends StatelessWidget {
             builder: (context) => AlertDialog(
               title: Text('Under Taking'.tr),
               content: Text(
-                  'The loan application is approved and will be fulfilled once the product owner confirms it.'
+                  'The finance application is approved and will be fulfilled once the product owner confirms it.'
                       .tr),
               actions: [
                 TextButton(
@@ -136,7 +136,7 @@ class LoanListWidget extends StatelessWidget {
             context: context,
             builder: (context) => AlertDialog(
               title: Text('Agreements Accepted'.tr),
-              content: Text('The loan application is now closed.'.tr),
+              content: Text('The Finance application is now approved.'.tr),
               actions: [
                 TextButton(
                     onPressed: () {
@@ -168,12 +168,15 @@ class LoanListWidget extends StatelessWidget {
               title: Text('Rejected'.tr),
               content: ConstrainedBox(
                 constraints: BoxConstraints(
-                  maxHeight: MediaQuery.of(context).size.height * 0.7, // Max 70% of screen height
-                  maxWidth: MediaQuery.of(context).size.width * 0.8,   // Max 80% of screen width
+                  maxHeight: MediaQuery.of(context).size.height *
+                      0.7, // Max 70% of screen height
+                  maxWidth: MediaQuery.of(context).size.width *
+                      0.8, // Max 80% of screen width
                 ),
                 child: SingleChildScrollView(
                   child: Column(
-                    mainAxisSize: MainAxisSize.min, // Makes column wrap its content
+                    mainAxisSize:
+                        MainAxisSize.min, // Makes column wrap its content
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
@@ -181,7 +184,8 @@ class LoanListWidget extends StatelessWidget {
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                       const SizedBox(height: 8),
-                      if (rejectionReason != null && rejectionReason!.isNotEmpty)
+                      if (rejectionReason != null &&
+                          rejectionReason!.isNotEmpty)
                         Text(
                           rejectionReason!,
                           style: Theme.of(context).textTheme.bodyMedium,

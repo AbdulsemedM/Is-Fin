@@ -19,7 +19,7 @@ class _AllApplicationsState extends State<AllApplications> {
   Widget build(BuildContext context) {
     return widget.loanformList.isEmpty
         ? Center(
-            child: Text("There are no loans found".tr),
+            child: Text("There are no finance applications found".tr),
           )
         : SizedBox(
             height: ScreenConfig.screenHeight * 0.77,

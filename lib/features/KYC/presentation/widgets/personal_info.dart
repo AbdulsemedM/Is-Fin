@@ -52,6 +52,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
   final TextEditingController _kebeleController = TextEditingController();
   final TextEditingController _educationLevelController =
       TextEditingController();
+  String? phoneNumber;
 
   String? validateName(String? value) {
     if (value == null || value.trim().isEmpty) {
@@ -119,6 +120,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     PhoneNumberManager phoneManager = PhoneNumberManager();
     String? phone = await phoneManager.getPhoneNumber();
+    phoneNumber = phone;
 
     final String? jsonString = prefs.getString('personal_info_$phone');
 
@@ -927,6 +929,15 @@ class _PersonalInfoState extends State<PersonalInfo> {
                     onPressed: loading
                         ? () {}
                         : () {
+                            if (phoneNumber == _cPhoneNoController.text ||
+                                phoneNumber == _sPhoneNoController.text) {
+                              displaySnack(
+                                  context,
+                                  "Phone number cannot be same as the alternative contact person"
+                                      .tr,
+                                  Colors.red);
+                              return;
+                            }
                             if (myKey.currentState!.validate()) {
                               context.read<KycBloc>().add(PersonalKYCSent(
                                   personalinfo: PersonalInfoModel(

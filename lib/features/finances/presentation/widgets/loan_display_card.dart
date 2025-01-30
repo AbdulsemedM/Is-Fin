@@ -65,7 +65,7 @@ class LoanCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: const Text(
-                      'Inactive',
+                      'Closed',
                       style: TextStyle(
                         fontSize: 12,
                         color: Colors.red,

@@ -235,7 +235,7 @@ class _LoanApprovalMurabahaScreenState extends State<LoanApprovalMurabahaScreen>
                     ),
                     TextSpan(text: " in ".tr),
                     TextSpan(text: repaymentPlan),
-                    TextSpan(text: "repayment duration.".tr),
+                    TextSpan(text: " days payment duration.".tr),
                   ],
                 ),
               ),

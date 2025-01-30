@@ -48,8 +48,8 @@ class ProviderLoanListWidget extends StatelessWidget {
           showDialog(
             context: context,
             builder: (context) => AlertDialog(
-              title: Text('Loan Accepted'.tr),
-              content: Text('The loan application is now closed'.tr),
+              title: Text('Finance Accepted'.tr),
+              content: Text('The Finance application is now approved'.tr),
               actions: [
                 TextButton(
                     onPressed: () {
@@ -65,7 +65,7 @@ class ProviderLoanListWidget extends StatelessWidget {
             builder: (context) => AlertDialog(
               title: Text('Pending'.tr),
               content: Text(
-                  'The loan application is pending approval from the customer'
+                  'The finance application is pending approval from the customer'
                       .tr),
               actions: [
                 TextButton(
@@ -82,7 +82,7 @@ class ProviderLoanListWidget extends StatelessWidget {
             builder: (context) => AlertDialog(
               title: Text('Under Review'.tr),
               content: Text(
-                  'The loan application is under review by the Bank officers'
+                  'The finance application is under review by the Bank officers'
                       .tr),
               actions: [
                 TextButton(
@@ -111,7 +111,7 @@ class ProviderLoanListWidget extends StatelessWidget {
                         MainAxisSize.min, // Makes column wrap its content
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('The loan application is rejected'.tr),
+                      Text('The finance application is rejected'.tr),
                       const SizedBox(height: 8),
                       Text(rejectionReason ?? ""),
                     ],
@@ -142,7 +142,7 @@ class ProviderLoanListWidget extends StatelessWidget {
             context: context,
             builder: (context) => AlertDialog(
               title: Text('Agreements Accepted'.tr),
-              content: Text('The loan application is now closed.'.tr),
+              content: Text('The finance application is now approved.'.tr),
               actions: [
                 TextButton(
                     onPressed: () {

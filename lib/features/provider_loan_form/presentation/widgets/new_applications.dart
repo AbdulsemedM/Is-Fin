@@ -17,7 +17,7 @@ class _NewApplicationsState extends State<NewApplications> {
   Widget build(BuildContext context) {
     return widget.loanformList.isEmpty
         ? Center(
-            child: Text("There are no loans found".tr),
+            child: Text("There are no finance applications found".tr),
           )
         : GestureDetector(
             onTap: () {},
