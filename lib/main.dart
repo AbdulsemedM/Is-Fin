@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -77,54 +80,79 @@ void main() async {
       Permission.notification.request();
     }
   });
+  Future<bool> isEmulator() async {
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    if (Platform.isAndroid) {
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      return androidInfo.isPhysicalDevice != true;
+    } else if (Platform.isIOS) {
+      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+      return iosInfo.isPhysicalDevice != true;
+    }
+    return false;
+  }
 
   String? lang = await LanguageManager().getLanguage();
+  bool emulator = await isEmulator();
   lang ??= '';
-  runApp(MultiBlocProvider(
-    providers: [
-      BlocProvider(
-          create: (context) =>
-              SignupBloc(SignupRepository(SignupDataProvider()))),
-      BlocProvider(
-          create: (contex) =>
-              LoginBloc(LoginRepository(LoginDataProvider(), UserManager()))),
-      BlocProvider(
-          create: (contex) => KycBloc(KycRepository(KycDataProvider()))),
-      BlocProvider(
-          create: (contex) =>
-              ProvidersBloc(ProviderRepository(ProviderDataProvider()))),
-      BlocProvider(
-          create: (contex) =>
-              LoanAppBloc(LoanAppRepository(LoanAppProvider()))),
-      BlocProvider(
-          create: (contex) => ProviderLoanFormBloc(
-              ProviderLoanFormRepository(ProviderLoanFormDataProvider()))),
-      BlocProvider(
-          create: (contex) => LoanApprovalStatusBloc(
-              LoanApprovalStatusRepository(LoanApprovalStatusDataProvider()))),
-      BlocProvider(
-          create: (contex) =>
-              FinancesBloc(FinancesRepository(FinanceDataProvider()))),
-      BlocProvider(
-          create: (contex) =>
-              OtpBloc(OtpRepository(otpDataProvider: OtpDataProvider()))),
-      BlocProvider(
-          create: (contex) => HomeBloc(HomeRepository(HomeDataProvider()))),
-      BlocProvider(
-          create: (contex) => ProviderKycBloc(
-              ProviderKYCRepository(ProviderKycDataProvider()))),
-      BlocProvider(
-          create: (contex) => LoanRepaymentBloc(
-              LoanRepaymentRepository(LoanRepaymentDataProvider()))),
-      BlocProvider(create: (contex) => DashboardBloc()),
-    ],
-    child: BaseScreen(
-      child: MyApp(
-        isFirstTime: isFirstTime,
-        lang: lang,
+  if (!emulator) {
+    runApp(MultiBlocProvider(
+      providers: [
+        BlocProvider(
+            create: (context) =>
+                SignupBloc(SignupRepository(SignupDataProvider()))),
+        BlocProvider(
+            create: (contex) =>
+                LoginBloc(LoginRepository(LoginDataProvider(), UserManager()))),
+        BlocProvider(
+            create: (contex) => KycBloc(KycRepository(KycDataProvider()))),
+        BlocProvider(
+            create: (contex) =>
+                ProvidersBloc(ProviderRepository(ProviderDataProvider()))),
+        BlocProvider(
+            create: (contex) =>
+                LoanAppBloc(LoanAppRepository(LoanAppProvider()))),
+        BlocProvider(
+            create: (contex) => ProviderLoanFormBloc(
+                ProviderLoanFormRepository(ProviderLoanFormDataProvider()))),
+        BlocProvider(
+            create: (contex) => LoanApprovalStatusBloc(
+                LoanApprovalStatusRepository(
+                    LoanApprovalStatusDataProvider()))),
+        BlocProvider(
+            create: (contex) =>
+                FinancesBloc(FinancesRepository(FinanceDataProvider()))),
+        BlocProvider(
+            create: (contex) =>
+                OtpBloc(OtpRepository(otpDataProvider: OtpDataProvider()))),
+        BlocProvider(
+            create: (contex) => HomeBloc(HomeRepository(HomeDataProvider()))),
+        BlocProvider(
+            create: (contex) => ProviderKycBloc(
+                ProviderKYCRepository(ProviderKycDataProvider()))),
+        BlocProvider(
+            create: (contex) => LoanRepaymentBloc(
+                LoanRepaymentRepository(LoanRepaymentDataProvider()))),
+        BlocProvider(create: (contex) => DashboardBloc()),
+      ],
+      child: BaseScreen(
+        child: MyApp(
+          isFirstTime: isFirstTime,
+          lang: lang,
+        ),
       ),
-    ),
-  ));
+    ));
+  } else {
+    runApp(
+      const MaterialApp(
+        home: Scaffold(
+          body: Center(
+            child: Text('This app cannot be run on an emulator.'),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class ProviderLoanFormProvider {}
@@ -138,6 +166,18 @@ Future<bool> _checkFirstTime() async {
   }
 
   return isFirstTime;
+}
+
+Future<bool> isEmulator() async {
+  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+  if (Platform.isAndroid) {
+    AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+    return androidInfo.isPhysicalDevice != true;
+  } else if (Platform.isIOS) {
+    IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+    return iosInfo.isPhysicalDevice != true;
+  }
+  return false;
 }
 
 class MyApp extends StatefulWidget {
