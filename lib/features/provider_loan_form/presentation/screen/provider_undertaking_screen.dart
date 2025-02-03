@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:ifb_loan/app/app_button.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
 import 'package:ifb_loan/app/utils/dialog_utils.dart';
+import 'package:ifb_loan/features/loan_approval_status/bloc/loan_approval_status_bloc.dart';
 import 'package:ifb_loan/features/loan_approval_status/presentation/widgets/pdf_dialog.dart';
 import 'package:ifb_loan/features/provider_loan_form/bloc/provider_loan_form_bloc.dart';
 import 'package:lottie/lottie.dart';
@@ -31,40 +33,63 @@ class _ProviderUndertakingScreenState extends State<ProviderUndertakingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.orange[100],
-        ),
+      appBar: AppBar(
         backgroundColor: Colors.orange[100],
-        body: BlocListener<ProviderLoanFormBloc, ProviderLoanFormState>(
-          listener: (context, state) {
-            if (state is AcceptUnderTakingAndagentAgreementLoading) {
-              setState(() {
-                loading = true;
-              });
-            } else if (state is AcceptUnderTakingAndAgentAgreementSuccess) {
-              setState(() {
-                loading = false;
-              });
-              displaySnack(context, state.message, Colors.black);
-              context
-                  .read<ProviderLoanFormBloc>()
-                  .add(FetchProviderLoanFormList());
-              Navigator.pop(context);
-            } else if (state is AcceptUnderTakingAndAgentAgreementFailure) {
-              setState(() {
-                loading = false;
-              });
-              displaySnack(context, state.errorMessage, Colors.red);
-            }
-          },
-          child: Stack(
-            children: [
-              // Background Animation
-              Positioned.fill(
-                child: Lottie.asset('assets/animation/background.json',
-                    fit: BoxFit.cover, repeat: false),
-              ),
-              Padding(
+      ),
+      backgroundColor: Colors.orange[100],
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener<ProviderLoanFormBloc, ProviderLoanFormState>(
+            listener: (context, state) {
+              if (state is AcceptUnderTakingAndagentAgreementLoading) {
+                setState(() {
+                  loading = true;
+                });
+              } else if (state is AcceptUnderTakingAndAgentAgreementSuccess) {
+                setState(() {
+                  loading = false;
+                });
+                displaySnack(context, state.message, Colors.black);
+                context
+                    .read<ProviderLoanFormBloc>()
+                    .add(FetchProviderLoanFormList());
+                Navigator.pop(context);
+              } else if (state is AcceptUnderTakingAndAgentAgreementFailure) {
+                setState(() {
+                  loading = false;
+                });
+                displaySnack(context, state.errorMessage, Colors.red);
+              }
+            },
+          ),
+          BlocListener<LoanApprovalStatusBloc, LoanApprovalStatusState>(
+            listener: (context, state) {
+              if (state is AcceptOfferSuccess) {
+                setState(() {
+                  loading = false;
+                });
+                context
+                    .read<ProviderLoanFormBloc>()
+                    .add(FetchProviderLoanFormList());
+                Navigator.pop(context);
+              } else if (state is AcceptOfferFailure) {
+                setState(() {
+                  loading = false;
+                });
+                displaySnack(context, state.errorMessage, Colors.red);
+              }
+            },
+          ),
+        ],
+        child: Stack(
+          children: [
+            // Background Animation
+            Positioned.fill(
+              child: Lottie.asset('assets/animation/background.json',
+                  fit: BoxFit.cover, repeat: false),
+            ),
+            SingleChildScrollView(
+              child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -139,141 +164,201 @@ class _ProviderUndertakingScreenState extends State<ProviderUndertakingScreen> {
                   ],
                 ),
               ),
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              MyButton(
+                height: ScreenConfig.screenHeight * 0.055,
+                width: ScreenConfig.screenWidth,
+                backgroundColor:
+                    loading ? AppColors.iconColor : AppColors.primaryDarkColor,
+                onPressed: loading
+                    ? () {}
+                    : () async {
+                        final result1 = await showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (context) => AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  title: Row(
+                                    children: [
+                                      Container(
+                                        padding: const EdgeInsets.all(8),
+                                        decoration: BoxDecoration(
+                                          color: Colors.orange[100],
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                        ),
+                                        child: const Icon(
+                                            Icons.label_important_outline,
+                                            color: Colors.deepOrange),
+                                      ),
+                                      const SizedBox(width: 12),
+                                      const Expanded(
+                                        child: Text(
+                                          "Earmark Product",
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  content: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Lottie.asset(
+                                        'assets/animation/earmark1.json',
+                                        height: 150,
+                                        repeat: true,
+                                      ),
+                                      const SizedBox(height: 16),
+                                      const Text(
+                                        "Have you earmarked the product?",
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 8),
+                                      const Text(
+                                        "Please ensure the product is reserved before proceeding with the finance process.",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: Colors.black54,
+                                          height: 1.3,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(context, false),
+                                      child: Text(
+                                        "Cancel",
+                                        style: TextStyle(
+                                          color: Colors.grey[600],
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.orange,
+                                        foregroundColor: Colors.white,
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 20,
+                                          vertical: 12,
+                                        ),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                        ),
+                                      ),
+                                      onPressed: () =>
+                                          Navigator.pop(context, true),
+                                      child: const Text(
+                                        "Yes, Proceed",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                    ),
+                                  ],
+                                  actionsPadding:
+                                      const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                                ));
+                        if (result1) {
+                          final result2 = await _showPdfDialog(
+                              context, widget.undertakingAgreementtDocument);
+                          if (result2) {
+                            context.read<ProviderLoanFormBloc>().add(
+                                AcceptUnderTakingAndagentAgreement(
+                                    widget.id, "APPROVED"));
+                          } else {
+                            setState(() {
+                              loading = false;
+                            });
+                          }
+                        }
+                      },
+                buttonText: loading
+                    ? SizedBox(
+                        height: ScreenConfig.screenHeight * 0.02,
+                        width: ScreenConfig.screenHeight * 0.02,
+                        child: const CircularProgressIndicator(
+                          strokeWidth: 3,
+                          color: AppColors.primaryColor,
+                        ),
+                      )
+                    : const Text(
+                        "Finalize Finance Process",
+                        style: TextStyle(color: AppColors.bg1),
+                      ),
+              ),
+              const SizedBox(height: 10),
+              MyButton(
+                height: ScreenConfig.screenHeight * 0.055,
+                width: ScreenConfig.screenWidth,
+                backgroundColor: loading ? AppColors.iconColor : Colors.red,
+                onPressed: loading
+                    ? () {}
+                    : () async {
+                        final bool? result = await showDialog<bool>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text("Confirmation".tr),
+                              content: Text(
+                                  "Are you sure you want to reject the offer?"
+                                      .tr),
+                              actions: [
+                                TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(context, false),
+                                    child: Text("No".tr)),
+                                TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(context, true),
+                                    child: Text("Yes".tr)),
+                              ],
+                            );
+                          },
+                        );
+                        if (result == true && mounted) {
+                          context.read<LoanApprovalStatusBloc>().add(
+                              AcceptOffer(id: widget.id, status: "REJECTED"));
+                        }
+                      },
+                buttonText: loading
+                    ? SizedBox(
+                        height: ScreenConfig.screenHeight * 0.02,
+                        width: ScreenConfig.screenHeight * 0.02,
+                        child: const CircularProgressIndicator(
+                          strokeWidth: 3,
+                          color: AppColors.primaryColor,
+                        ),
+                      )
+                    : const Text(
+                        "Reject",
+                        style: TextStyle(color: AppColors.bg1),
+                      ),
+              ),
             ],
           ),
         ),
-        bottomNavigationBar: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
-          child: MyButton(
-            height: ScreenConfig.screenHeight * 0.055,
-            width: ScreenConfig.screenWidth,
-            backgroundColor:
-                loading ? AppColors.iconColor : AppColors.primaryDarkColor,
-            onPressed: loading
-                ? () {}
-                : () async {
-                    final result1 = await showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (context) => AlertDialog(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              title: Row(
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.all(8),
-                                    decoration: BoxDecoration(
-                                      color: Colors.orange[100],
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    child: const Icon(
-                                        Icons.label_important_outline,
-                                        color: Colors.deepOrange),
-                                  ),
-                                  const SizedBox(width: 12),
-                                  const Expanded(
-                                    child: Text(
-                                      "Earmark Product",
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              content: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Lottie.asset(
-                                    'assets/animation/earmark1.json',
-                                    height: 150,
-                                    repeat: true,
-                                  ),
-                                  const SizedBox(height: 16),
-                                  const Text(
-                                    "Have you earmarked the product?",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  const Text(
-                                    "Please ensure the product is reserved before proceeding with the finance process.",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.black54,
-                                      height: 1.3,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              actions: [
-                                TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(context, false),
-                                  child: Text(
-                                    "Cancel",
-                                    style: TextStyle(
-                                      color: Colors.grey[600],
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ),
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.orange,
-                                    foregroundColor: Colors.white,
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 20,
-                                      vertical: 12,
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                  ),
-                                  onPressed: () => Navigator.pop(context, true),
-                                  child: const Text(
-                                    "Yes, Proceed",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.w600),
-                                  ),
-                                ),
-                              ],
-                              actionsPadding:
-                                  const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                            ));
-                    if (result1) {
-                      final result2 = await _showPdfDialog(
-                          context, widget.undertakingAgreementtDocument);
-                      if (result2) {
-                        context.read<ProviderLoanFormBloc>().add(
-                            AcceptUnderTakingAndagentAgreement(
-                                widget.id, "APPROVED"));
-                      } else {
-                        setState(() {
-                          loading = false;
-                        });
-                      }
-                    }
-                  },
-            buttonText: loading
-                ? SizedBox(
-                    height: ScreenConfig.screenHeight * 0.02,
-                    width: ScreenConfig.screenHeight * 0.02,
-                    child: const CircularProgressIndicator(
-                      strokeWidth: 3,
-                      color: AppColors.primaryColor,
-                    ),
-                  )
-                : const Text(
-                    "Finalize Finance Process",
-                    style: TextStyle(color: AppColors.bg1),
-                  ),
-          ),
-        ));
+      ),
+    );
   }
 
   Future<bool> _showPdfDialog(BuildContext context, String pdfUrl) async {
