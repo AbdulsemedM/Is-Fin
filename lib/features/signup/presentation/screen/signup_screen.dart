@@ -73,7 +73,7 @@ class _SignupScreenState extends State<SignupScreen> {
               Row(
                 children: [
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: GestureDetector(
                         onTap: () {
                           Navigator.pop(context);
@@ -318,11 +318,11 @@ class _SignupScreenState extends State<SignupScreen> {
                                     onTap: () {
                                       // Replace with your terms URL
                                       launchUrl(Uri.parse(
-                                          'https://michumizan.com/privacy-policy'));
+                                          'https://michumizan.com/en/privacy-policy'));
                                     },
                                     child: Text(
                                       "Terms".tr,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: AppColors.primaryDarkColor,
                                         decoration: TextDecoration.underline,
                                       ),
@@ -337,11 +337,11 @@ class _SignupScreenState extends State<SignupScreen> {
                                     onTap: () {
                                       // Replace with your conditions URL
                                       launchUrl(Uri.parse(
-                                          'https://michumizan.com/privacy-policy'));
+                                          'https://michumizan.com/en/privacy-policy'));
                                     },
                                     child: Text(
                                       "Conditions".tr,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: AppColors.primaryDarkColor,
                                         decoration: TextDecoration.underline,
                                       ),
