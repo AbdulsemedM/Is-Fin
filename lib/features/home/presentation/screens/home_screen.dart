@@ -473,18 +473,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ExpandableCard(
-                    title: 'Murabaha'.tr,
+                    title: 'Bi-Weekly'.tr,
                     iconContainer: Container(
                       padding: const EdgeInsets.all(8),
                       decoration: const BoxDecoration(
                         color: Colors.orange,
                         shape: BoxShape.circle,
                       ),
-                      child: const Icon(Icons.account_balance,
-                          color: Colors.white),
+                      child:
+                          const Icon(Icons.calendar_month, color: Colors.white),
                     ),
                     description:
-                        'Murabaha at Coop Bank is a Sharia-compliant financing product where the bank buys goods for customers and resells them at a disclosed profit, allowing interest-free financing in line with Islamic principles.'
+                        'The Bi-Weekly Michu Mizan Murabaha Financing is designed for customers seeking short-term financial support. With a financing amount ranging from 5,000 to 25,000 ETB, this product provides quick access to funds with a 15-day repayment duration. It operates under a Murabaha model, ensuring transparency in profit margins, with a markup (profit margin) of 3. Additionally, a 2% processing fee applies to the financing amount. This option is ideal for individuals needing smaller financial assistance with a short repayment cycle'
                             .tr,
                     onGetStarted: () {
                       // print("Get Started clicked");
@@ -492,44 +492,44 @@ class _HomeScreenState extends State<HomeScreen> {
                     cardColor: const Color(0xFFFAC7A6), // Custom card color
                   ),
                   ExpandableCard(
-                    title: 'Musharaka'.tr,
+                    title: 'Monthly'.tr,
                     iconContainer: Container(
                       padding: const EdgeInsets.all(8),
                       decoration: const BoxDecoration(
                         color: Colors.blue,
                         shape: BoxShape.circle,
                       ),
-                      child: const Icon(Icons.handshake_rounded,
+                      child: const Icon(Icons.calendar_view_day_rounded,
                           color: Colors.white),
                     ),
                     description:
-                        'Musharaka is a partnership-based financing method where both the bank and the customer contribute capital to a joint venture or project, sharing profits according to a pre-agreed ratio while losses are shared in proportion to their respective capital contributions, adhering to Sharia principles.'
+                        'The Monthly Michu Mizan Murabaha Financing offers a more extensive financing solution, catering to customers who require larger amounts and a longer repayment period. Customers can access financing between 25,000 and 100,000 ETB, with a 30-day repayment duration. This financing follows the Murabaha principle with a markup (profit margin) of 6, ensuring ethical and transparent transactions. A 2% processing fee is applicable. This product is well-suited for individuals or businesses needing substantial financial support with a manageable repayment timeline.'
                             .tr,
                     onGetStarted: () {
                       // print("Get Started clicked");
                     },
                     cardColor: const Color(0xFFA6D9FA), // Custom card color
                   ),
-                  ExpandableCard(
-                    title: 'Mudarabah'.tr,
-                    iconContainer: Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: const BoxDecoration(
-                        color: Colors.green,
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(Icons.account_balance,
-                          color: Colors.white),
-                    ),
-                    description:
-                        'Mudaraba is a profit-sharing agreement where one party (the bank) provides the capital, and the other party (the entrepreneur) manages the business, with profits shared as per a pre-agreed ratio, and losses borne solely by the capital provider in line with Islamic financing norms.'
-                            .tr,
-                    onGetStarted: () {
-                      // print("Get Started clicked");
-                    },
-                    cardColor: const Color.fromARGB(
-                        255, 155, 249, 163), // Custom card color
-                  ),
+                  // ExpandableCard(
+                  //   title: 'Mudarabah'.tr,
+                  //   iconContainer: Container(
+                  //     padding: const EdgeInsets.all(8),
+                  //     decoration: const BoxDecoration(
+                  //       color: Colors.green,
+                  //       shape: BoxShape.circle,
+                  //     ),
+                  //     child: const Icon(Icons.account_balance,
+                  //         color: Colors.white),
+                  //   ),
+                  //   description:
+                  //       'Mudaraba is a profit-sharing agreement where one party (the bank) provides the capital, and the other party (the entrepreneur) manages the business, with profits shared as per a pre-agreed ratio, and losses borne solely by the capital provider in line with Islamic financing norms.'
+                  //           .tr,
+                  //   onGetStarted: () {
+                  //     // print("Get Started clicked");
+                  //   },
+                  //   cardColor: const Color.fromARGB(
+                  //       255, 155, 249, 163), // Custom card color
+                  // ),
                 ],
               ),
             ),

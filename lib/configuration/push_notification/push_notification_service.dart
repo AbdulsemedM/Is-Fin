@@ -22,7 +22,7 @@ Future<void> _showNotification(RemoteMessage message) async {
       notification.hashCode,
       notification.title,
       notification.body,
-      NotificationDetails(
+      const NotificationDetails(
         android: AndroidNotificationDetails(
           'high_importance_channel',
           'High Importance Notifications',
@@ -32,7 +32,7 @@ Future<void> _showNotification(RemoteMessage message) async {
           priority: Priority.high,
           playSound: true,
           sound:
-              const RawResourceAndroidNotificationSound('notification_sound'),
+              RawResourceAndroidNotificationSound('notification_sound'),
           enableVibration: true,
         ),
       ),

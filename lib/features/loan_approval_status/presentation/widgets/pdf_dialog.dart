@@ -1,9 +1,11 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ifb_loan/core/utils/url_utils.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:dio/dio.dart';
 import 'package:path_provider/path_provider.dart';
+// import 'package:core/utils/url_utils.dart';
 
 class PdfDialog extends StatefulWidget {
   final String pdfUrl;
@@ -25,6 +27,13 @@ class PdfDialog extends StatefulWidget {
 class _PdfDialogState extends State<PdfDialog> {
   bool _isLoading = true;
   bool _isDownloading = false;
+  @override
+  void initState() {
+    super.initState();
+    print("widget.pdfUrl");
+    final modifiedUrl = formatPdfUrl(widget.pdfUrl);
+    print(modifiedUrl);
+  }
 
   Future<void> _downloadPdf() async {
     try {
@@ -60,7 +69,8 @@ class _PdfDialogState extends State<PdfDialog> {
       // Download the file
       final dio = Dio();
       await dio.download(
-        widget.pdfUrl,
+        formatPdfUrl(widget.pdfUrl),
+        // widget.pdfUrl,
         filePath,
         options: Options(headers: {'Authorizaton': 'Bearer ${widget.token}'}),
         onReceiveProgress: (received, total) {
@@ -110,7 +120,8 @@ class _PdfDialogState extends State<PdfDialog> {
                 children: [
                   // PDF Viewer
                   SfPdfViewer.network(
-                    widget.pdfUrl,
+                    formatPdfUrl(widget.pdfUrl),
+                    // widget.pdfUrl,
                     onDocumentLoaded: (_) {
                       setState(() {
                         _isLoading = false;
@@ -197,4 +208,27 @@ class _PdfDialogState extends State<PdfDialog> {
       ),
     );
   }
+}
+
+Future<bool> _showPdfDialog(BuildContext context, String pdfUrl) async {
+  final modifiedUrl = formatPdfUrl(pdfUrl);
+  print('Original URL: $pdfUrl');
+  print('Modified URL: $modifiedUrl');
+
+  final result = await showDialog<bool>(
+    context: context,
+    builder: (BuildContext context) {
+      return PdfDialog(
+        pdfUrl: modifiedUrl,
+        onAccept: () {
+          Navigator.pop(context, true);
+        },
+        onReject: () {
+          Navigator.pop(context, false);
+        },
+      );
+    },
+  );
+
+  return result ?? false;
 }

@@ -94,7 +94,7 @@ class EmailPasswordSection extends StatelessWidget {
                 return 'Password must be at least 6 characters long'.tr;
               } else if (!isPasswordStrong(value)) {
                 return 'Password must be at least 6 characters long'.tr;
-              } else if (!isSequentialString(value)) {
+              } else if (isSequentialString(value)) {
                 return 'Password must not be sequential'.tr;
               }
               return null;
