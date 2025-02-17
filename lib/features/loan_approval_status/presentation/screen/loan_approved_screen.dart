@@ -57,7 +57,7 @@ class LoanApprovedScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     Text(
-                      'Your loan has been approved!'.tr,
+                      'Your Finance request has been approved!'.tr,
                       style: const TextStyle(
                         fontSize: 18,
                         color: Colors.white70,
@@ -101,7 +101,7 @@ class LoanApprovedScreen extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    'Your loan application has been successfully approved. You will be contacted shortly by our team for the next steps.'
+                    'Your Finance request has been successfully approved. You will be contacted shortly by our team for the next steps.'
                         .tr,
                     textAlign: TextAlign.center,
                     style: const TextStyle(
