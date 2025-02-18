@@ -61,7 +61,7 @@ class _LandingPageState extends State<LandingPage> {
               _buildPage(
                 context,
                 animationPath: 'assets/animation/animation2.json',
-                title: 'Get your loan fast and hassle-free',
+                title: 'Get your finance fast and hassle-free',
                 description:
                     'Apply in minutes and enjoy quick approval with a seamless process designed just for you!',
               ),
