@@ -226,9 +226,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ],
                         ),
-                        // SizedBox(
-                        //   height: ScreenConfig.screenHeight * 0.04,
-                        // ),
                         MyButton(
                           height: ScreenConfig.screenHeight * 0.055,
                           width: ScreenConfig.screenWidth,
