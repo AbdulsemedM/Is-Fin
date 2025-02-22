@@ -312,7 +312,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Text(locale[index]['name']),
                         onTap: () async {
                           String selectedLocale = locale[index]['name'];
-                          // print(selectedLocale);
                           LanguageManager preferences = LanguageManager();
                           await preferences.setLanguage(selectedLocale);
                           // print("here");
