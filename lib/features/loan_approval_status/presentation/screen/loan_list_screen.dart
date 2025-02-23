@@ -141,8 +141,7 @@ class _LoanListScreenState extends State<LoanListScreen> {
                                   .toList(),
                             );
                           }
-                          return const SizedBox
-                              .shrink(); // Empty widget if no match
+                          return const SizedBox.shrink();
                         },
                       ),
                     // SizedBox(
