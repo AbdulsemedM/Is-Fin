@@ -32,7 +32,6 @@ class LoanApprovedScreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // Lottie animation
                     Lottie.asset(
                       'assets/animation/congrats.json',
                       height: 200,
