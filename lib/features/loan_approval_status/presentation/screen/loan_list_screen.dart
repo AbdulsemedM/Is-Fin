@@ -66,7 +66,6 @@ class _LoanListScreenState extends State<LoanListScreen> {
               isLoading = false;
             });
           } else if (state is LoanApprovalListFetchedFailure) {
-            // Show error message
             setState(() {
               isLoading = false;
             });
@@ -87,7 +86,6 @@ class _LoanListScreenState extends State<LoanListScreen> {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // _buildLabel('Multiple Items'),
                     AdvancedSegment(
                       activeStyle: const TextStyle(
                           color: AppColors.bgColor,
