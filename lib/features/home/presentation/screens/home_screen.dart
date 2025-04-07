@@ -223,6 +223,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Text("Something went wrong".tr),
+                      // child: Text(state.errorMessage),
                     ),
                   ],
                 );
