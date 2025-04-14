@@ -510,6 +510,9 @@ class _PersonalInfoState extends State<PersonalInfo> {
                         validator: (value) => validateIdNo(value),
                         decoration: InputDecoration(
                           labelText: 'ID. No.'.tr,
+                          hintText: _idTypeController.text == "National ID"
+                              ? "FIN Number"
+                              : "",
                           filled: true,
                           fillColor: Colors.grey[200],
                           border: OutlineInputBorder(
@@ -569,115 +572,6 @@ class _PersonalInfoState extends State<PersonalInfo> {
                       ),
                   ],
                 ),
-                const SizedBox(height: 16),
-                if (_maritalStatusController.text == "Married")
-                  Column(
-                    children: [
-                      Row(
-                        children: [
-                          const Expanded(
-                              child: Divider(
-                            color: Colors.grey, // Set the color of the divider
-                            thickness: 1,
-                          )),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text("Spouse info.".tr),
-                          ),
-                          const Expanded(
-                              child: Divider(
-                            color: Colors.grey, // Set the color of the divider
-                            thickness: 1,
-                          )),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: TextFormField(
-                              controller: _sFirstNameController,
-                              validator: (value) => validateName(value),
-                              decoration: InputDecoration(
-                                labelText: 'First Name'.tr,
-                                filled: true,
-                                fillColor: Colors.grey[200],
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  borderSide: BorderSide.none,
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: TextFormField(
-                              controller: _sLastNameController,
-                              validator: (value) => validateName(value),
-                              decoration: InputDecoration(
-                                labelText: 'Last Name'.tr,
-                                filled: true,
-                                fillColor: Colors.grey[200],
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  borderSide: BorderSide.none,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 16),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: TextFormField(
-                              controller: _sPhoneNoController,
-                              validator: (value) {
-                                if (value?.isEmpty == true) {
-                                  return 'Phone number is required'.tr;
-                                } else if (value!.length != 10) {
-                                  return 'Invalid phone number format'.tr;
-                                } else if (!value.startsWith("09")) {
-                                  return 'Invalid phone number format'.tr;
-                                } else if (!RegExp(r'^\d+$')
-                                    .hasMatch(value.trim())) {
-                                  return 'This field must contain only numbers'
-                                      .tr;
-                                }
-                                return null;
-                              },
-                              decoration: InputDecoration(
-                                labelText: 'Phone Number'.tr,
-                                filled: true,
-                                fillColor: Colors.grey[200],
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  borderSide: BorderSide.none,
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: TextFormField(
-                              controller: _sIdNoController,
-                              validator: (value) => newValidateField(value),
-                              decoration: InputDecoration(
-                                labelText: 'ID. No.'.tr,
-                                filled: true,
-                                fillColor: Colors.grey[200],
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  borderSide: BorderSide.none,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-
                 const SizedBox(height: 16),
                 Row(
                   children: [
@@ -762,21 +656,22 @@ class _PersonalInfoState extends State<PersonalInfo> {
                       ),
                     ),
                     const SizedBox(width: 16),
-                    Expanded(
-                      child: TextFormField(
-                        controller: _cIdNoController,
-                        validator: (value) => newValidateField(value),
-                        decoration: InputDecoration(
-                          labelText: 'ID. No.'.tr,
-                          filled: true,
-                          fillColor: Colors.grey[200],
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                            borderSide: BorderSide.none,
-                          ),
-                        ),
-                      ),
-                    ),
+                    Expanded(child: Container())
+                    // Expanded(
+                    //   child: TextFormField(
+                    //     controller: _cIdNoController,
+                    //     validator: (value) => newValidateField(value),
+                    //     decoration: InputDecoration(
+                    //       labelText: 'ID. No.'.tr,
+                    //       filled: true,
+                    //       fillColor: Colors.grey[200],
+                    //       border: OutlineInputBorder(
+                    //         borderRadius: BorderRadius.circular(8.0),
+                    //         borderSide: BorderSide.none,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
                 const SizedBox(height: 16),
@@ -922,6 +817,115 @@ class _PersonalInfoState extends State<PersonalInfo> {
                   ],
                 ),
                 const SizedBox(height: 16),
+                // if (_maritalStatusController.text == "Married")
+                //   Column(
+                //     children: [
+                //       Row(
+                //         children: [
+                //           const Expanded(
+                //               child: Divider(
+                //             color: Colors.grey, // Set the color of the divider
+                //             thickness: 1,
+                //           )),
+                //           Padding(
+                //             padding: const EdgeInsets.all(8.0),
+                //             child: Text("Spouse info.".tr),
+                //           ),
+                //           const Expanded(
+                //               child: Divider(
+                //             color: Colors.grey, // Set the color of the divider
+                //             thickness: 1,
+                //           )),
+                //         ],
+                //       ),
+                //     Row(
+                //       children: [
+                //         Expanded(
+                //           child: TextFormField(
+                //             controller: _sFirstNameController,
+                //             validator: (value) => validateName(value),
+                //             decoration: InputDecoration(
+                //               labelText: 'First Name'.tr,
+                //               filled: true,
+                //               fillColor: Colors.grey[200],
+                //               border: OutlineInputBorder(
+                //                 borderRadius: BorderRadius.circular(8.0),
+                //                 borderSide: BorderSide.none,
+                //               ),
+                //             ),
+                //           ),
+                //         ),
+                //         const SizedBox(width: 16),
+                //         Expanded(
+                //           child: TextFormField(
+                //             controller: _sLastNameController,
+                //             validator: (value) => validateName(value),
+                //             decoration: InputDecoration(
+                //               labelText: 'Last Name'.tr,
+                //               filled: true,
+                //               fillColor: Colors.grey[200],
+                //               border: OutlineInputBorder(
+                //                 borderRadius: BorderRadius.circular(8.0),
+                //                 borderSide: BorderSide.none,
+                //               ),
+                //             ),
+                //           ),
+                //         ),
+                //       ],
+                //     ),
+                //     const SizedBox(height: 16),
+                //     Row(
+                //       children: [
+                //         Expanded(
+                //           child: TextFormField(
+                //             controller: _sPhoneNoController,
+                //             validator: (value) {
+                //               if (value?.isEmpty == true) {
+                //                 return 'Phone number is required'.tr;
+                //               } else if (value!.length != 10) {
+                //                 return 'Invalid phone number format'.tr;
+                //               } else if (!value.startsWith("09")) {
+                //                 return 'Invalid phone number format'.tr;
+                //               } else if (!RegExp(r'^\d+$')
+                //                   .hasMatch(value.trim())) {
+                //                 return 'This field must contain only numbers'
+                //                     .tr;
+                //               }
+                //               return null;
+                //             },
+                //             decoration: InputDecoration(
+                //               labelText: 'Phone Number'.tr,
+                //               filled: true,
+                //               fillColor: Colors.grey[200],
+                //               border: OutlineInputBorder(
+                //                 borderRadius: BorderRadius.circular(8.0),
+                //                 borderSide: BorderSide.none,
+                //               ),
+                //             ),
+                //           ),
+                //         ),
+                //         const SizedBox(width: 16),
+                //         Expanded(
+                //           child: TextFormField(
+                //             controller: _sIdNoController,
+                //             validator: (value) => newValidateField(value),
+                //             decoration: InputDecoration(
+                //               labelText: 'ID. No.'.tr,
+                //               filled: true,
+                //               fillColor: Colors.grey[200],
+                //               border: OutlineInputBorder(
+                //                 borderRadius: BorderRadius.circular(8.0),
+                //                 borderSide: BorderSide.none,
+                //               ),
+                //             ),
+                //           ),
+                //         ),
+                //       ],
+                //     ),
+                //   ],
+                // ),
+
+                const SizedBox(height: 16),
                 MyButton(
                     backgroundColor: loading
                         ? AppColors.iconColor
@@ -960,22 +964,20 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                                   _cLastNameController.text,
                                               contactPersonphoneNumber:
                                                   _cPhoneNoController.text,
-                                              idNo: _cIdNoController.text),
+                                              idNo: "txext"),
                                       residentialInfoDto: AddressInfoModel(
                                           region: _regionController.text,
                                           zone: _zoneController.text,
                                           woreda: _woredaController.text,
                                           kebele: _kebeleController.text),
                                       spouseInformationDto:
-                                          _maritalStatusController.text == "Married"
+                                          _maritalStatusController.text ==
+                                                  "Married"
                                               ? SpouseInfoModel(
-                                                  firstName: _sFirstNameController
-                                                      .text,
-                                                  lastName:
-                                                      _sLastNameController.text,
-                                                  phoneNumber:
-                                                      _sPhoneNoController.text,
-                                                  idNo: _sIdNoController.text)
+                                                  firstName: "text",
+                                                  lastName: "text",
+                                                  phoneNumber: "text",
+                                                  idNo: "texts")
                                               : null)));
                             }
                           },
