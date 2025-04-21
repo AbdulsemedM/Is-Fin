@@ -266,8 +266,6 @@ class _LoanApprovalStatusState extends State<LoanApprovalStatus> {
                                   : () async {
                                       final bool result = await _showPdfDialog(
                                           context, widget.promisePdfUrl);
-                                      // print("result");
-                                      // print(result);
                                       if (result == true && mounted) {
                                         final bool result2 =
                                             await _showPdfDialog(
