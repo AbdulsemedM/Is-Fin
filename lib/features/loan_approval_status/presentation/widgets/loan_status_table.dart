@@ -18,12 +18,11 @@ class LoanStatusTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.grey[200], // Grey background color for the table
-      // padding: const EdgeInsets.all(8.0),
+      color: Colors.grey[200],
       child: DataTable(
         columnSpacing: 16,
-        headingRowColor: WidgetStateColor.resolveWith(
-            (states) => Colors.grey[300]!), // Light grey color for header
+        headingRowColor:
+            WidgetStateColor.resolveWith((states) => Colors.grey[300]!),
         columns: [
           // DataColumn(label: Text('No.')),
           DataColumn(label: Text('Name'.tr)),
