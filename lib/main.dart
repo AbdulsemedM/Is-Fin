@@ -95,7 +95,7 @@ void main() async {
   String? lang = await LanguageManager().getLanguage();
   bool emulator = await isEmulator();
   lang ??= '';
-  if (!emulator) {
+  if (emulator) {
     runApp(MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -147,7 +147,7 @@ void main() async {
       const MaterialApp(
         home: Scaffold(
           body: Center(
-            child: Text('This app cannot be run on an emulator.'),
+            child: Text('This app cannot run on an emulator.'),
           ),
         ),
       ),
