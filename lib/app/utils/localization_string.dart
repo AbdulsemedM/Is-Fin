@@ -115,7 +115,7 @@ class LocalizationString extends Translations {
           "Please add products first": "Please add products first",
           "Apply Loan": "Apply Loan",
           //////////////////////////////////////////kcy screen////////////////////////////
-          "Bank Link": "Bank Link",
+          "Bank": "Bank",
           "Pers. Info.": "Pers. Info.",
           "Bus. Info.": "Bus. Info.",
           "Upload Image": "Upload Image",
@@ -476,7 +476,7 @@ class LocalizationString extends Translations {
           "Please add products first": "እባክዎ መጀመሪያ ምርቶችን ያክሉ",
           "Apply Loan": "ብድር ያመልክቱ",
           ////////////////////////////////////kyc screen////////////////////////////
-          "Bank Link": "አካውንት አገናኝ",
+          "Bank": "አካውንት",
           "Pers. Info.": "የግል መረጃ",
           "Bus. Info.": "የንግድ መረጃ",
           "Upload Image": "ምስሎችን ያክሉ",
@@ -823,7 +823,7 @@ class LocalizationString extends Translations {
           "Please add products first": "Maaloo dursa meeshaa galchaa",
           "Apply Loan": "Liqii gaafadhaa",
           //////////////////////////////////////////kcy screen////////////////////////////
-          "Bank Link": "Hidhata Baankii",
+          "Bank": "Baankii",
           "Pers. Info.": "odeeffannoo dhuunfaa.",
           "Bus. Info.": "odeeffannoo hojii.",
           "Upload Image": "suuraa olka'aa",
