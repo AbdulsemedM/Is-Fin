@@ -118,7 +118,7 @@ class _CompleteKYCDetailState extends State<CompleteKYCDetail> {
                                   children: [
                                     Text(
                                       isProvider ? "Provider" : "Customer",
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15,
                                         color: AppColors.primaryDarkColor,

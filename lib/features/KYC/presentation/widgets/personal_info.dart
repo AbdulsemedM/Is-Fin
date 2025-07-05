@@ -666,208 +666,215 @@ class _PersonalInfoState extends State<PersonalInfo> {
                     userType == UserType.provider
                         ? const SizedBox()
                         : Row(
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            controller: _cPhoneNoController,
-                            validator: (value) {
-                              if (value?.isEmpty == true) {
-                                return 'Phone number is required'.tr;
-                              } else if (value!.length != 10) {
-                                return 'Invalid phone number format'.tr;
-                              } else if (!value.startsWith("09")) {
-                                return 'Invalid phone number format'.tr;
-                              } else if (!RegExp(r'^\d+$')
-                                  .hasMatch(value.trim())) {
-                                return 'This field must contain only numbers'
-                                    .tr;
-                              }
-                              return null;
-                            },
-                            decoration: InputDecoration(
-                              labelText: 'Phone Number'.tr,
-                              filled: true,
-                              fillColor: Colors.grey[200],
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                                borderSide: BorderSide.none,
+                            children: [
+                              Expanded(
+                                child: TextFormField(
+                                  controller: _cPhoneNoController,
+                                  validator: (value) {
+                                    if (value?.isEmpty == true) {
+                                      return 'Phone number is required'.tr;
+                                    } else if (value!.length != 10) {
+                                      return 'Invalid phone number format'.tr;
+                                    } else if (!value.startsWith("09")) {
+                                      return 'Invalid phone number format'.tr;
+                                    } else if (!RegExp(r'^\d+$')
+                                        .hasMatch(value.trim())) {
+                                      return 'This field must contain only numbers'
+                                          .tr;
+                                    }
+                                    return null;
+                                  },
+                                  decoration: InputDecoration(
+                                    labelText: 'Phone Number'.tr,
+                                    filled: true,
+                                    fillColor: Colors.grey[200],
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ),
+                              const SizedBox(width: 16),
+                              Expanded(child: Container())
+                              // Expanded(
+                              //   child: TextFormField(
+                              //     controller: _cIdNoController,
+                              //     validator: (value) => newValidateField(value),
+                              //     decoration: InputDecoration(
+                              //       labelText: 'ID. No.'.tr,
+                              //       filled: true,
+                              //       fillColor: Colors.grey[200],
+                              //       border: OutlineInputBorder(
+                              //         borderRadius: BorderRadius.circular(8.0),
+                              //         borderSide: BorderSide.none,
+                              //       ),
+                              //     ),
+                              //   ),
+                              // ),
+                            ],
                           ),
-                        ),
-                        const SizedBox(width: 16),
-                        Expanded(child: Container())
-                        // Expanded(
-                        //   child: TextFormField(
-                        //     controller: _cIdNoController,
-                        //     validator: (value) => newValidateField(value),
-                        //     decoration: InputDecoration(
-                        //       labelText: 'ID. No.'.tr,
-                        //       filled: true,
-                        //       fillColor: Colors.grey[200],
-                        //       border: OutlineInputBorder(
-                        //         borderRadius: BorderRadius.circular(8.0),
-                        //         borderSide: BorderSide.none,
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
-                      ],
-                    ),
                     userType == UserType.provider
                         ? const SizedBox()
                         : const SizedBox(height: 16),
                     userType == UserType.provider
                         ? const SizedBox()
                         : Row(
-                      children: [
-                        const Expanded(
-                            child: Divider(
-                          color: Colors.grey, // Set the color of the divider
-                          thickness: 1,
-                        )),
-                        Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text("Residential Info.".tr),
-                        ),
-                        const Expanded(
-                            child: Divider(
-                          color: Colors.grey, // Set the color of the divider
-                          thickness: 1,
-                        )),
-                      ],
-                    ),
+                            children: [
+                              const Expanded(
+                                  child: Divider(
+                                color:
+                                    Colors.grey, // Set the color of the divider
+                                thickness: 1,
+                              )),
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text("Residential Info.".tr),
+                              ),
+                              const Expanded(
+                                  child: Divider(
+                                color:
+                                    Colors.grey, // Set the color of the divider
+                                thickness: 1,
+                              )),
+                            ],
+                          ),
                     userType == UserType.provider
                         ? const SizedBox()
                         : Row(
-                      children: [
-                        if (!loadValues)
-                          Expanded(
-                            child: DropdownButtonFormField<String>(
-                              value: _regionController.text.isNotEmpty &&
-                                      myRegions.any((region) =>
-                                          region.regionName ==
-                                          _regionController.text)
-                                  ? _regionController.text
-                                  : null,
-                              validator: (value) => validateDropDown(value),
-                              decoration: InputDecoration(
-                                labelText: 'Region/ District'.tr,
-                                filled: true,
-                                fillColor: Colors.grey[200],
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  borderSide: BorderSide.none,
+                            children: [
+                              if (!loadValues)
+                                Expanded(
+                                  child: DropdownButtonFormField<String>(
+                                    value: _regionController.text.isNotEmpty &&
+                                            myRegions.any((region) =>
+                                                region.regionName ==
+                                                _regionController.text)
+                                        ? _regionController.text
+                                        : null,
+                                    validator: (value) =>
+                                        validateDropDown(value),
+                                    decoration: InputDecoration(
+                                      labelText: 'Region/ District'.tr,
+                                      filled: true,
+                                      fillColor: Colors.grey[200],
+                                      border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                        borderSide: BorderSide.none,
+                                      ),
+                                    ),
+                                    items: myRegions.map((region) {
+                                      return DropdownMenuItem(
+                                        value: region.regionName,
+                                        child: Text(region.regionName),
+                                      );
+                                    }).toList(),
+                                    onChanged: (value) {
+                                      if (value == null) return;
+
+                                      setState(() {
+                                        _regionController.text = value;
+                                      });
+
+                                      try {
+                                        String regionId = myRegions
+                                            .firstWhere((region) =>
+                                                region.regionName == value)
+                                            .id
+                                            .toString();
+
+                                        _zoneController.clear();
+                                        fetchzone(regionId);
+                                      } catch (e) {
+                                        // Handle the case where region is not found
+                                        displaySnack(
+                                            context,
+                                            "Selected region not found".tr,
+                                            Colors.red);
+                                      }
+                                    },
+                                  ),
                                 ),
-                              ),
-                              items: myRegions.map((region) {
-                                return DropdownMenuItem(
-                                  value: region.regionName,
-                                  child: Text(region.regionName),
-                                );
-                              }).toList(),
-                              onChanged: (value) {
-                                if (value == null) return;
+                              const SizedBox(width: 16),
+                              if (!loadValues)
+                                Expanded(
+                                  child: DropdownButtonFormField<String>(
+                                    value: _zoneController.text.isNotEmpty &&
+                                            myZones.any((zone) =>
+                                                zone.zoneName ==
+                                                _zoneController.text)
+                                        ? _zoneController.text
+                                        : null,
+                                    validator: (value) =>
+                                        validateDropDown(value),
+                                    decoration: InputDecoration(
+                                      labelText: 'Zone/ Subcity'.tr,
+                                      filled: true,
+                                      fillColor: Colors.grey[200],
+                                      border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                        borderSide: BorderSide.none,
+                                      ),
+                                    ),
+                                    items: myZones.map((zone) {
+                                      return DropdownMenuItem(
+                                        value: zone.zoneName,
+                                        child: Text(zone.zoneName),
+                                      );
+                                    }).toList(),
+                                    onChanged: (value) {
+                                      if (value == null) return;
 
-                                setState(() {
-                                  _regionController.text = value;
-                                });
-
-                                try {
-                                  String regionId = myRegions
-                                      .firstWhere((region) =>
-                                          region.regionName == value)
-                                      .id
-                                      .toString();
-
-                                  _zoneController.clear();
-                                  fetchzone(regionId);
-                                } catch (e) {
-                                  // Handle the case where region is not found
-                                  displaySnack(
-                                      context,
-                                      "Selected region not found".tr,
-                                      Colors.red);
-                                }
-                              },
-                            ),
-                          ),
-                        const SizedBox(width: 16),
-                        if (!loadValues)
-                          Expanded(
-                            child: DropdownButtonFormField<String>(
-                              value: _zoneController.text.isNotEmpty &&
-                                      myZones.any((zone) =>
-                                          zone.zoneName == _zoneController.text)
-                                  ? _zoneController.text
-                                  : null,
-                              validator: (value) => validateDropDown(value),
-                              decoration: InputDecoration(
-                                labelText: 'Zone/ Subcity'.tr,
-                                filled: true,
-                                fillColor: Colors.grey[200],
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  borderSide: BorderSide.none,
+                                      setState(() {
+                                        _zoneController.text = value;
+                                      });
+                                    },
+                                  ),
                                 ),
-                              ),
-                              items: myZones.map((zone) {
-                                return DropdownMenuItem(
-                                  value: zone.zoneName,
-                                  child: Text(zone.zoneName),
-                                );
-                              }).toList(),
-                              onChanged: (value) {
-                                if (value == null) return;
-
-                                setState(() {
-                                  _zoneController.text = value;
-                                });
-                              },
-                            ),
+                            ],
                           ),
-                      ],
-                    ),
                     userType == UserType.provider
                         ? const SizedBox()
                         : const SizedBox(height: 16),
                     userType == UserType.provider
                         ? const SizedBox()
                         : Row(
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            controller: _woredaController,
-                            validator: (value) => newValidateField(value),
-                            decoration: InputDecoration(
-                              labelText: 'Woreda'.tr,
-                              filled: true,
-                              fillColor: Colors.grey[200],
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                                borderSide: BorderSide.none,
+                            children: [
+                              Expanded(
+                                child: TextFormField(
+                                  controller: _woredaController,
+                                  validator: (value) => newValidateField(value),
+                                  decoration: InputDecoration(
+                                    labelText: 'Woreda'.tr,
+                                    filled: true,
+                                    fillColor: Colors.grey[200],
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: TextFormField(
-                            controller: _kebeleController,
-                            validator: (value) => newValidateField(value),
-                            decoration: InputDecoration(
-                              labelText: 'Kebele'.tr,
-                              filled: true,
-                              fillColor: Colors.grey[200],
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                                borderSide: BorderSide.none,
+                              const SizedBox(width: 16),
+                              Expanded(
+                                child: TextFormField(
+                                  controller: _kebeleController,
+                                  validator: (value) => newValidateField(value),
+                                  decoration: InputDecoration(
+                                    labelText: 'Kebele'.tr,
+                                    filled: true,
+                                    fillColor: Colors.grey[200],
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ),
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
                     userType == UserType.provider
                         ? const SizedBox()
                         : const SizedBox(height: 16),
