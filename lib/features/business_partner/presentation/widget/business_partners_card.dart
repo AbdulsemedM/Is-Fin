@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:ifb_loan/features/business_partner/presentation/widget/partner_rating_modal.dart';
+import 'package:ifb_loan/features/rate_provider/presentation/screens/rate_provider_screen.dart';
 
 class BusinessPartnersCard extends StatelessWidget {
   final String name;
   final String id;
   final VoidCallback onAccept;
   final VoidCallback onReject;
+  final bool isRateProvider;
+  final bool isViewRatings;
 
   const BusinessPartnersCard({
     super.key,
@@ -12,6 +16,8 @@ class BusinessPartnersCard extends StatelessWidget {
     required this.id,
     required this.onAccept,
     required this.onReject,
+    required this.isRateProvider,
+    required this.isViewRatings,
   });
 
   @override
@@ -25,6 +31,7 @@ class BusinessPartnersCard extends StatelessWidget {
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           // Accept Icon
           GestureDetector(
@@ -40,31 +47,58 @@ class BusinessPartnersCard extends StatelessWidget {
           const SizedBox(width: 12.0),
 
           // Name and ID
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  name,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black87,
+          GestureDetector(
+            onTap: () {
+              if (isRateProvider) {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => RateProviderScreen(
+                            partnerName: name, phoneNumber: id)));
+              }
+              if (isViewRatings) {
+                PartnerRatingModal.show(
+                  context: context,
+                  partnerName: name,
+                  phoneNumber: id,
+                  averageRating: 4.5,
+                  totalRatings: 128,
+                  ratingDistribution: {
+                    5: 65.0, // 65% gave 5 stars
+                    4: 20.0, // 20% gave 4 stars
+                    3: 10.0, // 10% gave 3 stars
+                    2: 3.0, // 3% gave 2 stars
+                    1: 2.0, // 2% gave 1 star
+                  },
+                );
+              }
+            },
+            
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black87,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 4.0),
-                Text(
-                  id,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87,
+                  const SizedBox(height: 4.0),
+                  Text(
+                    id,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
+            
           ),
-
+          const Spacer(),
           // Reject Icon
           GestureDetector(
             onTap: onReject,

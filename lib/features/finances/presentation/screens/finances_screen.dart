@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
 import 'package:ifb_loan/app/utils/dialog_utils.dart';
 import 'package:ifb_loan/configuration/phone_number_manager.dart';
-import 'package:ifb_loan/features/business_partner/presentation/screen/add_bisiness_partner_screen.dart';
+import 'package:ifb_loan/features/business_partner/presentation/screen/business_partners_screen.dart';
 import 'package:ifb_loan/features/finances/bloc/finances_bloc.dart';
 import 'package:ifb_loan/features/finances/models/active_loan_model.dart';
 import 'package:ifb_loan/features/finances/presentation/widgets/finances_widget.dart';
@@ -139,7 +139,10 @@ class _FinancesScreenState extends State<FinancesScreen> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    const AddBisinessPartnerScreen()));
+                                    const BusinessPartnersScreen(
+                                      isRateProvider: false,
+                                      isViewRatings: false,
+                                    )));
                       }
                     } else if (index == 2) {
                       Navigator.push(

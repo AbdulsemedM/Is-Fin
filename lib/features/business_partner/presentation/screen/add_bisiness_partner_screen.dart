@@ -10,7 +10,12 @@ import 'package:ifb_loan/features/business_partner/presentation/widget/url_card_
 // import 'package:ifb_loan/features/provider_KYC/presentation/screen/provider_KYC_screen.dart';
 
 class AddBisinessPartnerScreen extends StatefulWidget {
-  const AddBisinessPartnerScreen({super.key});
+  final bool isUniversal;
+
+  const AddBisinessPartnerScreen({
+    super.key,
+    required this.isUniversal,
+  });
 
   @override
   State<AddBisinessPartnerScreen> createState() =>

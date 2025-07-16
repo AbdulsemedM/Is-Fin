@@ -7,14 +7,17 @@ import 'package:ifb_loan/app/utils/app_theme.dart';
 import 'package:ifb_loan/configuration/phone_number_manager.dart';
 import 'package:ifb_loan/features/KYC/bloc/kyc_bloc.dart';
 import 'package:ifb_loan/features/KYC/models/image_models/images_model.dart';
-import 'package:ifb_loan/features/KYC/presentation/screen/kyc_screen.dart';
+//import 'package:ifb_loan/features/KYC/presentation/screen/kyc_screen.dart';
 import 'package:ifb_loan/features/business_partner/presentation/screen/business_partners_screen.dart';
 import 'package:ifb_loan/features/profile/presentation/widgets/custome_list_button.dart';
 import 'package:ifb_loan/features/profile/presentation/widgets/kyc_card_widget.dart';
 import 'package:ifb_loan/features/profile/presentation/widgets/loan_status_card.dart';
+import 'package:ifb_loan/features/profile/presentation/widgets/public_mode_card.dart';
 import 'package:ifb_loan/features/profile/presentation/widgets/profile_image_widget.dart';
 import 'package:ifb_loan/features/profile/presentation/widgets/upper_circular_design.dart';
 import 'package:ifb_loan/features/provider_loan_form/presentation/screen/provider_loan_list_screen.dart';
+//import 'package:ifb_loan/features/rate_provider/presentation/screens/rate_provider_screen.dart';
+import 'package:ifb_loan/features/switch_account/presentation/screens/switch_account_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   static const routeName = '/profile';
@@ -239,24 +242,50 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
               child: Column(
                 children: [
                   CustomListButton(
-                    icon: Icons.info,
-                    title: 'Complete KYC'.tr,
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => CompleteKYCDetail()));
-                    },
-                  ),
-                  CustomListButton(
-                    icon: Icons.add,
-                    title: 'Add Business Partner'.tr,
+                    icon: Icons.account_balance,
+                    title: 'Switch Account'.tr,
                     onPressed: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  const BusinessPartnersScreen()));
+                                  const SwitchAccountScreen()));
+                    },
+                  ),
+                  CustomListButton(
+                    icon: Icons.star,
+                    title: 'Rate Provider'.tr,
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const BusinessPartnersScreen(
+                                    isRateProvider: true,
+                                    isViewRatings: false,
+                                  )));
+                    },
+                  ),
+                  CustomListButton(
+                    icon: Icons.switch_account,
+                    title: 'See Provider Ratings'.tr,
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const BusinessPartnersScreen(
+                                    isRateProvider: false,
+                                    isViewRatings: true,
+                                  )));
+                    },
+                  ),
+                  PublicModeCard(
+                    initialValue:
+                        false, // You can manage this with shared preferences later
+                    onChanged: (value) {
+                      // Handle theme change here
+                      // You can implement theme switching logic using GetX or Provider
                     },
                   ),
                   const SizedBox(height: 10),

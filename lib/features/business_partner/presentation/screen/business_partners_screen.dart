@@ -7,10 +7,15 @@ import 'package:ifb_loan/app/utils/dialog_utils.dart';
 import 'package:ifb_loan/features/business_partner/bloc/providers_bloc.dart';
 import 'package:ifb_loan/features/business_partner/presentation/screen/add_bisiness_partner_screen.dart';
 import 'package:ifb_loan/features/business_partner/presentation/widget/business_partners_card.dart';
+import 'package:ifb_loan/features/business_partner/presentation/widget/partner_type_popup_menu.dart';
 import 'package:ifb_loan/features/loan_application/bloc/loan_app_bloc.dart';
+import 'package:ifb_loan/features/universal_partners/presentation/screens/universal_partners_screen.dart';
 
 class BusinessPartnersScreen extends StatefulWidget {
-  const BusinessPartnersScreen({super.key});
+  final bool isRateProvider;
+  final bool isViewRatings;
+  const BusinessPartnersScreen(
+      {super.key, required this.isRateProvider, required this.isViewRatings});
 
   @override
   State<BusinessPartnersScreen> createState() => _BusinessPartnersScreenState();
@@ -30,11 +35,26 @@ class _BusinessPartnersScreenState extends State<BusinessPartnersScreen> {
     return Scaffold(
       floatingActionButton: GestureDetector(
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const AddBisinessPartnerScreen(),
-            ),
+          PartnerTypePopupMenu.show(
+            context: context,
+            onUniversalSelected: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const UniversalPartnersScreen(),
+                ),
+              );
+            },
+            onLocalSelected: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const AddBisinessPartnerScreen(
+                    isUniversal: false,
+                  ),
+                ),
+              );
+            },
           );
         },
         child: const CircleAvatar(
@@ -92,6 +112,8 @@ class _BusinessPartnersScreenState extends State<BusinessPartnersScreen> {
                       children: myProviders
                           .map(
                             (provider) => BusinessPartnersCard(
+                              isRateProvider: widget.isRateProvider,
+                              isViewRatings: widget.isViewRatings,
                               name: provider['fullName'] ?? "Unknown",
                               id: provider['phoneNumber'] ?? "N/A",
                               onAccept: () {
