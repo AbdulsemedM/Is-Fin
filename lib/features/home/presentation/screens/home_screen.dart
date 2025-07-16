@@ -425,7 +425,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                const BusinessPartnersScreen()));
+                                const BusinessPartnersScreen(
+                                  isRateProvider: false,
+                                  isViewRatings: false,
+                                )));
                   },
                 ),
                 HomeIconWidget(

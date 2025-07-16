@@ -10,6 +10,9 @@ import 'package:ifb_loan/features/KYC/presentation/widgets/bank_link.dart';
 import 'package:ifb_loan/features/KYC/presentation/widgets/business_info.dart';
 import 'package:ifb_loan/features/KYC/presentation/widgets/personal_info.dart';
 import 'package:ifb_loan/features/KYC/presentation/widgets/upload_images.dart';
+// import 'package:ifb_loan/features/user_type/user_type_cubit.dart';
+
+enum UserType { customer, provider }
 
 class CompleteKYCDetail extends StatefulWidget {
   const CompleteKYCDetail({super.key});
@@ -40,10 +43,11 @@ class _CompleteKYCDetailState extends State<CompleteKYCDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text(
-        'Complete KYC'.tr,
-        style: Theme.of(context).textTheme.displaySmall,
-      )),
+        title: Text(
+          'Complete KYC'.tr,
+          style: Theme.of(context).textTheme.displaySmall,
+        ),
+      ),
       body: BlocListener<KycBloc, KycState>(
         listener: (context, state) async {
           if (state is KycStatusFetchedLoading) {
@@ -65,61 +69,190 @@ class _CompleteKYCDetailState extends State<CompleteKYCDetail> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: CustomSlidingSegmentedControl<int>(
-                  initialValue: _selectedValue,
-                  children: {
-                    3: Text(
-                      'Bank Link'.tr,
-                      style: const TextStyle(
-                          color: AppColors.bgColor,
-                          fontWeight: FontWeight.w500),
-                    ),
-                    1: Text(
-                      'Pers. Info.'.tr,
-                      style: const TextStyle(
-                          color: AppColors.bgColor,
-                          fontWeight: FontWeight.w500),
-                    ),
-                    2: Text(
-                      'Bus. Info.'.tr,
-                      style: const TextStyle(
-                          color: AppColors.bgColor,
-                          fontWeight: FontWeight.w500),
-                    ),
-                    4: Text(
-                      'Upload Image'.tr,
-                      style: const TextStyle(
-                          color: AppColors.bgColor,
-                          fontWeight: FontWeight.w500),
-                    ),
-                  },
-                  decoration: BoxDecoration(
-                    color: AppColors.iconColor,
-                    borderRadius: BorderRadius.circular(8),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // const SizedBox(height: 4),
+                  // User Type
+                  BlocBuilder<UserTypeCubit, UserType>(
+                    builder: (context, state) {
+                      final isProvider = state == UserType.provider;
+                      return Card(
+                        elevation: 2,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16)),
+                        color: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 18, vertical: 7),
+                          child: Row(
+                            children: [
+                              AnimatedContainer(
+                                duration: Duration(milliseconds: 300),
+                                decoration: BoxDecoration(
+                                  color: isProvider
+                                      ? AppColors.primaryDarkColor
+                                          .withOpacity(0.15)
+                                      : AppColors.primaryDarkColor
+                                          .withOpacity(0.05),
+                                  shape: BoxShape.circle,
+                                ),
+                                padding: const EdgeInsets.all(10),
+                                child: Icon(
+                                  isProvider
+                                      ? Icons.business_center_rounded
+                                      : Icons.person_rounded,
+                                  color: isProvider
+                                      ? AppColors.primaryDarkColor
+                                      : AppColors.primaryDarkColor
+                                          .withOpacity(0.7),
+                                  size: 28,
+                                ),
+                              ),
+                              const SizedBox(width: 16),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      isProvider ? "Provider" : "Customer",
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15,
+                                        color: AppColors.primaryDarkColor,
+                                      ),
+                                    ),
+                                    AnimatedSwitcher(
+                                      duration: Duration(milliseconds: 300),
+                                      child: Text(
+                                        isProvider
+                                            ? "You are registering as a provider."
+                                            : "You are registering as a customer.",
+                                        key: ValueKey(isProvider),
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.grey[700],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(width: 16),
+                              GestureDetector(
+                                onTap: () {
+                                  context.read<UserTypeCubit>().setUserType(
+                                        isProvider
+                                            ? UserType.customer
+                                            : UserType.provider,
+                                      );
+                                },
+                                child: AnimatedContainer(
+                                  duration: Duration(milliseconds: 300),
+                                  width: 54,
+                                  height: 28,
+                                  padding: const EdgeInsets.all(3),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: isProvider
+                                        ? AppColors.primaryDarkColor
+                                        : Colors.grey[300],
+                                  ),
+                                  child: AnimatedAlign(
+                                    duration: Duration(milliseconds: 300),
+                                    alignment: isProvider
+                                        ? Alignment.centerRight
+                                        : Alignment.centerLeft,
+                                    child: Container(
+                                      width: 22,
+                                      height: 22,
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.white,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.black12,
+                                            blurRadius: 2,
+                                            offset: Offset(0, 1),
+                                          ),
+                                        ],
+                                      ),
+                                      child: Icon(
+                                        isProvider
+                                            ? Icons.business_center_rounded
+                                            : Icons.person_rounded,
+                                        size: 16,
+                                        color: isProvider
+                                            ? AppColors.primaryDarkColor
+                                            : AppColors.primaryDarkColor
+                                                .withOpacity(0.7),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
                   ),
-                  thumbDecoration: BoxDecoration(
-                    color: AppColors.primaryDarkColor,
-                    borderRadius: BorderRadius.circular(6),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(.3),
-                        blurRadius: 4.0,
-                        spreadRadius: 1.0,
-                        offset: const Offset(0.0, 2.0),
+                  const SizedBox(height: 4),
+                  CustomSlidingSegmentedControl<int>(
+                    initialValue: _selectedValue,
+                    children: {
+                      3: Text(
+                        'Bank'.tr,
+                        style: const TextStyle(
+                            color: AppColors.bgColor,
+                            fontWeight: FontWeight.w500),
                       ),
-                    ],
+                      1: Text(
+                        'Pers. Info.'.tr,
+                        style: const TextStyle(
+                            color: AppColors.bgColor,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      2: Text(
+                        'Bus. Info.'.tr,
+                        style: const TextStyle(
+                            color: AppColors.bgColor,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      4: Text(
+                        'Upload File'.tr,
+                        style: const TextStyle(
+                            color: AppColors.bgColor,
+                            fontWeight: FontWeight.w500),
+                      ),
+                    },
+                    decoration: BoxDecoration(
+                      color: AppColors.iconColor,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    thumbDecoration: BoxDecoration(
+                      color: AppColors.primaryDarkColor,
+                      borderRadius: BorderRadius.circular(6),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(.3),
+                          blurRadius: 4.0,
+                          spreadRadius: 1.0,
+                          offset: const Offset(0.0, 2.0),
+                        ),
+                      ],
+                    ),
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInToLinear,
+                    onValueChanged: (value) {
+                      setState(() {
+                        _selectedValue = value; // Update the selected value
+                      });
+                    },
                   ),
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeInToLinear,
-                  onValueChanged: (value) {
-                    setState(() {
-                      _selectedValue = value; // Update the selected value
-                    });
-                  },
-                ),
+                ],
               ),
             ),
             Expanded(
@@ -304,4 +437,10 @@ class _CompleteKYCDetailState extends State<CompleteKYCDetail> {
       },
     );
   }
+}
+
+class UserTypeCubit extends Cubit<UserType> {
+  UserTypeCubit() : super(UserType.customer); // Default is customer
+
+  void setUserType(UserType type) => emit(type);
 }

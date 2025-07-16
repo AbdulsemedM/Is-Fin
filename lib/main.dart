@@ -14,6 +14,7 @@ import 'package:ifb_loan/core/presentation/widgets/base_screen.dart';
 import 'package:ifb_loan/features/KYC/bloc/kyc_bloc.dart';
 import 'package:ifb_loan/features/KYC/data/data_provider/KYC_data_provider.dart';
 import 'package:ifb_loan/features/KYC/data/repository/KYC_repository.dart';
+import 'package:ifb_loan/features/KYC/presentation/screen/kyc_screen.dart';
 import 'package:ifb_loan/features/business_partner/bloc/providers_bloc.dart';
 import 'package:ifb_loan/features/business_partner/data/data_provider/provider_data_provider.dart';
 import 'package:ifb_loan/features/business_partner/data/repository/provider_repository.dart';
@@ -95,7 +96,7 @@ void main() async {
   String? lang = await LanguageManager().getLanguage();
   bool emulator = await isEmulator();
   lang ??= '';
-  if (emulator) {
+  if (!emulator) {
     runApp(MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -134,6 +135,7 @@ void main() async {
             create: (contex) => LoanRepaymentBloc(
                 LoanRepaymentRepository(LoanRepaymentDataProvider()))),
         BlocProvider(create: (contex) => DashboardBloc()),
+        BlocProvider(create: (contex) => UserTypeCubit()),
       ],
       child: BaseScreen(
         child: MyApp(

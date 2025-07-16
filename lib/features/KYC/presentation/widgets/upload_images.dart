@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:ifb_loan/app/utils/dialog_utils.dart';
 import 'package:ifb_loan/configuration/phone_number_manager.dart';
 import 'package:ifb_loan/features/KYC/models/image_models/images_model.dart';
+import 'package:ifb_loan/features/KYC/presentation/screen/kyc_screen.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ifb_loan/app/app_button.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
@@ -200,82 +201,92 @@ class _UploadImagesState extends State<UploadImages> {
           displaySnack(context, state.errorMessage, Colors.red);
         }
       },
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Text("Upload the following files".tr),
-              Row(
+      child: BlocBuilder<UserTypeCubit, UserType>(
+        builder: (context, userType) {
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
                 children: [
-                  const Expanded(
-                      child: Divider(
-                    color: Colors.grey,
-                    thickness: 1,
-                  )),
+                  Text(
+                    userType == UserType.provider
+                        ? "Provider Upload Files"
+                        : "Customer Upload Files",
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  Text("Upload the following files".tr),
+                  Row(
+                    children: [
+                      const Expanded(
+                          child: Divider(
+                        color: Colors.grey,
+                        thickness: 1,
+                      )),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text("Personal and Business Info.".tr),
+                      ),
+                      const Expanded(
+                          child: Divider(
+                        color: Colors.grey,
+                        thickness: 1,
+                      )),
+                    ],
+                  ),
+                  ..._buildImageSection(
+                    existsRenewedId == null
+                        ? 'Renewed Id.'.tr
+                        : 'Renewed Id.(Sent)'.tr,
+                    _idImageName,
+                    'id',
+                  ),
+                  ..._buildImageSection(
+                    existsTinNumber == null
+                        ? 'Id. Back Page (Optional)'.tr
+                        : 'Id. Back Page (Optional)(Sent)'.tr,
+                    _tinImageName,
+                    'tin',
+                  ),
+                  ..._buildImageSection(
+                    existsTradeLicense == null
+                        ? 'Renewed Trade License'.tr
+                        : "Renewed Trade License(Sent)".tr,
+                    _tradeLicenseImageName,
+                    'tradeLicense', // Fix: Change from 'license' to 'tradeLicense'
+                  ),
+                  ..._buildImageSection(
+                    existsRegCertificate == null
+                        ? 'Commercial Registration Certificate'.tr
+                        : 'Commercial Registration Certificate(Sent)'.tr,
+                    _registrationCertImageName,
+                    'registrationCert', // Fix: Ensure the key matches getBase64StringByType
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text("Personal and Business Info.".tr),
+                    child: MyButton(
+                        backgroundColor: loading
+                            ? AppColors.iconColor
+                            : AppColors.primaryDarkColor,
+                        onPressed: loading ? () {} : _submitForm,
+                        buttonText: loading
+                            ? const SizedBox(
+                                height: 24,
+                                width: 24,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 3,
+                                  color: AppColors.primaryColor,
+                                ),
+                              )
+                            : Text(
+                                "Submit".tr,
+                                style: const TextStyle(color: Colors.white),
+                              )),
                   ),
-                  const Expanded(
-                      child: Divider(
-                    color: Colors.grey,
-                    thickness: 1,
-                  )),
                 ],
               ),
-              ..._buildImageSection(
-                existsRenewedId == null
-                    ? 'Renewed Id.'.tr
-                    : 'Renewed Id.(Sent)'.tr,
-                _idImageName,
-                'id',
-              ),
-              ..._buildImageSection(
-                existsTinNumber == null
-                    ? 'Id. Back Page (Optional)'.tr
-                    : 'Id. Back Page (Optional)(Sent)'.tr,
-                _tinImageName,
-                'tin',
-              ),
-              ..._buildImageSection(
-                existsTradeLicense == null
-                    ? 'Renewed Trade License'.tr
-                    : "Renewed Trade License(Sent)".tr,
-                _tradeLicenseImageName,
-                'tradeLicense', // Fix: Change from 'license' to 'tradeLicense'
-              ),
-              ..._buildImageSection(
-                existsRegCertificate == null
-                    ? 'Commercial Registration Certificate'.tr
-                    : 'Commercial Registration Certificate(Sent)'.tr,
-                _registrationCertImageName,
-                'registrationCert', // Fix: Ensure the key matches getBase64StringByType
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: MyButton(
-                    backgroundColor: loading
-                        ? AppColors.iconColor
-                        : AppColors.primaryDarkColor,
-                    onPressed: loading ? () {} : _submitForm,
-                    buttonText: loading
-                        ? const SizedBox(
-                            height: 24,
-                            width: 24,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 3,
-                              color: AppColors.primaryColor,
-                            ),
-                          )
-                        : Text(
-                            "Submit".tr,
-                            style: const TextStyle(color: Colors.white),
-                          )),
-              ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }
