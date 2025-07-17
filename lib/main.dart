@@ -42,6 +42,9 @@ import 'package:ifb_loan/features/login/presentation/screen/login_screen.dart';
 import 'package:ifb_loan/features/otp/bloc/otp_bloc.dart';
 import 'package:ifb_loan/features/otp/data/data_provider/otp_data_provider.dart';
 import 'package:ifb_loan/features/otp/data/repository/otp_repository.dart';
+import 'package:ifb_loan/features/profile/bloc/bloc/profile_bloc.dart';
+import 'package:ifb_loan/features/profile/data/data_provider/profile_data_provider.dart';
+import 'package:ifb_loan/features/profile/data/repository/profile_repository.dart';
 import 'package:ifb_loan/features/provider_KYC/bloc/provider_kyc_bloc.dart';
 import 'package:ifb_loan/features/provider_KYC/data/data_provider/provider_KYC_data_provider.dart';
 import 'package:ifb_loan/features/provider_KYC/data/repository/provider_KYC_repository.dart';
@@ -148,6 +151,9 @@ void main() async {
         BlocProvider(
             create: (contex) => RateProviderBloc(
                 RateProviderRepository(RateProviderDataProvider()))),
+        BlocProvider(
+            create: (context) =>
+                ProfileBloc(ProfileRepository(ProfileDataProvider()))),
       ],
       child: BaseScreen(
         child: MyApp(
