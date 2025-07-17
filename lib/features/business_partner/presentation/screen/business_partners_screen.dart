@@ -27,7 +27,8 @@ class _BusinessPartnersScreenState extends State<BusinessPartnersScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<ProvidersBloc>().add(ProviderFetch());
+    context.read<ProvidersBloc>().add(ProviderFetch(
+        isRateProvider: widget.isRateProvider || widget.isViewRatings));
   }
 
   @override
@@ -116,6 +117,7 @@ class _BusinessPartnersScreenState extends State<BusinessPartnersScreen> {
                               isViewRatings: widget.isViewRatings,
                               name: provider['fullName'] ?? "Unknown",
                               id: provider['phoneNumber'] ?? "N/A",
+                              supplierId: provider['id'] ?? "N/A",
                               onAccept: () {
                                 // Handle Accept Action
                                 // print("Accepted: ${provider['fullName']}");

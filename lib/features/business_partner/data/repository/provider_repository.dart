@@ -42,9 +42,10 @@ class ProviderRepository {
     }
   }
 
-  Future<List<Map<String, String>>> getProvider() async {
+  Future<List<Map<String, String>>> getProvider(bool isRateProvider) async {
     try {
-      final providerData = await providerDataProvider.getProvider();
+      final providerData =
+          await providerDataProvider.getProvider(isRateProvider);
 
       final data = jsonDecode(providerData);
       if (data['httpStatus'] != 200) {
@@ -55,6 +56,7 @@ class ProviderRepository {
 
         for (var item in data['response']) {
           providers.add({
+            "id": isRateProvider ? item['id'].toString() : "",
             "phoneNumber": item['phoneNumber'].toString(),
             "fullName": item['fullName'].toString(),
           });

@@ -25,11 +25,16 @@ class ProviderDataProvider {
     }
   }
 
-  Future<String> getProvider() async {
+  Future<String> getProvider(bool isRateProvider) async {
     try {
       final apiProvider = ProviderSetup.getApiProvider(ApiConstants.baseUrl);
-      final response = await apiProvider.getRequest("/api/user/partner");
-      return response.body;
+      if (isRateProvider) {
+        final response = await apiProvider.getRequest("/api/suppliers/my-suppliers");
+        return response.body;
+      } else {
+        final response = await apiProvider.getRequest("/api/user/partner");
+        return response.body;
+      }
     } catch (e) {
       throw e.toString();
     }

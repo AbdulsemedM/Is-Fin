@@ -47,7 +47,8 @@ class ProvidersBloc extends Bloc<ProvidersEvent, ProvidersState> {
     emit(ProviderFetchLoading());
     try {
       // final login =
-      final providers = await providerRepository.getProvider();
+      final providers =
+          await providerRepository.getProvider(event.isRateProvider);
       emit(ProviderFetchSuccess(providers: providers));
       // print("sent from the business page");
       // print(signup);
