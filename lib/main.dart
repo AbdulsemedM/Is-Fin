@@ -96,7 +96,7 @@ void main() async {
   String? lang = await LanguageManager().getLanguage();
   bool emulator = await isEmulator();
   lang ??= '';
-  if (!emulator) {
+  if (emulator) {
     runApp(MultiBlocProvider(
       providers: [
         BlocProvider(
