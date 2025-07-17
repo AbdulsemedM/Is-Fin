@@ -52,6 +52,9 @@ import 'package:ifb_loan/features/signup/bloc/signup_bloc.dart';
 import 'package:ifb_loan/features/signup/data/data_provider/signup_data_provider.dart';
 import 'package:ifb_loan/features/signup/data/repository/signup_repository.dart';
 import 'package:ifb_loan/features/splash_screen/splash_screen.dart';
+import 'package:ifb_loan/features/switch_account/bloc/account_bloc.dart';
+import 'package:ifb_loan/features/switch_account/data/data_provider/switch_account_data_provider.dart';
+import 'package:ifb_loan/features/switch_account/data/repository/switch_account_repository.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/widgets.dart';
@@ -136,6 +139,9 @@ void main() async {
                 LoanRepaymentRepository(LoanRepaymentDataProvider()))),
         BlocProvider(create: (contex) => DashboardBloc()),
         BlocProvider(create: (contex) => UserTypeCubit()),
+        BlocProvider(
+            create: (contex) => AccountBloc(
+                SwitchAccountRepository(SwitchAccountDataProvider()))),
       ],
       child: BaseScreen(
         child: MyApp(
