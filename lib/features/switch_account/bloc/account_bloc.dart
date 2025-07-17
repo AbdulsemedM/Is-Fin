@@ -39,7 +39,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   Future<void> _onSwitchAccountEvent(SwitchAccountEvent event, Emitter<AccountState> emit) async {
     emit(SwitchAccountLoading());
     try {
-      final account = await switchAccountRepository.switchAccount(event.accountId);
+      final account = await switchAccountRepository.switchAccount(event.accountType);
       emit(SwitchAccountLoaded(account));
     } catch (e) {
       emit(SwitchAccountError(e.toString()));
@@ -48,7 +48,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   Future<void> _onLinkAccountEvent(LinkAccountEvent event, Emitter<AccountState> emit) async {
     emit(LinkAccountLoading());
     try {
-      final account = await switchAccountRepository.linkAccount(event.accountId);
+      final account = await switchAccountRepository.linkAccount(event.accountNumber, event.accountType);
       emit(LinkAccountLoaded(account));
     } catch (e) {
       emit(LinkAccountError(e.toString()));
