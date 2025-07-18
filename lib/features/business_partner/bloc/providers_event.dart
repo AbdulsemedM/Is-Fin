@@ -17,5 +17,6 @@ class ProviderVerify extends ProvidersEvent {
 }
 
 class ProviderFetch extends ProvidersEvent {
-  ProviderFetch();
+  final bool isRateProvider;
+  ProviderFetch({required this.isRateProvider});
 }

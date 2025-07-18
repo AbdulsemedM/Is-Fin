@@ -5,6 +5,7 @@ import 'package:ifb_loan/features/rate_provider/presentation/screens/rate_provid
 class BusinessPartnersCard extends StatelessWidget {
   final String name;
   final String id;
+  final String supplierId;
   final VoidCallback onAccept;
   final VoidCallback onReject;
   final bool isRateProvider;
@@ -14,6 +15,7 @@ class BusinessPartnersCard extends StatelessWidget {
     super.key,
     required this.name,
     required this.id,
+    required this.supplierId,
     required this.onAccept,
     required this.onReject,
     required this.isRateProvider,
@@ -54,7 +56,9 @@ class BusinessPartnersCard extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         builder: (context) => RateProviderScreen(
-                            partnerName: name, phoneNumber: id)));
+                            partnerName: name,
+                            phoneNumber: id,
+                            supplierId: supplierId)));
               }
               if (isViewRatings) {
                 PartnerRatingModal.show(
@@ -73,30 +77,28 @@ class BusinessPartnersCard extends StatelessWidget {
                 );
               }
             },
-            
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    name,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black87,
-                    ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  name,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black87,
                   ),
-                  const SizedBox(height: 4.0),
-                  Text(
-                    id,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
-                    ),
+                ),
+                const SizedBox(height: 4.0),
+                Text(
+                  id,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
                   ),
-                ],
-              ),
-            
+                ),
+              ],
+            ),
           ),
           const Spacer(),
           // Reject Icon

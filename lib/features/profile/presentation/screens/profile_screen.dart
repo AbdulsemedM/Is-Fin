@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:ifb_loan/app/app_button.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/app/utils/app_theme.dart';
@@ -9,6 +10,7 @@ import 'package:ifb_loan/features/KYC/bloc/kyc_bloc.dart';
 import 'package:ifb_loan/features/KYC/models/image_models/images_model.dart';
 //import 'package:ifb_loan/features/KYC/presentation/screen/kyc_screen.dart';
 import 'package:ifb_loan/features/business_partner/presentation/screen/business_partners_screen.dart';
+import 'package:ifb_loan/features/profile/bloc/bloc/profile_bloc.dart';
 import 'package:ifb_loan/features/profile/presentation/widgets/custome_list_button.dart';
 import 'package:ifb_loan/features/profile/presentation/widgets/kyc_card_widget.dart';
 import 'package:ifb_loan/features/profile/presentation/widgets/loan_status_card.dart';
@@ -46,6 +48,8 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
     super.initState();
     getKYCStatus();
     fetchUserStatus();
+    // Fetch initial public mode status
+    context.read<ProfileBloc>().add(ProfileFetch());
   }
 
   fetchUserStatus() async {
@@ -280,12 +284,83 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
                                   )));
                     },
                   ),
-                  PublicModeCard(
-                    initialValue:
-                        false, // You can manage this with shared preferences later
-                    onChanged: (value) {
-                      // Handle theme change here
-                      // You can implement theme switching logic using GetX or Provider
+                  BlocBuilder<ProfileBloc, ProfileState>(
+                    builder: (context, state) {
+                      bool isPublic = false;
+                      bool isLoading = state is FetchProfileLoading ||
+                          state is UpdateProfileLoading;
+
+                      if (state is FetchProfileSuccess ||
+                          state is UpdateProfileSuccess) {
+                        isPublic = state is FetchProfileSuccess
+                            ? state.isPublic
+                            : (state as UpdateProfileSuccess).isPublic;
+                      }
+
+                      if (isLoading) {
+                        return Shimmer.fromColors(
+                          baseColor: Colors.grey[300]!,
+                          highlightColor: Colors.grey[100]!,
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(vertical: 8),
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(12),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.1),
+                                  spreadRadius: 1,
+                                  blurRadius: 5,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ],
+                            ),
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: 24,
+                                  height: 24,
+                                  decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                    shape: BoxShape.circle,
+                                  ),
+                                ),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Container(
+                                    height: 20,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 12),
+                                Container(
+                                  width: 40,
+                                  height: 24,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }
+
+                      return PublicModeCard(
+                        initialValue: isPublic,
+                        onChanged: (value) {
+                          if (!isLoading) {
+                            context
+                                .read<ProfileBloc>()
+                                .add(ProfileUpdate(isPublic: value));
+                          }
+                        },
+                      );
                     },
                   ),
                   const SizedBox(height: 10),

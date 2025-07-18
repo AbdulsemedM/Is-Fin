@@ -50,7 +50,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
     context.read<LoanAppBloc>().add(SectorsFetch());
     context.read<LoanAppBloc>().add(RepaymentsFetch());
     context.read<LoanAppBloc>().add(UnitofMeasurementsFetch());
-    context.read<ProvidersBloc>().add(ProviderFetch());
+    context.read<ProvidersBloc>().add(ProviderFetch(isRateProvider: false));
   }
 
   String? validateField(String? value) {

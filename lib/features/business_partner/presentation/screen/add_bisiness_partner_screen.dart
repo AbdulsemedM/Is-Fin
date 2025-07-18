@@ -75,7 +75,9 @@ class _AddBisinessPartnerScreenState extends State<AddBisinessPartnerScreen> {
             setState(() {
               loading2 = false;
             });
-            context.read<ProvidersBloc>().add(ProviderFetch());
+            context
+                .read<ProvidersBloc>()
+                .add(ProviderFetch(isRateProvider: false));
             displaySnack(context, state.message, Colors.black);
             Navigator.pop(context, true);
           } else if (state is ProviderVerifyFailure) {

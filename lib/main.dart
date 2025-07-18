@@ -42,16 +42,25 @@ import 'package:ifb_loan/features/login/presentation/screen/login_screen.dart';
 import 'package:ifb_loan/features/otp/bloc/otp_bloc.dart';
 import 'package:ifb_loan/features/otp/data/data_provider/otp_data_provider.dart';
 import 'package:ifb_loan/features/otp/data/repository/otp_repository.dart';
+import 'package:ifb_loan/features/profile/bloc/bloc/profile_bloc.dart';
+import 'package:ifb_loan/features/profile/data/data_provider/profile_data_provider.dart';
+import 'package:ifb_loan/features/profile/data/repository/profile_repository.dart';
 import 'package:ifb_loan/features/provider_KYC/bloc/provider_kyc_bloc.dart';
 import 'package:ifb_loan/features/provider_KYC/data/data_provider/provider_KYC_data_provider.dart';
 import 'package:ifb_loan/features/provider_KYC/data/repository/provider_KYC_repository.dart';
 import 'package:ifb_loan/features/provider_loan_form/bloc/provider_loan_form_bloc.dart';
 import 'package:ifb_loan/features/provider_loan_form/data/data_provider/provider_loan_form_data_provider.dart';
 import 'package:ifb_loan/features/provider_loan_form/data/repository/provider_loan_form_repository.dart';
+import 'package:ifb_loan/features/rate_provider/bloc/rate_provider_bloc.dart';
+import 'package:ifb_loan/features/rate_provider/data/data_provider/rate_provider_data_provider.dart';
+import 'package:ifb_loan/features/rate_provider/data/repository/rate_provider_repository.dart';
 import 'package:ifb_loan/features/signup/bloc/signup_bloc.dart';
 import 'package:ifb_loan/features/signup/data/data_provider/signup_data_provider.dart';
 import 'package:ifb_loan/features/signup/data/repository/signup_repository.dart';
 import 'package:ifb_loan/features/splash_screen/splash_screen.dart';
+import 'package:ifb_loan/features/switch_account/bloc/account_bloc.dart';
+import 'package:ifb_loan/features/switch_account/data/data_provider/switch_account_data_provider.dart';
+import 'package:ifb_loan/features/switch_account/data/repository/switch_account_repository.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/widgets.dart';
@@ -96,7 +105,7 @@ void main() async {
   String? lang = await LanguageManager().getLanguage();
   bool emulator = await isEmulator();
   lang ??= '';
-  if (emulator) {
+  if (!emulator) {
     runApp(MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -136,6 +145,15 @@ void main() async {
                 LoanRepaymentRepository(LoanRepaymentDataProvider()))),
         BlocProvider(create: (contex) => DashboardBloc()),
         BlocProvider(create: (contex) => UserTypeCubit()),
+        BlocProvider(
+            create: (contex) => AccountBloc(
+                SwitchAccountRepository(SwitchAccountDataProvider()))),
+        BlocProvider(
+            create: (contex) => RateProviderBloc(
+                RateProviderRepository(RateProviderDataProvider()))),
+        BlocProvider(
+            create: (context) =>
+                ProfileBloc(ProfileRepository(ProfileDataProvider()))),
       ],
       child: BaseScreen(
         child: MyApp(
