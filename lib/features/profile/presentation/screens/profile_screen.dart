@@ -290,11 +290,30 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
                       bool isLoading = state is FetchProfileLoading ||
                           state is UpdateProfileLoading;
 
-                      if (state is FetchProfileSuccess ||
-                          state is UpdateProfileSuccess) {
-                        isPublic = state is FetchProfileSuccess
-                            ? state.isPublic
-                            : (state as UpdateProfileSuccess).isPublic;
+                      if (state is FetchProfileSuccess) {
+                        isPublic = state.isPublic;
+                      }
+
+                      if (state is UpdateProfileSuccess) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(state.message),
+                            backgroundColor: Colors.green,
+                          ),
+                        );
+                      }
+
+                      if (state is UpdateProfileError ||
+                          state is FetchProfileError) {
+                        final error = state is UpdateProfileError
+                            ? state.errorMessage
+                            : (state as FetchProfileError).errorMessage;
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(error),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
                       }
 
                       if (isLoading) {

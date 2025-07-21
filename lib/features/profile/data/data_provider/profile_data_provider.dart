@@ -5,7 +5,7 @@ class ProfileDataProvider {
   Future<String> getProfile()async {
     try {
       final apiProvider = ProviderSetup.getApiProvider(ApiConstants.baseUrl);
-      final response = await apiProvider.getRequest("/api/user/profile");
+      final response = await apiProvider.getRequest("/api/suppliers/mystatus");
       return response.body;
     } catch (e) {
       throw Exception(e.toString());
@@ -18,7 +18,7 @@ class ProfileDataProvider {
         "isPublic": isPublic,
       };
       final apiProvider = ProviderSetup.getApiProvider(ApiConstants.baseUrl);
-      final response = await apiProvider.putRequest("/api/user/profile", body);
+      final response = await apiProvider.postRequest("/api/suppliers/public", body);
       return response.body;
     } catch (e) {
       throw Exception(e.toString());

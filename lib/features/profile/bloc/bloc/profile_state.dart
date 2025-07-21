@@ -20,9 +20,10 @@ class FetchProfileError extends ProfileState {
 class UpdateProfileLoading extends ProfileState {}
 
 class UpdateProfileSuccess extends ProfileState {
-  final bool isPublic;
-  UpdateProfileSuccess({required this.isPublic});
-}   
+  final String message;
+  UpdateProfileSuccess({required this.message});
+}
+
 class UpdateProfileError extends ProfileState {
   final String errorMessage;
   UpdateProfileError({required this.errorMessage});
