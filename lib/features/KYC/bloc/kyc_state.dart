@@ -157,3 +157,27 @@ final class KycAccountFetchedFailure extends KycState {
 
   KycAccountFetchedFailure(this.errorMessage);
 }
+
+final class UserTypeFetchedLoading extends KycState {}
+
+final class UserTypeFetchedSuccess extends KycState {
+  final bool isSupplier;
+
+  UserTypeFetchedSuccess({required this.isSupplier});
+}
+
+final class UserTypeFetchedFailure extends KycState {
+  final String errorMessage;
+
+  UserTypeFetchedFailure(this.errorMessage);
+}
+
+final class UserTypeChangedLoading extends KycState {}
+
+final class UserTypeChangedSuccess extends KycState {}
+
+final class UserTypeChangedFailure extends KycState {
+  final String errorMessage;
+
+  UserTypeChangedFailure(this.errorMessage);
+}

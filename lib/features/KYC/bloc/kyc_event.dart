@@ -61,3 +61,12 @@ class ZonesKYCFetched extends KycEvent {
 class KYCStatusFetched extends KycEvent {
   KYCStatusFetched();
 }
+
+class FetchUserType extends KycEvent {
+  FetchUserType();
+}
+
+class ChangeUserType extends KycEvent {
+  final bool isSupplier;
+  ChangeUserType({required this.isSupplier});
+}

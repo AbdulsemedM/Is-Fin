@@ -230,4 +230,28 @@ class KycDataProvider {
       throw e.toString();
     }
   }
+
+  Future<String> fetchUserType() async {
+    try {
+      final apiProvider = ProviderSetup.getApiProvider(ApiConstants.baseUrl);
+      final response = await apiProvider.getRequest("/api/user/myType");
+      return response.body;
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  Future<String> changeUserType(bool isSupplier) async {
+    try {
+      final body = {
+        "isSupplier": isSupplier,
+      };
+      final apiProvider = ProviderSetup.getApiProvider(ApiConstants.baseUrl);
+      final response =
+          await apiProvider.postRequest("/api/user/switchType", body);
+      return response.body;
+    } catch (e) {
+      throw e.toString();
+    }
+  }
 }

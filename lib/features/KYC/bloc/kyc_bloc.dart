@@ -25,6 +25,8 @@ class KycBloc extends Bloc<KycEvent, KycState> {
     on<ZonesKYCFetched>(_zonesKYCFetched);
     on<KYCStatusFetched>(_kycStatusFetched);
     on<AccountKYCFetched>(_accountKYCFetched);
+    on<FetchUserType>(_fetchUserType);
+    on<ChangeUserType>(_changeUserType);
   }
   void _personalKYCSent(PersonalKYCSent event, Emitter<KycState> emit) async {
     emit(KycPersonalSentLoading());
@@ -200,6 +202,27 @@ class KycBloc extends Bloc<KycEvent, KycState> {
       emit(KycStatusFetchedFailure(e.toString()));
       // print("failure...");
       // print(e.toString());
+    }
+  }
+
+  void _fetchUserType(FetchUserType event, Emitter<KycState> emit) async {
+    emit(UserTypeFetchedLoading());
+    try {
+      final userType = await kycRepository.fetchUserType();
+      emit(UserTypeFetchedSuccess(isSupplier: userType));
+    } catch (e) {
+      emit(UserTypeFetchedFailure(e.toString()));
+    }
+  }
+
+  void _changeUserType(ChangeUserType event, Emitter<KycState> emit) async {
+    emit(UserTypeChangedLoading());
+    try {
+      await kycRepository.changeUserType(event.isSupplier);
+      emit(UserTypeChangedSuccess());
+      add(FetchUserType());
+    } catch (e) {
+      emit(UserTypeChangedFailure(e.toString()));
     }
   }
 }

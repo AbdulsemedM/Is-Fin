@@ -24,6 +24,7 @@ class CompleteKYCDetail extends StatefulWidget {
 class _CompleteKYCDetailState extends State<CompleteKYCDetail> {
   int _selectedValue = 3; // Initial tab selected
   final UserManager userManager = UserManager();
+  bool isProvider = false; // Add state variable for provider status
 
   // Define your different screens as widgets
   final Map<int, Widget> _screens = const {
@@ -34,9 +35,10 @@ class _CompleteKYCDetailState extends State<CompleteKYCDetail> {
   };
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     context.read<KycBloc>().add(KYCStatusFetched());
+    // Fetch initial user type status
+    context.read<KycBloc>().add(FetchUserType());
   }
 
   @override
@@ -49,37 +51,47 @@ class _CompleteKYCDetailState extends State<CompleteKYCDetail> {
         ),
       ),
       body: BlocListener<KycBloc, KycState>(
-        listener: (context, state) async {
-          if (state is KycStatusFetchedLoading) {
-            // print("here accessing the status");
+        listener: (context, state) {
+          if (state is UserTypeFetchedSuccess) {
+            setState(() {
+              isProvider = state.isSupplier;
+            });
           }
-          if (state is KycStatusFetchedSuccess) {
-            await userManager.setKYCStatus(state.kycStatusInfo.approvalStatus);
-            if (state.kycStatusInfo.approvalStatus == "REJECTED") {
-              _showRejectDialog(context, state.kycStatusInfo.rejectReason!);
-            }
-            if (state.kycStatusInfo.approvalStatus == "PENDING") {
-              _showPendingDialog(context);
-            }
-            if (state.kycStatusInfo.approvalStatus == "APPROVED") {
-              _showSuccessDialog(context);
-            }
+          if (state is UserTypeChangedSuccess) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('User type updated successfully'),
+                backgroundColor: Colors.green,
+              ),
+            );
+          }
+          if (state is UserTypeChangedFailure ||
+              state is UserTypeFetchedFailure) {
+            final error = state is UserTypeChangedFailure
+                ? state.errorMessage
+                : (state as UserTypeFetchedFailure).errorMessage;
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(error),
+                backgroundColor: Colors.red,
+              ),
+            );
           }
         },
-        child: Column(
-          children: [
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // const SizedBox(height: 4),
-                  // User Type
-                  BlocBuilder<UserTypeCubit, UserType>(
-                    builder: (context, state) {
-                      final isProvider = state == UserType.provider;
-                      return Card(
+        child: BlocBuilder<KycBloc, KycState>(
+          builder: (context, state) {
+            bool isLoading = state is UserTypeFetchedLoading ||
+                state is UserTypeChangedLoading;
+
+            return Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0, vertical: 4.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Card(
                         elevation: 2,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16)),
@@ -90,7 +102,7 @@ class _CompleteKYCDetailState extends State<CompleteKYCDetail> {
                           child: Row(
                             children: [
                               AnimatedContainer(
-                                duration: Duration(milliseconds: 300),
+                                duration: const Duration(milliseconds: 300),
                                 decoration: BoxDecoration(
                                   color: isProvider
                                       ? AppColors.primaryDarkColor
@@ -100,16 +112,25 @@ class _CompleteKYCDetailState extends State<CompleteKYCDetail> {
                                   shape: BoxShape.circle,
                                 ),
                                 padding: const EdgeInsets.all(10),
-                                child: Icon(
-                                  isProvider
-                                      ? Icons.business_center_rounded
-                                      : Icons.person_rounded,
-                                  color: isProvider
-                                      ? AppColors.primaryDarkColor
-                                      : AppColors.primaryDarkColor
-                                          .withOpacity(0.7),
-                                  size: 28,
-                                ),
+                                child: isLoading
+                                    ? const SizedBox(
+                                        width: 28,
+                                        height: 28,
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 2,
+                                          color: AppColors.primaryDarkColor,
+                                        ),
+                                      )
+                                    : Icon(
+                                        isProvider
+                                            ? Icons.business_center_rounded
+                                            : Icons.person_rounded,
+                                        color: isProvider
+                                            ? AppColors.primaryDarkColor
+                                            : AppColors.primaryDarkColor
+                                                .withOpacity(0.7),
+                                        size: 28,
+                                      ),
                               ),
                               const SizedBox(width: 16),
                               Expanded(
@@ -125,7 +146,8 @@ class _CompleteKYCDetailState extends State<CompleteKYCDetail> {
                                       ),
                                     ),
                                     AnimatedSwitcher(
-                                      duration: Duration(milliseconds: 300),
+                                      duration:
+                                          const Duration(milliseconds: 300),
                                       child: Text(
                                         isProvider
                                             ? "You are registering as a provider."
@@ -143,14 +165,13 @@ class _CompleteKYCDetailState extends State<CompleteKYCDetail> {
                               const SizedBox(width: 16),
                               GestureDetector(
                                 onTap: () {
-                                  context.read<UserTypeCubit>().setUserType(
-                                        isProvider
-                                            ? UserType.customer
-                                            : UserType.provider,
-                                      );
+                                  if (!isLoading) {
+                                    context.read<KycBloc>().add(ChangeUserType(
+                                        isSupplier: !isProvider));
+                                  }
                                 },
                                 child: AnimatedContainer(
-                                  duration: Duration(milliseconds: 300),
+                                  duration: const Duration(milliseconds: 300),
                                   width: 54,
                                   height: 28,
                                   padding: const EdgeInsets.all(3),
@@ -161,7 +182,7 @@ class _CompleteKYCDetailState extends State<CompleteKYCDetail> {
                                         : Colors.grey[300],
                                   ),
                                   child: AnimatedAlign(
-                                    duration: Duration(milliseconds: 300),
+                                    duration: const Duration(milliseconds: 300),
                                     alignment: isProvider
                                         ? Alignment.centerRight
                                         : Alignment.centerLeft,
@@ -196,70 +217,70 @@ class _CompleteKYCDetailState extends State<CompleteKYCDetail> {
                             ],
                           ),
                         ),
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 4),
-                  CustomSlidingSegmentedControl<int>(
-                    initialValue: _selectedValue,
-                    children: {
-                      3: Text(
-                        'Bank'.tr,
-                        style: const TextStyle(
-                            color: AppColors.bgColor,
-                            fontWeight: FontWeight.w500),
                       ),
-                      1: Text(
-                        'Pers. Info.'.tr,
-                        style: const TextStyle(
-                            color: AppColors.bgColor,
-                            fontWeight: FontWeight.w500),
-                      ),
-                      2: Text(
-                        'Bus. Info.'.tr,
-                        style: const TextStyle(
-                            color: AppColors.bgColor,
-                            fontWeight: FontWeight.w500),
-                      ),
-                      4: Text(
-                        'Upload File'.tr,
-                        style: const TextStyle(
-                            color: AppColors.bgColor,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    },
-                    decoration: BoxDecoration(
-                      color: AppColors.iconColor,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    thumbDecoration: BoxDecoration(
-                      color: AppColors.primaryDarkColor,
-                      borderRadius: BorderRadius.circular(6),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(.3),
-                          blurRadius: 4.0,
-                          spreadRadius: 1.0,
-                          offset: const Offset(0.0, 2.0),
+                      const SizedBox(height: 4),
+                      CustomSlidingSegmentedControl<int>(
+                        initialValue: _selectedValue,
+                        children: {
+                          3: Text(
+                            'Bank'.tr,
+                            style: const TextStyle(
+                                color: AppColors.bgColor,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          1: Text(
+                            'Pers. Info.'.tr,
+                            style: const TextStyle(
+                                color: AppColors.bgColor,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          2: Text(
+                            'Bus. Info.'.tr,
+                            style: const TextStyle(
+                                color: AppColors.bgColor,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          4: Text(
+                            'Upload File'.tr,
+                            style: const TextStyle(
+                                color: AppColors.bgColor,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        },
+                        decoration: BoxDecoration(
+                          color: AppColors.iconColor,
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                      ],
-                    ),
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeInToLinear,
-                    onValueChanged: (value) {
-                      setState(() {
-                        _selectedValue = value; // Update the selected value
-                      });
-                    },
+                        thumbDecoration: BoxDecoration(
+                          color: AppColors.primaryDarkColor,
+                          borderRadius: BorderRadius.circular(6),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(.3),
+                              blurRadius: 4.0,
+                              spreadRadius: 1.0,
+                              offset: const Offset(0.0, 2.0),
+                            ),
+                          ],
+                        ),
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInToLinear,
+                        onValueChanged: (value) {
+                          setState(() {
+                            _selectedValue = value; // Update the selected value
+                          });
+                        },
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
-            Expanded(
-              // Display the selected screen based on _selectedValue
-              child: _screens[_selectedValue] ?? Container(),
-            ),
-          ],
+                ),
+                Expanded(
+                  // Display the selected screen based on _selectedValue
+                  child: _screens[_selectedValue] ?? Container(),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
