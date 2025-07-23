@@ -209,7 +209,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                       String regionId = myRegions
                           .firstWhere((region) =>
                               region.regionName ==
-                              personalData!.residentialInfoDto.region)
+                              personalData!.residentialInfoDto!.region)
                           .id
                           .toString();
                       // print("regionId");
@@ -1018,32 +1018,31 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                           educationLevel:
                                               _educationLevelController.text,
                                           idNo: _idNoController.text,
-                                          meritalStatus: _maritalStatusController
-                                              .text,
-                                          alternativeContactPerson:
-                                              ContactPersonInfoModel(
-                                                  contactPersonfirstName:
-                                                      _cFirstNameController
-                                                          .text,
+                                          meritalStatus:
+                                              _maritalStatusController.text,
+                                          alternativeContactPerson: userType == UserType.provider
+                                              ? null
+                                              : ContactPersonInfoModel(
+                                                  contactPersonfirstName: _cFirstNameController
+                                                      .text,
                                                   contactPersonlastName:
                                                       _cLastNameController.text,
                                                   contactPersonphoneNumber:
                                                       _cPhoneNoController.text,
                                                   idNo: "txext"),
-                                          residentialInfoDto: AddressInfoModel(
-                                              region: _regionController.text,
-                                              zone: _zoneController.text,
-                                              woreda: _woredaController.text,
-                                              kebele: _kebeleController.text),
-                                          spouseInformationDto:
-                                              _maritalStatusController.text ==
-                                                      "Married"
-                                                  ? SpouseInfoModel(
-                                                      firstName: "text",
-                                                      lastName: "text",
-                                                      phoneNumber: "text",
-                                                      idNo: "texts")
-                                                  : null)));
+                                          residentialInfoDto: userType == UserType.provider
+                                              ? null
+                                              : AddressInfoModel(
+                                                  region:
+                                                      _regionController.text,
+                                                  zone: _zoneController.text,
+                                                  woreda:
+                                                      _woredaController.text,
+                                                  kebele:
+                                                      _kebeleController.text),
+                                          spouseInformationDto: _maritalStatusController.text == "Married"
+                                              ? SpouseInfoModel(firstName: "text", lastName: "text", phoneNumber: "text", idNo: "texts")
+                                              : null)));
                                 }
                               },
                         buttonText: loading
@@ -1091,16 +1090,20 @@ class _PersonalInfoState extends State<PersonalInfo> {
           personalData!.spouseInformationDto!.phoneNumber;
       _sIdNoController.text = personalData!.spouseInformationDto!.idNo;
     }
+    if (personalData!.alternativeContactPerson != null) {
     _cFirstNameController.text =
-        personalData!.alternativeContactPerson.contactPersonfirstName;
-    _cLastNameController.text =
-        personalData!.alternativeContactPerson.contactPersonlastName;
-    _cPhoneNoController.text =
-        personalData!.alternativeContactPerson.contactPersonphoneNumber;
-    _cIdNoController.text = personalData!.alternativeContactPerson.idNo;
-    _regionController.text = personalData!.residentialInfoDto.region;
-    _zoneController.text = personalData!.residentialInfoDto.zone;
-    _woredaController.text = personalData!.residentialInfoDto.woreda;
-    _kebeleController.text = personalData!.residentialInfoDto.kebele;
+          personalData!.alternativeContactPerson!.contactPersonfirstName;
+      _cLastNameController.text =
+          personalData!.alternativeContactPerson!.contactPersonlastName;
+      _cPhoneNoController.text =
+          personalData!.alternativeContactPerson!.contactPersonphoneNumber;
+      _cIdNoController.text = personalData!.alternativeContactPerson!.idNo;
+    }
+    if (personalData!.residentialInfoDto != null) {
+      _regionController.text = personalData!.residentialInfoDto!.region;
+      _zoneController.text = personalData!.residentialInfoDto!.zone;
+      _woredaController.text = personalData!.residentialInfoDto!.woreda;
+      _kebeleController.text = personalData!.residentialInfoDto!.kebele;
+    }
   }
 }

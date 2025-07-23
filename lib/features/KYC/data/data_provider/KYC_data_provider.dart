@@ -24,20 +24,22 @@ class KycDataProvider {
             "phoneNumber": personalInfo.spouseInformationDto!.phoneNumber,
             "idNo": personalInfo.spouseInformationDto!.idNo
           },
-        "alternativeContactPerson": {
-          "contactPersonfirstName":
-              personalInfo.alternativeContactPerson.contactPersonfirstName,
+        if (personalInfo.alternativeContactPerson != null)
+          "alternativeContactPerson": {
+            "contactPersonfirstName":
+                personalInfo.alternativeContactPerson!.contactPersonfirstName,
           "contactPersonlastName":
-              personalInfo.alternativeContactPerson.contactPersonlastName,
-          "contactPersonphoneNumber":
-              personalInfo.alternativeContactPerson.contactPersonphoneNumber,
-          "idNo": personalInfo.alternativeContactPerson.idNo
-        },
-        "residentialInfoDto": {
-          "region": personalInfo.residentialInfoDto.region,
-          "zone": personalInfo.residentialInfoDto.zone,
-          "woreda": personalInfo.residentialInfoDto.woreda,
-          "kebele": personalInfo.residentialInfoDto.kebele
+                  personalInfo.alternativeContactPerson!.contactPersonlastName,
+            "contactPersonphoneNumber":
+                personalInfo.alternativeContactPerson!.contactPersonphoneNumber,
+            "idNo": personalInfo.alternativeContactPerson!.idNo
+          },
+        if (personalInfo.residentialInfoDto != null)
+          "residentialInfoDto": {
+            "region": personalInfo.residentialInfoDto!.region,
+            "zone": personalInfo.residentialInfoDto!.zone,
+            "woreda": personalInfo.residentialInfoDto!.woreda,
+            "kebele": personalInfo.residentialInfoDto!.kebele
         }
       };
       final apiProvider = ProviderSetup.getApiProvider(ApiConstants.baseUrl);
@@ -53,19 +55,30 @@ class KycDataProvider {
     try {
       final body = {
         "businessName": businessInfo.businessName,
+        if (businessInfo.applicationType != null)
+          "applicationType": businessInfo.applicationType,
+        if (businessInfo.managerTinNumber != null)
+          "managerTinNumber": businessInfo.managerTinNumber,
         if (businessInfo.websiteUrl != null)
           "websiteUrl": businessInfo.websiteUrl,
         "tinNumber": businessInfo.tinNumber,
         "yearOfEstablishment": businessInfo.yearOfEstablishment,
         "ownership": businessInfo.ownership,
         "businessType": businessInfo.businessType,
-        "financeSource": businessInfo.financeSource,
-        "startingCapital": businessInfo.startingCapital,
-        "currentCapital": businessInfo.currentCapital,
-        "startingEmployee": businessInfo.startingEmployee,
-        "currentEmployee": businessInfo.currentEmployee,
-        "monthlySales": businessInfo.monthlySales,
-        "monthlyRevenue": businessInfo.monthlyRevenue,
+        if (businessInfo.financeSource != null)
+          "financeSource": businessInfo.financeSource,
+        if (businessInfo.startingCapital != null)
+          "startingCapital": businessInfo.startingCapital,
+        if (businessInfo.currentCapital != null)
+          "currentCapital": businessInfo.currentCapital,
+        if (businessInfo.startingEmployee != null)
+          "startingEmployee": businessInfo.startingEmployee,
+        if (businessInfo.currentEmployee != null)
+          "currentEmployee": businessInfo.currentEmployee,
+        if (businessInfo.monthlySales != null)
+          "monthlySales": businessInfo.monthlySales,
+        if (businessInfo.monthlyRevenue != null)
+          "monthlyRevenue": businessInfo.monthlyRevenue,
         "businessAddressDto": {
           "businessAddressregion":
               businessInfo.businessAddressDto.businessAddressregion,

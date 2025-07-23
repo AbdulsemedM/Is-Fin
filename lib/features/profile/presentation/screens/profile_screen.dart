@@ -10,7 +10,7 @@ import 'package:ifb_loan/features/KYC/bloc/kyc_bloc.dart';
 import 'package:ifb_loan/features/KYC/models/image_models/images_model.dart';
 //import 'package:ifb_loan/features/KYC/presentation/screen/kyc_screen.dart';
 import 'package:ifb_loan/features/business_partner/presentation/screen/business_partners_screen.dart';
-import 'package:ifb_loan/features/profile/bloc/bloc/profile_bloc.dart';
+import 'package:ifb_loan/features/profile/bloc/profile_bloc.dart';
 import 'package:ifb_loan/features/profile/presentation/widgets/custome_list_button.dart';
 import 'package:ifb_loan/features/profile/presentation/widgets/kyc_card_widget.dart';
 import 'package:ifb_loan/features/profile/presentation/widgets/loan_status_card.dart';

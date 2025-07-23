@@ -24,21 +24,23 @@ class ProviderKycDataProvider {
             "phoneNumber": personalInfo.spouseInformationDto!.phoneNumber,
             "idNo": personalInfo.spouseInformationDto!.idNo
           },
-        "alternativeContactPerson": {
-          "contactPersonfirstName":
-              personalInfo.alternativeContactPerson.contactPersonfirstName,
-          "contactPersonlastName":
-              personalInfo.alternativeContactPerson.contactPersonlastName,
-          "contactPersonphoneNumber":
-              personalInfo.alternativeContactPerson.contactPersonphoneNumber,
-          "idNo": personalInfo.alternativeContactPerson.idNo
-        },
-        "residentialInfoDto": {
-          "region": personalInfo.residentialInfoDto.region,
-          "zone": personalInfo.residentialInfoDto.zone,
-          "woreda": personalInfo.residentialInfoDto.woreda,
-          "kebele": personalInfo.residentialInfoDto.kebele
-        }
+        if (personalInfo.alternativeContactPerson != null)
+          "alternativeContactPerson": {
+            "contactPersonfirstName":
+                personalInfo.alternativeContactPerson!.contactPersonfirstName,
+            "contactPersonlastName":
+                personalInfo.alternativeContactPerson!.contactPersonlastName,
+            "contactPersonphoneNumber":
+                personalInfo.alternativeContactPerson!.contactPersonphoneNumber,
+            "idNo": personalInfo.alternativeContactPerson!.idNo
+          },
+        if (personalInfo.residentialInfoDto != null)
+          "residentialInfoDto": {
+            "region": personalInfo.residentialInfoDto!.region,
+            "zone": personalInfo.residentialInfoDto!.zone,
+            "woreda": personalInfo.residentialInfoDto!.woreda,
+            "kebele": personalInfo.residentialInfoDto!.kebele
+          }
       };
       final apiProvider = ProviderSetup.getApiProvider(ApiConstants.baseUrl);
       final response =

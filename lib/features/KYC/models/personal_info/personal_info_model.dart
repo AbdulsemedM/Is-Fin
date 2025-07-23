@@ -16,8 +16,8 @@ class PersonalInfoModel {
   final String educationLevel;
   final String meritalStatus;
   final SpouseInfoModel? spouseInformationDto;
-  final ContactPersonInfoModel alternativeContactPerson;
-  final AddressInfoModel residentialInfoDto;
+  final ContactPersonInfoModel? alternativeContactPerson;
+  final AddressInfoModel? residentialInfoDto;
   PersonalInfoModel({
     required this.firstName,
     required this.lastName,
@@ -29,8 +29,8 @@ class PersonalInfoModel {
     required this.educationLevel,
     required this.meritalStatus,
     this.spouseInformationDto,
-    required this.alternativeContactPerson,
-    required this.residentialInfoDto,
+    this.alternativeContactPerson,
+    this.residentialInfoDto,
   });
 
   PersonalInfoModel copyWith({
@@ -76,8 +76,8 @@ class PersonalInfoModel {
       'educationLevel': educationLevel,
       'meritalStatus': meritalStatus,
       'spouseInformationDto': spouseInformationDto?.toMap(),
-      'alternativeContactPerson': alternativeContactPerson.toMap(),
-      'residentialInfoDto': residentialInfoDto.toMap(),
+      'alternativeContactPerson': alternativeContactPerson?.toMap(),
+      'residentialInfoDto': residentialInfoDto?.toMap(),
     };
   }
 
@@ -96,10 +96,14 @@ class PersonalInfoModel {
           ? SpouseInfoModel.fromMap(
               map['spouseInformationDto'] as Map<String, dynamic>)
           : null,
-      alternativeContactPerson: ContactPersonInfoModel.fromMap(
-          map['alternativeContactPerson'] as Map<String, dynamic>),
-      residentialInfoDto: AddressInfoModel.fromMap(
-          map['residentialInfoDto'] as Map<String, dynamic>),
+      alternativeContactPerson: map['alternativeContactPerson'] != null
+          ? ContactPersonInfoModel.fromMap(
+              map['alternativeContactPerson'] as Map<String, dynamic>)
+          : null,
+      residentialInfoDto: map['residentialInfoDto'] != null
+          ? AddressInfoModel.fromMap(
+              map['residentialInfoDto'] as Map<String, dynamic>)
+          : null,
     );
   }
   // factory PersonalInfoModel.fromMap(Map<String, dynamic> map) {

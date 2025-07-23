@@ -83,6 +83,35 @@ class _CompleteKYCDetailState extends State<CompleteKYCDetail> {
             bool isLoading = state is UserTypeFetchedLoading ||
                 state is UserTypeChangedLoading;
 
+            if (state is UserTypeFetchedSuccess) {
+              // Update UserTypeCubit when we get the initial state
+              context.read<UserTypeCubit>().setUserType(
+                    state.isSupplier ? UserType.provider : UserType.customer,
+                  );
+            }
+
+            if (state is UserTypeChangedSuccess) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('User type updated successfully'),
+                  backgroundColor: Colors.green,
+                ),
+              );
+            }
+
+            if (state is UserTypeChangedFailure ||
+                state is UserTypeFetchedFailure) {
+              final error = state is UserTypeChangedFailure
+                  ? state.errorMessage
+                  : (state as UserTypeFetchedFailure).errorMessage;
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(error),
+                  backgroundColor: Colors.red,
+                ),
+              );
+            }
+
             return Column(
               children: [
                 Padding(
@@ -91,132 +120,150 @@ class _CompleteKYCDetailState extends State<CompleteKYCDetail> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Card(
-                        elevation: 2,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16)),
-                        color: Colors.white,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 18, vertical: 7),
-                          child: Row(
-                            children: [
-                              AnimatedContainer(
-                                duration: const Duration(milliseconds: 300),
-                                decoration: BoxDecoration(
-                                  color: isProvider
-                                      ? AppColors.primaryDarkColor
-                                          .withOpacity(0.15)
-                                      : AppColors.primaryDarkColor
-                                          .withOpacity(0.05),
-                                  shape: BoxShape.circle,
-                                ),
-                                padding: const EdgeInsets.all(10),
-                                child: isLoading
-                                    ? const SizedBox(
-                                        width: 28,
-                                        height: 28,
-                                        child: CircularProgressIndicator(
-                                          strokeWidth: 2,
-                                          color: AppColors.primaryDarkColor,
-                                        ),
-                                      )
-                                    : Icon(
-                                        isProvider
-                                            ? Icons.business_center_rounded
-                                            : Icons.person_rounded,
-                                        color: isProvider
-                                            ? AppColors.primaryDarkColor
-                                            : AppColors.primaryDarkColor
-                                                .withOpacity(0.7),
-                                        size: 28,
-                                      ),
-                              ),
-                              const SizedBox(width: 16),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      isProvider ? "Provider" : "Customer",
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15,
-                                        color: AppColors.primaryDarkColor,
-                                      ),
+                      BlocBuilder<UserTypeCubit, UserType>(
+                        builder: (context, userTypeState) {
+                          final isProvider = userTypeState == UserType.provider;
+
+                          return Card(
+                            elevation: 2,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16)),
+                            color: Colors.white,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 18, vertical: 7),
+                              child: Row(
+                                children: [
+                                  AnimatedContainer(
+                                    duration: const Duration(milliseconds: 300),
+                                    decoration: BoxDecoration(
+                                      color: isProvider
+                                          ? AppColors.primaryDarkColor
+                                              .withOpacity(0.15)
+                                          : AppColors.primaryDarkColor
+                                              .withOpacity(0.05),
+                                      shape: BoxShape.circle,
                                     ),
-                                    AnimatedSwitcher(
+                                    padding: const EdgeInsets.all(10),
+                                    child: isLoading
+                                        ? const SizedBox(
+                                            width: 28,
+                                            height: 28,
+                                            child: CircularProgressIndicator(
+                                              strokeWidth: 2,
+                                              color: AppColors.primaryDarkColor,
+                                            ),
+                                          )
+                                        : Icon(
+                                            isProvider
+                                                ? Icons.business_center_rounded
+                                                : Icons.person_rounded,
+                                            color: isProvider
+                                                ? AppColors.primaryDarkColor
+                                                : AppColors.primaryDarkColor
+                                                    .withOpacity(0.7),
+                                            size: 28,
+                                          ),
+                                  ),
+                                  const SizedBox(width: 16),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          isProvider ? "Provider" : "Customer",
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15,
+                                            color: AppColors.primaryDarkColor,
+                                          ),
+                                        ),
+                                        AnimatedSwitcher(
+                                          duration:
+                                              const Duration(milliseconds: 300),
+                                          child: Text(
+                                            isProvider
+                                                ? "You are registering as a provider."
+                                                : "You are registering as a customer.",
+                                            key: ValueKey(isProvider),
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              color: Colors.grey[700],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(width: 16),
+                                  GestureDetector(
+                                    onTap: () {
+                                      if (!isLoading) {
+                                        // Update both KycBloc and UserTypeCubit
+                                        context.read<KycBloc>().add(
+                                            ChangeUserType(
+                                                isSupplier: !isProvider));
+                                        context
+                                            .read<UserTypeCubit>()
+                                            .setUserType(
+                                              !isProvider
+                                                  ? UserType.provider
+                                                  : UserType.customer,
+                                            );
+                                      }
+                                    },
+                                    child: AnimatedContainer(
                                       duration:
                                           const Duration(milliseconds: 300),
-                                      child: Text(
-                                        isProvider
-                                            ? "You are registering as a provider."
-                                            : "You are registering as a customer.",
-                                        key: ValueKey(isProvider),
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          color: Colors.grey[700],
+                                      width: 54,
+                                      height: 28,
+                                      padding: const EdgeInsets.all(3),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        color: isProvider
+                                            ? AppColors.primaryDarkColor
+                                            : Colors.grey[300],
+                                      ),
+                                      child: AnimatedAlign(
+                                        duration:
+                                            const Duration(milliseconds: 300),
+                                        alignment: isProvider
+                                            ? Alignment.centerRight
+                                            : Alignment.centerLeft,
+                                        child: Container(
+                                          width: 22,
+                                          height: 22,
+                                          decoration: const BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Colors.white,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.black12,
+                                                blurRadius: 2,
+                                                offset: Offset(0, 1),
+                                              ),
+                                            ],
+                                          ),
+                                          child: Icon(
+                                            isProvider
+                                                ? Icons.business_center_rounded
+                                                : Icons.person_rounded,
+                                            size: 16,
+                                            color: isProvider
+                                                ? AppColors.primaryDarkColor
+                                                : AppColors.primaryDarkColor
+                                                    .withOpacity(0.7),
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(width: 16),
-                              GestureDetector(
-                                onTap: () {
-                                  if (!isLoading) {
-                                    context.read<KycBloc>().add(ChangeUserType(
-                                        isSupplier: !isProvider));
-                                  }
-                                },
-                                child: AnimatedContainer(
-                                  duration: const Duration(milliseconds: 300),
-                                  width: 54,
-                                  height: 28,
-                                  padding: const EdgeInsets.all(3),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: isProvider
-                                        ? AppColors.primaryDarkColor
-                                        : Colors.grey[300],
                                   ),
-                                  child: AnimatedAlign(
-                                    duration: const Duration(milliseconds: 300),
-                                    alignment: isProvider
-                                        ? Alignment.centerRight
-                                        : Alignment.centerLeft,
-                                    child: Container(
-                                      width: 22,
-                                      height: 22,
-                                      decoration: const BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Colors.white,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.black12,
-                                            blurRadius: 2,
-                                            offset: Offset(0, 1),
-                                          ),
-                                        ],
-                                      ),
-                                      child: Icon(
-                                        isProvider
-                                            ? Icons.business_center_rounded
-                                            : Icons.person_rounded,
-                                        size: 16,
-                                        color: isProvider
-                                            ? AppColors.primaryDarkColor
-                                            : AppColors.primaryDarkColor
-                                                .withOpacity(0.7),
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                                ],
                               ),
-                            ],
-                          ),
-                        ),
+                            ),
+                          );
+                        },
                       ),
                       const SizedBox(height: 4),
                       CustomSlidingSegmentedControl<int>(
