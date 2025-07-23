@@ -19,14 +19,14 @@ class ProfileRepository {
     }
   }
 
-  Future<bool> updateProfile(bool isPublic) async {
+  Future<String> updateProfile(bool isPublic) async {
     try {
       final response = await profileDataProvider.updateProfile(isPublic);
       final data = jsonDecode(response);
       if (data['httpStatus'] != 200) {
         throw data['message'];
       }
-      return data['response']['isPublic'];
+      return data['message'];
     } catch (e) {
       throw Exception(e.toString());
     }

@@ -10,13 +10,15 @@ class BusinessInfoModel {
   final String yearOfEstablishment;
   final String ownership;
   final String businessType;
-  final String financeSource;
-  final String startingCapital;
-  final String currentCapital;
-  final String startingEmployee;
-  final String currentEmployee;
-  final String monthlySales;
-  final String monthlyRevenue;
+  final String? financeSource;
+  final String? startingCapital;
+  final String? currentCapital;
+  final String? startingEmployee;
+  final String? currentEmployee;
+  final String? monthlySales;
+  final String? monthlyRevenue;
+  final String? applicationType;
+  final String? managerTinNumber;
   final BusinessAddressModel businessAddressDto;
   BusinessInfoModel({
     required this.businessName,
@@ -25,13 +27,15 @@ class BusinessInfoModel {
     required this.yearOfEstablishment,
     required this.ownership,
     required this.businessType,
-    required this.financeSource,
-    required this.startingCapital,
-    required this.currentCapital,
-    required this.startingEmployee,
-    required this.currentEmployee,
-    required this.monthlySales,
-    required this.monthlyRevenue,
+    this.financeSource,
+    this.startingCapital,
+    this.currentCapital,
+    this.startingEmployee,
+    this.currentEmployee,
+    this.monthlySales,
+    this.monthlyRevenue,
+    this.applicationType,
+    this.managerTinNumber,
     required this.businessAddressDto,
   });
 
@@ -50,6 +54,8 @@ class BusinessInfoModel {
     String? monthlySales,
     String? monthlyRevenue,
     BusinessAddressModel? businessAddressDto,
+    String? applicationType,
+    String? managerTinNumber,
   }) {
     return BusinessInfoModel(
       businessName: businessName ?? this.businessName,
@@ -66,6 +72,8 @@ class BusinessInfoModel {
       monthlySales: monthlySales ?? this.monthlySales,
       monthlyRevenue: monthlyRevenue ?? this.monthlyRevenue,
       businessAddressDto: businessAddressDto ?? this.businessAddressDto,
+      applicationType: applicationType ?? this.applicationType,
+      managerTinNumber: managerTinNumber ?? this.managerTinNumber,
     );
   }
 
@@ -85,6 +93,8 @@ class BusinessInfoModel {
       'monthlySales': monthlySales,
       'monthlyRevenue': monthlyRevenue,
       'businessAddressDto': businessAddressDto.toMap(),
+      'applicationType': applicationType,
+      'managerTinNumber': managerTinNumber,
     };
   }
 
@@ -97,15 +107,35 @@ class BusinessInfoModel {
       yearOfEstablishment: map['yearOfEstablishment'] as String,
       ownership: map['ownership'] as String,
       businessType: map['businessType'] as String,
-      financeSource: map['financeSource'] as String,
-      startingCapital: map['startingCapital'] as String,
-      currentCapital: map['currentCapital'] as String,
-      startingEmployee: map['startingEmployee'] as String,
-      currentEmployee: map['currentEmployee'] as String,
-      monthlySales: map['monthlySales'] as String,
-      monthlyRevenue: map['monthlyRevenue'] as String,
+      financeSource: map['financeSource'] != null
+          ? map['financeSource'] as String
+          : null,
+      startingCapital: map['startingCapital'] != null
+          ? map['startingCapital'] as String
+          : null,
+      currentCapital: map['currentCapital'] != null
+          ? map['currentCapital'] as String
+          : null,
+      startingEmployee: map['startingEmployee'] != null
+          ? map['startingEmployee'] as String
+          : null,
+      currentEmployee: map['currentEmployee'] != null
+          ? map['currentEmployee'] as String
+          : null,
+      monthlySales: map['monthlySales'] != null
+          ? map['monthlySales'] as String
+          : null,
+      monthlyRevenue: map['monthlyRevenue'] != null
+          ? map['monthlyRevenue'] as String
+          : null,
       businessAddressDto: BusinessAddressModel.fromMap(
           map['businessAddressDto'] as Map<String, dynamic>),
+      applicationType: map['applicationType'] != null
+          ? map['applicationType'] as String
+          : null,
+      managerTinNumber: map['managerTinNumber'] != null
+          ? map['managerTinNumber'] as String
+          : null,
     );
   }
 

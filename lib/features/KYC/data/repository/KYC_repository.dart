@@ -287,4 +287,22 @@ class KycRepository {
     await prefs.setString('images_info_${imageInfo}_$phone', "Done");
     // print("image info saved successfully.");
   }
+
+  Future<bool> fetchUserType() async {
+    final userType = await kycDataProvider.fetchUserType();
+    final data = jsonDecode(userType);
+    if (data['httpStatus'] != 200) {
+      throw data['message'];
+    }
+    return data['response']['isSupplier'];
+  }
+
+  Future<void> changeUserType(bool isSupplier) async {
+    final userType = await kycDataProvider.changeUserType(isSupplier);
+    final data = jsonDecode(userType);
+    if (data['httpStatus'] != 200) {
+      throw data['message'];
+    }
+    return data['message'];
+  }
 }

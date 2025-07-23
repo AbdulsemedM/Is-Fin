@@ -42,7 +42,7 @@ import 'package:ifb_loan/features/login/presentation/screen/login_screen.dart';
 import 'package:ifb_loan/features/otp/bloc/otp_bloc.dart';
 import 'package:ifb_loan/features/otp/data/data_provider/otp_data_provider.dart';
 import 'package:ifb_loan/features/otp/data/repository/otp_repository.dart';
-import 'package:ifb_loan/features/profile/bloc/bloc/profile_bloc.dart';
+import 'package:ifb_loan/features/profile/bloc/profile_bloc.dart';
 import 'package:ifb_loan/features/profile/data/data_provider/profile_data_provider.dart';
 import 'package:ifb_loan/features/profile/data/repository/profile_repository.dart';
 import 'package:ifb_loan/features/provider_KYC/bloc/provider_kyc_bloc.dart';
@@ -105,7 +105,7 @@ void main() async {
   String? lang = await LanguageManager().getLanguage();
   bool emulator = await isEmulator();
   lang ??= '';
-  if (!emulator) {
+  if (emulator) {
     runApp(MultiBlocProvider(
       providers: [
         BlocProvider(

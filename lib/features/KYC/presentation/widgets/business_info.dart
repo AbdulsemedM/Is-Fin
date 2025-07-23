@@ -707,7 +707,7 @@ class _BusinessInfoState extends State<BusinessInfo> {
                           ),
                         ),
                         const SizedBox(width: 16),
-                        _applicationTypeController.text == "Group"
+                        _applicationTypeController.text == "Group" && userType == UserType.customer
                             ? Expanded(
                                 child: TextFormField(
                                   controller: _websiteURLController,
@@ -948,6 +948,17 @@ class _BusinessInfoState extends State<BusinessInfo> {
                                   if (myKey.currentState!.validate()) {
                                     context.read<KycBloc>().add(BusinessKYCSent(
                                         businessInfo: BusinessInfoModel(
+                                            applicationType:
+                                                userType == UserType.provider
+                                                    ? null
+                                                    : _applicationTypeController
+                                                        .text,
+                                            managerTinNumber: userType ==
+                                                        UserType.provider &&
+                                                    _applicationTypeController.text ==
+                                                        "Individual"
+                                                ? null
+                                                : _websiteURLController.text,
                                             businessName:
                                                 _businessNameController.text,
                                             tinNumber: _tinNoController.text,
@@ -958,28 +969,19 @@ class _BusinessInfoState extends State<BusinessInfo> {
                                                 _ownershipController.text,
                                             businessType:
                                                 _typeofBusinessController.text,
-                                            financeSource:
-                                                _financeSourceController.text,
+                                            financeSource: userType == UserType.provider
+                                                ? null
+                                                : _financeSourceController.text,
                                             startingCapital:
-                                                _startingCapitalController.text,
-                                            currentCapital:
-                                                _currentCapitalController.text,
-                                            startingEmployee:
-                                                _startingEmployeeNoController
-                                                    .text,
-                                            currentEmployee:
-                                                _currentEmployeeNoController
-                                                    .text,
-                                            monthlySales:
-                                                _monthlySalesController.text,
-                                            monthlyRevenue:
-                                                _businessLevelController.text,
-                                            businessAddressDto: BusinessAddressModel(
-                                                businessAddressregion:
-                                                    _regionController.text,
-                                                businessAdressZone: _zoneController.text,
-                                                businessAdressWoreda: _woredaController.text,
-                                                businessAdressKebele: _kebeleController.text))));
+                                                userType == UserType.provider
+                                                    ? null
+                                                    : _startingCapitalController.text,
+                                            currentCapital: userType == UserType.provider ? null : _currentCapitalController.text,
+                                            startingEmployee: userType == UserType.provider ? null : _startingEmployeeNoController.text,
+                                            currentEmployee: userType == UserType.provider ? null : _currentEmployeeNoController.text,
+                                            monthlySales: userType == UserType.provider ? null : _monthlySalesController.text,
+                                            monthlyRevenue: userType == UserType.provider ? null : _businessLevelController.text,
+                                            businessAddressDto: BusinessAddressModel(businessAddressregion: _regionController.text, businessAdressZone: _zoneController.text, businessAdressWoreda: _woredaController.text, businessAdressKebele: _kebeleController.text))));
                                   }
                                 },
                           buttonText: loading
@@ -1009,21 +1011,43 @@ class _BusinessInfoState extends State<BusinessInfo> {
 
   void _initializeTextFields() async {
     _businessNameController.text = businessData!.businessName;
+    if (businessData!.applicationType != null) {
+      _applicationTypeController.text = businessData!.applicationType!;
+    }
+    if (businessData!.managerTinNumber != null) {
+      _websiteURLController.text = businessData!.managerTinNumber!;
+    }
     if (businessData!.websiteUrl != null) {
       _websiteURLController.text = businessData!.websiteUrl!;
     }
-    _businessLevelController.text = businessData!.monthlyRevenue;
+    if (businessData!.monthlyRevenue != null) {
+      _businessLevelController.text = businessData!.monthlyRevenue!;
+    }
     _tinNoController.text = businessData!.tinNumber;
     _typeofBusinessController.text = businessData!.businessType;
     _yearofEstablishmentController.text = businessData!.yearOfEstablishment;
     _ownershipController.text = businessData!.ownership;
-    _financeSourceController.text = businessData!.financeSource;
-    _startingCapitalController.text = businessData!.startingCapital;
-    _currentCapitalController.text = businessData!.currentCapital;
-    _startingEmployeeNoController.text = businessData!.startingEmployee;
-    _currentEmployeeNoController.text = businessData!.currentEmployee;
-    _monthlySalesController.text = businessData!.monthlySales;
-    _monthlyRevenueController.text = businessData!.monthlyRevenue;
+    if (businessData!.financeSource != null) {
+      _financeSourceController.text = businessData!.financeSource!;
+    }
+    if (businessData!.startingCapital != null) {
+      _startingCapitalController.text = businessData!.startingCapital!;
+    }
+    if (businessData!.currentCapital != null) {
+      _currentCapitalController.text = businessData!.currentCapital!;
+    }
+    if (businessData!.startingEmployee != null) {
+      _startingEmployeeNoController.text = businessData!.startingEmployee!;
+    }
+    if (businessData!.currentEmployee != null) {
+      _currentEmployeeNoController.text = businessData!.currentEmployee!;
+    }
+    if (businessData!.monthlySales != null) {
+      _monthlySalesController.text = businessData!.monthlySales!;
+    }
+    if (businessData!.monthlyRevenue != null) {
+      _monthlyRevenueController.text = businessData!.monthlyRevenue!;
+    }
     _regionController.text =
         businessData!.businessAddressDto.businessAddressregion;
     _zoneController.text = businessData!.businessAddressDto.businessAdressZone;

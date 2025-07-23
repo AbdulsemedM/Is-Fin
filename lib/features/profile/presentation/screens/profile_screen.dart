@@ -10,7 +10,7 @@ import 'package:ifb_loan/features/KYC/bloc/kyc_bloc.dart';
 import 'package:ifb_loan/features/KYC/models/image_models/images_model.dart';
 //import 'package:ifb_loan/features/KYC/presentation/screen/kyc_screen.dart';
 import 'package:ifb_loan/features/business_partner/presentation/screen/business_partners_screen.dart';
-import 'package:ifb_loan/features/profile/bloc/bloc/profile_bloc.dart';
+import 'package:ifb_loan/features/profile/bloc/profile_bloc.dart';
 import 'package:ifb_loan/features/profile/presentation/widgets/custome_list_button.dart';
 import 'package:ifb_loan/features/profile/presentation/widgets/kyc_card_widget.dart';
 import 'package:ifb_loan/features/profile/presentation/widgets/loan_status_card.dart';
@@ -290,11 +290,30 @@ class _ProfileScreenState extends State<ProfileScreen> with RouteAware {
                       bool isLoading = state is FetchProfileLoading ||
                           state is UpdateProfileLoading;
 
-                      if (state is FetchProfileSuccess ||
-                          state is UpdateProfileSuccess) {
-                        isPublic = state is FetchProfileSuccess
-                            ? state.isPublic
-                            : (state as UpdateProfileSuccess).isPublic;
+                      if (state is FetchProfileSuccess) {
+                        isPublic = state.isPublic;
+                      }
+
+                      if (state is UpdateProfileSuccess) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(state.message),
+                            backgroundColor: Colors.green,
+                          ),
+                        );
+                      }
+
+                      if (state is UpdateProfileError ||
+                          state is FetchProfileError) {
+                        final error = state is UpdateProfileError
+                            ? state.errorMessage
+                            : (state as FetchProfileError).errorMessage;
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(error),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
                       }
 
                       if (isLoading) {
