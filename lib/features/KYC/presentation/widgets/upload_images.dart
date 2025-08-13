@@ -9,6 +9,7 @@ import 'package:ifb_loan/configuration/phone_number_manager.dart';
 import 'package:ifb_loan/features/KYC/models/image_models/images_model.dart';
 import 'package:ifb_loan/features/KYC/presentation/screen/kyc_screen.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:ifb_loan/app/app_button.dart';
 import 'package:ifb_loan/app/utils/app_colors.dart';
 import 'package:ifb_loan/features/KYC/bloc/kyc_bloc.dart';
@@ -25,12 +26,14 @@ class _UploadImagesState extends State<UploadImages> {
   var loading = false;
 
   String? _idImageBase64;
+  String? _powerOfAttorneyImageBase64;
   // String? _licenseImageBase64;
   String? _tradeLicenseImageBase64;
   String? _registrationCertImageBase64;
   String? _tinImageBase64;
 
   String? _idImageName;
+  String? _powerOfAttorneyImageName;
   // String? _licenseImageName;
   String? _tradeLicenseImageName;
   String? _registrationCertImageName;
@@ -40,6 +43,7 @@ class _UploadImagesState extends State<UploadImages> {
   String? existsTradeLicense;
   String? existsRegCertificate;
   String? existsTinNumber;
+  String? existsPowerOfAttorney;
 
   final ImagePicker _picker = ImagePicker();
   @override
@@ -60,21 +64,61 @@ class _UploadImagesState extends State<UploadImages> {
       existsTinNumber = prefs.getString('images_info_tinNumber_$phone');
       existsTradeLicense =
           prefs.getString('images_info_renewedTradeLicense_$phone');
+      existsPowerOfAttorney =
+          prefs.getString('images_info_powerOfAttorney_$phone');
     });
     if (mounted &&
         existsRenewedId == null &&
         existsRegCertificate == null &&
         existsTinNumber == null &&
+        existsPowerOfAttorney == null &&
         existsTradeLicense == null) {
       context.read<KycBloc>().add(ImagesKYCFetched());
     }
   }
 
-  // Method to pick image from gallery
-  Future<void> _pickImageFromGallery(String imageType) async {
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-    if (image != null) {
-      _encodeImageToBase64(image, imageType);
+  // Method to pick file from gallery
+  Future<void> _pickFileFromGallery(String imageType) async {
+    try {
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['jpg', 'jpeg', 'png', 'pdf'],
+      );
+
+      if (result != null) {
+        File file = File(result.files.single.path!);
+        String fileName = result.files.single.name;
+
+        // Convert file to base64
+        List<int> bytes = await file.readAsBytes();
+        String base64String = base64Encode(bytes);
+
+        setState(() {
+          switch (imageType) {
+            case 'id':
+              _idImageBase64 = base64String;
+              _idImageName = fileName;
+              break;
+            case 'tradeLicense':
+              _tradeLicenseImageBase64 = base64String;
+              _tradeLicenseImageName = fileName;
+              break;
+            case 'registrationCert':
+              _registrationCertImageBase64 = base64String;
+              _registrationCertImageName = fileName;
+              break;
+            case 'tin':
+              _tinImageBase64 = base64String;
+              _tinImageName = fileName;
+              break;
+            case 'powerOfAttorney':
+              _powerOfAttorneyImageBase64 = base64String;
+              _powerOfAttorneyImageName = fileName;
+          }
+        });
+      }
+    } catch (e) {
+      displaySnack(context, "Error picking file: $e", Colors.red);
     }
   }
 
@@ -82,36 +126,35 @@ class _UploadImagesState extends State<UploadImages> {
   Future<void> _pickImageFromCamera(String imageType) async {
     final XFile? image = await _picker.pickImage(source: ImageSource.camera);
     if (image != null) {
-      _encodeImageToBase64(image, imageType);
+      File file = File(image.path);
+      List<int> bytes = await file.readAsBytes();
+      String base64String = base64Encode(bytes);
+
+      setState(() {
+        switch (imageType) {
+          case 'id':
+            _idImageBase64 = base64String;
+            _idImageName = image.name;
+            break;
+          case 'tradeLicense':
+            _tradeLicenseImageBase64 = base64String;
+            _tradeLicenseImageName = image.name;
+            break;
+          case 'registrationCert':
+            _registrationCertImageBase64 = base64String;
+            _registrationCertImageName = image.name;
+            break;
+          case 'tin':
+            _tinImageBase64 = base64String;
+            _tinImageName = image.name;
+            break;
+          case 'powerOfAttorney':
+            _powerOfAttorneyImageBase64 = base64String;
+            _powerOfAttorneyImageName = image.name;
+            break;
+        }
+      });
     }
-  }
-
-  // Method to encode image to base64 and store the file name
-  void _encodeImageToBase64(XFile image, String imageType) async {
-    File file = File(image.path);
-    List<int> bytes = await file.readAsBytes();
-    String base64String = base64Encode(bytes);
-
-    setState(() {
-      switch (imageType) {
-        case 'id':
-          _idImageBase64 = base64String;
-          _idImageName = image.name;
-          break;
-        case 'tradeLicense':
-          _tradeLicenseImageBase64 = base64String;
-          _tradeLicenseImageName = image.name;
-          break;
-        case 'registrationCert':
-          _registrationCertImageBase64 = base64String;
-          _registrationCertImageName = image.name;
-          break;
-        case 'tin':
-          _tinImageBase64 = base64String;
-          _tinImageName = image.name;
-          break;
-      }
-    });
   }
 
   // Method to handle form submission
@@ -123,6 +166,7 @@ class _UploadImagesState extends State<UploadImages> {
         // _licenseImageBase64 == null &&
         _tradeLicenseImageBase64 == null &&
         _registrationCertImageBase64 == null &&
+        _powerOfAttorneyImageBase64 == null &&
         _tinImageBase64 == null) {
       displaySnack(context, "Please upload at least one image.".tr, Colors.red);
 
@@ -139,7 +183,9 @@ class _UploadImagesState extends State<UploadImages> {
             commercialRegistrationCertificateFileName:
                 _registrationCertImageName,
             tinNumber: _tinImageBase64,
-            tinNumberFileName: _tinImageName)));
+            tinNumberFileName: _tinImageName,
+            powerOfAttorney: _powerOfAttorneyImageBase64,
+            powerOfAttorneyFileName: _powerOfAttorneyImageName)));
 
     Future.delayed(const Duration(seconds: 2), () {
       setState(() {
@@ -182,7 +228,7 @@ class _UploadImagesState extends State<UploadImages> {
                 (images.tinNumber?.isNotEmpty ?? false) ? "Done" : null;
 
             existsRegCertificate =
-                (images.commercialRegistrationCertificateFileName?.isNotEmpty ??
+                (images.commercialRegistrationCertificate?.isNotEmpty ??
                         false)
                     ? "Done"
                     : null;
@@ -191,6 +237,8 @@ class _UploadImagesState extends State<UploadImages> {
                 (images.renewedTradeLicense?.isNotEmpty ?? false)
                     ? "Done"
                     : null;
+            existsPowerOfAttorney =
+                (images.powerOfAttorney?.isNotEmpty ?? false) ? "Done" : null;
             loading = false;
           });
           // displaySnack(context, "Images sent successfully!", Colors.black);
@@ -261,6 +309,13 @@ class _UploadImagesState extends State<UploadImages> {
                     _registrationCertImageName,
                     'registrationCert', // Fix: Ensure the key matches getBase64StringByType
                   ),
+                  ..._buildImageSection(
+                    existsPowerOfAttorney == null
+                        ? 'Power of Attorney (For group applicants)'.tr
+                        : 'Power of Attorney(Sent)'.tr,
+                    _powerOfAttorneyImageName,
+                    'powerOfAttorney', // Fix: Ensure the key matches getBase64StringByType
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: MyButton(
@@ -312,16 +367,33 @@ class _UploadImagesState extends State<UploadImages> {
           if (imageName != null)
             Row(
               children: [
-                Image.memory(
-                  base64Decode(getBase64StringByType(imageType)),
-                  width: 100,
-                  height: 100,
-                  fit: BoxFit.cover,
-                ),
+                if (imageName.toLowerCase().endsWith('.pdf'))
+                  Container(
+                    width: 100,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: const Center(
+                      child: Icon(
+                        Icons.picture_as_pdf,
+                        size: 50,
+                        color: Colors.red,
+                      ),
+                    ),
+                  )
+                else
+                  Image.memory(
+                    base64Decode(getBase64StringByType(imageType)),
+                    width: 100,
+                    height: 100,
+                    fit: BoxFit.cover,
+                  ),
                 const SizedBox(width: 16),
                 IconButton(
-                  icon: const Icon(Icons.photo, size: 30),
-                  onPressed: () => _pickImageFromGallery(imageType),
+                  icon: const Icon(Icons.file_upload, size: 30),
+                  onPressed: () => _pickFileFromGallery(imageType),
                 ),
                 const SizedBox(width: 8),
                 IconButton(
@@ -334,8 +406,8 @@ class _UploadImagesState extends State<UploadImages> {
             Row(
               children: [
                 IconButton(
-                  icon: const Icon(Icons.photo, size: 40),
-                  onPressed: () => _pickImageFromGallery(imageType),
+                  icon: const Icon(Icons.file_upload, size: 40),
+                  onPressed: () => _pickFileFromGallery(imageType),
                 ),
                 const SizedBox(width: 32),
                 IconButton(
@@ -374,6 +446,8 @@ class _UploadImagesState extends State<UploadImages> {
         return _registrationCertImageBase64 ?? '';
       case 'tin':
         return _tinImageBase64 ?? '';
+      case 'powerOfAttorney':
+        return _powerOfAttorneyImageBase64 ?? "";
       default:
         return '';
     }

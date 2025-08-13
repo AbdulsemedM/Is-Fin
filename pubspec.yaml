@@ -64,6 +64,9 @@ dependencies:
   firebase_messaging: ^15.1.1
   google_api_availability: ^5.0.0
   flutter_local_notifications: ^18.0.1
+  file_picker: ^10.2.0
+  enough_ascii_art: ^1.1.0
+  ansicolor: ^2.0.1
 
 dev_dependencies:
   flutter_test:

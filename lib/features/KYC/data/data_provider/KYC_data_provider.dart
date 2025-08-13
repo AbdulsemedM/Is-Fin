@@ -28,8 +28,8 @@ class KycDataProvider {
           "alternativeContactPerson": {
             "contactPersonfirstName":
                 personalInfo.alternativeContactPerson!.contactPersonfirstName,
-          "contactPersonlastName":
-                  personalInfo.alternativeContactPerson!.contactPersonlastName,
+            "contactPersonlastName":
+                personalInfo.alternativeContactPerson!.contactPersonlastName,
             "contactPersonphoneNumber":
                 personalInfo.alternativeContactPerson!.contactPersonphoneNumber,
             "idNo": personalInfo.alternativeContactPerson!.idNo
@@ -40,7 +40,7 @@ class KycDataProvider {
             "zone": personalInfo.residentialInfoDto!.zone,
             "woreda": personalInfo.residentialInfoDto!.woreda,
             "kebele": personalInfo.residentialInfoDto!.kebele
-        }
+          }
       };
       final apiProvider = ProviderSetup.getApiProvider(ApiConstants.baseUrl);
       final response =
@@ -145,6 +145,8 @@ class KycDataProvider {
             imageInfo.commercialRegistrationCertificateFileName,
         'tinNumber': imageInfo.tinNumber,
         'tinNumberFileName': imageInfo.tinNumberFileName,
+        'powerOfAttorney': imageInfo.powerOfAttorney,
+        'powerOfAttorneyFileName': imageInfo.powerOfAttorneyFileName
       };
       final apiProvider = ProviderSetup.getApiProvider(ApiConstants.baseUrl);
       final response = await apiProvider.postRequest("/api/kyc/file", body);

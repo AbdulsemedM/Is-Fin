@@ -163,6 +163,9 @@ class KycRepository {
       if (imagesInfo.renewedTradeLicenseFileName != null) {
         saveImageInfo("renewedTradeLicense");
       }
+      if (imagesInfo.powerOfAttorneyFileName != null) {
+        saveImageInfo('powerOfAttorney');
+      }
       return data['message'];
     } catch (e) {
       rethrow; // This will throw only the `message` part if thrown from above
