@@ -492,7 +492,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                               ),
                             )
                           : Text(
-                              "Apply Loan".tr,
+                              "Apply Financing".tr,
                               style: TextStyle(color: Colors.white),
                             )),
                   const SizedBox(height: 10)

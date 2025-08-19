@@ -21,6 +21,7 @@ class _SignupScreenState extends State<SignupScreen> {
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController cPasswordController = TextEditingController();
+  String userType = "FORMAL"; // Default to formal
   bool loading = false;
   bool obscurePassword1 = true;
   bool obscurePassword2 = true;
@@ -56,8 +57,8 @@ class _SignupScreenState extends State<SignupScreen> {
                       builder: (context) => SignupOtp(
                           name: fullNameController.text,
                           phoneNumber: phoneNumberController.text,
-                          password: passwordController
-                              .text))); // Navigate back on success
+                          password: passwordController.text,
+                          userType: userType))); // Navigate back on success
             } else if (state is OtpSentFailure) {
               setState(() {
                 loading = false;
@@ -142,6 +143,119 @@ class _SignupScreenState extends State<SignupScreen> {
                             return null;
                           },
                         ),
+                        Row(
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
+                              child: Text(
+                                "Account Type".tr,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .displaySmall
+                                    ?.copyWith(fontSize: 16),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: AppColors.greyColor,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: DropdownButtonFormField<String>(
+                            value: userType,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: AppColors.greyColor,
+                              focusedBorder: InputBorder.none,
+                              border: InputBorder.none,
+                              prefixIcon: const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 12),
+                                child: Icon(Icons.business_center,
+                                    color: AppColors.iconColor),
+                              ),
+                              contentPadding:
+                                  const EdgeInsets.symmetric(vertical: 16),
+                            ),
+                            dropdownColor: AppColors.greyColor,
+                            icon: const Icon(Icons.keyboard_arrow_down,
+                                color: AppColors.iconColor),
+                            items: [
+                              DropdownMenuItem(
+                                value: "FORMAL",
+                                child: Row(
+                                  children: [
+                                    const Icon(Icons.business,
+                                        color: AppColors.primaryDarkColor,
+                                        size: 20),
+                                    const SizedBox(width: 8),
+                                    Text("Formal Business".tr,
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.w500)),
+                                  ],
+                                ),
+                              ),
+                              DropdownMenuItem(
+                                value: "IN_FORMAL",
+                                child: Row(
+                                  children: [
+                                    const Icon(Icons.store,
+                                        color: AppColors.primaryDarkColor,
+                                        size: 20),
+                                    const SizedBox(width: 8),
+                                    Text("Informal Business".tr,
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.w500)),
+                                  ],
+                                ),
+                              ),
+                            ],
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                userType = newValue!;
+                              });
+                            },
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please select an account type'.tr;
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        if (userType == "IN_FORMAL")
+                          Container(
+                            margin: const EdgeInsets.only(top: 8),
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              color:
+                                  AppColors.primaryDarkColor.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                  color: AppColors.primaryDarkColor
+                                      .withOpacity(0.3)),
+                            ),
+                            child: Row(
+                              children: [
+                                const Icon(Icons.info_outline,
+                                    color: AppColors.primaryDarkColor,
+                                    size: 20),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: Text(
+                                    "Note: Informal businesses must be under the Master Card Foundation initiative"
+                                        .tr,
+                                    style: const TextStyle(
+                                      color: AppColors.primaryDarkColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         Row(
                           children: [
                             Padding(

@@ -20,6 +20,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
         event.phoneNumber,
         event.password,
         event.otp,
+        event.userType,
         event.email,
       );
       emit(SignupSuccess(signupModel: signup));

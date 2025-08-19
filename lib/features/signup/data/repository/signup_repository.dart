@@ -9,10 +9,10 @@ class SignupRepository {
   SignupRepository(this.signupDataProvider);
 
   Future<SignupModel> sendSignup(String fullName, String phoneNumber,
-      String password, String otp, String? email) async {
+      String password, String otp, String userType, String? email) async {
     try {
       final signupData = await signupDataProvider.sendSignup(
-          fullName, phoneNumber, password, otp, email);
+          fullName, phoneNumber, password, otp, userType, email);
 
       final data = jsonDecode(signupData);
 

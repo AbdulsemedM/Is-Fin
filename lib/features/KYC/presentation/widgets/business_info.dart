@@ -691,23 +691,26 @@ class _BusinessInfoState extends State<BusinessInfo> {
                     const SizedBox(height: 16),
                     Row(
                       children: [
-                        Expanded(
-                          child: TextFormField(
-                            controller: _monthlySalesController,
-                            validator: (value) => validateField(value),
-                            decoration: InputDecoration(
-                              labelText: 'Annual Income(ETB)'.tr,
-                              filled: true,
-                              fillColor: Colors.grey[200],
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                                borderSide: BorderSide.none,
+                        userType == UserType.provider
+                            ? const SizedBox()
+                            : Expanded(
+                                child: TextFormField(
+                                  controller: _monthlySalesController,
+                                  validator: (value) => validateField(value),
+                                  decoration: InputDecoration(
+                                    labelText: 'Annual Income(ETB)'.tr,
+                                    filled: true,
+                                    fillColor: Colors.grey[200],
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                        ),
                         const SizedBox(width: 16),
-                        _applicationTypeController.text == "Group" && userType == UserType.customer
+                        _applicationTypeController.text == "Group" &&
+                                userType == UserType.customer
                             ? Expanded(
                                 child: TextFormField(
                                   controller: _websiteURLController,

@@ -12,11 +12,13 @@ class SignupOtp extends StatefulWidget {
   final String phoneNumber;
   final String password;
   final String name;
+  final String userType;
   const SignupOtp(
       {super.key,
       required this.phoneNumber,
       required this.password,
-      required this.name});
+      required this.name,
+      required this.userType});
 
   @override
   State<SignupOtp> createState() => _SignupOtpState();
@@ -123,6 +125,7 @@ class _SignupOtpState extends State<SignupOtp> {
                             phoneNumber: widget.phoneNumber,
                             otp: pin,
                             password: widget.password,
+                            userType: widget.userType,
                             // email: emailController.text,
                           ));
                     },

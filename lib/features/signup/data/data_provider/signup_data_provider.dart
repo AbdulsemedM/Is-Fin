@@ -3,13 +3,14 @@ import 'package:ifb_loan/providers/provider_setup.dart';
 
 class SignupDataProvider {
   Future<String> sendSignup(String fullName, String phoneNumber,
-      String password, String otp, String? email) async {
+      String password, String otp, String userType, String? email) async {
     try {
       final body = {
         "fullName": fullName,
         "phoneNumber": phoneNumber,
         "password": password,
         "otp": otp,
+        "userType": userType,
         if (email != null) "email": email
       };
       // print(body);

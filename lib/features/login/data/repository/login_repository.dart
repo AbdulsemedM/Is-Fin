@@ -30,6 +30,7 @@ class LoginRepository {
       await authService.storeToken(data['response']['token']);
       await userManager.setFullName(data['response']['fullName']);
       await userManager.setKYCStatus(data['response']['kycStatus']);
+      await userManager.setUserType(data['response']['userType']);
 
       return data['message'];
     } catch (e) {

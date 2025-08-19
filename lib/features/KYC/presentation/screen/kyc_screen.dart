@@ -25,6 +25,7 @@ class _CompleteKYCDetailState extends State<CompleteKYCDetail> {
   int _selectedValue = 3; // Initial tab selected
   final UserManager userManager = UserManager();
   bool isProvider = false; // Add state variable for provider status
+  bool isInformalUser = false; // Add state variable for informal user status
 
   // Define your different screens as widgets
   final Map<int, Widget> _screens = const {
@@ -39,6 +40,20 @@ class _CompleteKYCDetailState extends State<CompleteKYCDetail> {
     context.read<KycBloc>().add(KYCStatusFetched());
     // Fetch initial user type status
     context.read<KycBloc>().add(FetchUserType());
+    _checkUserType();
+  }
+
+  // Check if user is informal
+  Future<void> _checkUserType() async {
+    try {
+      String? userType = await userManager.getUserType();
+      setState(() {
+        isInformalUser = userType == "IN_FORMAL";
+      });
+    } catch (e) {
+      // Handle error if needed
+      print('Error checking user type: $e');
+    }
   }
 
   @override
@@ -268,32 +283,47 @@ class _CompleteKYCDetailState extends State<CompleteKYCDetail> {
                       const SizedBox(height: 4),
                       CustomSlidingSegmentedControl<int>(
                         initialValue: _selectedValue,
-                        children: {
-                          3: Text(
-                            'Bank'.tr,
-                            style: const TextStyle(
-                                color: AppColors.bgColor,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          1: Text(
-                            'Pers. Info.'.tr,
-                            style: const TextStyle(
-                                color: AppColors.bgColor,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          2: Text(
-                            'Bus. Info.'.tr,
-                            style: const TextStyle(
-                                color: AppColors.bgColor,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          4: Text(
-                            'Upload File'.tr,
-                            style: const TextStyle(
-                                color: AppColors.bgColor,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        },
+                        children: isInformalUser
+                            ? {
+                                3: Text(
+                                  'Bank'.tr,
+                                  style: const TextStyle(
+                                      color: AppColors.bgColor,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                1: Text(
+                                  'Pers. Info.'.tr,
+                                  style: const TextStyle(
+                                      color: AppColors.bgColor,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              }
+                            : {
+                                3: Text(
+                                  'Bank'.tr,
+                                  style: const TextStyle(
+                                      color: AppColors.bgColor,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                1: Text(
+                                  'Pers. Info.'.tr,
+                                  style: const TextStyle(
+                                      color: AppColors.bgColor,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                2: Text(
+                                  'Bus. Info.'.tr,
+                                  style: const TextStyle(
+                                      color: AppColors.bgColor,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                4: Text(
+                                  'Upload File'.tr,
+                                  style: const TextStyle(
+                                      color: AppColors.bgColor,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              },
                         decoration: BoxDecoration(
                           color: AppColors.iconColor,
                           borderRadius: BorderRadius.circular(8),
@@ -314,7 +344,12 @@ class _CompleteKYCDetailState extends State<CompleteKYCDetail> {
                         curve: Curves.easeInToLinear,
                         onValueChanged: (value) {
                           setState(() {
-                            _selectedValue = value; // Update the selected value
+                            // For informal users, only allow Bank (3) and Personal Info (1)
+                            if (isInformalUser && (value == 2 || value == 4)) {
+                              _selectedValue = 3; // Default to Bank tab
+                            } else {
+                              _selectedValue = value; // Update the selected value
+                            }
                           });
                         },
                       ),
@@ -323,7 +358,11 @@ class _CompleteKYCDetailState extends State<CompleteKYCDetail> {
                 ),
                 Expanded(
                   // Display the selected screen based on _selectedValue
-                  child: _screens[_selectedValue] ?? Container(),
+                  child: isInformalUser
+                      ? (_selectedValue == 1
+                          ? const PersonalInfo()
+                          : const BankLink()) // Only show Bank and Personal Info for informal users
+                      : (_screens[_selectedValue] ?? Container()),
                 ),
               ],
             );

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
@@ -29,12 +30,39 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   String name = "";
   String kycStatus = "null";
+  String userType = "null";
   UserManager userManager = UserManager();
+  late PageController _pageController;
+  late Timer _timer;
+  int _currentPage = 0;
+
   @override
   void initState() {
     super.initState();
+    _pageController = PageController();
     context.read<HomeBloc>().add(FetcheCreditScore());
     fetchUserStatus();
+    _startAutoSlide();
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  void _startAutoSlide() {
+    _timer = Timer.periodic(const Duration(seconds: 5), (timer) {
+      if (_pageController.hasClients) {
+        _currentPage = (_currentPage + 1) % 3; // 3 products
+        _pageController.animateToPage(
+          _currentPage,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+        );
+      }
+    });
   }
 
   fetchUserStatus() async {
@@ -42,10 +70,12 @@ class _HomeScreenState extends State<HomeScreen> {
     try {
       String myName = (await userManager.getFullName())!;
       String kyc = (await userManager.getKYCStatus()).toString();
+      String user = await userManager.getUserType().toString();
 
       setState(() {
         name = myName;
         kycStatus = kyc;
+        userType = user;
       });
     } catch (e) {
       // print('Error fetching user status: $e');
@@ -201,202 +231,287 @@ class _HomeScreenState extends State<HomeScreen> {
           //     value: 723,
           //   ),
           // ),
-          BlocBuilder<HomeBloc, HomeState>(
-            builder: (context, state) {
-              if (state is CreditScoreFetchedSuccess) {
-                return SizedBox(
-                  height: 250,
-                  child: MultipleRangeGaugeWidget(
-                    value: state.score.overallScore,
-                  ),
-                );
-              } else if (state is CreditScoreFetchedFailure) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const SizedBox(
-                      height: 250,
-                      child: MultipleRangeGaugeWidget(
-                        value: 0,
+          // Conditional UI based on user type
+          if (userType == "FORMAL") ...[            
+            BlocBuilder<HomeBloc, HomeState>(
+              builder: (context, state) {
+                if (state is CreditScoreFetchedSuccess) {
+                  return SizedBox(
+                    height: 250,
+                    child: MultipleRangeGaugeWidget(
+                      value: state.score.overallScore,
+                    ),
+                  );
+                } else if (state is CreditScoreFetchedFailure) {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const SizedBox(
+                        height: 250,
+                        child: MultipleRangeGaugeWidget(
+                          value: 0,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text("Something went wrong".tr),
+                        // child: Text(state.errorMessage),
+                      ),
+                    ],
+                  );
+                } else if (state is CreditScoreFetchedLoading) {
+                  return const Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+                }
+                return const SizedBox.shrink(); // Default empty state
+              },
+            ),
+          ] else ...[            
+            // Informal user - Show micro-finance products
+            Container(
+              height: 320,
+              margin: const EdgeInsets.symmetric(vertical: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Text(
+                      'Available Products'.tr,
+                      style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.primaryColor,
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text("Something went wrong".tr),
-                      // child: Text(state.errorMessage),
-                    ),
-                  ],
-                );
-              } else if (state is CreditScoreFetchedLoading) {
-                return const Center(
-                  child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: CircularProgressIndicator(),
                   ),
-                );
-              }
-              return const SizedBox.shrink(); // Default empty state
-            },
-          ),
-          BlocBuilder<HomeBloc, HomeState>(
-            builder: (context, state) {
-              final score = state is CreditScoreFetchedSuccess
-                  ? state.score.overallScore
-                  : '0';
-              final amountAllowed = state is CreditScoreFetchedSuccess
-                  ? state.score.amountAllowed
-                  : '0';
+                  const SizedBox(height: 16),
+                  Expanded(
+                    child: PageView(
+                      controller: _pageController,
+                      onPageChanged: (index) {
+                        setState(() {
+                          _currentPage = index;
+                        });
+                      },
+                      children: [
+                        _buildProductCard(
+                          context,
+                          'Micro Apiculture',
+                          'Beekeepers',
+                          '62K - 68.2K ETB',
+                          '2 payments (Months 11 & 12)',
+                          Icons.hive,
+                          Colors.amber,
+                        ),
+                        _buildProductCard(
+                          context,
+                          'Micro Shoat Fattening',
+                          'Sheep/Goat Farmers',
+                          '85K - 93.5K ETB',
+                          'Once (Month 5)',
+                          Icons.pets,
+                          Colors.brown,
+                        ),
+                        _buildProductCard(
+                          context,
+                          'Micro Poultry',
+                          'Poultry Farmers',
+                          '42K - 46.2K ETB',
+                          '8 payments (Months 5-12)',
+                          Icons.egg,
+                          Colors.orange,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  // Page indicators
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(
+                      3,
+                      (index) => Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 4),
+                        width: _currentPage == index ? 12 : 8,
+                        height: 8,
+                        decoration: BoxDecoration(
+                          color: _currentPage == index
+                              ? AppColors.primaryColor
+                              : Colors.grey[300],
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+          // Show credit score details only for FORMAL users
+          if (userType == "FORMAL")
+            BlocBuilder<HomeBloc, HomeState>(
+              builder: (context, state) {
+                final score = state is CreditScoreFetchedSuccess
+                    ? state.score.overallScore
+                    : '0';
+                final amountAllowed = state is CreditScoreFetchedSuccess
+                    ? state.score.amountAllowed
+                    : '0';
 
-              return Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.1),
-                      spreadRadius: 1,
-                      blurRadius: 5,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        _buildLegendItem(
-                            context, 'Very Poor', Colors.red, '0-170'),
-                        _buildLegendItem(
-                            context, 'Poor', Colors.orange, '171-340'),
-                        _buildLegendItem(
-                            context, 'Average', Colors.yellow, '341-510'),
-                        _buildLegendItem(
-                            context, 'Good', Colors.lightGreen, '511-680'),
-                        _buildLegendItem(
-                            context, 'Excellent', Colors.green, '681-850'),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Your Credit Score: '.tr,
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium
-                              ?.copyWith(fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          NumberFormat("#,##0")
-                              .format(double.tryParse(score.toString()) ?? 0),
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium
-                              ?.copyWith(fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 12, horizontal: 16),
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [
-                                  AppColors.primaryColor.withOpacity(0.1),
-                                  AppColors.primaryColor.withOpacity(0.05)
-                                ],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                              ),
-                              borderRadius: BorderRadius.circular(12),
-                              boxShadow: [
-                                BoxShadow(
-                                  color:
-                                      AppColors.primaryColor.withOpacity(0.1),
-                                  blurRadius: 8,
-                                  offset: const Offset(0, 2),
+                return Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.1),
+                        spreadRadius: 1,
+                        blurRadius: 5,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          _buildLegendItem(
+                              context, 'Very Poor', Colors.red, '0-170'),
+                          _buildLegendItem(
+                              context, 'Poor', Colors.orange, '171-340'),
+                          _buildLegendItem(
+                              context, 'Average', Colors.yellow, '341-510'),
+                          _buildLegendItem(
+                              context, 'Good', Colors.lightGreen, '511-680'),
+                          _buildLegendItem(
+                              context, 'Excellent', Colors.green, '681-850'),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Your Credit Score: '.tr,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            NumberFormat("#,##0")
+                                .format(double.tryParse(score.toString()) ?? 0),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 12, horizontal: 16),
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    AppColors.primaryColor.withOpacity(0.1),
+                                    AppColors.primaryColor.withOpacity(0.05)
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
                                 ),
-                              ],
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Purchase Limit".tr,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium
-                                      ?.copyWith(
+                                borderRadius: BorderRadius.circular(12),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color:
+                                        AppColors.primaryColor.withOpacity(0.1),
+                                    blurRadius: 8,
+                                    offset: const Offset(0, 2),
+                                  ),
+                                ],
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Purchase Limit".tr,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium
+                                        ?.copyWith(
+                                          color: AppColors.primaryColor
+                                              .withOpacity(0.7),
+                                        ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.account_balance_wallet,
                                         color: AppColors.primaryColor
                                             .withOpacity(0.7),
+                                        size: 20,
                                       ),
-                                ),
-                                Row(
-                                  children: [
-                                    Icon(
-                                      Icons.account_balance_wallet,
-                                      color: AppColors.primaryColor
-                                          .withOpacity(0.7),
-                                      size: 20,
-                                    ),
-                                    const SizedBox(width: 8),
-                                    Text(
-                                      amountAllowed.toString(),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineSmall
-                                          ?.copyWith(
-                                            fontWeight: FontWeight.bold,
-                                            color: AppColors.primaryColor
-                                                .withOpacity(0.9),
-                                          ),
-                                    ),
-                                    Text(
-                                      " ETB".tr,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleMedium
-                                          ?.copyWith(
-                                            fontWeight: FontWeight.w500,
-                                            color: AppColors.primaryColor
-                                                .withOpacity(0.9),
-                                          ),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                      const SizedBox(width: 8),
+                                      Text(
+                                        amountAllowed.toString(),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headlineSmall
+                                            ?.copyWith(
+                                              fontWeight: FontWeight.bold,
+                                              color: AppColors.primaryColor
+                                                  .withOpacity(0.9),
+                                            ),
+                                      ),
+                                      Text(
+                                        " ETB".tr,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleMedium
+                                            ?.copyWith(
+                                              fontWeight: FontWeight.w500,
+                                              color: AppColors.primaryColor
+                                                  .withOpacity(0.9),
+                                            ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                        kycStatus == "null" ||
-                                kycStatus == "Not Filled" ||
-                                kycStatus == "IN_PROGRESS" ||
-                                kycStatus == "REJECTED"
-                            ? 'Complete your KYC to achieve a good credit score. A verified KYC helps improve your financial profile!'
-                                .tr
-                            : 'Your KYC is verified!'.tr,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyMedium
-                            ?.copyWith(color: Colors.grey[600])),
-                  ],
-                ),
-              );
-            },
-          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                          kycStatus == "null" ||
+                                  kycStatus == "Not Filled" ||
+                                  kycStatus == "IN_PROGRESS" ||
+                                  kycStatus == "REJECTED"
+                              ? 'Complete your KYC to achieve a good credit score. A verified KYC helps improve your financial profile!'
+                                  .tr
+                              : 'Your KYC is verified!'.tr,
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(color: Colors.grey[600])),
+                    ],
+                  ),
+                );
+              },
+            ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 14.0),
             child: Row(
@@ -424,8 +539,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>
-                                const BusinessPartnersScreen(
+                            builder: (context) => const BusinessPartnersScreen(
                                   isRateProvider: false,
                                   isViewRatings: false,
                                 )));
@@ -539,6 +653,187 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildProductCard(
+    BuildContext context,
+    String title,
+    String target,
+    String amount,
+    String repayment,
+    IconData icon,
+    Color color,
+  ) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            color.withOpacity(0.1),
+            color.withOpacity(0.05),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: color.withOpacity(0.2),
+            blurRadius: 15,
+            offset: const Offset(0, 5),
+          ),
+        ],
+      ),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: color.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Icon(
+                    icon,
+                    color: color,
+                    size: 24,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: color,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        'Target: $target'.tr,
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: Colors.grey[600],
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.1),
+                    blurRadius: 5,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.account_balance_wallet,
+                        color: color,
+                        size: 18,
+                      ),
+                      const SizedBox(width: 6),
+                      Text(
+                        'Amount:'.tr,
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const Spacer(),
+                      Flexible(
+                        child: Text(
+                          amount,
+                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: color,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Icon(
+                        Icons.schedule,
+                        color: color,
+                        size: 18,
+                      ),
+                      const SizedBox(width: 6),
+                      Text(
+                        'Repayment:'.tr,
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(width: 6),
+                      Expanded(
+                        child: Text(
+                          repayment,
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: Colors.grey[700],
+                          ),
+                          textAlign: TextAlign.right,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 12),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [color, color.withOpacity(0.8)],
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                ),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Text(
+                'Learn More'.tr,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

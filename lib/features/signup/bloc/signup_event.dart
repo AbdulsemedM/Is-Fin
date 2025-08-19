@@ -8,12 +8,14 @@ class SignupSent extends SignupEvent {
   final String phoneNumber;
   final String password;
   final String otp;
+  final String userType;
   final String? email;
   SignupSent({
     required this.fullName,
     required this.phoneNumber,
     required this.password,
     required this.otp,
+    required this.userType,
     this.email,
   });
 }
