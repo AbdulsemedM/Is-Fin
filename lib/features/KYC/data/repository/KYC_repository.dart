@@ -15,6 +15,8 @@ class KycRepository {
   final KycDataProvider kycDataProvider;
   KycRepository(this.kycDataProvider);
   PhoneNumberManager phoneManager = PhoneNumberManager();
+  UserManager userManager = UserManager();
+
   Future<String> sendPersonalKYC(PersonalInfoModel personalInfo) async {
     try {
       // print("here we gooooo");
@@ -28,6 +30,7 @@ class KycRepository {
         // Throw only the message part
         throw data['message'];
       }
+      await userManager.setKYCStatus(data['response']['approvalStatus']);
       savePersonalInfo(personalInfo);
       return data['message'];
     } catch (e) {

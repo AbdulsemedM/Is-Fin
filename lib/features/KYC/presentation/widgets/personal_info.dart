@@ -389,7 +389,8 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                       [
                                         'Driver\'s License',
                                         'Passport',
-                                        'National ID'
+                                        'National ID',
+                                        'Kebele ID'
                                       ].contains(_idTypeController.text)
                                   ? _idTypeController.text
                                   : null,
@@ -415,6 +416,10 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                 DropdownMenuItem(
                                   value: 'National ID',
                                   child: Text('National ID'.tr),
+                                ),
+                                DropdownMenuItem(
+                                  value: 'Kebele ID',
+                                  child: Text('Kebele ID'.tr),
                                 ),
                               ],
                               onChanged: (value) {

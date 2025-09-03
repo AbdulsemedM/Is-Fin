@@ -35,6 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late PageController _pageController;
   late Timer _timer;
   int _currentPage = 0;
+  bool _isUserInteracting = false;
 
   @override
   void initState() {
@@ -53,14 +54,31 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _startAutoSlide() {
-    _timer = Timer.periodic(const Duration(seconds: 5), (timer) {
-      if (_pageController.hasClients) {
+    _timer = Timer.periodic(const Duration(seconds: 8), (timer) {
+      if (_pageController.hasClients && !_isUserInteracting) {
         _currentPage = (_currentPage + 1) % 3; // 3 products
         _pageController.animateToPage(
           _currentPage,
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.easeInOutCubic,
         );
+      }
+    });
+  }
+
+  void _onUserInteractionStart() {
+    setState(() {
+      _isUserInteracting = true;
+    });
+  }
+
+  void _onUserInteractionEnd() {
+    // Resume auto-slide after 3 seconds of no interaction
+    Timer(const Duration(seconds: 3), () {
+      if (mounted) {
+        setState(() {
+          _isUserInteracting = false;
+        });
       }
     });
   }
@@ -70,7 +88,10 @@ class _HomeScreenState extends State<HomeScreen> {
     try {
       String myName = (await userManager.getFullName())!;
       String kyc = (await userManager.getKYCStatus()).toString();
-      String user = await userManager.getUserType().toString();
+      String user = (await userManager.getUserType()).toString();
+
+      print("the user type");
+      print(user);
 
       setState(() {
         name = myName;
@@ -141,6 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           Expanded(
                             child: RichText(
+                              overflow: TextOverflow.ellipsis,
                               text: TextSpan(
                                 children: [
                                   TextSpan(
@@ -172,7 +194,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ],
                               ),
-                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                         ],
@@ -232,7 +253,7 @@ class _HomeScreenState extends State<HomeScreen> {
           //   ),
           // ),
           // Conditional UI based on user type
-          if (userType == "FORMAL") ...[            
+          if (userType == "FORMAL") ...[
             BlocBuilder<HomeBloc, HomeState>(
               builder: (context, state) {
                 if (state is CreditScoreFetchedSuccess) {
@@ -270,86 +291,103 @@ class _HomeScreenState extends State<HomeScreen> {
                 return const SizedBox.shrink(); // Default empty state
               },
             ),
-          ] else ...[            
+          ] else ...[
             // Informal user - Show micro-finance products
-            Container(
-              height: 320,
-              margin: const EdgeInsets.symmetric(vertical: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Text(
-                      'Available Products'.tr,
-                      style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.primaryColor,
+            if (userType == "IN_FORMAL")
+              Container(
+                height: 320,
+                margin: const EdgeInsets.symmetric(vertical: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Text(
+                        'Available Products'.tr,
+                        style:
+                            Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.primaryColor,
+                                ),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 16),
-                  Expanded(
-                    child: PageView(
-                      controller: _pageController,
-                      onPageChanged: (index) {
-                        setState(() {
-                          _currentPage = index;
-                        });
-                      },
-                      children: [
-                        _buildProductCard(
-                          context,
-                          'Micro Apiculture',
-                          'Beekeepers',
-                          '62K - 68.2K ETB',
-                          '2 payments (Months 11 & 12)',
-                          Icons.hive,
-                          Colors.amber,
-                        ),
-                        _buildProductCard(
-                          context,
-                          'Micro Shoat Fattening',
-                          'Sheep/Goat Farmers',
-                          '85K - 93.5K ETB',
-                          'Once (Month 5)',
-                          Icons.pets,
-                          Colors.brown,
-                        ),
-                        _buildProductCard(
-                          context,
-                          'Micro Poultry',
-                          'Poultry Farmers',
-                          '42K - 46.2K ETB',
-                          '8 payments (Months 5-12)',
-                          Icons.egg,
-                          Colors.orange,
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  // Page indicators
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(
-                      3,
-                      (index) => Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 4),
-                        width: _currentPage == index ? 12 : 8,
-                        height: 8,
-                        decoration: BoxDecoration(
-                          color: _currentPage == index
-                              ? AppColors.primaryColor
-                              : Colors.grey[300],
-                          borderRadius: BorderRadius.circular(4),
+                    const SizedBox(height: 16),
+                    Expanded(
+                      child: GestureDetector(
+                        onPanStart: (_) => _onUserInteractionStart(),
+                        onPanEnd: (_) => _onUserInteractionEnd(),
+                        onPanCancel: () => _onUserInteractionEnd(),
+                        onTapDown: (_) => _onUserInteractionStart(),
+                        onTapUp: (_) => _onUserInteractionEnd(),
+                        onTapCancel: () => _onUserInteractionEnd(),
+                        child: PageView(
+                          controller: _pageController,
+                          physics: const BouncingScrollPhysics(
+                            parent: AlwaysScrollableScrollPhysics(),
+                          ),
+                          pageSnapping: true,
+                          allowImplicitScrolling: true,
+                          padEnds: false,
+                          clipBehavior: Clip.none,
+                          onPageChanged: (index) {
+                            setState(() {
+                              _currentPage = index;
+                            });
+                          },
+                          children: [
+                            _buildProductCard(
+                              context,
+                              'Micro Agriculture',
+                              'Beekeepers',
+                              '62K - 68.2K ETB',
+                              '2 payments (Months 11 & 12)',
+                              Icons.hive,
+                              Colors.amber,
+                            ),
+                            _buildProductCard(
+                              context,
+                              'Micro Shoat Fattening',
+                              'Sheep/Goat Farmers',
+                              '85K - 93.5K ETB',
+                              'Once (Month 5)',
+                              Icons.pets,
+                              Colors.brown,
+                            ),
+                            _buildProductCard(
+                              context,
+                              'Micro Poultry',
+                              'Poultry Farmers',
+                              '42K - 46.2K ETB',
+                              '8 payments (Months 5-12)',
+                              Icons.egg,
+                              Colors.orange,
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 16),
+                    // Page indicators
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(
+                        3,
+                        (index) => Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 4),
+                          width: _currentPage == index ? 12 : 8,
+                          height: 8,
+                          decoration: BoxDecoration(
+                            color: _currentPage == index
+                                ? AppColors.primaryColor
+                                : Colors.grey[300],
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
           ],
           // Show credit score details only for FORMAL users
           if (userType == "FORMAL")
@@ -442,7 +480,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ],
                               ),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     "Purchase Limit".tr,
@@ -667,172 +706,241 @@ class _HomeScreenState extends State<HomeScreen> {
     Color color,
   ) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
-      padding: const EdgeInsets.all(16),
+      margin: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [
-            color.withOpacity(0.1),
-            color.withOpacity(0.05),
-          ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
+          colors: [
+            Colors.white,
+            color.withOpacity(0.05),
+          ],
         ),
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: color.withOpacity(0.2),
-            blurRadius: 15,
-            offset: const Offset(0, 5),
+            color: color.withOpacity(0.15),
+            spreadRadius: 0,
+            blurRadius: 20,
+            offset: const Offset(0, 8),
+          ),
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            spreadRadius: 0,
+            blurRadius: 10,
+            offset: const Offset(0, 2),
           ),
         ],
+        border: Border.all(
+          color: color.withOpacity(0.1),
+          width: 1,
+        ),
       ),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: color.withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Icon(
-                    icon,
-                    color: color,
-                    size: 24,
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: color,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        'Target: $target'.tr,
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Colors.grey[600],
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.1),
-                    blurRadius: 5,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: Column(
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
                 children: [
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.account_balance_wallet,
-                        color: color,
-                        size: 18,
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          color.withOpacity(0.8),
+                          color,
+                        ],
                       ),
-                      const SizedBox(width: 6),
-                      Text(
-                        'Amount:'.tr,
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          fontWeight: FontWeight.w600,
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: color.withOpacity(0.3),
+                          spreadRadius: 0,
+                          blurRadius: 8,
+                          offset: const Offset(0, 4),
                         ),
-                      ),
-                      const Spacer(),
-                      Flexible(
-                        child: Text(
-                          amount,
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: color,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
+                    child: Icon(
+                      icon,
+                      color: Colors.white,
+                      size: 20,
+                    ),
                   ),
-                  const SizedBox(height: 8),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Icon(
-                        Icons.schedule,
-                        color: color,
-                        size: 18,
-                      ),
-                      const SizedBox(width: 6),
-                      Text(
-                        'Repayment:'.tr,
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(width: 6),
-                      Expanded(
-                        child: Text(
-                          repayment,
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: Colors.grey[700],
-                          ),
-                          textAlign: TextAlign.right,
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          title,
+                          style:
+                              Theme.of(context).textTheme.titleMedium?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black87,
+                                    fontSize: 16,
+                                  ),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
-                      ),
-                    ],
+                        const SizedBox(height: 6),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: color.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Text(
+                            target,
+                            style:
+                                Theme.of(context).textTheme.bodySmall?.copyWith(
+                                      color: color.withOpacity(0.8),
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
-            ),
-            const SizedBox(height: 12),
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [color, color.withOpacity(0.8)],
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
+              const SizedBox(height: 10),
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Colors.grey[50]!,
+                      Colors.white,
+                    ],
+                  ),
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(
+                    color: color.withOpacity(0.2),
+                    width: 1,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.02),
+                      spreadRadius: 0,
+                      blurRadius: 8,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
                 ),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Text(
-                'Learn More'.tr,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w600,
+                child: Column(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [Colors.green[400]!, Colors.green[600]!],
+                        ),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.account_balance_wallet,
+                            color: Colors.white,
+                            size: 20,
+                          ),
+                          const SizedBox(width: 8),
+                          Text(
+                            'Amount:'.tr,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
+                                  fontSize: 13,
+                                ),
+                          ),
+                          const Spacer(),
+                          Flexible(
+                            child: Text(
+                              amount,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 10,
+                                  ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [Colors.blue[400]!, Colors.blue[600]!],
+                        ),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(
+                            Icons.schedule,
+                            color: Colors.white,
+                            size: 20,
+                          ),
+                          const SizedBox(width: 8),
+                          Text(
+                            'Repayment:'.tr,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
+                                  fontSize: 13,
+                                ),
+                          ),
+                          const SizedBox(width: 6),
+                          Expanded(
+                            child: Text(
+                              repayment,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 10,
+                                  ),
+                              textAlign: TextAlign.right,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
