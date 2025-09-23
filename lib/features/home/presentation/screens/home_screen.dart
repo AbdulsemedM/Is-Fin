@@ -150,7 +150,7 @@ class _HomeScreenState extends State<HomeScreen> {
           // Padding(
           //   padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 14),
           Padding(
-            padding: const EdgeInsets.fromLTRB(8.0, 10, 8, 0),
+            padding: const EdgeInsets.fromLTRB(8.0, 4, 8, 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -172,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         .displaySmall
                                         ?.copyWith(
                                             fontWeight: FontWeight.w700,
-                                            fontSize: 28),
+                                            fontSize: 20),
                                   ),
                                   TextSpan(
                                     text: name,
@@ -181,7 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         .displaySmall
                                         ?.copyWith(
                                             fontWeight: FontWeight.w700,
-                                            fontSize: 28),
+                                            fontSize: 20),
                                   ),
                                   TextSpan(
                                     text: " 👋",
@@ -189,7 +189,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         .textTheme
                                         .displaySmall
                                         ?.copyWith(
-                                          fontSize: 24,
+                                          fontSize: 18,
                                         ),
                                   ),
                                 ],
@@ -203,7 +203,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         style: Theme.of(context)
                             .textTheme
                             .bodyMedium!
-                            .copyWith(fontSize: 20),
+                            .copyWith(fontSize: 16),
                       ),
                     ],
                   ),
@@ -228,7 +228,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           // )
           SizedBox(
-            height: ScreenConfig.screenHeight * 0.03,
+            height: ScreenConfig.screenHeight * 0.01,
           ),
           // Text(
           //   "Coop Bank's Sharia-compliant financing",
@@ -253,143 +253,44 @@ class _HomeScreenState extends State<HomeScreen> {
           //   ),
           // ),
           // Conditional UI based on user type
-          if (userType == "FORMAL") ...[
-            BlocBuilder<HomeBloc, HomeState>(
-              builder: (context, state) {
-                if (state is CreditScoreFetchedSuccess) {
-                  return SizedBox(
-                    height: 250,
-                    child: MultipleRangeGaugeWidget(
-                      value: state.score.overallScore,
-                    ),
-                  );
-                } else if (state is CreditScoreFetchedFailure) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const SizedBox(
-                        height: 250,
-                        child: MultipleRangeGaugeWidget(
-                          value: 0,
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text("Something went wrong".tr),
-                        // child: Text(state.errorMessage),
-                      ),
-                    ],
-                  );
-                } else if (state is CreditScoreFetchedLoading) {
-                  return const Center(
-                    child: Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: CircularProgressIndicator(),
-                    ),
-                  );
-                }
-                return const SizedBox.shrink(); // Default empty state
-              },
-            ),
-          ] else ...[
-            // Informal user - Show micro-finance products
-            if (userType == "IN_FORMAL")
-              Container(
-                height: 320,
-                margin: const EdgeInsets.symmetric(vertical: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+
+          BlocBuilder<HomeBloc, HomeState>(
+            builder: (context, state) {
+              if (state is CreditScoreFetchedSuccess) {
+                return SizedBox(
+                  height: 250,
+                  child: MultipleRangeGaugeWidget(
+                    value: state.score.overallScore,
+                  ),
+                );
+              } else if (state is CreditScoreFetchedFailure) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    const SizedBox(
+                      height: 250,
+                      child: MultipleRangeGaugeWidget(
+                        value: 0,
+                      ),
+                    ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Text(
-                        'Available Products'.tr,
-                        style:
-                            Theme.of(context).textTheme.headlineSmall?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.primaryColor,
-                                ),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    Expanded(
-                      child: GestureDetector(
-                        onPanStart: (_) => _onUserInteractionStart(),
-                        onPanEnd: (_) => _onUserInteractionEnd(),
-                        onPanCancel: () => _onUserInteractionEnd(),
-                        onTapDown: (_) => _onUserInteractionStart(),
-                        onTapUp: (_) => _onUserInteractionEnd(),
-                        onTapCancel: () => _onUserInteractionEnd(),
-                        child: PageView(
-                          controller: _pageController,
-                          physics: const BouncingScrollPhysics(
-                            parent: AlwaysScrollableScrollPhysics(),
-                          ),
-                          pageSnapping: true,
-                          allowImplicitScrolling: true,
-                          padEnds: false,
-                          clipBehavior: Clip.none,
-                          onPageChanged: (index) {
-                            setState(() {
-                              _currentPage = index;
-                            });
-                          },
-                          children: [
-                            _buildProductCard(
-                              context,
-                              'Micro Agriculture',
-                              'Beekeepers',
-                              '62K - 68.2K ETB',
-                              '2 payments (Months 11 & 12)',
-                              Icons.hive,
-                              Colors.amber,
-                            ),
-                            _buildProductCard(
-                              context,
-                              'Micro Shoat Fattening',
-                              'Sheep/Goat Farmers',
-                              '85K - 93.5K ETB',
-                              'Once (Month 5)',
-                              Icons.pets,
-                              Colors.brown,
-                            ),
-                            _buildProductCard(
-                              context,
-                              'Micro Poultry',
-                              'Poultry Farmers',
-                              '42K - 46.2K ETB',
-                              '8 payments (Months 5-12)',
-                              Icons.egg,
-                              Colors.orange,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    // Page indicators
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: List.generate(
-                        3,
-                        (index) => Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 4),
-                          width: _currentPage == index ? 12 : 8,
-                          height: 8,
-                          decoration: BoxDecoration(
-                            color: _currentPage == index
-                                ? AppColors.primaryColor
-                                : Colors.grey[300],
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                        ),
-                      ),
+                      padding: EdgeInsets.all(8.0),
+                      child: Text("Something went wrong".tr),
+                      // child: Text(state.errorMessage),
                     ),
                   ],
-                ),
-              ),
-          ],
-          // Show credit score details only for FORMAL users
+                );
+              } else if (state is CreditScoreFetchedLoading) {
+                return const Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              }
+              return const SizedBox.shrink(); // Default empty state
+            },
+          ),
           if (userType == "FORMAL")
             BlocBuilder<HomeBloc, HomeState>(
               builder: (context, state) {
@@ -432,7 +333,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               context, 'Excellent', Colors.green, '681-850'),
                         ],
                       ),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: 8),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -622,75 +523,175 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
+          // Informal user - Show micro-finance products
+          if (userType == "IN_FORMAL")
+            Container(
+              height: 320,
+              margin: const EdgeInsets.symmetric(vertical: 16),
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ExpandableCard(
-                    title: 'Bi-Weekly'.tr,
-                    iconContainer: Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: const BoxDecoration(
-                        color: Colors.orange,
-                        shape: BoxShape.circle,
-                      ),
-                      child:
-                          const Icon(Icons.calendar_month, color: Colors.white),
-                    ),
-                    description:
-                        'The Bi-Weekly Michu Mizan Murabaha Financing is designed for customers seeking short-term financial support. With a financing amount ranging from 5,000 to 25,000 ETB, this product provides quick access to funds with a 15-day repayment duration. It operates under a Murabaha model, ensuring transparency in profit margins, with a markup (profit margin) of 3. Additionally, a 2% processing fee applies to the financing amount. This option is ideal for individuals needing smaller financial assistance with a short repayment cycle'
-                            .tr,
-                    onGetStarted: () {
-                      // print("Get Started clicked");
-                    },
-                    cardColor: const Color(0xFFFAC7A6), // Custom card color
-                  ),
-                  ExpandableCard(
-                    title: 'Monthly'.tr,
-                    iconContainer: Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: const BoxDecoration(
-                        color: Colors.blue,
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(Icons.calendar_view_day_rounded,
-                          color: Colors.white),
-                    ),
-                    description:
-                        'The Monthly Michu Mizan Murabaha Financing offers a more extensive financing solution, catering to customers who require larger amounts and a longer repayment period. Customers can access financing between 25,000 and 100,000 ETB, with a 30-day repayment duration. This financing follows the Murabaha principle with a markup (profit margin) of 6, ensuring ethical and transparent transactions. A 2% processing fee is applicable. This product is well-suited for individuals or businesses needing substantial financial support with a manageable repayment timeline.'
-                            .tr,
-                    onGetStarted: () {
-                      // print("Get Started clicked");
-                    },
-                    cardColor: const Color(0xFFA6D9FA), // Custom card color
-                  ),
-                  // ExpandableCard(
-                  //   title: 'Mudarabah'.tr,
-                  //   iconContainer: Container(
-                  //     padding: const EdgeInsets.all(8),
-                  //     decoration: const BoxDecoration(
-                  //       color: Colors.green,
-                  //       shape: BoxShape.circle,
-                  //     ),
-                  //     child: const Icon(Icons.account_balance,
-                  //         color: Colors.white),
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(horizontal: 16),
+                  //   child: Text(
+                  //     'Available Products'.tr,
+                  //     style:
+                  //         Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  //               fontWeight: FontWeight.bold,
+                  //               color: AppColors.primaryColor,
+                  //             ),
                   //   ),
-                  //   description:
-                  //       'Mudaraba is a profit-sharing agreement where one party (the bank) provides the capital, and the other party (the entrepreneur) manages the business, with profits shared as per a pre-agreed ratio, and losses borne solely by the capital provider in line with Islamic financing norms.'
-                  //           .tr,
-                  //   onGetStarted: () {
-                  //     // print("Get Started clicked");
-                  //   },
-                  //   cardColor: const Color.fromARGB(
-                  //       255, 155, 249, 163), // Custom card color
                   // ),
+                  // const SizedBox(height: 16),
+                  Expanded(
+                    child: GestureDetector(
+                      onPanStart: (_) => _onUserInteractionStart(),
+                      onPanEnd: (_) => _onUserInteractionEnd(),
+                      onPanCancel: () => _onUserInteractionEnd(),
+                      onTapDown: (_) => _onUserInteractionStart(),
+                      onTapUp: (_) => _onUserInteractionEnd(),
+                      onTapCancel: () => _onUserInteractionEnd(),
+                      child: PageView(
+                        controller: _pageController,
+                        physics: const BouncingScrollPhysics(
+                          parent: AlwaysScrollableScrollPhysics(),
+                        ),
+                        pageSnapping: true,
+                        allowImplicitScrolling: true,
+                        padEnds: false,
+                        clipBehavior: Clip.none,
+                        onPageChanged: (index) {
+                          setState(() {
+                            _currentPage = index;
+                          });
+                        },
+                        children: [
+                          _buildProductCard(
+                            context,
+                            'Micro Agriculture',
+                            'Beekeepers',
+                            '62K - 68.2K ETB',
+                            '2 payments (Months 11 & 12)',
+                            Icons.hive,
+                            Colors.amber,
+                          ),
+                          _buildProductCard(
+                            context,
+                            'Micro Shoat Fattening',
+                            'Sheep/Goat Farmers',
+                            '85K - 93.5K ETB',
+                            'Once (Month 5)',
+                            Icons.pets,
+                            Colors.brown,
+                          ),
+                          _buildProductCard(
+                            context,
+                            'Micro Poultry',
+                            'Poultry Farmers',
+                            '42K - 46.2K ETB',
+                            '8 payments (Months 5-12)',
+                            Icons.egg,
+                            Colors.orange,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  // Page indicators
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(
+                      3,
+                      (index) => Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 4),
+                        width: _currentPage == index ? 12 : 8,
+                        height: 8,
+                        decoration: BoxDecoration(
+                          color: _currentPage == index
+                              ? AppColors.primaryColor
+                              : Colors.grey[300],
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
-          ),
+
+          // Show credit score details only for FORMAL users
+
+          if (userType == "FORMAL")
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ExpandableCard(
+                      title: 'Bi-Weekly'.tr,
+                      iconContainer: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: const BoxDecoration(
+                          color: Colors.orange,
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(Icons.calendar_month,
+                            color: Colors.white),
+                      ),
+                      description:
+                          'The Bi-Weekly Michu Mizan Murabaha Financing is designed for customers seeking short-term financial support. With a financing amount ranging from 5,000 to 25,000 ETB, this product provides quick access to funds with a 15-day repayment duration. It operates under a Murabaha model, ensuring transparency in profit margins, with a markup (profit margin) of 3. Additionally, a 2% processing fee applies to the financing amount. This option is ideal for individuals needing smaller financial assistance with a short repayment cycle'
+                              .tr,
+                      onGetStarted: () {
+                        // print("Get Started clicked");
+                      },
+                      cardColor: const Color(0xFFFAC7A6), // Custom card color
+                    ),
+                    ExpandableCard(
+                      title: 'Monthly'.tr,
+                      iconContainer: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: const BoxDecoration(
+                          color: Colors.blue,
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(Icons.calendar_view_day_rounded,
+                            color: Colors.white),
+                      ),
+                      description:
+                          'The Monthly Michu Mizan Murabaha Financing offers a more extensive financing solution, catering to customers who require larger amounts and a longer repayment period. Customers can access financing between 25,000 and 100,000 ETB, with a 30-day repayment duration. This financing follows the Murabaha principle with a markup (profit margin) of 6, ensuring ethical and transparent transactions. A 2% processing fee is applicable. This product is well-suited for individuals or businesses needing substantial financial support with a manageable repayment timeline.'
+                              .tr,
+                      onGetStarted: () {
+                        // print("Get Started clicked");
+                      },
+                      cardColor: const Color(0xFFA6D9FA), // Custom card color
+                    ),
+                    // ExpandableCard(
+                    //   title: 'Mudarabah'.tr,
+                    //   iconContainer: Container(
+                    //     padding: const EdgeInsets.all(8),
+                    //     decoration: const BoxDecoration(
+                    //       color: Colors.green,
+                    //       shape: BoxShape.circle,
+                    //     ),
+                    //     child: const Icon(Icons.account_balance,
+                    //         color: Colors.white),
+                    //   ),
+                    //   description:
+                    //       'Mudaraba is a profit-sharing agreement where one party (the bank) provides the capital, and the other party (the entrepreneur) manages the business, with profits shared as per a pre-agreed ratio, and losses borne solely by the capital provider in line with Islamic financing norms.'
+                    //           .tr,
+                    //   onGetStarted: () {
+                    //     // print("Get Started clicked");
+                    //   },
+                    //   cardColor: const Color.fromARGB(
+                    //       255, 155, 249, 163), // Custom card color
+                    // ),
+                  ],
+                ),
+              ),
+            ),
         ],
       ),
     );
@@ -705,7 +706,26 @@ class _HomeScreenState extends State<HomeScreen> {
     IconData icon,
     Color color,
   ) {
-    return Container(
+    return GestureDetector(
+      onTap: () {
+        if (kycStatus == "null" ||
+            kycStatus == "Not Filled" ||
+            kycStatus == "IN_PROGRESS" ||
+            kycStatus == "REJECTED") {
+          displaySnack(
+              context,
+              "Please fill KYC before going to loan applications."
+                  .tr,
+              Colors.red);
+        } else {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      LoanApplicationScreen(productName: title)));
+        }
+      },
+      child: Container(
       margin: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -736,75 +756,188 @@ class _HomeScreenState extends State<HomeScreen> {
           width: 1,
         ),
       ),
-      child: Container(
-        padding: const EdgeInsets.all(20),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        color.withOpacity(0.8),
+                        color,
+                      ],
+                    ),
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: color.withOpacity(0.3),
+                        spreadRadius: 0,
+                        blurRadius: 8,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: Icon(
+                    icon,
+                    color: Colors.white,
+                    size: 20,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style:
+                            Theme.of(context).textTheme.titleMedium?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black87,
+                                  fontSize: 16,
+                                ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: 6),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: color.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Text(
+                          target,
+                          style:
+                              Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    color: color.withOpacity(0.8),
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Colors.grey[50]!,
+                    Colors.white,
+                  ],
+                ),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: color.withOpacity(0.2),
+                  width: 1,
+                ),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          color.withOpacity(0.8),
-                          color,
-                        ],
+                        colors: [Colors.green[400]!, Colors.green[600]!],
                       ),
-                      borderRadius: BorderRadius.circular(16),
-                      boxShadow: [
-                        BoxShadow(
-                          color: color.withOpacity(0.3),
-                          spreadRadius: 0,
-                          blurRadius: 8,
-                          offset: const Offset(0, 4),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.account_balance_wallet,
+                          color: Colors.white,
+                          size: 20,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          'Amount:'.tr,
+                          style:
+                              Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white,
+                                    fontSize: 13,
+                                  ),
+                        ),
+                        const Spacer(),
+                        Flexible(
+                          child: Text(
+                            amount,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 10,
+                                ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                       ],
                     ),
-                    child: Icon(
-                      icon,
-                      color: Colors.white,
-                      size: 20,
-                    ),
                   ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
+                  const SizedBox(height: 12),
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [Colors.blue[400]!, Colors.blue[600]!],
+                      ),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          title,
-                          style:
-                              Theme.of(context).textTheme.titleMedium?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black87,
-                                    fontSize: 16,
-                                  ),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
+                        Icon(
+                          Icons.schedule,
+                          color: Colors.white,
+                          size: 20,
                         ),
-                        const SizedBox(height: 6),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 4),
-                          decoration: BoxDecoration(
-                            color: color.withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
+                        const SizedBox(width: 8),
+                        Text(
+                          'Repayment:'.tr,
+                          style:
+                              Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white,
+                                    fontSize: 13,
+                                  ),
+                        ),
+                        const SizedBox(width: 6),
+                        Expanded(
                           child: Text(
-                            target,
-                            style:
-                                Theme.of(context).textTheme.bodySmall?.copyWith(
-                                      color: color.withOpacity(0.8),
-                                      fontSize: 11,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                            maxLines: 1,
+                            repayment,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 10,
+                                ),
+                            textAlign: TextAlign.right,
+                            maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
@@ -813,136 +946,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 10),
-              Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Colors.grey[50]!,
-                      Colors.white,
-                    ],
-                  ),
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(
-                    color: color.withOpacity(0.2),
-                    width: 1,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.02),
-                      spreadRadius: 0,
-                      blurRadius: 8,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [Colors.green[400]!, Colors.green[600]!],
-                        ),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.account_balance_wallet,
-                            color: Colors.white,
-                            size: 20,
-                          ),
-                          const SizedBox(width: 8),
-                          Text(
-                            'Amount:'.tr,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
-                                ?.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.white,
-                                  fontSize: 13,
-                                ),
-                          ),
-                          const Spacer(),
-                          Flexible(
-                            child: Text(
-                              amount,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 10,
-                                  ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    Container(
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [Colors.blue[400]!, Colors.blue[600]!],
-                        ),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Icons.schedule,
-                            color: Colors.white,
-                            size: 20,
-                          ),
-                          const SizedBox(width: 8),
-                          Text(
-                            'Repayment:'.tr,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
-                                ?.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.white,
-                                  fontSize: 13,
-                                ),
-                          ),
-                          const SizedBox(width: 6),
-                          Expanded(
-                            child: Text(
-                              repayment,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 10,
-                                  ),
-                              textAlign: TextAlign.right,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
-    );
+    ));
   }
 }

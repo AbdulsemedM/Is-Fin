@@ -21,6 +21,8 @@ class LoanAppRepository {
         for (var item in data['response']) {
           sectors.add({
             "sectorName": item['sectorName'].toString(),
+            "duration":
+                item['duration'] != null ? item['duration'].toString() : "",
           });
         }
 

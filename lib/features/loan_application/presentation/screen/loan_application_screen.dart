@@ -11,9 +11,12 @@ import 'package:ifb_loan/features/loan_application/bloc/loan_app_bloc.dart';
 import 'package:ifb_loan/features/loan_application/models/products_model.dart';
 import 'package:ifb_loan/features/loan_application/models/products_request_model.dart';
 import 'package:ifb_loan/features/loan_application/presentation/widgets/table_item_widget.dart';
+import 'package:ifb_loan/configuration/phone_number_manager.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoanApplicationScreen extends StatefulWidget {
-  const LoanApplicationScreen({super.key});
+  final String? productName;
+  const LoanApplicationScreen({super.key, this.productName});
 
   @override
   State<LoanApplicationScreen> createState() => _LoanApplicationScreenState();
@@ -26,6 +29,9 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
   var isRepayment = false;
   var isUnitofMeasurement = false;
   var isProviderFetched = false;
+  final UserManager userManager = UserManager();
+  bool isInformalUser = false;
+  bool isRepaymentAutoSelected = false;
   List<Map<String, String>> mySectors = [];
   List<Map<String, String>> myRepayments = [];
   List<Map<String, String>> myUnitofMeasurements = [];
@@ -42,15 +48,151 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
   final TextEditingController _productRepaymentController =
       TextEditingController();
   List<ProductsModel> myProducts = [];
+  bool saveProductsEnabled = false;
   GlobalKey<FormState> myKey1 = GlobalKey();
   GlobalKey<FormState> myKey2 = GlobalKey();
   @override
   void initState() {
     super.initState();
+    _initializeUserType();
     context.read<LoanAppBloc>().add(SectorsFetch());
     context.read<LoanAppBloc>().add(RepaymentsFetch());
     context.read<LoanAppBloc>().add(UnitofMeasurementsFetch());
     context.read<ProvidersBloc>().add(ProviderFetch(isRateProvider: false));
+    _loadProductsFromCache();
+
+    // Pre-fill product name if passed from home screen
+    if (widget.productName != null) {
+      _productNameController.text = widget.productName!;
+      _autoSelectSector(widget.productName!);
+    }
+  }
+
+  Future<void> _saveProductsToCache() async {
+    if (!saveProductsEnabled) return;
+
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final List<String> productsJsonList =
+          myProducts.map((product) => product.toJson()).toList();
+      await prefs.setStringList('saved_products', productsJsonList);
+    } catch (e) {
+      print('Error saving products to cache: $e');
+    }
+  }
+
+  Future<void> _loadProductsFromCache() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final List<String>? savedProductsJsonList =
+          prefs.getStringList('saved_products');
+
+      if (savedProductsJsonList != null && savedProductsJsonList.isNotEmpty) {
+        final loadedProducts = savedProductsJsonList
+            .map((jsonStr) => ProductsModel.fromJson(jsonStr))
+            .toList();
+
+        if (loadedProducts.isNotEmpty) {
+          setState(() {
+            saveProductsEnabled = true;
+            myProducts = loadedProducts;
+          });
+        }
+      }
+    } catch (e) {
+      print('Error loading products from cache: $e');
+    }
+  }
+
+  Future<void> _initializeUserType() async {
+    String? userType = await userManager.getUserType();
+    setState(() {
+      isInformalUser = userType == "IN_FORMAL";
+    });
+  }
+
+  void _autoSelectSector(String productName) {
+    // Auto-select sector based on product name for informal users
+    if (mySectors.isEmpty) {
+      return;
+    }
+
+    // Find matching sector dynamically from available sectors
+    String sectorName = '';
+    String productLower = productName.toLowerCase();
+
+    // Try exact match first
+    var exactMatch = mySectors.firstWhere(
+        (sector) => sector['sectorName']?.toLowerCase() == productLower,
+        orElse: () => <String, String>{});
+
+    if (exactMatch.isNotEmpty) {
+      sectorName = exactMatch['sectorName'] ?? '';
+    } else {
+      // Try partial matches with key terms
+      for (var sector in mySectors) {
+        String sectorNameLower = (sector['sectorName'] ?? '').toLowerCase();
+
+        // Check for agriculture/apiculture matches
+        if ((productLower.contains('agriculture') ||
+                productLower.contains('beekeep')) &&
+            sectorNameLower.contains('apiculture')) {
+          sectorName = sector['sectorName'] ?? '';
+          break;
+        }
+        // Check for shoat/fattening matches
+        else if ((productLower.contains('shoat') ||
+                productLower.contains('fattening')) &&
+            (sectorNameLower.contains('shoat') ||
+                sectorNameLower.contains('fattening'))) {
+          sectorName = sector['sectorName'] ?? '';
+          break;
+        }
+        // Check for poultry matches
+        else if (productLower.contains('poultry') &&
+            sectorNameLower.contains('poultry')) {
+          sectorName = sector['sectorName'] ?? '';
+          break;
+        }
+      }
+    }
+
+    // Set the sector if found
+    if (sectorName.isNotEmpty) {
+      setState(() {
+        _productSectorController.text = sectorName;
+      });
+      _autoSelectRepaymentForInformal(sectorName);
+    }
+  }
+
+  void _autoSelectRepaymentForInformal(String sectorName) {
+    if (!isInformalUser) {
+      return;
+    }
+
+    // Find the sector in mySectors and get its duration dynamically
+    String duration = '';
+    var matchingSector = mySectors.firstWhere(
+        (sector) => sector['sectorName'] == sectorName,
+        orElse: () => <String, String>{});
+
+    if (matchingSector.isNotEmpty) {
+      duration = matchingSector['duration'] ?? '';
+    }
+
+    if (duration.isNotEmpty && myRepayments.isNotEmpty) {
+      var matchingRepayment = myRepayments.firstWhere(
+          (repayment) => repayment['duration'] == duration,
+          orElse: () => <String, String>{});
+
+      if (matchingRepayment.isNotEmpty) {
+        setState(() {
+          _productRepaymentController.text = duration;
+          isRepaymentAutoSelected = true;
+        });
+      }
+    }
   }
 
   String? validateField(String? value) {
@@ -132,7 +274,10 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
               setState(() {
                 mySectors = state.sectors;
                 isSectorFetched = true;
-                // print(mySectors.length);
+                // Try to auto-select sector again now that sectors are loaded
+                if (widget.productName != null) {
+                  _autoSelectSector(widget.productName!);
+                }
               });
             }
             if (state is RepaymentFetchSuccess) {
@@ -296,6 +441,9 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                                               _productUoMController.clear();
                                               loading1 = false;
                                             });
+                                            if (saveProductsEnabled) {
+                                              _saveProductsToCache();
+                                            }
                                             // print(myProducts.length);
                                           }
                                         },
@@ -324,6 +472,24 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                         EdgeInsets.symmetric(horizontal: 8.0, vertical: 16),
                     child: Divider(),
                   ),
+                  Row(
+                    children: [
+                      Checkbox(
+                        activeColor: AppColors.primaryColor,
+                        value: saveProductsEnabled,
+                        onChanged: (value) {
+                          setState(() {
+                            saveProductsEnabled = value ?? false;
+                          });
+                          if (saveProductsEnabled) {
+                            _saveProductsToCache();
+                          }
+                        },
+                      ),
+                      Text('Save products for later'.tr,
+                          style: TextStyle(fontSize: 14)),
+                    ],
+                  ),
                   TableWidget(
                     items: myProducts.map((product) {
                       return TableItem(
@@ -333,7 +499,9 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                           setState(() {
                             myProducts.remove(product);
                           });
-                          // print(myProducts.length);
+                          if (saveProductsEnabled) {
+                            _saveProductsToCache();
+                          }
                         },
                         onEdit: () {
                           setState(() {
@@ -346,6 +514,9 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                             _productUoMController.text =
                                 product.productUnitofMeasurement;
                           });
+                          if (saveProductsEnabled) {
+                            _saveProductsToCache();
+                          }
                         },
                       );
                     }).toList(),
@@ -378,7 +549,13 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                             );
                           }).toList(),
                           onChanged: (value) {
-                            _productSectorController.text = value!;
+                            setState(() {
+                              _productSectorController.text = value!;
+                              // Auto-select repayment when sector changes for informal users
+                              if (isInformalUser) {
+                                _autoSelectRepaymentForInformal(value);
+                              }
+                            });
                           },
                         ),
                         const SizedBox(height: 16),
@@ -429,7 +606,10 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                                 decoration: InputDecoration(
                                   labelText: 'Repayment Plan'.tr,
                                   filled: true,
-                                  fillColor: Colors.grey[200],
+                                  fillColor: (isInformalUser &&
+                                          isRepaymentAutoSelected)
+                                      ? Colors.grey[300]
+                                      : Colors.grey[200],
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(8.0),
                                     borderSide: BorderSide.none,
@@ -443,9 +623,16 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                                         .toString()), // Display the name in the dropdown
                                   );
                                 }).toList(),
-                                onChanged: (value) {
-                                  _productRepaymentController.text = value!;
-                                },
+                                onChanged:
+                                    (isInformalUser && isRepaymentAutoSelected)
+                                        ? null
+                                        : (value) {
+                                            setState(() {
+                                              _productRepaymentController.text =
+                                                  value!;
+                                              isRepaymentAutoSelected = false;
+                                            });
+                                          },
                               ),
                             ),
                           ],
