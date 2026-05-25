@@ -33,9 +33,9 @@ class LoanRepaymentBloc extends Bloc<LoanRepaymentEvent, LoanRepaymentState> {
           await loanRepaymentRepository.makePayment(event.loanId, event.amount);
       print(response);
       emit(LoanRepaymentPaymentSuccess(
-          transactionId: response['transactionId'],
-          customerName: response['fullName'],
-          amount: response['amount']));
+          transactionId: response['transactionId']?.toString() ?? '',
+          customerName: response['fullName']?.toString() ?? '',
+          amount: response['amount']?.toString() ?? event.amount));
     } catch (e) {
       emit(LoanRepaymentPaymentFailure(e.toString()));
     }

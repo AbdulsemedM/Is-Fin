@@ -38,11 +38,16 @@ class RepaymentHistoryModel {
 
   factory RepaymentHistoryModel.fromMap(Map<String, dynamic> map) {
     return RepaymentHistoryModel(
-      id: map['id'] as String,
-      amount: map['amount'] as String,
-      paymentDate: map['paymentDate'] as String,
-      transactionId: map['transactionId'] as String,
+      id: _stringFromValue(map['id']),
+      amount: _stringFromValue(map['amount']),
+      paymentDate: _stringFromValue(map['paymentDate']),
+      transactionId: _stringFromValue(map['transactionId']),
     );
+  }
+
+  static String _stringFromValue(dynamic value) {
+    if (value == null) return '';
+    return value.toString();
   }
 
   String toJson() => json.encode(toMap());

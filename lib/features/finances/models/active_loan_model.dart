@@ -63,16 +63,21 @@ class ActiveLoanModel {
 
   factory ActiveLoanModel.fromMap(Map<String, dynamic> map) {
     return ActiveLoanModel(
-      id: map['id'] as String,
-      name: map['name'] as String,
-      sector: map['sector'] as String,
-      productQuantity: map['productQuantity'] as String,
-      totalPayableAmount: map['totalPayableAmount'] as String,
-      penaltyAmount: map['penaltyAmount'] as String,
-      outstandingAmount: map['outstandingAmount'] as String,
-      loanStatus: map['loanStatus'] as String,
-      daysLeft: map['daysLeft'] as String,
+      id: _stringFromValue(map['id']),
+      name: _stringFromValue(map['name']),
+      sector: _stringFromValue(map['sector']),
+      productQuantity: _stringFromValue(map['productQuantity']),
+      totalPayableAmount: _stringFromValue(map['totalPayableAmount']),
+      penaltyAmount: _stringFromValue(map['penaltyAmount']),
+      outstandingAmount: _stringFromValue(map['outstandingAmount']),
+      loanStatus: _stringFromValue(map['loanStatus']),
+      daysLeft: _stringFromValue(map['daysLeft']),
     );
+  }
+
+  static String _stringFromValue(dynamic value) {
+    if (value == null) return '';
+    return value.toString();
   }
 
   String toJson() => json.encode(toMap());

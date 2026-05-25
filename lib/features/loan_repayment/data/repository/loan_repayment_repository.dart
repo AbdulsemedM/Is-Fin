@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:ifb_loan/configuration/phone_number_manager.dart';
 import 'package:ifb_loan/features/loan_repayment/data/data_provider/loan_provider_data_provider.dart';
 import 'package:ifb_loan/features/loan_repayment/models/repayment_history_model.dart';
 
@@ -32,11 +33,28 @@ class LoanRepaymentRepository {
     try {
       final response =
           await loanRepaymentDataProvider.makePayment(loanId, amount);
-      final data = jsonDecode(response);
+      final data = jsonDecode(response) as Map<String, dynamic>;
+
+      // Informal: POST /api/payment/process
+      if (data.containsKey('success')) {
+        if (data['success'] != true) {
+          throw data['message'] ?? 'Payment failed';
+        }
+        final fullName = await UserManager().getFullName();
+        return {
+          'transactionId': '${data['paymentId'] ?? ''}',
+          'fullName': fullName ?? '',
+          'amount': '${data['amountPaid'] ?? amount}',
+          'message': data['message'],
+          'totalRemainingBalance': data['totalRemainingBalance'],
+        };
+      }
+
+      // Formal: POST /api/payment
       if (data['httpStatus'] != 201) {
         throw data['message'];
       }
-      return data['response'];
+      return data['response'] as Map<String, dynamic>;
     } catch (e) {
       throw e.toString();
     }

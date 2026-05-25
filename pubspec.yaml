@@ -56,13 +56,13 @@ dependencies:
   get: ^4.6.6
   path_provider: ^2.1.1
   screenshot: ^3.0.0
-  image_gallery_saver_plus: ^3.0.5
+  image_gallery_saver_plus: ^4.0.1
   # image_gallery_saver: ^2.0.3
-  permission_handler: ^10.0.0
+  permission_handler: ^12.0.1
   swipe_refresh: ^1.1.2
   firebase_core: ^3.10.0
   firebase_messaging: ^15.1.1
-  google_api_availability: ^5.0.0
+  google_api_availability: ^5.0.1
   flutter_local_notifications: ^18.0.1
   file_picker: ^10.2.0
   enough_ascii_art: ^1.1.0
@@ -78,6 +78,10 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^4.0.0
+
+# Dependency overrides to fix compatibility issues
+dependency_overrides:
+  google_api_availability_android: ^1.1.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

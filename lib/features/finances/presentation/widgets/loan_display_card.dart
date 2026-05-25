@@ -29,6 +29,12 @@ class LoanCard extends StatelessWidget {
     required this.daysLeft,
   });
 
+  String _formatAmount(String value) {
+    final parsed = double.tryParse(value);
+    if (parsed == null) return '—';
+    return NumberFormat('#,###.##').format(parsed);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -117,7 +123,7 @@ class LoanCard extends StatelessWidget {
               Row(children: [
                 Text("Days Left: "),
                 Text(
-                  '$daysLeft',
+                  daysLeft.isEmpty ? '—' : daysLeft,
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
@@ -127,7 +133,7 @@ class LoanCard extends StatelessWidget {
               ]),
             const SizedBox(height: 4),
             Text(
-              'As of today: ${NumberFormat('#,###.##').format(double.parse(outStandingAmount))} ETB',
+              'As of today: ${_formatAmount(outStandingAmount)} ETB',
               style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
@@ -136,7 +142,7 @@ class LoanCard extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             Text(
-              'Penalty: ${NumberFormat('#,###.##').format(double.parse(penalty))} ETB',
+              'Penalty: ${_formatAmount(penalty)} ETB',
               style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,

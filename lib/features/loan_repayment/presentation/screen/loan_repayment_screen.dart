@@ -182,14 +182,20 @@ class _LoanRepaymentScreenState extends State<LoanRepaymentScreen> {
                                     ..sort((a, b) =>
                                         b.paymentDate.compareTo(a.paymentDate));
                                   final payment = payments[index];
+                                  final parsedAmount =
+                                      double.tryParse(payment.amount);
 
                                   return PaymentCard(
                                     transactionId: payment.transactionId,
-                                    date: payment.paymentDate,
+                                    date: payment.paymentDate.isEmpty
+                                        ? '—'
+                                        : payment.paymentDate,
                                     status: "Paid",
                                     statusColor: Colors.green,
-                                    amount: NumberFormat('#,###.##')
-                                        .format(double.parse(payment.amount)),
+                                    amount: parsedAmount != null
+                                        ? NumberFormat('#,###.##')
+                                            .format(parsedAmount)
+                                        : payment.amount,
                                     currency: "ETB",
                                   );
                                 },
